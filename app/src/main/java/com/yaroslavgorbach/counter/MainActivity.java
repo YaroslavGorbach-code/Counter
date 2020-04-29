@@ -1,59 +1,32 @@
 package com.yaroslavgorbach.counter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mValue_tv;
-    private TextView mIncButton;
-    private TextView mDecButton;
-    private ImageButton mRefreshButton;
-    private int mValue;
+
+    private  CounterList_rv mCountersList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mValue_tv = findViewById(R.id.value);
-        mIncButton = findViewById(R.id.inc_value);
-        mDecButton = findViewById(R.id.dec_value);
-        mRefreshButton = findViewById(R.id.refresh_value);
-
-        mValue = 0;
-
-
-
-        mIncButton.setOnClickListener(v->{
-
-            mValue++;
-            setValue(mValue);
-
-        });
-
-        mDecButton.setOnClickListener(v->{
-
-            mValue--;
-            setValue(mValue);
-
-        });
-
-        mRefreshButton.setOnClickListener(v->{
-
-            mValue = 0;
-            setValue(mValue);
-
-        });
-
-    }
-
-    private void setValue(int value){
-
-        mValue_tv.setText(String.valueOf(value));
+        ArrayList<Counter> mTestDta = new ArrayList<>();
+        mTestDta.add(new Counter(1,"test",1, 10, 22, 1, "test", getResources().getColor(R.color.blue)));
+        mTestDta.add(new Counter(2,"test2",111, 10, 22, 1, "test", getResources().getColor(R.color.green)));
+        mTestDta.add(new Counter(1,"test",1, 10, 22, 1, "test", getResources().getColor(R.color.blue)));
+        mTestDta.add(new Counter(2,"test2",111, 10, 22, 1, "test", getResources().getColor(R.color.orange)));
+        mTestDta.add(new Counter(1,"test",1, 10, 22, 1, "test", getResources().getColor(R.color.red)));
+        mTestDta.add(new Counter(2,"test2",111, 10, 22, 1, "test", getResources().getColor(R.color.turquoise)));
+        mTestDta.add(new Counter(1,"test",1, 10, 22, 1, "test", getResources().getColor(R.color.violet)));
+        mTestDta.add(new Counter(2,"test2",111, 10, 22, 1, "test", getResources().getColor(R.color.yellow)));
+        mCountersList = new CounterList_rv((RecyclerView) findViewById(R.id.countersList_rv));
+        mCountersList.setCounters(mTestDta);
 
     }
 }
