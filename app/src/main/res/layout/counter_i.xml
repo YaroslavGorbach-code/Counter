@@ -5,54 +5,25 @@
     android:id="@+id/counterItem"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="110dp">
+    android:layout_height="110dp"
+    android:background="?selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/counterItem2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:background="#DEA3E9">
 
         <TextView
-            android:id="@+id/plus_i"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginEnd="8dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:gravity="center"
-            android:text="+"
-            android:textColor="#FFFFFF"
-            android:textSize="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.525" />
-
-        <TextView
-            android:id="@+id/minus_i"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginEnd="4dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:gravity="center"
-            android:text="−"
-            android:textColor="#FFFFFF"
-            android:textSize="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/plus_i"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:id="@+id/value_i"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:text="0"
-            android:textColor="#FFFFFF"
+            android:textColor="#C51162"
             android:textSize="40sp"
-            app:layout_constraintBottom_toBottomOf="@+id/minus_i"
-            app:layout_constraintEnd_toStartOf="@+id/minus_i"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_i" />
 
         <TextView
             android:id="@+id/title_i"
@@ -60,20 +31,52 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="CounterTitle"
-            android:textColor="#FFFFFF"
+            android:textColor="#C51162"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@+id/value_i"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="1dp"
-            android:layout_height="60dp"
-            android:background="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/minus_i"
-            app:layout_constraintEnd_toStartOf="@+id/plus_i"
-            app:layout_constraintStart_toEndOf="@+id/minus_i"
-            app:layout_constraintTop_toTopOf="@+id/plus_i" />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/button_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/plus_i"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="#C51162"
+                android:textSize="50dp" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="1dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/minus_i"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="−"
+                android:textColor="#C51162"
+                android:textSize="50dp" />
+
+
+        </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

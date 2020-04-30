@@ -15,10 +15,20 @@ import java.util.List;
 
 public class CounterList_rv {
 
+    public interface Listener{
+
+        void onPlusClick(Counter counter);
+        void onMinusClick(Counter counter);
+        void onOpen(Counter counter);
+
+    }
+
     private final CounterAdapter mAdapter = new CounterAdapter();
+    private Listener mListener;
 
-    public CounterList_rv(RecyclerView rv) {
+    public CounterList_rv(RecyclerView rv, Listener Listener) {
 
+        mListener = Listener;
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rv.getContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(), DividerItemDecoration.VERTICAL);
         rv.setLayoutManager(mLayoutManager);
@@ -33,12 +43,11 @@ public class CounterList_rv {
 
         }
 
-        private static class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.Vh> {
-
+        private  class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.Vh> {
             private List<Counter> mData = new ArrayList<>();
-
             private void setData(List<Counter> data) {
                 mData = data;
+                notifyDataSetChanged();
             }
 
             @NonNull
@@ -80,16 +89,25 @@ public class CounterList_rv {
 
                    mPlus.setOnClickListener(v->{
 
+                       mListener.onPlusClick(mData.get(getAdapterPosition()));
+
                    });
 
                     mMinus.setOnClickListener(v->{
+
+                        mListener.onMinusClick(mData.get(getAdapterPosition()));
+
+                    });
+
+                    mItem.setOnClickListener(v->{
+
+                        mListener.onOpen(mData.get(getAdapterPosition()));
 
                     });
 
                 }
 
                 private void bind(Counter counter){
-                    mItem.setBackgroundColor(counter.color);
                     mTitle.setText(counter.title);
                     mValue.setText(String.valueOf(counter.value));
 
