@@ -20,14 +20,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ArrayList<Counter> mTestDta = new ArrayList<>();
-        mTestDta.add(new Counter(1,"test",1, 10, 22, 1, "test", getResources().getColor(R.color.blue)));
-        mTestDta.add(new Counter(2,"test2",111, 10, 22, 1, "test", getResources().getColor(R.color.green)));
-        mTestDta.add(new Counter(1,"test",1, 10, 22, 1, "test", getResources().getColor(R.color.blue)));
-        mTestDta.add(new Counter(2,"test2",111, 10, 22, 1, "test", getResources().getColor(R.color.orange)));
-        mTestDta.add(new Counter(1,"test",1, 10, 22, 1, "test", getResources().getColor(R.color.red)));
-        mTestDta.add(new Counter(2,"test2",111, 10, 22, 1, "test", getResources().getColor(R.color.turquoise)));
-        mTestDta.add(new Counter(1,"test",1, 10, 22, 1, "test", getResources().getColor(R.color.violet)));
-        mTestDta.add(new Counter(2,"test2",111, 10, 22, 1, "test", getResources().getColor(R.color.yellow)));
+        mTestDta.add(new Counter("test",1, 10, 22, 1, "test"));
+        mTestDta.add(new Counter("test2",111, 10, 22, 1, "test"));
+        mTestDta.add(new Counter("test",1, 10, 22, 1, "test"));
+        mTestDta.add(new Counter("test2",111, 10, 22, 1, "test"));
+        mTestDta.add(new Counter("test",1, 10, 22, 1, "test"));
+        mTestDta.add(new Counter("test2",111, 10, 22, 1, "test"));
+        mTestDta.add(new Counter("test",1, 10, 22, 1, "test"));
+        mTestDta.add(new Counter("test2",111, 10, 22, 1, "test"));
         mCountersList = new CounterList_rv((RecyclerView) findViewById(R.id.countersList_rv), new Listener() {
 
             @Override
