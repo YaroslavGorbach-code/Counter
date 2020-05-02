@@ -39,6 +39,13 @@ public class Repo {
        return mAll_counters;
     }
 
+    public LiveData<Counter> getCounter(long id) {
+
+     return mCounterDao.getCounter(id);
+
+    }
+
+
     public static class InsertCounterAsyncTask extends AsyncTask<Counter, Void, Void>{
 
         private CounterDao counterDao;

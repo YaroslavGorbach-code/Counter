@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import com.yaroslavgorbach.counter.CounterList_rv.Listener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,25 +25,34 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mCounterViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
+
 
         mCountersList = new CounterList_rv((RecyclerView) findViewById(R.id.countersList_rv), new Listener() {
 
             @Override
             public void onPlusClick(Counter counter) {
 
+                int value = counter.value;
+                value++;
+                mCounterViewModel.setValue(counter, value);
+
             }
 
             @Override
             public void onMinusClick(Counter counter) {
 
-
+                int value = counter.value;
+                value--;
+                mCounterViewModel.setValue(counter, value);
             }
 
             @Override
             public void onOpen(Counter counter) {
 
-                startActivity(new Intent(MainActivity.this, CounterActivity.class));
+                startActivity(new Intent(MainActivity.this, CounterActivity.class).
+                        putExtra(CounterActivity.EXTRA_COUNTER_ID, counter.id));
             }
         });
 
@@ -53,4 +63,5 @@ public class MainActivity extends AppCompatActivity  {
         });
 
     }
+
 }

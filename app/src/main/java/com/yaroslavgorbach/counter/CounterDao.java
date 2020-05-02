@@ -23,4 +23,7 @@ public interface CounterDao {
 
     @Query("SELECT * FROM counter_table ORDER BY 'DESC'")
     LiveData<List<Counter>> getAllCounters();
+
+    @Query("SELECT * FROM counter_table WHERE id = :id")
+    LiveData<Counter> getCounter(long id);
 }

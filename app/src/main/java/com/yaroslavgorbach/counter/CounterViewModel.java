@@ -40,6 +40,18 @@ public class CounterViewModel extends AndroidViewModel {
 
     }
 
+    public void setValue(Counter counter, int value){
+
+        counter.value = value;
+        mRepo.update(counter);
+
+    }
+
+    public LiveData<Counter> getCounter(long id){
+
+      return mRepo.getCounter(id);
+    }
+
     public LiveData<List<Counter>> getAllCounters(){
 
         return mAllCounters;

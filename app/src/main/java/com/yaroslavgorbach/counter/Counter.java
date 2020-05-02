@@ -7,8 +7,10 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "counter_table")
 public class Counter {
+
     @PrimaryKey(autoGenerate = true)
     public long id;
+
     public String title;
     public int value;
     public int maxValue;
@@ -17,8 +19,7 @@ public class Counter {
     public String grope;
 
 
-    public Counter(long id, String title, int value, int maxValue, int minValue, int step, String grope) {
-        this.id = id;
+    public Counter( String title, int value, int maxValue, int minValue, int step, String grope) {
         this.title = title;
         this.value = value;
         this.maxValue = maxValue;
@@ -30,6 +31,7 @@ public class Counter {
 
 
     public void setId(long id) {
+
         this.id = id;
     }
 }
