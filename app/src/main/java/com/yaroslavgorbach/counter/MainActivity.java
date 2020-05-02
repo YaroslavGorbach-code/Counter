@@ -1,6 +1,9 @@
 package com.yaroslavgorbach.counter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -9,25 +12,20 @@ import android.os.Bundle;
 import com.yaroslavgorbach.counter.CounterList_rv.Listener;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     private  CounterList_rv mCountersList;
+    private CounterViewModel mCounterViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<Counter> mTestDta = new ArrayList<>();
-        mTestDta.add(new Counter("test",1, 10, 22, 1, "test"));
-        mTestDta.add(new Counter("test2",111, 10, 22, 1, "test"));
-        mTestDta.add(new Counter("test",1, 10, 22, 1, "test"));
-        mTestDta.add(new Counter("test2",111, 10, 22, 1, "test"));
-        mTestDta.add(new Counter("test",1, 10, 22, 1, "test"));
-        mTestDta.add(new Counter("test2",111, 10, 22, 1, "test"));
-        mTestDta.add(new Counter("test",1, 10, 22, 1, "test"));
-        mTestDta.add(new Counter("test2",111, 10, 22, 1, "test"));
+        mCounterViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
+
         mCountersList = new CounterList_rv((RecyclerView) findViewById(R.id.countersList_rv), new Listener() {
 
             @Override
@@ -47,7 +45,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CounterActivity.class));
             }
         });
-        mCountersList.setCounters(mTestDta);
+
+        mCounterViewModel.getAllCounters().observe(this, counters -> {
+
+            mCountersList.setCounters(counters);
+
+        });
 
     }
 }

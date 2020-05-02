@@ -54,11 +54,11 @@ public abstract class CounterDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            counterDao.insert(new Counter("test",1, 10, 22, 1, "test"));
-            counterDao.insert(new Counter("test",1, 10, 22, 1, "test"));
-            counterDao.insert(new Counter("test",1, 10, 22, 1, "test"));
-            counterDao.insert(new Counter("test",1, 10, 22, 1, "test"));
-            counterDao.insert(new Counter("test",1, 10, 22, 1, "test"));
+            counterDao.insert(new Counter(1,"test",1, 10, 22, 1, "test"));
+            counterDao.insert(new Counter(2,"test",1, 10, 22, 1, "test"));
+            counterDao.insert(new Counter(3,"test",1, 10, 22, 1, "test"));
+            counterDao.insert(new Counter(4,"test",1, 10, 22, 1, "test"));
+            counterDao.insert(new Counter(5,"test",1, 10, 22, 1, "test"));
 
             return null;
         }
