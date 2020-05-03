@@ -6,7 +6,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +29,7 @@ public class CounterList_rv {
 
         mListener = Listener;
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rv.getContext());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(), DividerItemDecoration.VERTICAL);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setAdapter(mAdapter);
         rv.setHasFixedSize(true);
@@ -48,6 +47,10 @@ public class CounterList_rv {
             private void setData(List<Counter> data) {
                 mData = data;
                 notifyDataSetChanged();
+            }
+
+            CounterAdapter(){
+                setHasStableIds(true);
             }
 
             @NonNull
@@ -68,6 +71,10 @@ public class CounterList_rv {
                 return mData.size();
             }
 
+            @Override
+            public long getItemId(int position) {
+                return mData.get(position).id;
+            }
 
             private  class Vh extends RecyclerView.ViewHolder {
 
