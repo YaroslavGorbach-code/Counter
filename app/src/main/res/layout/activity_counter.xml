@@ -9,19 +9,30 @@
     >
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/counterActivity_toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="?android:colorBackground">
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
+        android:id="@+id/counterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:gravity="center"
+        />
+    <TextView
         android:id="@+id/value"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="0"
-        android:textSize="200dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="150dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:gravity="center"
         />
 

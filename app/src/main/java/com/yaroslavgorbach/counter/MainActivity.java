@@ -26,11 +26,11 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
 
 
+        /*initialize fields*/
         mCounterViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
-
-
         mCountersList = new CounterList_rv((RecyclerView) findViewById(R.id.countersList_rv), new Listener() {
 
+            /*counter +*/
             @Override
             public void onPlusClick(Counter counter) {
 
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity  {
 
             }
 
+            /*counter -*/
             @Override
             public void onMinusClick(Counter counter) {
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity  {
                 mCounterViewModel.setValue(counter, value);
             }
 
+            /*open counterActivity*/
             @Override
             public void onOpen(Counter counter) {
 
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
+        /*updates the list of counters if something changes in the counter_table*/
         mCounterViewModel.getAllCounters().observe(this, counters -> {
 
             mCountersList.setCounters(counters);

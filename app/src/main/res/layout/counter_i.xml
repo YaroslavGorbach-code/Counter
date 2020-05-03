@@ -7,14 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="110dp"
     android:background="?selectableItemBackground"
-
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/counterItem2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:background="#DEA3E9">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/value_i"
@@ -22,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="0"
-            android:textColor="#C51162"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="40sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_i" />
@@ -33,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="CounterTitle"
-            android:textColor="#C51162"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@+id/value_i"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/button_background"
+            android:background="@drawable/item_button_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
