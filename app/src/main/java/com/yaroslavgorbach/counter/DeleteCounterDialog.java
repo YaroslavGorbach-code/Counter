@@ -12,22 +12,23 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class DeleteCounterDialog extends AppCompatDialogFragment {
 
+  private DeleteDialogListener mListener;
+
+
     public interface DeleteDialogListener {
 
-         void onDialogDeleteClick();
+        void onDialogDeleteClick();
 
     }
 
-  private DeleteDialogListener mListener;
-
-    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
+    // Override the Fragment.onAttach() method to instantiate the DeleteDialogListener
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         // Verify that the host activity implements the callback interface
         try {
-            // Instantiate the NoticeDialogListener so we can send events to the host
-            mListener= (DeleteDialogListener) context;
+
+            mListener = (DeleteDialogListener) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(getActivity().toString()

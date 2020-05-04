@@ -21,7 +21,7 @@ public interface CounterDao {
     @Delete
     void delete(Counter counter);
 
-    @Query("SELECT * FROM counter_table ORDER BY 'DESC'")
+    @Query("SELECT * FROM counter_table ORDER BY id DESC")
     LiveData<List<Counter>> getAllCounters();
 
     @Query("SELECT * FROM counter_table WHERE id = :id")

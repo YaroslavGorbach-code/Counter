@@ -1,6 +1,7 @@
 package com.yaroslavgorbach.counter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
@@ -15,19 +16,42 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements AddCounterDialog.AddCounterListener {
 
     private  CounterList_rv mCountersList;
     private CounterViewModel mCounterViewModel;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         /*initialize fields*/
+        mToolbar = findViewById(R.id.toolbar_mainActivity);
         mCounterViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
+
+        /*inflating menu and set listeners*/
+        mToolbar.inflateMenu(R.menu.menu_counter_main_activity);
+        mToolbar.setOnMenuItemClickListener(i->{
+
+            switch (i.getItemId()){
+
+                case R.id.counterAdd:
+
+                    new AddCounterDialog().show(getSupportFragmentManager(), "Add Counter");
+
+                    break;
+
+            }
+
+
+            return true;
+
+        });
+
+
+        /*initialize RecyclerView and it listener*/
         mCountersList = new CounterList_rv((RecyclerView) findViewById(R.id.countersList_rv), new Listener() {
 
             /*counter +*/
@@ -67,4 +91,11 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    @Override
+    public void onAddClick(String title) {
+
+        Counter counter = new Counter(title, 0, 100, 100, 1, "null");
+        mCounterViewModel.insert(counter);
+
+    }
 }
