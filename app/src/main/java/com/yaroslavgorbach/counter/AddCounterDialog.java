@@ -20,6 +20,7 @@ public class AddCounterDialog extends AppCompatDialogFragment {
     public interface AddCounterListener{
 
         void onAddClick(String title);
+        void onLaunchDetailedClick();
     }
 
     private AddCounterListener mListener;
@@ -57,9 +58,16 @@ public class AddCounterDialog extends AppCompatDialogFragment {
                     mListener.onAddClick(title);
 
                 })
+
                 .setNegativeButton("Cancel", (dialog, which) -> {
 
                 });
+
+            view.findViewById(R.id.LaunchDetailed).setOnClickListener(v -> {
+
+                mListener.onLaunchDetailedClick();
+
+            });
 
          return builder.create();
 

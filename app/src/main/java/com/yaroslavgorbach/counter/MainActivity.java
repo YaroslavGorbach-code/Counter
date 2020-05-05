@@ -98,4 +98,11 @@ public class MainActivity extends AppCompatActivity implements AddCounterDialog.
         mCounterViewModel.insert(counter);
 
     }
+
+    @Override
+    public void onLaunchDetailedClick() {
+
+        startActivity(new Intent(MainActivity.this, CreateCounterDetailedActivity.class ));
+
+    }
 }

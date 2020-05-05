@@ -15,7 +15,9 @@
             android:id="@+id/toolbar_mainActivity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?android:colorBackground">
+            android:background="?android:colorBackground"
+            app:title="All counters"
+            app:titleTextColor="#FFC51162">
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
