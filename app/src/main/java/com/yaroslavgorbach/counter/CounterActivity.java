@@ -62,11 +62,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
             return true;
         });
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        mToolbar.setNavigationOnClickListener(i->{
-
-            finish();
-
-        });
+        mToolbar.setNavigationOnClickListener(i-> finish());
 
 
         /*each new counter value is set to textView*/
@@ -114,14 +110,8 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
             int value = 0;
             mCounterViewModel.setValue(Objects.requireNonNull(mCounter.getValue()), value);
             Snackbar.make(mLayout,"Counter reset", BaseTransientBottomBar.LENGTH_LONG)
-                    .setAction("UNDO", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            mCounterViewModel.setValue(Objects.requireNonNull(mCounter.getValue()), oldValue);
-
-                        }
-                    }).show();
+                    .setAction("UNDO", v1 ->
+                            mCounterViewModel.setValue(Objects.requireNonNull(mCounter.getValue()), oldValue)).show();
 
         });
 

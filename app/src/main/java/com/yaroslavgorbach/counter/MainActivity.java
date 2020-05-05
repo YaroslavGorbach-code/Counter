@@ -91,14 +91,16 @@ public class MainActivity extends AppCompatActivity implements AddCounterDialog.
 
     }
 
+    /*create new counter*/
     @Override
     public void onAddClick(String title) {
 
-        Counter counter = new Counter(title, 0, 100, 100, 1, "null");
+        Counter counter = new Counter(title, 0, 100, 100, 1, "AllCounters");
         mCounterViewModel.insert(counter);
 
     }
 
+    /*launch exact creation counter*/
     @Override
     public void onLaunchDetailedClick() {
 

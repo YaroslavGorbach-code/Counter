@@ -26,4 +26,7 @@ public interface CounterDao {
 
     @Query("SELECT * FROM counter_table WHERE id = :id")
     LiveData<Counter> getCounter(long id);
+
+    @Query("SELECT grope FROM counter_table")
+    LiveData<String[]> getGroups();
 }

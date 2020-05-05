@@ -9,14 +9,20 @@ import java.util.List;
 
 public class Repo {
 
+   private LiveData<String[]> mGroups;
    private CounterDao mCounterDao;
    private LiveData<List<Counter>> mAll_counters;
 
-   public Repo(Application application){
+
+
+    public Repo(Application application){
 
        CounterDatabase database = CounterDatabase.getInstance(application);
         mCounterDao = database.counterDao();
         mAll_counters = mCounterDao.getAllCounters();
+        mGroups = mCounterDao.getGroups();
+
+
    }
 
     public void insert(Counter counter){
@@ -44,6 +50,12 @@ public class Repo {
      return mCounterDao.getCounter(id);
 
     }
+
+    public LiveData<String[]> getGroups(){
+
+        return mGroups;
+    }
+
 
 
     public static class InsertCounterAsyncTask extends AsyncTask<Counter, Void, Void>{
@@ -101,3 +113,24 @@ public class Repo {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

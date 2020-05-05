@@ -25,14 +25,14 @@ public class DeleteCounterDialog extends AppCompatDialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        // Verify that the host activity implements the callback interface
         try {
 
             mListener = (DeleteDialogListener) context;
+
         } catch (ClassCastException e) {
-            // The activity doesn't implement the interface, throw exception
+
             throw new ClassCastException(getActivity().toString()
-                    + " must implement NoticeDialogListener");
+                    + " must implement DeleteDialogListener");
         }
     }
 
@@ -42,14 +42,7 @@ public class DeleteCounterDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setTitle("Delete counter?")
                 .setMessage("This action can't be undone")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        mListener.onDialogDeleteClick();
-
-                    }
-                })
+                .setPositiveButton("Yes", (dialog, which) -> mListener.onDialogDeleteClick())
                 .setNegativeButton("Cancel", null);
 
         return builder.create();
