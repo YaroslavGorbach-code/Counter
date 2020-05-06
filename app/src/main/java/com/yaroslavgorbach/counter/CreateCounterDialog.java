@@ -3,7 +3,6 @@ package com.yaroslavgorbach.counter;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-public class AddCounterDialog extends AppCompatDialogFragment {
+public class CreateCounterDialog extends AppCompatDialogFragment {
 
     public interface AddCounterListener{
 
@@ -45,17 +44,34 @@ public class AddCounterDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         @SuppressLint("InflateParams") View view = LayoutInflater.from(requireContext())
-                .inflate(R.layout.dialog_add_counter, null);
+                .inflate(R.layout.dialog_create_counter, null);
 
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setView(view)
-                .setPositiveButton("Add", (dialog, which) -> {
+                .setPositiveButton("Create", (dialog, which) -> {
 
-                    TextInputEditText text = view.findViewById(R.id.counterTitle_addCounter);
-                    String title = text.getText().toString();
-                    mListener.onAddClick(title);
+                    TextInputEditText text_et = view.findViewById(R.id.counterTitle_addCounter);
+
+                    /*creating new counter and check title is not empty*/
+                    String title = "";
+
+                    if(text_et.getText().toString().trim().isEmpty()){
+
+                        text_et.setError("This field cannot be empty");
+
+                    }else{
+
+                        title = text_et.getText().toString();
+                    }
+
+                    if (!(title.trim().isEmpty())){
+
+                        mListener.onAddClick(title);
+
+                    }
+
 
                 })
 
@@ -66,6 +82,7 @@ public class AddCounterDialog extends AppCompatDialogFragment {
             view.findViewById(R.id.LaunchDetailed).setOnClickListener(v -> {
 
                 mListener.onLaunchDetailedClick();
+                dismiss();
 
             });
 
