@@ -5,8 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +27,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     private Toolbar mToolbar;
     private TextView mCounterTitle;
     private LinearLayout mLayout;
+    private long mCounterId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,13 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
                     break;
 
+                case R.id.counterEdit:
+
+                    startActivity(new Intent(CounterActivity.this, CreateCounterDetailed_AND_EditCounterActivity.class)
+                            .putExtra(CreateCounterDetailed_AND_EditCounterActivity.EXTRA_COUNTER_ID, mCounterId));
+
+                    break;
+
             }
 
 
@@ -68,23 +76,19 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         /*each new counter value is set to textView*/
         mCounter.observe(this, counter -> {
 
+            /*if counter == null that means it was deleted*/
         if (counter != null) {
-
+            mCounterId = counter.id;
             mValue_tv.setText(String.valueOf(counter.value));
             // TODO: 03.05.2020 установку текста нужно делать в другом месте но пока пусть будет тут
             mCounterTitle.setText(counter.title);
 
         }else {
-
             finish();
-
         }
-
-
         });
 
-
-
+        
         /*counter +*/
         mIncButton.setOnClickListener(v->{
 

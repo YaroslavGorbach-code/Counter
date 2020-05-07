@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateCounterDetailedActivity">
+    tools:context=".CreateCounterDetailed_AND_EditCounterActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -68,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Value"
+            android:maxLength="9"
             android:imeOptions="actionDone"
             android:inputType="number"
             android:text="0"
@@ -93,6 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Step"
+            android:maxLength="9"
             android:imeOptions="actionDone"
             android:inputType="number"
             android:text="1"
@@ -117,6 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Max value"
+            android:maxLength="9"
             android:imeOptions="actionDone"
             android:inputType="number"
 
@@ -141,6 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Min value"
+            android:maxLength="9"
             android:imeOptions="actionDone"
             android:inputType="number"
 

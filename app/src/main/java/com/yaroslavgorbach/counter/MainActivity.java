@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     @Override
     public void onAddClick(String title) {
 
-        Counter counter = new Counter(title, 0, 100, 100, 1, "All Counters");
+        Counter counter = new Counter(title, 0, 999999999, -999999999, 1, "All Counters");
         mCounterViewModel.insert(counter);
 
     }
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     @Override
     public void onLaunchDetailedClick() {
 
-        startActivity(new Intent(MainActivity.this, CreateCounterDetailedActivity.class ));
+        startActivity(new Intent(MainActivity.this, CreateCounterDetailed_AND_EditCounterActivity.class ));
 
 
     }
