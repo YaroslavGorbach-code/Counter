@@ -42,7 +42,7 @@ public class CounterList_rv {
 
         }
 
-        private  class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.Vh> {
+        private class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.Vh> {
 
             private List<Counter> mData = new ArrayList<>();
             private void setData(List<Counter> data) {

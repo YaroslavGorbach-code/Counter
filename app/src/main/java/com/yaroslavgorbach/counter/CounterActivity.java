@@ -88,7 +88,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         }
         });
 
-        
+
         /*counter +*/
         mIncButton.setOnClickListener(v->{
 

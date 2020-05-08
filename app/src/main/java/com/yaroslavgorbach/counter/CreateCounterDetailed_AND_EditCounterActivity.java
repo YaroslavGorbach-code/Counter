@@ -192,7 +192,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
          mViewModel.getGroups().observe(this, strings -> {
 
               /*delete the same groups*/
-          Set<String> set = new HashSet<>(Arrays.asList(strings));
+          Set<String> set = new HashSet<>(strings);
           String[] result = set.toArray(new String[set.size()]);
 
           ArrayAdapter<String> adapter =

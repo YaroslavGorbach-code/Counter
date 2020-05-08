@@ -1,24 +1,26 @@
 package com.yaroslavgorbach.counter;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.security.acl.Group;
 import java.util.List;
 
 public class CounterViewModel extends AndroidViewModel {
 
     private Repo mRepo;
     private LiveData<List<Counter>> mAllCounters;
+    private LiveData<List<String>> mGroups;
 
     public CounterViewModel(@NonNull Application application) {
         super(application);
 
         mRepo = new Repo(application);
         mAllCounters = mRepo.getAllCounters();
+        mGroups = mRepo.getGroups();
 
 
     }
@@ -59,8 +61,10 @@ public class CounterViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<String[]> getGroups(){
+    public LiveData<List<String>> getGroups(){
 
-        return mRepo.getGroups();
+        return mGroups;
+
     }
+
 }

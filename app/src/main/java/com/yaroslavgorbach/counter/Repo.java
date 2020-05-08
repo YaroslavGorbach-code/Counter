@@ -9,9 +9,10 @@ import java.util.List;
 
 public class Repo {
 
-   private LiveData<String[]> mGroups;
    private CounterDao mCounterDao;
+
    private LiveData<List<Counter>> mAll_counters;
+   private LiveData<List<String>> mGroups;
 
 
 
@@ -47,14 +48,15 @@ public class Repo {
 
     public LiveData<Counter> getCounter(long id) {
 
-     return mCounterDao.getCounter(id);
+        return mCounterDao.getCounter(id);
 
     }
 
-    public LiveData<String[]> getGroups(){
+    public LiveData<List<String>> getGroups(){
 
         return mGroups;
     }
+
 
 
 
@@ -111,6 +113,11 @@ public class Repo {
             return null;
         }
     }
+
+
+
+
+
 
 }
 

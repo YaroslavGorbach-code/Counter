@@ -5,12 +5,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = Counter.class, version = 4)
+@Database(entities = Counter.class, version = 8)
 public abstract class CounterDatabase extends RoomDatabase {
 
     private static CounterDatabase sInstance;
-    public abstract CounterDao counterDao();
 
+    public abstract CounterDao counterDao();
 
     public static synchronized CounterDatabase getInstance(Context context){
 

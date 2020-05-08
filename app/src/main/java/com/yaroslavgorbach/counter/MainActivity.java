@@ -1,7 +1,11 @@
 package com.yaroslavgorbach.counter;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,12 +14,20 @@ import android.os.Bundle;
 
 import com.yaroslavgorbach.counter.CounterList_rv.Listener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity implements CreateCounterDialog.AddCounterListener {
 
-    private  CounterList_rv mCountersList;
+    private CounterList_rv mCountersList;
+    private GroupList_rv mGroupsList;
     private CounterViewModel mCounterViewModel;
-    private Toolbar mToolbar;
 
+    private Toolbar mToolbar;
+    private DrawerLayout mDrawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
 
         /*initialize fields*/
         mToolbar = findViewById(R.id.toolbar_mainActivity);
+        mDrawer = findViewById(R.id.drawer);
         mCounterViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
 
         /*inflating menu and set listeners*/
@@ -36,17 +49,22 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
                     new CreateCounterDialog().show(getSupportFragmentManager(), "Add Counter");
 
                     break;
-
             }
-
 
             return true;
 
         });
 
 
+
+        /*adding toggle*/
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.addDrawerListener(toggle);
+        toggle.syncState();
+
         /*initialize RecyclerView and it listener*/
-        mCountersList = new CounterList_rv((RecyclerView) findViewById(R.id.countersList_rv), new Listener() {
+        mCountersList = new CounterList_rv(findViewById(R.id.countersList_rv), new Listener() {
 
             /*counter +*/
             @Override
@@ -83,6 +101,24 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
 
         });
 
+
+        /*initialize RecyclerView and it listener*/
+        mGroupsList = new GroupList_rv(findViewById(R.id.groupsList_rv), new GroupList_rv.Listener() {
+
+            @Override
+            public void onOpen(String string) {
+
+            }
+
+        });
+
+        mCounterViewModel.getGroups().observe(this, strings -> {
+
+            /*delete the same groups*/
+             Set<String> set = new HashSet<>(strings);
+             String[] result = set.toArray(new String[set.size()]);
+             mGroupsList.setGroups(Arrays.asList(result));
+        });
     }
 
     /*create new counter*/
