@@ -46,6 +46,11 @@ public class Repo {
        return mAll_counters;
     }
 
+    public LiveData<List<Counter>> getCountersByGroup(String group){
+
+        return mCounterDao.getCountersByGroup(group);
+    }
+
     public LiveData<Counter> getCounter(long id) {
 
         return mCounterDao.getCounter(id);

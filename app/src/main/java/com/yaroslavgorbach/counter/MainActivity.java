@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
 
         });
 
-
-
         /*adding toggle*/
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -108,7 +106,13 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
             @Override
             public void onOpen(String string) {
 
+                mCounterViewModel.getCountersByGroup(string).observe(MainActivity.this, counters -> {
+
+                    mCountersList.setCounters(counters);
+
+                });
             }
+
 
         });
 
