@@ -1,27 +1,25 @@
 package com.yaroslavgorbach.counter;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 import com.yaroslavgorbach.counter.CounterList_rv.Listener;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity implements CreateCounterDialog.AddCounterListener {
+public class CountersByGroupActivity extends AppCompatActivity implements CreateCounterDialog.AddCounterListener {
 
+    public static final String EXTRA_GROUP_TITLE = "EXTRA_GROUP_TITLE";
     private CounterList_rv mCountersList;
     private GroupList_rv mGroupsList;
     private CounterViewModel mCounterViewModel;
@@ -87,13 +85,13 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
             @Override
             public void onOpen(Counter counter) {
 
-                startActivity(new Intent(MainActivity.this, CounterActivity.class).
+                startActivity(new Intent(CountersByGroupActivity.this, CounterActivity.class).
                         putExtra(CounterActivity.EXTRA_COUNTER_ID, counter.id));
             }
         });
 
         /*updates the list of counters if something changes in the counter_table*/
-        mCounterViewModel.getCountersByGroup("All counters").observe(this, new Observer<List<Counter>>() {
+        mCounterViewModel.getCountersByGroup(getIntent().getStringExtra(EXTRA_GROUP_TITLE)).observe(this, new Observer<List<Counter>>() {
 
             @Override
             public void onChanged(List<Counter> counters) {
@@ -109,8 +107,9 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
             @Override
             public void onOpen(String string) {
 
-                   startActivity(new Intent(MainActivity.this, CountersByGroupActivity.class )
-                   .putExtra(CountersByGroupActivity.EXTRA_GROUP_TITLE, string));
+                   startActivity(new Intent(CountersByGroupActivity.this, CountersByGroupActivity.class )
+                           .putExtra(EXTRA_GROUP_TITLE, string));
+
                     finish();
 
             }
@@ -140,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     @Override
     public void onLaunchDetailedClick() {
 
-        startActivity(new Intent(MainActivity.this, CreateCounterDetailed_AND_EditCounterActivity.class ));
+        startActivity(new Intent(CountersByGroupActivity.this, CreateCounterDetailed_AND_EditCounterActivity.class ));
 
 
     }
