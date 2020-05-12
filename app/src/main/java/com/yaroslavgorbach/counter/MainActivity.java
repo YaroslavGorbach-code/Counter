@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.yaroslavgorbach.counter.CounterList_rv.Listener;
 
 import java.util.ArrayList;
@@ -93,25 +95,20 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
         });
 
         /*updates the list of counters if something changes in the counter_table*/
-        mCounterViewModel.getCountersByGroup("All counters").observe(this, new Observer<List<Counter>>() {
-
-            @Override
-            public void onChanged(List<Counter> counters) {
-                mCountersList.setCounters(counters);
-            }
-
-        });
+        mCounterViewModel.getCountersByGroup("All counters")
+                .observe(this, counters -> mCountersList.setCounters(counters));
 
 
-        /*initialize RecyclerView and it listener*/
+        /*initialize RecyclerView and it listener for groups*/
         mGroupsList = new GroupList_rv(findViewById(R.id.groupsList_rv), new GroupList_rv.Listener() {
 
             @Override
-            public void onOpen(String string) {
+            public void onOpen(String string, TextView item) {
 
                    startActivity(new Intent(MainActivity.this, CountersByGroupActivity.class )
                    .putExtra(CountersByGroupActivity.EXTRA_GROUP_TITLE, string));
                     finish();
+
 
             }
 
@@ -131,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     @Override
     public void onAddClick(String title) {
 
-        Counter counter = new Counter(title, 0, 999999999, -999999999, 1, "All Counters");
+        Counter counter = new Counter(title, 0, 999999999, -999999999, 1, "All counters");
         mCounterViewModel.insert(counter);
 
     }

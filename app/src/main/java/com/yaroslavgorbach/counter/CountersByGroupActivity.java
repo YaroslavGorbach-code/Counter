@@ -2,6 +2,7 @@ package com.yaroslavgorbach.counter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,7 @@ public class CountersByGroupActivity extends AppCompatActivity implements Create
 
         /*inflating menu and set listeners*/
         mToolbar.inflateMenu(R.menu.menu_counter_main_activity);
+        mToolbar.setTitle(getIntent().getStringExtra(EXTRA_GROUP_TITLE));
         mToolbar.setOnMenuItemClickListener(i->{
 
             switch (i.getItemId()){
@@ -105,12 +107,11 @@ public class CountersByGroupActivity extends AppCompatActivity implements Create
         mGroupsList = new GroupList_rv(findViewById(R.id.groupsList_rv), new GroupList_rv.Listener() {
 
             @Override
-            public void onOpen(String string) {
+            public void onOpen(String string, TextView item) {
 
                    startActivity(new Intent(CountersByGroupActivity.this, CountersByGroupActivity.class )
                            .putExtra(EXTRA_GROUP_TITLE, string));
-
-                    finish();
+                finish();
 
             }
 
@@ -130,7 +131,7 @@ public class CountersByGroupActivity extends AppCompatActivity implements Create
     @Override
     public void onAddClick(String title) {
 
-        Counter counter = new Counter(title, 0, 999999999, -999999999, 1, "All Counters");
+        Counter counter = new Counter(title, 0, 999999999, -999999999, 1, "All counters");
         mCounterViewModel.insert(counter);
 
     }

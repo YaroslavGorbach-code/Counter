@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +18,7 @@ public class GroupList_rv {
     public interface Listener{
 
 
-        void onOpen(String group);
+        void onOpen(String tittle, TextView item);
 
     }
 
@@ -28,7 +29,7 @@ public class GroupList_rv {
 
         mListener = Listener;
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rv.getContext());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(), DividerItemDecoration.VERTICAL);
         rv.setLayoutManager(mLayoutManager);
         rv.setAdapter(mAdapter);
         rv.setHasFixedSize(true);
@@ -85,7 +86,7 @@ public class GroupList_rv {
 
                     mItem.setOnClickListener(v->{
 
-                        mListener.onOpen(mData.get(getAdapterPosition()));
+                        mListener.onOpen(mData.get(getAdapterPosition()), mTitle);
 
                     });
 
