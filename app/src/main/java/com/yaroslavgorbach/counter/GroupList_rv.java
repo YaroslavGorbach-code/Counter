@@ -3,6 +3,7 @@ package com.yaroslavgorbach.counter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,7 +72,7 @@ public class GroupList_rv {
 
             private  class Vh extends RecyclerView.ViewHolder {
 
-                private FrameLayout mItem;
+                private LinearLayout mItem;
                 private TextView mTitle;
 
 

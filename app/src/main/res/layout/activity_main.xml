@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Groups"
+                android:gravity="start"
                 android:textColor="#FFC51162"
                 android:textSize="20sp" />
 
@@ -87,10 +88,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="15dp"
                     android:text="Settings"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
         </LinearLayout>
