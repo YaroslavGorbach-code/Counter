@@ -115,7 +115,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
 
             }else {
 
-                mValue = Integer.valueOf(String.valueOf(mValue_et.getText()));
+                mValue = Integer.parseInt(String.valueOf(mValue_et.getText()));
             }
 
             /*if step is empty show error*/
@@ -125,7 +125,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
 
             }else {
 
-                mStep = Integer.valueOf(String.valueOf(mStep_et.getText()));
+                mStep = Integer.parseInt(String.valueOf(mStep_et.getText()));
             }
 
             /*if maxValue is empty show error*/
@@ -135,7 +135,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
 
             }else {
 
-                mMaxValue = Integer.valueOf(String.valueOf(mMaxValue_et.getText()));
+                mMaxValue = Integer.parseInt(String.valueOf(mMaxValue_et.getText()));
 
             }
 
@@ -146,14 +146,14 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
 
             }else {
 
-                mMinValue = Integer.valueOf(String.valueOf(mMinValue_et.getText()));
+                mMinValue = Integer.parseInt(String.valueOf(mMinValue_et.getText()));
 
             }
 
             /*if group is empty show error*/
             if(mGroups_et.getText().toString().trim().isEmpty()){
 
-                mGroups_et.setError("This field cannot be empty");
+                mGroup =null;
 
             }else{
 
@@ -164,8 +164,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
             /*if all fields are filled create counter*/
             if ( !(String.valueOf(mValue_et.getText()).trim().isEmpty())
                     &&!(String.valueOf(mTitle_et.getText()).trim().isEmpty())
-                    && !(String.valueOf(mStep_et.getText()).trim().isEmpty())
-                    && !(String.valueOf(mGroups_et.getText()).trim().isEmpty())){
+                    && !(String.valueOf(mStep_et.getText()).trim().isEmpty())){
 
 
                 /*if mCounter == null insert counter*/
@@ -181,8 +180,6 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
                     mViewModel.update(counter);
                     finish();
                 }
-
-
             }
 
             return true;
@@ -203,9 +200,6 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
           mGroups_et.setAdapter(adapter);
 
       });
-
-
-
-
+         
     }
 }

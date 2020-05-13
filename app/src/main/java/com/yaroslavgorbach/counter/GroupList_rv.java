@@ -18,8 +18,7 @@ public class GroupList_rv {
 
     public interface Listener{
 
-
-        void onOpen(String tittle, TextView item);
+        void onOpen(String tittle);
 
     }
 
@@ -30,11 +29,10 @@ public class GroupList_rv {
 
         mListener = Listener;
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rv.getContext());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(), DividerItemDecoration.VERTICAL);
         rv.setLayoutManager(mLayoutManager);
         rv.setAdapter(mAdapter);
         rv.setHasFixedSize(true);
-        rv.addItemDecoration(dividerItemDecoration);
+
     }
 
         public void setGroups (List<String> list) {
@@ -44,17 +42,21 @@ public class GroupList_rv {
         }
 
         private class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.Vh> {
-
             private List<String> mData = new ArrayList<>();
+
             private void setData(List<String> data) {
+
                 mData = data;
                 notifyDataSetChanged();
+
             }
 
             @NonNull
             @Override
             public Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
                 return new Vh(parent);
+
             }
 
             @Override
@@ -69,13 +71,9 @@ public class GroupList_rv {
                 return mData.size();
             }
 
-
             private  class Vh extends RecyclerView.ViewHolder {
-
                 private LinearLayout mItem;
                 private TextView mTitle;
-
-
 
                 public Vh(@NonNull ViewGroup parent) {
 
@@ -83,17 +81,12 @@ public class GroupList_rv {
                    mItem = itemView.findViewById(R.id.item_group_i);
                    mTitle = itemView.findViewById(R.id.group_title_i);
 
-
-
-                    mItem.setOnClickListener(v->{
-
-                        mListener.onOpen(mData.get(getAdapterPosition()), mTitle);
-
-                    });
+                    mItem.setOnClickListener(v-> mListener.onOpen(mData.get(getAdapterPosition())));
 
                 }
 
                 private void bind(String string){
+
                     mTitle.setText(string);
 
                 }

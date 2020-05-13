@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -24,12 +25,13 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements CreateCounterDialog.AddCounterListener {
 
-    private CounterList_rv mCountersList;
     private GroupList_rv mGroupsList;
     private CounterViewModel mCounterViewModel;
-
     private Toolbar mToolbar;
     private DrawerLayout mDrawer;
+    private LinearLayout mAllCounters_navigationItem;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
         /*initialize fields*/
         mToolbar = findViewById(R.id.toolbar_mainActivity);
         mDrawer = findViewById(R.id.drawer);
+        mAllCounters_navigationItem = findViewById(R.id.AllCounters);
         mCounterViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
 
         /*inflating menu and set listeners*/
@@ -63,55 +66,31 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        /*initialize RecyclerView and it listener*/
-        mCountersList = new CounterList_rv(findViewById(R.id.countersList_rv), new Listener() {
+        /*setting the fragment with all the counters at the first time*/
+        ListOfCountersFragment  fragment = new ListOfCountersFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, fragment).commit();
 
-            /*counter +*/
-            @Override
-            public void onPlusClick(Counter counter) {
-
-                int value = counter.value;
-                value++;
-                mCounterViewModel.setValue(counter, value);
-
-            }
-
-            /*counter -*/
-            @Override
-            public void onMinusClick(Counter counter) {
-
-                int value = counter.value;
-                value--;
-                mCounterViewModel.setValue(counter, value);
-            }
-
-            /*open counterActivity*/
-            @Override
-            public void onOpen(Counter counter) {
-
-                startActivity(new Intent(MainActivity.this, CounterActivity.class).
-                        putExtra(CounterActivity.EXTRA_COUNTER_ID, counter.id));
-            }
+        /*setting the fragment with all the counters*/
+        mAllCounters_navigationItem.setOnClickListener(i->{
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, fragment).commit();
+            mToolbar.setTitle("All counters");
         });
-
-        /*updates the list of counters if something changes in the counter_table*/
-        mCounterViewModel.getCountersByGroup("All counters")
-                .observe(this, counters -> mCountersList.setCounters(counters));
-
 
         /*initialize RecyclerView and it listener for groups*/
         mGroupsList = new GroupList_rv(findViewById(R.id.groupsList_rv), new GroupList_rv.Listener() {
 
+            /*setting the fragment with all the counters which belong to a certain group*/
             @Override
-            public void onOpen(String string, TextView item) {
+            public void onOpen(String string) {
 
-                   startActivity(new Intent(MainActivity.this, CountersByGroupActivity.class )
-                   .putExtra(CountersByGroupActivity.EXTRA_GROUP_TITLE, string));
-                    finish();
-
+                Bundle arg = new Bundle();
+                arg.putString("group_title", string);
+                ListOfCountersFragment  fragment = new ListOfCountersFragment();
+                fragment.setArguments(arg);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, fragment).commit();
+                mToolbar.setTitle(string);
 
             }
-
 
         });
 
@@ -121,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
              Set<String> set = new HashSet<>(strings);
              String[] result = set.toArray(new String[set.size()]);
              mGroupsList.setGroups(Arrays.asList(result));
+
         });
     }
 
@@ -128,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     @Override
     public void onAddClick(String title) {
 
-        Counter counter = new Counter(title, 0, 999999999, -999999999, 1, "All counters");
+        Counter counter = new Counter(title, 0, 999999999, -999999999, 1, null);
         mCounterViewModel.insert(counter);
 
     }
@@ -138,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     public void onLaunchDetailedClick() {
 
         startActivity(new Intent(MainActivity.this, CreateCounterDetailed_AND_EditCounterActivity.class ));
-
 
     }
 }

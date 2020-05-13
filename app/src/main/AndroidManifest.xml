@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".CounterActivity"></activity>
-        <activity android:name=".CountersByGroupActivity"></activity>
     </application>
 
 </manifest>

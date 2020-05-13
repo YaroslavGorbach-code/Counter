@@ -27,7 +27,7 @@ public interface CounterDao {
     @Query("SELECT * FROM counter_table WHERE id = :id")
     LiveData<Counter> getCounter(long id);
 
-    @Query("SELECT grope FROM counter_table ORDER BY grope ASC")
+    @Query("SELECT grope FROM counter_table WHERE grope<>'' ORDER BY grope ASC")
     LiveData<List<String>> getGroups();
 
     @Query("SELECT * FROM counter_table WHERE grope =:group ORDER BY id DESC")
