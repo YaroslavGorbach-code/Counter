@@ -6,23 +6,31 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class CreateCounterDialog extends AppCompatDialogFragment {
 
     public interface AddCounterListener{
 
-        void onAddClick(String title);
+        void onAddClick(String title, String group);
         void onLaunchDetailedClick();
     }
 
     private AddCounterListener mListener;
+    private CounterViewModel mViewModel;
+    private AutoCompleteTextView mGroups_et;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
     @Override
@@ -56,6 +64,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
 
                     /*creating new counter and check title is not empty*/
                     String title = "";
+                    String group;
 
                     if(text_et.getText().toString().trim().isEmpty()){
 
@@ -66,19 +75,52 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
                         title = text_et.getText().toString();
                     }
 
-                    if (!(title.trim().isEmpty())){
+                    /*if group is empty set null*/
+                    if(mGroups_et.getText().toString().trim().isEmpty()){
 
-                        mListener.onAddClick(title);
+                        group = null;
 
+                    }else{
+
+                        group = mGroups_et.getText().toString();
                     }
 
+                    /*passing variables to create a counter*/
+                    if (!(title.trim().isEmpty())){
 
+                        mListener.onAddClick(title, group);
+
+                    }
+                    
                 })
 
                 .setNegativeButton("Cancel", (dialog, which) -> {
 
                 });
 
+
+        /*initialize fields*/
+        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
+            mViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
+
+        /*each new group sets into dropdown_menu*/
+        mViewModel.getGroups().observe(this, strings -> {
+
+            /*delete the same groups*/
+            Set<String> set = new HashSet<>(strings);
+            String[] result = set.toArray(new String[0]);
+
+            ArrayAdapter<String> adapter =
+                    new ArrayAdapter<>(
+                            view.getContext(),
+                            R.layout.dropdown_menu_popup_item,
+                            result);
+            mGroups_et.setAdapter(adapter);
+
+        });
+
+
+        /*start CreateCounterDetailed_AND_EditCounterActivity*/
             view.findViewById(R.id.LaunchDetailed).setOnClickListener(v -> {
 
                 mListener.onLaunchDetailedClick();
@@ -87,10 +129,6 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
             });
 
          return builder.create();
-
-
-
-
 
     }
 }

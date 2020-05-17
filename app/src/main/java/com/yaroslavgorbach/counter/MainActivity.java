@@ -106,9 +106,9 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
 
     /*create new counter*/
     @Override
-    public void onAddClick(String title) {
+    public void onAddClick(String title, String group) {
 
-        Counter counter = new Counter(title, 0, 999999999, -999999999, 1, null);
+        Counter counter = new Counter(title, 0, 999999999, -999999999, 1, group);
         mCounterViewModel.insert(counter);
 
     }

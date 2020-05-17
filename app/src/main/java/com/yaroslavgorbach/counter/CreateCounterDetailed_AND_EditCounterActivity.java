@@ -153,7 +153,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
             /*if group is empty show error*/
             if(mGroups_et.getText().toString().trim().isEmpty()){
 
-                mGroup =null;
+                mGroup = null;
 
             }else{
 

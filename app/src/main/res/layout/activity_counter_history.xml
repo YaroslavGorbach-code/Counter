@@ -12,10 +12,11 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_chart"
+            android:id="@+id/toolbar_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Статистика"
+            app:title="History"
+            app:titleTextColor="#FFC51162"
             android:background="?android:colorBackground"
             app:navigationIcon="@drawable/ic_arrow_back"/>
     </com.google.android.material.appbar.AppBarLayout>
