@@ -200,6 +200,6 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
           mGroups_et.setAdapter(adapter);
 
       });
-         
+
     }
 }

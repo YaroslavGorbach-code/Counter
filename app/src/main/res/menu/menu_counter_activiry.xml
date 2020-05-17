@@ -9,5 +9,8 @@
     <item android:title="Delete"
         android:id="@+id/counterDelete"
         />
+    <item android:title="Chart"
+        android:id="@+id/counterChart"
+        />
 
 </menu>

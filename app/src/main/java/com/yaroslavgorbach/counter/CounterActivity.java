@@ -14,6 +14,10 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class CounterActivity extends AppCompatActivity implements DeleteCounterDialog.DeleteDialogListener {
@@ -64,11 +68,19 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
                     break;
 
+                case R.id.counterChart:
+
+                    startActivity(new Intent(CounterActivity.this, CounterHistoryActivity.class).
+                            putExtra(CounterHistoryActivity.EXTRA_COUNTER_ID, mCounterId));
+
+                    break;
+
             }
 
 
             return true;
         });
+
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(i-> finish());
 
@@ -78,14 +90,18 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
             /*if counter == null that means it was deleted*/
         if (counter != null) {
+
             mCounterId = counter.id;
             mValue_tv.setText(String.valueOf(counter.value));
             // TODO: 03.05.2020 установку текста нужно делать в другом месте но пока пусть будет тут
             mCounterTitle.setText(counter.title);
-
+            
         }else {
+
             finish();
+
         }
+
         });
 
 
@@ -120,6 +136,8 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         });
 
     }
+
+
 
     /*delete counter*/
     @Override

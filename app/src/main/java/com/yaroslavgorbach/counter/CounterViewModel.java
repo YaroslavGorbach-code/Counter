@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import java.security.acl.Group;
 import java.util.List;
 
 public class CounterViewModel extends AndroidViewModel {
@@ -40,6 +39,36 @@ public class CounterViewModel extends AndroidViewModel {
     public void update(Counter counter){
 
         mRepo.update(counter);
+
+    }
+
+    public void insert(CounterHistory counterHistory){
+
+        mRepo.insert(counterHistory);
+
+    }
+
+    public void delete(CounterHistory counterHistory){
+
+        mRepo.delete(counterHistory);
+
+    }
+
+    public void update(CounterHistory counterHistory){
+
+        mRepo.update(counterHistory);
+
+    }
+
+    public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId){
+
+        return mRepo.getCounterHistoryList(counterId);
+
+    }
+
+    public LiveData<CounterHistory> getCounterHistory(long counterId, String data){
+
+        return mRepo.getCounterHistory(counterId, data);
 
     }
 
