@@ -8,11 +8,11 @@ public class CounterHistory {
 
     @PrimaryKey(autoGenerate = true)
     public long id;
-    public int value;
+    public long value;
     public String data;
     public long counterId;
 
-    public CounterHistory( int value, String data, long counterId) {
+    public CounterHistory( long value, String data, long counterId) {
         this.value = value;
         this.data = data;
         this.counterId = counterId;

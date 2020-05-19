@@ -72,7 +72,7 @@ public class CounterViewModel extends AndroidViewModel {
 
     }
 
-    public void setValue(Counter counter, int value){
+    public void setValue(Counter counter, long value){
 
         counter.value = value;
         mRepo.update(counter);

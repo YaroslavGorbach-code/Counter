@@ -31,7 +31,7 @@ public class ListOfCountersFragment extends Fragment {
             @Override
             public void onPlusClick(Counter counter) {
 
-                int value = counter.value;
+                long value = counter.value;
                 value++;
                 mCounterViewModel.setValue(counter, value);
 
@@ -41,7 +41,7 @@ public class ListOfCountersFragment extends Fragment {
             @Override
             public void onMinusClick(Counter counter) {
 
-                int value = counter.value;
+                long value = counter.value;
                 value--;
                 mCounterViewModel.setValue(counter, value);
             }

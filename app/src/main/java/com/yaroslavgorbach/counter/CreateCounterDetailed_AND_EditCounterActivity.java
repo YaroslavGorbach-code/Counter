@@ -18,11 +18,11 @@ import java.util.Set;
 public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActivity {
 
     private String mTitle;
-    private int mValue;
-    private int mStep;
+    private long mValue;
+    private long mStep;
     private String mGroup;
-    private int mMaxValue;
-    private int mMinValue;
+    private long mMaxValue;
+    private long mMinValue;
 
     private TextInputEditText mTitle_et;
     private TextInputEditText mValue_et;
@@ -115,7 +115,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
 
             }else {
 
-                mValue = Integer.parseInt(String.valueOf(mValue_et.getText()));
+                mValue = Long.parseLong(String.valueOf(mValue_et.getText()));
             }
 
             /*if step is empty show error*/
@@ -125,7 +125,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
 
             }else {
 
-                mStep = Integer.parseInt(String.valueOf(mStep_et.getText()));
+                mStep = Long.parseLong(String.valueOf(mStep_et.getText()));
             }
 
             /*if maxValue is empty show error*/
@@ -135,7 +135,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
 
             }else {
 
-                mMaxValue = Integer.parseInt(String.valueOf(mMaxValue_et.getText()));
+                mMaxValue = Long.parseLong(String.valueOf(mMaxValue_et.getText()));
 
             }
 
@@ -146,7 +146,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
 
             }else {
 
-                mMinValue = Integer.parseInt(String.valueOf(mMinValue_et.getText()));
+                mMinValue = Long.parseLong(String.valueOf(mMinValue_et.getText()));
 
             }
 

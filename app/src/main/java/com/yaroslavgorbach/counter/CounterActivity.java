@@ -47,6 +47,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         mCounterTitle = findViewById(R.id.counterTitle);
         mLayout = findViewById(R.id.counterLayout);
         mCounter = mCounterViewModel.getCounter(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1));
+        setTextViewSize();
 
 
         /*inflating menu, navigationIcon and set listeners*/
@@ -93,8 +94,9 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
             mCounterId = counter.id;
             mValue_tv.setText(String.valueOf(counter.value));
-            // TODO: 03.05.2020 установку текста нужно делать в другом месте но пока пусть будет тут
             mCounterTitle.setText(counter.title);
+            setTextViewSize();
+
             
         }else {
 
@@ -108,7 +110,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         /*counter +*/
         mIncButton.setOnClickListener(v->{
 
-           int value = Objects.requireNonNull(mCounter.getValue()).value;
+           long value = Objects.requireNonNull(mCounter.getValue()).value;
             value++;
            mCounterViewModel.setValue(mCounter.getValue(), value);
 
@@ -117,7 +119,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         /*counter -*/
         mDecButton.setOnClickListener(v->{
 
-            int value = Objects.requireNonNull(mCounter.getValue()).value;
+            long value = Objects.requireNonNull(mCounter.getValue()).value;
             value--;
             mCounterViewModel.setValue(mCounter.getValue(), value);
 
@@ -126,7 +128,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         /*reset counter*/
         mResetButton.setOnClickListener(v->{
 
-            int oldValue = Objects.requireNonNull(mCounter.getValue()).value;
+            long oldValue = Objects.requireNonNull(mCounter.getValue()).value;
             int value = 0;
             mCounterViewModel.setValue(Objects.requireNonNull(mCounter.getValue()), value);
             Snackbar.make(mLayout,"Counter reset", BaseTransientBottomBar.LENGTH_LONG)
@@ -144,6 +146,94 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     public void onDialogDeleteClick() {
 
         mCounterViewModel.delete(mCounter.getValue());
+
+    }
+
+    private void setTextViewSize(){
+
+        if (mValue_tv.getText().length() == 3){
+
+            mValue_tv.setTextSize(130);
+
+        }
+
+        if (mValue_tv.getText().length() == 4){
+
+            mValue_tv.setTextSize(120);
+
+        }
+
+        if (mValue_tv.getText().length() == 5){
+
+            mValue_tv.setTextSize(110);
+
+        }
+
+        if (mValue_tv.getText().length() == 6){
+
+            mValue_tv.setTextSize(100);
+
+        }
+
+        if (mValue_tv.getText().length() == 7){
+
+            mValue_tv.setTextSize(90);
+
+        }
+
+        if (mValue_tv.getText().length() == 8){
+
+            mValue_tv.setTextSize(80);
+
+        }
+
+        if (mValue_tv.getText().length() == 9){
+
+            mValue_tv.setTextSize(70);
+
+        }
+
+        if (mValue_tv.getText().length() == 10){
+
+            mValue_tv.setTextSize(60);
+
+        }
+
+        if (mValue_tv.getText().length() == 11){
+
+            mValue_tv.setTextSize(60);
+
+        }
+
+        if (mValue_tv.getText().length() == 12){
+
+            mValue_tv.setTextSize(50);
+
+        }
+
+        if (mValue_tv.getText().length() == 13){
+
+            mValue_tv.setTextSize(50);
+
+        }
+
+        if (mValue_tv.getText().length() == 14){
+
+            mValue_tv.setTextSize(40);
+
+        }
+
+        if (mValue_tv.getText().length() == 15){
+
+            mValue_tv.setTextSize(40);
+
+        }
+
+        if (mValue_tv.getText().length() == 16){
+
+            mValue_tv.setTextSize(40);
+
+        }
 
     }
 

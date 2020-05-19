@@ -12,14 +12,14 @@ public class Counter {
     public long id;
 
     public String title;
-    public int value;
-    public int maxValue;
-    public int minValue;
-    public int step;
+    public long value;
+    public long maxValue;
+    public long minValue;
+    public long step;
     public String grope;
 
 
-    public Counter( String title, int value, int maxValue, int minValue, int step, String grope) {
+    public Counter( String title, long value, long maxValue, long minValue, long step, String grope) {
         this.title = title;
         this.value = value;
         this.maxValue = maxValue;
