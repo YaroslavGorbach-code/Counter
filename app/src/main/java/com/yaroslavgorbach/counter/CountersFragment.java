@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 
-public class ListOfCountersFragment extends Fragment {
+public class CountersFragment extends Fragment {
     private CounterList_rv mCountersList;
     private CounterViewModel mCounterViewModel;
 
@@ -30,20 +31,49 @@ public class ListOfCountersFragment extends Fragment {
             /*counter +*/
             @Override
             public void onPlusClick(Counter counter) {
-
+                long maxValue;
+                long incOn;
                 long value = counter.value;
-                value++;
-                mCounterViewModel.setValue(counter, value);
+                maxValue = counter.maxValue;
+                incOn = counter.step;
+                value +=incOn;
+
+                if (value > maxValue){
+
+                    mCounterViewModel.setValue(counter, counter.maxValue);
+                    Toast.makeText(view.getContext(), "This is maximum", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    mCounterViewModel.setValue(counter, value);
+
+                }
 
             }
 
             /*counter -*/
             @Override
             public void onMinusClick(Counter counter) {
-
+                long minValue;
+                long decOn;
+                minValue = counter.minValue;
                 long value = counter.value;
-                value--;
-                mCounterViewModel.setValue(counter, value);
+                decOn = counter.step;
+                value -= decOn;
+
+                if (value < minValue){
+
+                    mCounterViewModel.setValue(counter, counter.minValue);
+
+                    Toast.makeText(view.getContext(), "This is minimum", Toast.LENGTH_SHORT).show();
+
+
+                }else {
+
+                    mCounterViewModel.setValue(counter, value);
+
+                }
+
             }
 
             /*open counterActivity*/

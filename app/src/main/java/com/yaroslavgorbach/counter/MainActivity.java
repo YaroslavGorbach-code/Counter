@@ -4,23 +4,14 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.google.android.material.navigation.NavigationView;
-import com.yaroslavgorbach.counter.CounterList_rv.Listener;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements CreateCounterDialog.AddCounterListener {
@@ -67,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
         toggle.syncState();
 
         /*setting the fragment with all the counters at the first time*/
-        ListOfCountersFragment  fragment = new ListOfCountersFragment();
+        CountersFragment fragment = new CountersFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, fragment).commit();
 
         /*setting the fragment with all the counters*/
@@ -85,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
 
                 Bundle arg = new Bundle();
                 arg.putString("group_title", string);
-                ListOfCountersFragment  fragment = new ListOfCountersFragment();
+                CountersFragment fragment = new CountersFragment();
                 fragment.setArguments(arg);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, fragment).commit();
                 mToolbar.setTitle(string);

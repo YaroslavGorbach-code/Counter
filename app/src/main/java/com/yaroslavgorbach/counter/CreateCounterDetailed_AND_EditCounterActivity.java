@@ -79,8 +79,20 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
                 mValue_et.setText(String.valueOf(counter.value));
                 mStep_et.setText(String.valueOf(counter.step));
                 mGroups_et.setText(counter.grope);
-                mMaxValue_et.setText(String.valueOf(counter.maxValue));
-                mMinValue_et.setText(String.valueOf(counter.minValue));
+
+
+                if(counter.maxValue != Long.parseLong("9999999999999999")){
+
+                    mMaxValue_et.setText(String.valueOf(counter.maxValue));
+
+                }
+
+                if (counter.minValue != Long.parseLong("-9999999999999999")){
+
+                    mMinValue_et.setText(String.valueOf(counter.minValue));
+
+                }
+
 
             });
 
@@ -128,10 +140,10 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
                 mStep = Long.parseLong(String.valueOf(mStep_et.getText()));
             }
 
-            /*if maxValue is empty show error*/
+            /*if maxValue is empty set default value if is not set value from editText*/
             if (String.valueOf(mMaxValue_et.getText()).trim().isEmpty()){
 
-                mMaxValue = 999999999;
+                mMaxValue = Long.parseLong("9999999999999999");
 
             }else {
 
@@ -139,10 +151,10 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
 
             }
 
-            /*if minValue is empty show error*/
+            /*if minValue is empty set default value if is not set value from editText*/
             if (String.valueOf(mMinValue_et.getText()).trim().isEmpty()){
 
-                mMinValue = -999999999;
+                mMinValue = Long.parseLong("-9999999999999999");
 
             }else {
 

@@ -10,14 +10,11 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 public class CounterActivity extends AppCompatActivity implements DeleteCounterDialog.DeleteDialogListener {
@@ -69,7 +66,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
                     break;
 
-                case R.id.counterChart:
+                case R.id.counterHistory:
 
                     startActivity(new Intent(CounterActivity.this, CounterHistoryActivity.class).
                             putExtra(CounterHistoryActivity.EXTRA_COUNTER_ID, mCounterId));
@@ -110,18 +107,50 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         /*counter +*/
         mIncButton.setOnClickListener(v->{
 
-           long value = Objects.requireNonNull(mCounter.getValue()).value;
-            value++;
-           mCounterViewModel.setValue(mCounter.getValue(), value);
+            long maxValue;
+            long incOn;
+            long value = Objects.requireNonNull(mCounter.getValue()).value;
+            incOn = mCounter.getValue().step;
+            maxValue = mCounter.getValue().maxValue;
+            value += incOn;
+
+            if (value > maxValue){
+
+                mCounterViewModel.setValue(mCounter.getValue(), maxValue);
+                Toast.makeText(this, "This is maximum", Toast.LENGTH_SHORT).show();
+
+            }else {
+
+                mCounterViewModel.setValue(mCounter.getValue(), value);
+
+            }
+
 
         });
 
         /*counter -*/
         mDecButton.setOnClickListener(v->{
 
+            long minValue;
+            long decOn;
             long value = Objects.requireNonNull(mCounter.getValue()).value;
-            value--;
-            mCounterViewModel.setValue(mCounter.getValue(), value);
+            decOn = mCounter.getValue().step;
+            minValue = mCounter.getValue().minValue;
+            value -=decOn;
+
+            if (value < minValue){
+
+                mCounterViewModel.setValue(mCounter.getValue(), minValue);
+                Toast.makeText(this, "This is minimum", Toast.LENGTH_SHORT).show();
+
+
+            }else {
+
+                mCounterViewModel.setValue(mCounter.getValue(), value);
+
+
+            }
+
 
         });
 
@@ -149,7 +178,20 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
     }
 
+    /*method for changing the font size when changing the value of the counter*/
     private void setTextViewSize(){
+
+        if (mValue_tv.getText().length() == 1){
+
+            mValue_tv.setTextSize(150);
+
+        }
+
+        if (mValue_tv.getText().length() == 2){
+
+            mValue_tv.setTextSize(150);
+
+        }
 
         if (mValue_tv.getText().length() == 3){
 
