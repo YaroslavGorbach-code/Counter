@@ -91,7 +91,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
                         mListener.onAddClick(title, group);
 
                     }
-                    
+
                 })
 
                 .setNegativeButton("Cancel", (dialog, which) -> {

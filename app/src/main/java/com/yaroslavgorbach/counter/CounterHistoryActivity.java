@@ -47,6 +47,7 @@ public class CounterHistoryActivity extends AppCompatActivity {
         mCounterViewModel.getCounter(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1))
                 .observe(this, counter -> {
 
+                    mToolbar.setTitle(counter.title);
 
                     mCounterViewModel.getCounterHistory(counter.id, mDate).observe(this, counterHistory -> {
 
