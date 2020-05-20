@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
 
             /*delete the same groups*/
              Set<String> set = new HashSet<>(strings);
-             String[] result = set.toArray(new String[set.size()]);
+             String[] result = set.toArray(new String[0]);
              mGroupsList.setGroups(Arrays.asList(result));
 
         });
@@ -99,7 +99,8 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     @Override
     public void onAddClick(String title, String group) {
 
-        Counter counter = new Counter(title, 0, 999999999, -999999999, 1, group);
+        Counter counter = new Counter(title, 0, Long.parseLong("9999999999999999"),
+                Long.parseLong("-9999999999999999"), 1, group);
         mCounterViewModel.insert(counter);
 
     }
