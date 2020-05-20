@@ -6,7 +6,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +18,10 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class CounterActivity extends AppCompatActivity implements DeleteCounterDialog.DeleteDialogListener {
@@ -29,6 +36,9 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     private TextView mCounterTitle;
     private LinearLayout mLayout;
     private long mCounterId;
+    private String mDate;
+    private Button mSaveToHistoryButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +53,11 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         mToolbar = findViewById(R.id.counterActivity_toolbar);
         mCounterTitle = findViewById(R.id.counterTitle);
         mLayout = findViewById(R.id.counterLayout);
+        mSaveToHistoryButton = findViewById(R.id.saveToHistoryButton);
         mCounter = mCounterViewModel.getCounter(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1));
+
+
+        /*setting valueTextView size depending on value*/
         setTextViewSize();
 
 
@@ -82,6 +96,10 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(i-> finish());
 
+        /*getting current data and time */
+        Date currentDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
+        mDate = dateFormat.format(currentDate);
 
         /*each new counter value is set to textView*/
         mCounter.observe(this, counter -> {
@@ -94,7 +112,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
             mCounterTitle.setText(counter.title);
             setTextViewSize();
 
-            
+
         }else {
 
             finish();
@@ -103,6 +121,14 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
         });
 
+
+        /*saving counter value to history*/
+        mSaveToHistoryButton.setOnClickListener(v -> {
+
+                    mCounterViewModel.insert(new CounterHistory(Objects.requireNonNull(
+                            mCounter.getValue()).value, mDate, mCounter.getValue().id));
+            Toast.makeText(this, "Value " + mCounter.getValue().value + " saved to counter history", Toast.LENGTH_SHORT).show();
+        });
 
         /*counter +*/
         mIncButton.setOnClickListener(v->{
@@ -124,6 +150,8 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
                 mCounterViewModel.setValue(mCounter.getValue(), value);
 
             }
+
+
 
 
         });
@@ -167,7 +195,6 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         });
 
     }
-
 
 
     /*delete counter*/
@@ -278,5 +305,6 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         }
 
     }
+
 
 }

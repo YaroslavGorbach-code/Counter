@@ -38,35 +38,6 @@ public class CounterHistoryActivity extends AppCompatActivity {
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(i-> finish());
 
-        /*getting current date*/
-        Date currentDate = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY", Locale.getDefault());
-        mDate = dateFormat.format(currentDate);
-
-        /*if the history with today's date is already in the database then update if not then create*/
-        mCounterViewModel.getCounter(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1))
-                .observe(this, counter -> {
-
-                    mToolbar.setTitle(counter.title);
-
-                    mCounterViewModel.getCounterHistory(counter.id, mDate).observe(this, counterHistory -> {
-
-                        if (counterHistory == null){
-
-                            mCounterViewModel.insert(new CounterHistory(counter.value, mDate, counter.id));
-
-                        }else {
-
-                            CounterHistory updateHistory = new CounterHistory( counter.value, mDate, counter.id );
-                            updateHistory.setId(counterHistory.id);
-
-                            mCounterViewModel.update(updateHistory);
-
-                        }
-
-                    });
-
-                });
 
         /*update list of history*/
         mCounterViewModel.getCounterHistoryList(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1))
