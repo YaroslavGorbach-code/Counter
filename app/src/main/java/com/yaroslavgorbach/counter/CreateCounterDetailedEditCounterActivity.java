@@ -10,12 +10,11 @@ import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 
-public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActivity {
+public class CreateCounterDetailedEditCounterActivity extends AppCompatActivity {
 
     private String mTitle;
     private long mValue;
@@ -206,7 +205,7 @@ public class CreateCounterDetailed_AND_EditCounterActivity extends AppCompatActi
 
           ArrayAdapter<String> adapter =
                   new ArrayAdapter<>(
-                          CreateCounterDetailed_AND_EditCounterActivity.this,
+                          CreateCounterDetailedEditCounterActivity.this,
                           R.layout.dropdown_menu_popup_item,
                           result);
           mGroups_et.setAdapter(adapter);

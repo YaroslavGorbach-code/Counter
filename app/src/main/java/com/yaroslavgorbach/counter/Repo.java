@@ -51,9 +51,9 @@ public class Repo {
         new InsertHistoryAsyncTask(mCounterHistoryDao).execute(counterHistory);
     }
 
-    public void delete(CounterHistory counterHistory){
+    public void delete(long counterId){
 
-        new DeleteHistoryAsyncTask(mCounterHistoryDao).execute(counterHistory);
+        new DeleteHistoryAsyncTask(mCounterHistoryDao).execute(counterId);
     }
 
     public void update(CounterHistory counterHistory){
@@ -169,7 +169,7 @@ public class Repo {
         }
     }
 
-    public static class DeleteHistoryAsyncTask extends AsyncTask<CounterHistory, Void, Void>{
+    public static class DeleteHistoryAsyncTask extends AsyncTask<Long, Void, Void>{
 
         private CounterHistoryDao counterHistoryDao;
 
@@ -180,9 +180,9 @@ public class Repo {
         }
 
         @Override
-        protected Void doInBackground(CounterHistory... counterHistories) {
+        protected Void doInBackground(Long... longs) {
 
-            counterHistoryDao.delete(counterHistories[0]);
+            counterHistoryDao.delete(longs[0]);
             return null;
         }
     }

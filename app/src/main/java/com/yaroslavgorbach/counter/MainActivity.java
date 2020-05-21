@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     @Override
     public void onLaunchDetailedClick() {
 
-        startActivity(new Intent(MainActivity.this, CreateCounterDetailed_AND_EditCounterActivity.class ));
+        startActivity(new Intent(MainActivity.this, CreateCounterDetailedEditCounterActivity.class ));
 
     }
 }

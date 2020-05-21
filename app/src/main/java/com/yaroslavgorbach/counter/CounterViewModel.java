@@ -48,9 +48,9 @@ public class CounterViewModel extends AndroidViewModel {
 
     }
 
-    public void delete(CounterHistory counterHistory){
+    public void delete(long counterId){
 
-        mRepo.delete(counterHistory);
+        mRepo.delete(counterId);
 
     }
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +36,6 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     private TextView mCounterTitle;
     private LinearLayout mLayout;
     private long mCounterId;
-    private String mDate;
     private Button mSaveToHistoryButton;
     private ImageView mAllInclusiveMin_iv;
     private ImageView mAllInclusiveMAx_iv;
@@ -84,8 +82,8 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
                 case R.id.counterEdit:
 
-                    startActivity(new Intent(CounterActivity.this, CreateCounterDetailed_AND_EditCounterActivity.class)
-                            .putExtra(CreateCounterDetailed_AND_EditCounterActivity.EXTRA_COUNTER_ID, mCounterId));
+                    startActivity(new Intent(CounterActivity.this, CreateCounterDetailedEditCounterActivity.class)
+                            .putExtra(CreateCounterDetailedEditCounterActivity.EXTRA_COUNTER_ID, mCounterId));
 
                     break;
 
@@ -105,10 +103,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(i-> finish());
 
-        /*getting current data and time */
-        Date currentDate = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
-        mDate = dateFormat.format(currentDate);
+
 
         /*each new counter value is set to textView*/
         mCounter.observe(this, counter -> {
@@ -137,7 +132,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
                 mMinValue_tv.setText(String.valueOf(counter.minValue));
 
             }
-            
+
             setTextViewSize();
 
 
@@ -153,8 +148,13 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         /*saving counter value to history*/
         mSaveToHistoryButton.setOnClickListener(v -> {
 
+            /*getting current data and time */
+            Date currentDate = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
+            String date = dateFormat.format(currentDate);
+
                     mCounterViewModel.insert(new CounterHistory(Objects.requireNonNull(
-                            mCounter.getValue()).value, mDate, mCounter.getValue().id));
+                            mCounter.getValue()).value, date, mCounter.getValue().id));
             Toast.makeText(this, "Value " + mCounter.getValue().value + " saved to counter history", Toast.LENGTH_SHORT).show();
         });
 
@@ -232,6 +232,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     public void onDialogDeleteClick() {
 
         mCounterViewModel.delete(mCounter.getValue());
+        mCounterViewModel.delete(mCounterId);
 
     }
 

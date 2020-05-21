@@ -18,8 +18,8 @@ public interface CounterHistoryDao {
     @Update
     void update(CounterHistory CounterHistory);
 
-    @Delete
-    void delete(CounterHistory CounterHistory);
+    @Query("DELETE FROM counterHistory_table WHERE counterId = :counterId")
+    void delete(long counterId);
 
     @Query("SELECT * FROM counterHistory_table WHERE counterId = :counterId ORDER BY id DESC")
     LiveData<List<CounterHistory>> getCounterHistoryList(long counterId );

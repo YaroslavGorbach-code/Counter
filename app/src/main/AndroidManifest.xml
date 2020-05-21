@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".CounterHistoryActivity"></activity>
-        <activity android:name=".CreateCounterDetailed_AND_EditCounterActivity" />
+        <activity android:name=".CreateCounterDetailedEditCounterActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
