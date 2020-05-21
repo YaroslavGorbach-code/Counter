@@ -2,4 +2,9 @@
     <string name="app_name">counter</string>
     <string name="navigation_drawer_close">Navigation drawer close</string>
     <string name="navigation_drawer_open">Navigation drawer open</string>
+
+    <string-array name="history_sort_items">
+       <item>Sort by time </item>
+        <item>Sort by value </item>
+    </string-array>
 </resources>

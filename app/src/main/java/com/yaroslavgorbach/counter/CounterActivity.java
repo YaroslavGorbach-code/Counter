@@ -41,6 +41,8 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     private ImageView mAllInclusiveMAx_iv;
     private TextView mMaxValue_tv;
     private TextView mMinValue_tv;
+    private TextView mGroupTitle;
+    private HistoryViewModel mHistoryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
         /*initialize fields*/
         mCounterViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
+        mHistoryViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
         mValue_tv = findViewById(R.id.value);
         mIncButton = findViewById(R.id.inc_value);
         mDecButton = findViewById(R.id.dec_value);
@@ -61,7 +64,9 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         mAllInclusiveMin_iv = findViewById(R.id.iconAllInclusiveMin);
         mMaxValue_tv = findViewById(R.id.maxValue);
         mMinValue_tv = findViewById(R.id.minValue);
+        mGroupTitle = findViewById(R.id.groupTitle);
         mCounter = mCounterViewModel.getCounter(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1));
+
 
 
         /*setting valueTextView size depending on value*/
@@ -115,6 +120,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
             mCounterId = counter.id;
             mValue_tv.setText(String.valueOf(counter.value));
             mCounterTitle.setText(counter.title);
+            mGroupTitle.setText(counter.grope);
 
             if (counter.maxValue != Long.parseLong("9999999999999999")) {
 
@@ -153,7 +159,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
             DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
             String date = dateFormat.format(currentDate);
 
-                    mCounterViewModel.insert(new CounterHistory(Objects.requireNonNull(
+                    mHistoryViewModel.insert(new CounterHistory(Objects.requireNonNull(
                             mCounter.getValue()).value, date, mCounter.getValue().id));
             Toast.makeText(this, "Value " + mCounter.getValue().value + " saved to counter history", Toast.LENGTH_SHORT).show();
         });
@@ -232,7 +238,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     public void onDialogDeleteClick() {
 
         mCounterViewModel.delete(mCounter.getValue());
-        mCounterViewModel.delete(mCounterId);
+        mHistoryViewModel.delete(mCounterId);
 
     }
 

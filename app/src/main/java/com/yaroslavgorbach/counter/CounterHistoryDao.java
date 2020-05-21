@@ -24,8 +24,8 @@ public interface CounterHistoryDao {
     @Query("SELECT * FROM counterHistory_table WHERE counterId = :counterId ORDER BY id DESC")
     LiveData<List<CounterHistory>> getCounterHistoryList(long counterId );
 
-    @Query("SELECT * FROM counterHistory_table WHERE counterId = :counterId AND data = :data ORDER BY id DESC")
-    LiveData<CounterHistory> getCounterHistory(long counterId, String data );
+    @Query("SELECT * FROM counterHistory_table WHERE counterId = :counterId ORDER BY value DESC")
+    LiveData<List<CounterHistory>> getCounterHistoryListSortByValue(long counterId );
 
 
 }

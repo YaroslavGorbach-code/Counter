@@ -42,36 +42,6 @@ public class CounterViewModel extends AndroidViewModel {
 
     }
 
-    public void insert(CounterHistory counterHistory){
-
-        mRepo.insert(counterHistory);
-
-    }
-
-    public void delete(long counterId){
-
-        mRepo.delete(counterId);
-
-    }
-
-    public void update(CounterHistory counterHistory){
-
-        mRepo.update(counterHistory);
-
-    }
-
-    public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId){
-
-        return mRepo.getCounterHistoryList(counterId);
-
-    }
-
-    public LiveData<CounterHistory> getCounterHistory(long counterId, String data){
-
-        return mRepo.getCounterHistory(counterId, data);
-
-    }
-
     public void setValue(Counter counter, long value){
 
         counter.value = value;

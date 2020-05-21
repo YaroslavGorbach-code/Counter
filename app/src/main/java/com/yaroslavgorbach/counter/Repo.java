@@ -67,11 +67,12 @@ public class Repo {
 
     }
 
-    public LiveData<CounterHistory> getCounterHistory(long counterId, String data){
+    public LiveData<List<CounterHistory>> getCounterHistoryListSortByValue(long counterId){
 
-        return mCounterHistoryDao.getCounterHistory(counterId, data);
+        return mCounterHistoryDao.getCounterHistoryListSortByValue(counterId);
 
     }
+
 
     public LiveData<List<Counter>> getAllCounters(){
 
