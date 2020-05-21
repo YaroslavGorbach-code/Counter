@@ -165,56 +165,10 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         });
 
         /*counter +*/
-        mIncButton.setOnClickListener(v->{
-
-            long maxValue;
-            long incOn;
-            long value = Objects.requireNonNull(mCounter.getValue()).value;
-            incOn = mCounter.getValue().step;
-            maxValue = mCounter.getValue().maxValue;
-            value += incOn;
-
-            if (value > maxValue){
-
-                mCounterViewModel.setValue(mCounter.getValue(), maxValue);
-                Toast.makeText(this, "This is maximum", Toast.LENGTH_SHORT).show();
-
-            }else {
-
-                mCounterViewModel.setValue(mCounter.getValue(), value);
-
-            }
-
-
-
-
-        });
+        new FastCountButton(mIncButton, this::incCounter);
 
         /*counter -*/
-        mDecButton.setOnClickListener(v->{
-
-            long minValue;
-            long decOn;
-            long value = Objects.requireNonNull(mCounter.getValue()).value;
-            decOn = mCounter.getValue().step;
-            minValue = mCounter.getValue().minValue;
-            value -=decOn;
-
-            if (value < minValue){
-
-                mCounterViewModel.setValue(mCounter.getValue(), minValue);
-                Toast.makeText(this, "This is minimum", Toast.LENGTH_SHORT).show();
-
-
-            }else {
-
-                mCounterViewModel.setValue(mCounter.getValue(), value);
-
-
-            }
-
-
-        });
+        new FastCountButton(mDecButton, this::decCounter);
 
         /*reset counter*/
         mResetButton.setOnClickListener(v->{
@@ -239,6 +193,52 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
         mCounterViewModel.delete(mCounter.getValue());
         mHistoryViewModel.delete(mCounterId);
+
+    }
+
+    private void incCounter(){
+
+        long maxValue;
+        long incOn;
+        long value = Objects.requireNonNull(mCounter.getValue()).value;
+        incOn = mCounter.getValue().step;
+        maxValue = mCounter.getValue().maxValue;
+        value += incOn;
+
+        if (value > maxValue){
+
+            mCounterViewModel.setValue(mCounter.getValue(), maxValue);
+            Toast.makeText(this, "This is maximum", Toast.LENGTH_SHORT).show();
+
+        }else {
+
+            mCounterViewModel.setValue(mCounter.getValue(), value);
+
+        }
+
+    }
+
+    private void decCounter(){
+
+        long minValue;
+        long decOn;
+        long value = Objects.requireNonNull(mCounter.getValue()).value;
+        decOn = mCounter.getValue().step;
+        minValue = mCounter.getValue().minValue;
+        value -=decOn;
+
+        if (value < minValue){
+
+            mCounterViewModel.setValue(mCounter.getValue(), minValue);
+            Toast.makeText(this, "This is minimum", Toast.LENGTH_SHORT).show();
+
+
+        }else {
+
+            mCounterViewModel.setValue(mCounter.getValue(), value);
+
+
+        }
 
     }
 
@@ -354,6 +354,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         }
 
     }
+
 
 
 }

@@ -95,17 +95,12 @@ public class CounterList_rv {
                    mPlus = itemView.findViewById(R.id.plus_i);
                    mMinus = itemView.findViewById(R.id.minus_i);
 
-                   mPlus.setOnClickListener(v->{
+                   new FastCountButton(mPlus, ()->
+                           mListener.onPlusClick(mData.get(getAdapterPosition())));
 
-                       mListener.onPlusClick(mData.get(getAdapterPosition()));
+                   new FastCountButton(mMinus, ()->
+                           mListener.onMinusClick(mData.get(getAdapterPosition())));
 
-                   });
-
-                    mMinus.setOnClickListener(v->{
-
-                        mListener.onMinusClick(mData.get(getAdapterPosition()));
-
-                    });
 
                     mItem.setOnClickListener(v->{
 
