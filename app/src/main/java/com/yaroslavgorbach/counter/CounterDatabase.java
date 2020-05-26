@@ -5,7 +5,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Counter.class, CounterHistory.class },  version = 12)
+@Database(entities = {Counter.class, CounterHistory.class },  version = 13)
 public abstract class CounterDatabase extends RoomDatabase {
 
     private static CounterDatabase sInstance;

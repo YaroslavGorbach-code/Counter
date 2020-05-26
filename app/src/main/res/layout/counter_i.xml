@@ -6,7 +6,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="110dp"
-    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,6 +81,15 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/testTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
