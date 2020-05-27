@@ -1,5 +1,7 @@
 package com.yaroslavgorbach.counter;
 
+import android.graphics.drawable.NinePatchDrawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +10,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.DrawableUtils;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
+import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator;
+import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
@@ -42,6 +50,7 @@ public class CounterList_rv {
     private ItemClickListener mItemClickListener;
     private MoveListener mMoveListener;
 
+
     public CounterList_rv(RecyclerView rv, ItemClickListener itemClickListener,
                           MoveListener moveListener) {
 
@@ -50,15 +59,18 @@ public class CounterList_rv {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rv.getContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext());
         RecyclerViewDragDropManager dragDropManager = new RecyclerViewDragDropManager();
-        rv.setHasFixedSize(true);
+        //rv.setHasFixedSize(true);
         rv.addItemDecoration(dividerItemDecoration);
         rv.setLayoutManager(mLayoutManager);
+
 
         RecyclerView.Adapter  wrappedAdapter = dragDropManager.createWrappedAdapter(mAdapter);
         rv.setAdapter(wrappedAdapter);
 
         // disable change animations
-                ((SimpleItemAnimator) Objects.requireNonNull(rv.getItemAnimator())).setSupportsChangeAnimations(true);
+                ((SimpleItemAnimator) Objects.requireNonNull(rv.getItemAnimator())).setSupportsChangeAnimations(false);
+
+
 
          dragDropManager.setInitiateOnTouch(false);
          dragDropManager.setInitiateOnMove(false);
@@ -97,7 +109,7 @@ public class CounterList_rv {
             @Override
             public void onBindViewHolder(@NonNull Vh holder, int position) {
 
-                holder.bind(mData.get(position));
+                holder.bind(mData.get(position), holder);
 
             }
 
@@ -135,6 +147,8 @@ public class CounterList_rv {
 
             @Override
             public void onMoveItem(int fromPosition, int toPosition) {
+                mMoveListener.onMove(mData.get(fromPosition), mData.get(toPosition));
+
                 Counter removed = mData.remove(fromPosition);
                 mData.add(toPosition, removed);
 
@@ -153,8 +167,6 @@ public class CounterList_rv {
 
             @Override
             public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
-                mMoveListener.onMove(mData.get(fromPosition), mData.get(toPosition));
-
 
             }
 
@@ -165,6 +177,7 @@ public class CounterList_rv {
                 private TextView mValue;
                 private TextView mPlus;
                 private TextView mMinus;
+                private View mDragHandle;
 
                 private TextView mTestDta;
 
@@ -178,6 +191,7 @@ public class CounterList_rv {
                    mPlus = itemView.findViewById(R.id.plus_i);
                    mMinus = itemView.findViewById(R.id.minus_i);
                    mTestDta = itemView.findViewById(R.id.testData);
+                   mDragHandle = itemView.findViewById(R.id.dragHandle);
 
                    new FastCountButton(mPlus, ()->
                            mItemClickListener.onPlusClick(mData.get(getAdapterPosition())));
@@ -194,12 +208,30 @@ public class CounterList_rv {
 
                 }
 
-                private void bind(Counter counter){
+                private void bind(Counter counter, Vh holder){
                     mTitle.setText(counter.title);
                     mValue.setText(String.valueOf(counter.value));
                     mTestDta.setText(counter.createData);
 
-                }
+
+//                    // set background resource (target view ID: container)
+//            final DraggableItemState dragState = holder.getDragState();
+//
+//                    if (dragState.isUpdated()) {
+//                int bgResId;
+//
+//                if (dragState.isUpdated()) {
+//                    bgResId = R.drawable.bg_item_dragging_active_state;
+//                    // need to clear drawable state here to get correct appearance of the dragging item.
+//                } else if (dragState.isDragging()) {
+//                    bgResId = R.drawable.bg_item_dragging_state;
+//                } else {
+//                    bgResId = R.drawable.bg_item_normal_state;
+//                }
+//
+//                holder.mItem.setBackgroundResource(bgResId);
+//            }
+        }
             }
 
         }

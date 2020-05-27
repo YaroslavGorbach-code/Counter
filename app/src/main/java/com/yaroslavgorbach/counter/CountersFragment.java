@@ -90,6 +90,8 @@ public class CountersFragment extends Fragment {
 
                 counterFrom.createData = dataTo;
                 mCounterViewModel.update(counterFrom);
+
+
             }
         });
 
