@@ -10,7 +10,11 @@ import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 
@@ -22,6 +26,8 @@ public class CreateCounterDetailedEditCounterActivity extends AppCompatActivity 
     private String mGroup;
     private long mMaxValue;
     private long mMinValue;
+    private String mCreateData;
+
 
     private TextInputEditText mTitle_et;
     private TextInputEditText mValue_et;
@@ -73,6 +79,8 @@ public class CreateCounterDetailedEditCounterActivity extends AppCompatActivity 
                 mGroup = counter.grope;
                 mMaxValue = counter.maxValue;
                 mMinValue = counter.minValue;
+                mCreateData = counter.createData;
+
 
                 mTitle_et.setText(counter.title);
                 mValue_et.setText(String.valueOf(counter.value));
@@ -180,13 +188,17 @@ public class CreateCounterDetailedEditCounterActivity extends AppCompatActivity 
 
                 /*if mCounter == null insert counter*/
                 if (mCounterId<0){
-                    Counter counter = new Counter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup);
+                    Date currentDate = new Date();
+                    DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
+                    String date = dateFormat.format(currentDate);
+
+                    Counter counter = new Counter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup, date);
                     mViewModel.insert(counter);
                     finish();
 
                     /*if mCounter != null update counter*/
                 }else{
-                    Counter counter = new Counter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup);
+                    Counter counter = new Counter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup, mCreateData);
                     counter.setId(mCounterId);
                     mViewModel.update(counter);
                     finish();

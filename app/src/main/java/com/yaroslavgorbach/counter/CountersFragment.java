@@ -2,6 +2,7 @@ package com.yaroslavgorbach.counter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
-import java.util.List;
 
 public class CountersFragment extends Fragment {
     private CounterList_rv mCountersList;
@@ -26,7 +24,7 @@ public class CountersFragment extends Fragment {
         mCounterViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
 
         /*initialize RecyclerView and it listener*/
-        mCountersList = new CounterList_rv(view.findViewById(R.id.countersList_rv), new CounterList_rv.Listener() {
+        mCountersList = new CounterList_rv(view.findViewById(R.id.countersList_rv), new CounterList_rv.ItemClickListener() {
 
             /*counter +*/
             @Override
@@ -36,14 +34,13 @@ public class CountersFragment extends Fragment {
                 long value = counter.value;
                 maxValue = counter.maxValue;
                 incOn = counter.step;
-                value +=incOn;
+                value += incOn;
 
-                if (value > maxValue){
+                if (value > maxValue) {
 
-                    mCounterViewModel.setValue(counter, counter.maxValue);
                     Toast.makeText(view.getContext(), "This is maximum", Toast.LENGTH_SHORT).show();
 
-                }else {
+                } else {
 
                     mCounterViewModel.setValue(counter, value);
 
@@ -61,14 +58,11 @@ public class CountersFragment extends Fragment {
                 decOn = counter.step;
                 value -= decOn;
 
-                if (value < minValue){
-
-                    mCounterViewModel.setValue(counter, counter.minValue);
+                if (value < minValue) {
 
                     Toast.makeText(view.getContext(), "This is minimum", Toast.LENGTH_SHORT).show();
 
-
-                }else {
+                } else {
 
                     mCounterViewModel.setValue(counter, value);
 
@@ -82,6 +76,20 @@ public class CountersFragment extends Fragment {
 
                 startActivity(new Intent(view.getContext(), CounterActivity.class).
                         putExtra(CounterActivity.EXTRA_COUNTER_ID, counter.id));
+            }
+        }, new CounterList_rv.MoveListener() {
+            //item moved
+            @Override
+            public void onMove(Counter counterFrom, Counter counterTo) {
+
+                String dataFrom = counterFrom.createData;
+                String dataTo = counterTo.createData;
+
+                counterTo.createData = dataFrom;
+                mCounterViewModel.update(counterTo);
+
+                counterFrom.createData = dataTo;
+                mCounterViewModel.update(counterFrom);
             }
         });
 

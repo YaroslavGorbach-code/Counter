@@ -17,15 +17,17 @@ public class Counter {
     public long minValue;
     public long step;
     public String grope;
+    public String createData;
 
 
-    public Counter( String title, long value, long maxValue, long minValue, long step, String grope) {
+    public Counter( String title, long value, long maxValue, long minValue, long step, String grope, String createData) {
         this.title = title;
         this.value = value;
         this.maxValue = maxValue;
         this.minValue = minValue;
         this.step = step;
         this.grope = grope;
+        this.createData = createData;
     }
 
 

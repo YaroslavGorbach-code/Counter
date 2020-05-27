@@ -10,8 +10,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements CreateCounterDialog.AddCounterListener {
@@ -99,8 +103,12 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     @Override
     public void onAddClick(String title, String group) {
 
+        Date currentDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
+        String date = dateFormat.format(currentDate);
+
         Counter counter = new Counter(title, 0, Long.parseLong("9999999999999999"),
-                Long.parseLong("-9999999999999999"), 1, group);
+                Long.parseLong("-9999999999999999"), 1, group, date);
         mCounterViewModel.insert(counter);
 
     }
