@@ -58,7 +58,7 @@ public class CounterList_rv {
         rv.setAdapter(wrappedAdapter);
 
         // disable change animations
-                ((SimpleItemAnimator) Objects.requireNonNull(rv.getItemAnimator())).setSupportsChangeAnimations(false);
+                ((SimpleItemAnimator) Objects.requireNonNull(rv.getItemAnimator())).setSupportsChangeAnimations(true);
 
          dragDropManager.setInitiateOnTouch(false);
          dragDropManager.setInitiateOnMove(false);
@@ -137,7 +137,6 @@ public class CounterList_rv {
             public void onMoveItem(int fromPosition, int toPosition) {
                 Counter removed = mData.remove(fromPosition);
                 mData.add(toPosition, removed);
-                mMoveListener.onMove(removed, mData.get(toPosition));
 
             }
 
@@ -154,7 +153,8 @@ public class CounterList_rv {
 
             @Override
             public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
-                notifyDataSetChanged();
+                mMoveListener.onMove(mData.get(fromPosition), mData.get(toPosition));
+
 
             }
 

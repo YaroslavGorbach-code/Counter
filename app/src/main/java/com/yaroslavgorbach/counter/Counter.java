@@ -5,6 +5,8 @@ import android.graphics.Color;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "counter_table")
 public class Counter {
 
@@ -18,6 +20,7 @@ public class Counter {
     public long step;
     public String grope;
     public String createData;
+
 
 
     public Counter( String title, long value, long maxValue, long minValue, long step, String grope, String createData) {

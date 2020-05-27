@@ -30,7 +30,8 @@ public interface CounterDao {
     @Query("SELECT grope FROM counter_table WHERE grope<>'' ORDER BY grope ASC")
     LiveData<List<String>> getGroups();
 
-    @Query("SELECT * FROM counter_table WHERE grope =:group ORDER BY createData DESC")
+
+    @Query("SELECT * FROM counter_table WHERE grope =:group ORDER BY createData ")
     LiveData<List<Counter>> getCountersByGroup(String group);
 
 }

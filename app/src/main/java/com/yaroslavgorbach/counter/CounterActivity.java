@@ -207,7 +207,6 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
         if (value > maxValue){
 
-            mCounterViewModel.setValue(mCounter.getValue(), maxValue);
             Toast.makeText(this, "This is maximum", Toast.LENGTH_SHORT).show();
 
         }else {
@@ -229,14 +228,11 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
         if (value < minValue){
 
-            mCounterViewModel.setValue(mCounter.getValue(), minValue);
             Toast.makeText(this, "This is minimum", Toast.LENGTH_SHORT).show();
-
 
         }else {
 
             mCounterViewModel.setValue(mCounter.getValue(), value);
-
 
         }
 
