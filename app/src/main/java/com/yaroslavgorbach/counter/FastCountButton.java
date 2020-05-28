@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewConfiguration;
 
@@ -35,7 +36,9 @@ public class FastCountButton implements View.OnTouchListener, Handler.Callback {
 
             case MotionEvent.ACTION_UP:
 
-                if (!mFastCounting) mView.performClick();
+                if (!mFastCounting) {
+                    mView.performClick();
+                }
                 //no break
 
             case MotionEvent.ACTION_CANCEL:
@@ -63,7 +66,6 @@ public class FastCountButton implements View.OnTouchListener, Handler.Callback {
                 mView.getParent().requestDisallowInterceptTouchEvent(true);
 
             }
-
             mView.performClick();
             mHandler.sendEmptyMessageDelayed(FAST_COUNT_MSG, FAST_COUNT_INTERVAL_MS);
 

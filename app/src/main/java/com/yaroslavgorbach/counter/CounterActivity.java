@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -214,7 +215,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
             mCounterViewModel.setValue(mCounter.getValue(), value);
 
         }
-
+        mIncButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
     }
 
     private void decCounter(){
@@ -235,7 +236,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
             mCounterViewModel.setValue(mCounter.getValue(), value);
 
         }
-
+        mDecButton.performHapticFeedback(HapticFeedbackConstants. LONG_PRESS);
     }
 
     /*method for changing the font size when changing the value of the counter*/

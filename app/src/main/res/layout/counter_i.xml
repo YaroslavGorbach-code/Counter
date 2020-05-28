@@ -84,13 +84,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/testData"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/value_i"
-        app:layout_constraintStart_toEndOf="@+id/title_i"
-        app:layout_constraintTop_toTopOf="@+id/title_i" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

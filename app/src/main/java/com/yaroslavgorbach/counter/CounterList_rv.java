@@ -1,9 +1,12 @@
 package com.yaroslavgorbach.counter;
 
+import android.accessibilityservice.AccessibilityButtonController;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.DrawableUtils;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.accessibility.AccessibilityEventCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
@@ -109,7 +113,7 @@ public class CounterList_rv {
             @Override
             public void onBindViewHolder(@NonNull Vh holder, int position) {
 
-                holder.bind(mData.get(position), holder);
+                holder.bind(mData.get(position));
 
             }
 
@@ -190,14 +194,19 @@ public class CounterList_rv {
                    mValue = itemView.findViewById(R.id.value_i);
                    mPlus = itemView.findViewById(R.id.plus_i);
                    mMinus = itemView.findViewById(R.id.minus_i);
-                   mTestDta = itemView.findViewById(R.id.testData);
                    mDragHandle = itemView.findViewById(R.id.dragHandle);
 
-                   new FastCountButton(mPlus, ()->
-                           mItemClickListener.onPlusClick(mData.get(getAdapterPosition())));
+                   new FastCountButton(mPlus, ()->{
+                       mMinus.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                       mItemClickListener.onPlusClick(mData.get(getAdapterPosition()));
+                   });
 
-                   new FastCountButton(mMinus, ()->
-                           mItemClickListener.onMinusClick(mData.get(getAdapterPosition())));
+
+                   new FastCountButton(mMinus, () -> {
+                       mMinus.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                       mItemClickListener.onMinusClick(mData.get(getAdapterPosition()));
+                   })
+                   ;
 
 
                     mItem.setOnClickListener(v->{
@@ -208,30 +217,13 @@ public class CounterList_rv {
 
                 }
 
-                private void bind(Counter counter, Vh holder){
+                private void bind(Counter counter){
                     mTitle.setText(counter.title);
                     mValue.setText(String.valueOf(counter.value));
-                    mTestDta.setText(counter.createData);
+
+                       }
 
 
-//                    // set background resource (target view ID: container)
-//            final DraggableItemState dragState = holder.getDragState();
-//
-//                    if (dragState.isUpdated()) {
-//                int bgResId;
-//
-//                if (dragState.isUpdated()) {
-//                    bgResId = R.drawable.bg_item_dragging_active_state;
-//                    // need to clear drawable state here to get correct appearance of the dragging item.
-//                } else if (dragState.isDragging()) {
-//                    bgResId = R.drawable.bg_item_dragging_state;
-//                } else {
-//                    bgResId = R.drawable.bg_item_normal_state;
-//                }
-//
-//                holder.mItem.setBackgroundResource(bgResId);
-//            }
-        }
             }
 
         }
