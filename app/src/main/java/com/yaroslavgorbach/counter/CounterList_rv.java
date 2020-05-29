@@ -153,8 +153,8 @@ public class CounterList_rv {
             public void onMoveItem(int fromPosition, int toPosition) {
                 mMoveListener.onMove(mData.get(fromPosition), mData.get(toPosition));
 
-                Counter removed = mData.remove(fromPosition);
-                mData.add(toPosition, removed);
+               // Counter removed = mData.remove(fromPosition);
+                // mData.add(toPosition, removed);
 
             }
 
