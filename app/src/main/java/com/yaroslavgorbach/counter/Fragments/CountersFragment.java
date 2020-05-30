@@ -1,8 +1,7 @@
-package com.yaroslavgorbach.counter;
+package com.yaroslavgorbach.counter.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.yaroslavgorbach.counter.Models.Counter;
+import com.yaroslavgorbach.counter.Activityes.CounterActivity;
+import com.yaroslavgorbach.counter.RecyclerViews.CounterList_rv;
+import com.yaroslavgorbach.counter.Database.ViewModels.CounterViewModel;
+import com.yaroslavgorbach.counter.R;
 
 public class CountersFragment extends Fragment {
     private CounterList_rv mCountersList;
@@ -90,7 +95,6 @@ public class CountersFragment extends Fragment {
 
                 counterFrom.createData = dataTo;
                 mCounterViewModel.update(counterFrom);
-
 
             }
         });

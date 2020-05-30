@@ -1,4 +1,4 @@
-package com.yaroslavgorbach.counter;
+package com.yaroslavgorbach.counter.Activityes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.yaroslavgorbach.counter.Database.ViewModels.CounterViewModel;
+import com.yaroslavgorbach.counter.Models.Counter;
+import com.yaroslavgorbach.counter.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

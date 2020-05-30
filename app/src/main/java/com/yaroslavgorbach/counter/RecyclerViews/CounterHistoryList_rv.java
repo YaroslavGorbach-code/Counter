@@ -1,13 +1,15 @@
-package com.yaroslavgorbach.counter;
+package com.yaroslavgorbach.counter.RecyclerViews;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.yaroslavgorbach.counter.Models.CounterHistory;
+import com.yaroslavgorbach.counter.R;
 
 import java.util.ArrayList;
 import java.util.List;

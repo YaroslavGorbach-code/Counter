@@ -1,34 +1,25 @@
-package com.yaroslavgorbach.counter;
+package com.yaroslavgorbach.counter.RecyclerViews;
 
-import android.accessibilityservice.AccessibilityButtonController;
-import android.graphics.drawable.NinePatchDrawable;
-import android.os.Build;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
-import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.DrawableUtils;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.accessibility.AccessibilityEventCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator;
-import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
+import com.yaroslavgorbach.counter.FastCountButton;
+import com.yaroslavgorbach.counter.Models.Counter;
+import com.yaroslavgorbach.counter.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,10 +142,11 @@ public class CounterList_rv {
 
             @Override
             public void onMoveItem(int fromPosition, int toPosition) {
+
                 mMoveListener.onMove(mData.get(fromPosition), mData.get(toPosition));
 
-               // Counter removed = mData.remove(fromPosition);
-                // mData.add(toPosition, removed);
+                 Counter removed = mData.remove(fromPosition);
+                 mData.add(toPosition, removed);
 
             }
 
@@ -195,6 +187,7 @@ public class CounterList_rv {
                    mPlus = itemView.findViewById(R.id.plus_i);
                    mMinus = itemView.findViewById(R.id.minus_i);
                    mDragHandle = itemView.findViewById(R.id.dragHandle);
+                   mTestDta = itemView.findViewById(R.id.testData);
 
                    new FastCountButton(mPlus, ()->{
                        mMinus.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
@@ -220,6 +213,7 @@ public class CounterList_rv {
                 private void bind(Counter counter){
                     mTitle.setText(counter.title);
                     mValue.setText(String.valueOf(counter.value));
+                    mTestDta.setText(counter.createData);
 
                        }
 

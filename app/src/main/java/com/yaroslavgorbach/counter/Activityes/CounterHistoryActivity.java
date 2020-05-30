@@ -1,8 +1,7 @@
-package com.yaroslavgorbach.counter;
+package com.yaroslavgorbach.counter.Activityes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Build;
@@ -11,17 +10,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.BarChart;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import com.yaroslavgorbach.counter.RecyclerViews.CounterHistoryList_rv;
+import com.yaroslavgorbach.counter.Database.ViewModels.HistoryViewModel;
+import com.yaroslavgorbach.counter.R;
 
 public class CounterHistoryActivity extends AppCompatActivity {
 

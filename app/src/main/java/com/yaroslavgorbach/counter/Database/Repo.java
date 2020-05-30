@@ -1,9 +1,14 @@
-package com.yaroslavgorbach.counter;
+package com.yaroslavgorbach.counter.Database;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+
+import com.yaroslavgorbach.counter.Database.Daos.CounterDao;
+import com.yaroslavgorbach.counter.Database.Daos.CounterHistoryDao;
+import com.yaroslavgorbach.counter.Models.Counter;
+import com.yaroslavgorbach.counter.Models.CounterHistory;
 
 import java.util.List;
 

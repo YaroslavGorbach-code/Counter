@@ -1,4 +1,4 @@
-package com.yaroslavgorbach.counter;
+package com.yaroslavgorbach.counter.Activityes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +18,13 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbach.counter.Database.ViewModels.CounterViewModel;
+import com.yaroslavgorbach.counter.FastCountButton;
+import com.yaroslavgorbach.counter.Fragments.DeleteCounterDialog;
+import com.yaroslavgorbach.counter.Database.ViewModels.HistoryViewModel;
+import com.yaroslavgorbach.counter.Models.Counter;
+import com.yaroslavgorbach.counter.Models.CounterHistory;
+import com.yaroslavgorbach.counter.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package com.yaroslavgorbach.counter;
+package com.yaroslavgorbach.counter.Models;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

@@ -1,4 +1,4 @@
-package com.yaroslavgorbach.counter;
+package com.yaroslavgorbach.counter.Activityes;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,13 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
+
+import com.yaroslavgorbach.counter.Database.ViewModels.CounterViewModel;
+import com.yaroslavgorbach.counter.Fragments.CountersFragment;
+import com.yaroslavgorbach.counter.Fragments.CreateCounterDialog;
+import com.yaroslavgorbach.counter.Models.Counter;
+import com.yaroslavgorbach.counter.R;
+import com.yaroslavgorbach.counter.RecyclerViews.GroupList_rv;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

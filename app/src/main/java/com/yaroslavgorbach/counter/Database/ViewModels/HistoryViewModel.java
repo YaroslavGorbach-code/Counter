@@ -1,10 +1,13 @@
-package com.yaroslavgorbach.counter;
+package com.yaroslavgorbach.counter.Database.ViewModels;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.yaroslavgorbach.counter.Database.Repo;
+import com.yaroslavgorbach.counter.Models.CounterHistory;
 
 import java.util.List;
 
