@@ -12,7 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.yaroslavgorbach.counter.CounterList_rv;
+
+import com.yaroslavgorbach.counter.RecyclerViews.CounterList_rv;
 import com.yaroslavgorbach.counter.Models.Counter;
 import com.yaroslavgorbach.counter.Activityes.CounterActivity;
 import com.yaroslavgorbach.counter.Database.ViewModels.CounterViewModel;
