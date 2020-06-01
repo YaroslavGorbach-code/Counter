@@ -1,5 +1,6 @@
 package com.yaroslavgorbach.counter.RecyclerViews;
 
+import android.graphics.drawable.Drawable;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -147,12 +149,12 @@ public class CounterList_rv {
 
             @Override
             public void onSelectedChanged() {
-
+                mItem.setBackgroundResource(R.drawable.item_background);
             }
 
             @Override
             public void clearView() {
-
+                mItem.setBackgroundResource(0);
             }
 
             @Override
