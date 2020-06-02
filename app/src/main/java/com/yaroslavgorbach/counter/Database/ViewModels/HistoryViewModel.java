@@ -17,40 +17,31 @@ public class HistoryViewModel extends AndroidViewModel {
 
     public HistoryViewModel(@NonNull Application application) {
         super(application);
-
         mRepo = new Repo(application);
-
-
     }
 
     public void insert(CounterHistory counterHistory){
-
         mRepo.insert(counterHistory);
-
     }
 
     public void delete(long counterId){
-
         mRepo.delete(counterId);
+    }
 
+    public void delete(CounterHistory counterHistory){
+        mRepo.delete(counterHistory);
     }
 
     public void update(CounterHistory counterHistory){
-
         mRepo.update(counterHistory);
-
     }
 
     public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId){
-
         return mRepo.getCounterHistoryList(counterId);
-
     }
 
     public LiveData<List<CounterHistory>> getCounterHistoryListSortByValue(long counterId){
-
         return mRepo.getCounterHistoryListSortByValue(counterId);
-
     }
 
 }

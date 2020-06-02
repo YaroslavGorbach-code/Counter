@@ -1,7 +1,9 @@
 package com.yaroslavgorbach.counter.RecyclerViews;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,11 +18,15 @@ import java.util.List;
 
 public class CounterHistoryList_rv {
 
+    public interface HistoryItemClickListener{
+        void onDelete(CounterHistory counterHistory);
+    }
 
     private final Adapter mAdapter = new Adapter();
+    private final HistoryItemClickListener mHistoryItemClickListener;
 
-    public CounterHistoryList_rv(RecyclerView rv) {
-
+    public CounterHistoryList_rv(RecyclerView rv, HistoryItemClickListener historyItemClickListener) {
+        mHistoryItemClickListener = historyItemClickListener;
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rv.getContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext());
         rv.setLayoutManager(mLayoutManager);
@@ -74,7 +80,8 @@ public class CounterHistoryList_rv {
 
 
                 private TextView mValue;
-                private TextView mData;
+                private TextView mCreateData;
+                private ImageView mHistoryDelete;
 
 
 
@@ -83,14 +90,21 @@ public class CounterHistoryList_rv {
                     super(LayoutInflater.from(parent.getContext()).inflate(R.layout.counter_history_i, parent, false));
 
                    mValue = itemView.findViewById(R.id.history_value);
-                   mData = itemView.findViewById(R.id.historyData);
+                   mCreateData = itemView.findViewById(R.id.historyData);
+                   mHistoryDelete = itemView.findViewById(R.id.deleteHistory);
+
+                   mHistoryDelete.setOnClickListener(v ->{
+                       if(getAdapterPosition()!=-1) {
+                           mHistoryItemClickListener.onDelete(mData.get(getAdapterPosition()));
+                       }
+                   });
 
                 }
 
                 private void bind(CounterHistory counterHistory){
 
                     mValue.setText(String.valueOf(counterHistory.value));
-                    mData.setText(counterHistory.data);
+                    mCreateData.setText(counterHistory.data);
 
                 }
             }

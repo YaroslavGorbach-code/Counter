@@ -2,6 +2,7 @@ package com.yaroslavgorbach.counter.Database.Daos;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -18,6 +19,9 @@ public interface CounterHistoryDao {
 
     @Update
     void update(CounterHistory CounterHistory);
+
+    @Delete
+    void delete(CounterHistory counterHistory);
 
     @Query("DELETE FROM counterHistory_table WHERE counterId = :counterId")
     void delete(long counterId);

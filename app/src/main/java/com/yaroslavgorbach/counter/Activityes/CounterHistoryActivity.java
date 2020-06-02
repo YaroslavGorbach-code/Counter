@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.yaroslavgorbach.counter.Models.CounterHistory;
 import com.yaroslavgorbach.counter.RecyclerViews.CounterHistoryList_rv;
 import com.yaroslavgorbach.counter.Database.ViewModels.HistoryViewModel;
 import com.yaroslavgorbach.counter.R;
@@ -31,13 +33,20 @@ public class CounterHistoryActivity extends AppCompatActivity {
 
         /*initialize fields*/
         mHistoryViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
-        mHistoryList = new CounterHistoryList_rv(findViewById(R.id.counterHistory_rv));
         mToolbar = findViewById(R.id.toolbar_history);
         mSpinner = findViewById(R.id.spinner);
 
         /*initialize navigation listener*/
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(i-> finish());
+
+        mHistoryList = new CounterHistoryList_rv(findViewById(R.id.counterHistory_rv),
+                new CounterHistoryList_rv.HistoryItemClickListener() {
+                    @Override
+                    public void onDelete(CounterHistory counterHistory) {
+                        mHistoryViewModel.delete(counterHistory);
+                    }
+                });
 
         /*set toolTipText*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

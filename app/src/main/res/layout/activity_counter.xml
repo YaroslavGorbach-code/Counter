@@ -20,6 +20,8 @@
         android:id="@+id/counterTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="title"
         android:textSize="20dp"
         android:padding="10dp"

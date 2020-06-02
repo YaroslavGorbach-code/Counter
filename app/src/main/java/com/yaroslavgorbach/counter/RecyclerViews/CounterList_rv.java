@@ -1,11 +1,13 @@
 package com.yaroslavgorbach.counter.RecyclerViews;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -155,6 +157,7 @@ public class CounterList_rv {
             @Override
             public void clearView() {
                 mItem.setBackgroundResource(0);
+
             }
 
             @Override
@@ -169,9 +172,7 @@ public class CounterList_rv {
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                mItemClickListener.onOpen(mData.get(getAdapterPosition()));
-                itemView.setPressed(true);
-                return true;
+                return false;
             }
 
             @Override
@@ -181,7 +182,8 @@ public class CounterList_rv {
 
             @Override
             public void onLongPress(MotionEvent e) {
-             mItemTouchHelper.startDrag(this);
+                itemView.performLongClick();
+                mItemTouchHelper.startDrag(this);
             }
 
             @Override
@@ -192,7 +194,22 @@ public class CounterList_rv {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 mGestureDetector.onTouchEvent(event);
+
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        itemView.setPressed(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        itemView.performClick();
+                        mItemClickListener.onOpen(mData.get(getAdapterPosition()));
+                        //no break
+                    case MotionEvent.ACTION_CANCEL:
+                        itemView.setPressed(false);
+                        break;
+                }
+
                 return true;
+
             }
         }
 
