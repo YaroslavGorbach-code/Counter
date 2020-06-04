@@ -42,7 +42,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     private CounterViewModel mCounterViewModel;
     private Toolbar mToolbar;
     private TextView mCounterTitle;
-    private LinearLayout mLayout;
+    private View mLayout;
     private long mCounterId;
     private Button mSaveToHistoryButton;
     private ImageView mAllInclusiveMin_iv;

@@ -49,15 +49,17 @@ public class CounterList_rv {
     private ItemClickListener mItemClickListener;
     private MoveListener mMoveListener;
     private ItemTouchHelper mItemTouchHelper;
+    private LinearLayoutManager mLinearLayoutManager;
 
     public CounterList_rv(RecyclerView rv, ItemClickListener ItemClickListener, MoveListener moveListener) {
 
         mItemClickListener = ItemClickListener;
         mMoveListener = moveListener;
+        mLinearLayoutManager = new LinearLayoutManager(rv.getContext());
         ItemTouchHelper.Callback callback = new MyItemTouchHelper(mAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext());
-        rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
+        rv.setLayoutManager(mLinearLayoutManager);
         rv.setAdapter(mAdapter);
         rv.setHasFixedSize(true);
         rv.addItemDecoration(dividerItemDecoration);
@@ -157,7 +159,6 @@ public class CounterList_rv {
             @Override
             public void clearView() {
                 mItem.setBackgroundResource(0);
-
             }
 
             @Override
@@ -177,7 +178,7 @@ public class CounterList_rv {
 
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                return false;
+                return true;
             }
 
             @Override
