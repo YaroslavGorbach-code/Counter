@@ -1,0 +1,43 @@
+<resources>
+        <string name="app_name">counter</string>
+        <string name="navigation_drawer_close">Navigation drawer close</string>
+        <string name="navigation_drawer_open">Navigation drawer open</string>
+
+        <string-array name="history_sort_items">
+            <item>Сортировка по дате</item>
+            <item>Сортировка по значению</item>
+        </string-array>
+
+    <string name="NavigationViewToolbar">Групы</string>
+    <string name="AllCountersItem">Все щетчики</string>
+    <string name="MainActivityToolbar">Все щетчики</string>
+    <string name="CounterActivitySaveToHistory">Сохранить в историю</string>
+    <string name="CounterActivityMax">Max</string>
+    <string name="CounterActivityMin">Min</string>
+    <string name="CounterActivityHistory_m">История</string>
+    <string name="CounterActivityEdit_m">Редактировать</string>
+    <string name="CounterActivityDelete_m">Удалить</string>
+    <string name="AddCounterDialogTitle">Добавить щетчик</string>
+    <string name="AddCounterDialogCounterTitle">Имя щетчика</string>
+    <string name="AddCounterDialogCounterGroup">Група</string>
+    <string name="AddCounterDialogCounterPositiveButton">Создать</string>
+    <string name="AddCounterDialogCounterNegativeButton">Отмена</string>
+    <string name="CreateEditCounterCounterTitleHint">Имя щетчика</string>
+    <string name="CreateEditCounterCounterTitleText">Новый щетчик</string>
+    <string name="CreateEditCounterCounterValueHint">Значение</string>
+    <string name="CreateEditCounterCounterValueText">0</string>
+    <string name="CreateEditCounterCounterStepHint">Шаг</string>
+    <string name="CreateEditCounterCounterStepText">1</string>
+    <string name="CreateEditCounterCounterMaxValueHint">Максимальное значение</string>
+    <string name="CreateEditCounterCounterMinValueHint">Минимальное значение</string>
+    <string name="DeleteCounterDialogTitle">Удалить щетчик?</string>
+    <string name="DeleteCounterDialogText">Ето действие нельзя будет отменить</string>
+    <string name="DeleteCounterDialogPositiveButton">Да</string>
+    <string name="DeleteCounterDialogNegativeButton">Отмена</string>
+    <string name="SaveToHistoryToast">сохранено в историю</string>
+
+
+
+
+
+</resources>

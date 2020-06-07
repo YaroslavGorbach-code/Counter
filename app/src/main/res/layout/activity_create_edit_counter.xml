@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activityes.CreateCounterDetailedEditCounterActivity">
+    tools:context=".Activityes.CreateEditCounterActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?android:colorBackground"
-            app:title="New counter"
+            app:title="@string/CreateEditCounterCounterTitleText"
             app:titleTextColor="#FFC51162"/>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -42,11 +42,11 @@
             android:id="@+id/counterTitle_addCounter_detailed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Counter tittle"
+            android:hint="@string/CreateEditCounterCounterTitleHint"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="1"
-            android:text="New counter" />
+            android:text="@string/CreateEditCounterCounterTitleText" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,11 +67,11 @@
             android:id="@+id/counterValue_addCounter_detailed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Value"
+            android:hint="@string/CreateEditCounterCounterValueHint"
             android:maxLength="16"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
-            android:text="0"
+            android:text="@string/CreateEditCounterCounterValueText"
 
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -93,11 +93,11 @@
             android:id="@+id/counterStep_addCounter_detailed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Step"
+            android:hint="@string/CreateEditCounterCounterStepHint"
             android:maxLength="16"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
-            android:text="1"
+            android:text="@string/CreateEditCounterCounterStepText"
 
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -118,7 +118,7 @@
             android:id="@+id/counterMaxValue_addCounter_detailed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Max value"
+            android:hint="@string/CreateEditCounterCounterMaxValueHint"
             android:maxLength="16"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
@@ -143,7 +143,7 @@
             android:id="@+id/counterMinValue_addCounter_detailed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Min value"
+            android:hint="@string/CreateEditCounterCounterMinValueHint"
             android:maxLength="17"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
@@ -160,7 +160,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Group"
+        android:hint="@string/AddCounterDialogCounterGroup"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

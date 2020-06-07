@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,8 +94,8 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
                 case R.id.counterEdit:
 
-                    startActivity(new Intent(CounterActivity.this, CreateCounterDetailedEditCounterActivity.class)
-                            .putExtra(CreateCounterDetailedEditCounterActivity.EXTRA_COUNTER_ID, mCounterId));
+                    startActivity(new Intent(CounterActivity.this, CreateEditCounterActivity.class)
+                            .putExtra(CreateEditCounterActivity.EXTRA_COUNTER_ID, mCounterId));
 
                     break;
 
@@ -169,7 +168,8 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
                     mHistoryViewModel.insert(new CounterHistory(Objects.requireNonNull(
                             mCounter.getValue()).value, date, mCounter.getValue().id));
-            Toast.makeText(this, "Value " + mCounter.getValue().value + " saved to counter history", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  getString(R.string.CreateEditCounterCounterValueHint) + " " +
+                    mCounter.getValue().value + " " + getString(R.string.SaveToHistoryToast), Toast.LENGTH_SHORT).show();
         });
 
         /*counter +*/

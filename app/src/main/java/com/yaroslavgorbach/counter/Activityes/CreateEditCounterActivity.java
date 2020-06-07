@@ -21,7 +21,7 @@ import java.util.Locale;
 import java.util.Set;
 
 
-public class CreateCounterDetailedEditCounterActivity extends AppCompatActivity {
+public class CreateEditCounterActivity extends AppCompatActivity {
 
     private String mTitle;
     private long mValue;
@@ -48,7 +48,7 @@ public class CreateCounterDetailedEditCounterActivity extends AppCompatActivity 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_edit_counter_detailed);
+        setContentView(R.layout.activity_create_edit_counter);
 
         /*initialize fields*/
         mTitle_et = findViewById(R.id.counterTitle_addCounter_detailed);
@@ -220,7 +220,7 @@ public class CreateCounterDetailedEditCounterActivity extends AppCompatActivity 
 
           ArrayAdapter<String> adapter =
                   new ArrayAdapter<>(
-                          CreateCounterDetailedEditCounterActivity.this,
+                          CreateEditCounterActivity.this,
                           R.layout.dropdown_menu_popup_item,
                           result);
           mGroups_et.setAdapter(adapter);

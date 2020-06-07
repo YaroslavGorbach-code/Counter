@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.yaroslavgorbach.counter.R;
+
 public class DeleteCounterDialog extends AppCompatDialogFragment {
 
   private DeleteDialogListener mListener;
@@ -40,10 +42,10 @@ public class DeleteCounterDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
-                .setTitle("Delete counter?")
-                .setMessage("This action can't be undone")
-                .setPositiveButton("Yes", (dialog, which) -> mListener.onDialogDeleteClick())
-                .setNegativeButton("Cancel", null);
+                .setTitle(R.string.DeleteCounterDialogTitle)
+                .setMessage(R.string.DeleteCounterDialogText)
+                .setPositiveButton(R.string.DeleteCounterDialogPositiveButton, (dialog, which) -> mListener.onDialogDeleteClick())
+                .setNegativeButton(R.string.DeleteCounterDialogNegativeButton, null);
 
         return builder.create();
     }

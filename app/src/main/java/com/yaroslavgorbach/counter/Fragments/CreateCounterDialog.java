@@ -60,7 +60,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setView(view)
-                .setPositiveButton("Create", (dialog, which) -> {
+                .setPositiveButton(R.string.AddCounterDialogCounterPositiveButton, (dialog, which) -> {
 
                     TextInputEditText text_et = view.findViewById(R.id.counterTitle_addCounter);
 
@@ -96,7 +96,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
 
                 })
 
-                .setNegativeButton("Cancel", (dialog, which) -> {
+                .setNegativeButton(R.string.AddCounterDialogCounterNegativeButton, (dialog, which) -> {
 
                 });
 

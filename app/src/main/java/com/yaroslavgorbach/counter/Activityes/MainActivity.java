@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     @Override
     public void onLaunchDetailedClick() {
 
-        startActivity(new Intent(MainActivity.this, CreateCounterDetailedEditCounterActivity.class ));
+        startActivity(new Intent(MainActivity.this, CreateEditCounterActivity.class ));
 
     }
 }
