@@ -19,11 +19,11 @@ public class Counter {
     public long minValue;
     public long step;
     public String grope;
-    public String createData;
+    public Date createData;
 
 
 
-    public Counter( String title, long value, long maxValue, long minValue, long step, String grope, String createData) {
+    public Counter( String title, long value, long maxValue, long minValue, long step, String grope, Date createData) {
         this.title = title;
         this.value = value;
         this.maxValue = maxValue;

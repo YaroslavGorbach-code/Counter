@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.yaroslavgorbach.counter.Database.Daos.CounterDao;
@@ -19,7 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-@Database(entities = {Counter.class, CounterHistory.class },  version = 21)
+@Database(entities = {Counter.class, CounterHistory.class },  version = 24)
+@TypeConverters({Converters.class})
 public abstract class CounterDatabase extends RoomDatabase {
 
     private static CounterDatabase sInstance;
@@ -41,6 +44,8 @@ public abstract class CounterDatabase extends RoomDatabase {
         return sInstance;
 
     }
+
+
     private static RoomDatabase.Callback rdc = new RoomDatabase.Callback() {
         public void onCreate(SupportSQLiteDatabase db) {
             new PopulateAsyncTask(sInstance).execute();
@@ -51,6 +56,7 @@ public abstract class CounterDatabase extends RoomDatabase {
         }
     };
 
+
     private static class PopulateAsyncTask extends AsyncTask<Void, Void, Void>{
         private CounterDao mDao;
         PopulateAsyncTask(CounterDatabase db){
@@ -60,11 +66,10 @@ public abstract class CounterDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             Date currentDate = new Date();
-            DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
-            String date = dateFormat.format(currentDate);
+            currentDate.getTime();
 
             mDao.insert(new Counter("New counter",0, Long.parseLong("9999999999999999"), Long.parseLong("-9999999999999999"),
-                    1, null, date ));
+                    1, null, currentDate ));
             return null;
         }
     }

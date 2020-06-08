@@ -19,6 +19,8 @@ import com.yaroslavgorbach.counter.Activityes.CounterActivity;
 import com.yaroslavgorbach.counter.Database.ViewModels.CounterViewModel;
 import com.yaroslavgorbach.counter.R;
 
+import java.util.Date;
+
 public class CountersFragment extends Fragment {
     private CounterList_rv mCountersList;
     private CounterViewModel mCounterViewModel;
@@ -88,14 +90,17 @@ public class CountersFragment extends Fragment {
             @Override
             public void onMove(Counter counterFrom, Counter counterTo) {
 
-                String dataFrom = counterFrom.createData;
-                String dataTo = counterTo.createData;
+                Date dataFrom = counterFrom.createData;
+                Date dataTo = counterTo.createData;
 
-                counterTo.createData = dataFrom;
-                mCounterViewModel.update(counterTo);
+                if (!dataFrom.equals(dataTo)) {
+                    counterTo.createData = dataFrom;
+                    mCounterViewModel.update(counterTo);
 
-                counterFrom.createData = dataTo;
-                mCounterViewModel.update(counterFrom);
+                    counterFrom.createData = dataTo;
+                    mCounterViewModel.update(counterFrom);
+
+                }
 
             }
         });

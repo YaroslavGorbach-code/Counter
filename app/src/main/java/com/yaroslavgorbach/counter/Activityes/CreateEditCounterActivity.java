@@ -29,7 +29,7 @@ public class CreateEditCounterActivity extends AppCompatActivity {
     private String mGroup;
     private long mMaxValue;
     private long mMinValue;
-    private String mCreateData;
+    private Date mCreateData;
 
 
     private TextInputEditText mTitle_et;
@@ -192,10 +192,9 @@ public class CreateEditCounterActivity extends AppCompatActivity {
                 /*if mCounter == null insert counter*/
                 if (mCounterId<0){
                     Date currentDate = new Date();
-                    DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
-                    String date = dateFormat.format(currentDate);
+                    currentDate.getTime();
 
-                    Counter counter = new Counter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup, date);
+                    Counter counter = new Counter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup, currentDate);
                     mViewModel.insert(counter);
                     finish();
 

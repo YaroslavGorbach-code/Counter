@@ -111,11 +111,12 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     public void onAddClick(String title, String group) {
 
         Date currentDate = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
-        String date = dateFormat.format(currentDate);
+        currentDate.getTime();
+//        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
+//        String date = dateFormat.format(currentDate);
 
         Counter counter = new Counter(title, 0, Long.parseLong("9999999999999999"),
-                Long.parseLong("-9999999999999999"), 1, group, date);
+                Long.parseLong("-9999999999999999"), 1, group, currentDate);
         mCounterViewModel.insert(counter);
 
     }
