@@ -3,6 +3,7 @@ package com.yaroslavgorbach.counter.Activityes;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.yaroslavgorbach.counter.Database.ViewModels.CounterViewModel;
 import com.yaroslavgorbach.counter.Fragments.CountersFragment;
 import com.yaroslavgorbach.counter.Fragments.CreateCounterDialog;
@@ -49,15 +51,9 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
         mToolbar.inflateMenu(R.menu.menu_counter_main_activity);
         mToolbar.setOnMenuItemClickListener(i->{
 
-            switch (i.getItemId()){
-
-                case R.id.counterAdd:
-
-                    new CreateCounterDialog().show(getSupportFragmentManager(), "Add Counter");
-
-                    break;
+            if (i.getItemId() == R.id.counterAdd) {
+                new CreateCounterDialog().show(getSupportFragmentManager(), "Add Counter");
             }
-
             return true;
 
         });
@@ -75,7 +71,8 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
         /*setting the fragment with all the counters*/
         mAllCounters_navigationItem.setOnClickListener(i->{
             getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, fragment).commit();
-            mToolbar.setTitle("All counters");
+            mToolbar.setTitle(R.string.AllCountersItem);
+            mDrawer.closeDrawer(GravityCompat.START);
         });
 
         /*initialize RecyclerView and it listener for groups*/
@@ -84,25 +81,22 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
             /*setting the fragment with all the counters which belong to a certain group*/
             @Override
             public void onOpen(String string) {
-
                 Bundle arg = new Bundle();
                 arg.putString("group_title", string);
                 CountersFragment fragment = new CountersFragment();
                 fragment.setArguments(arg);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, fragment).commit();
                 mToolbar.setTitle(string);
-
+                mDrawer.closeDrawer(GravityCompat.START);
             }
 
         });
 
         mCounterViewModel.getGroups().observe(this, strings -> {
-
             /*delete the same groups*/
              Set<String> set = new HashSet<>(strings);
              String[] result = set.toArray(new String[0]);
              mGroupsList.setGroups(Arrays.asList(result));
-
         });
     }
 

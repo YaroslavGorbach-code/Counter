@@ -25,52 +25,40 @@ public class FastCountButton implements View.OnTouchListener, Handler.Callback {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-
         switch (event.getActionMasked()) {
-
             case MotionEvent.ACTION_DOWN:
-
                 mView.setPressed(true);
                 mHandler.sendEmptyMessageDelayed(FAST_COUNT_MSG, ViewConfiguration.getLongPressTimeout());
                 break;
 
             case MotionEvent.ACTION_UP:
-
                 if (!mFastCounting) {
                     mView.performClick();
                 }
                 //no break
 
             case MotionEvent.ACTION_CANCEL:
-
                 mHandler.removeMessages(FAST_COUNT_MSG);
                 mFastCounting = false;
                 mView.setPressed(false);
                 mView.getParent().requestDisallowInterceptTouchEvent(false);
                 break;
         }
-
         return true;
-
     }
 
     @Override
     public boolean handleMessage(Message msg) {
-
         if (msg.what == FAST_COUNT_MSG) {
 
             if (!mFastCounting) {
-
                 mFastCounting = true;
                 mView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 mView.getParent().requestDisallowInterceptTouchEvent(true);
-
             }
             mView.performClick();
             mHandler.sendEmptyMessageDelayed(FAST_COUNT_MSG, FAST_COUNT_INTERVAL_MS);
-
         }
-
         return false;
     }
 }

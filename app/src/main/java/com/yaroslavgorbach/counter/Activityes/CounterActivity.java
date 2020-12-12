@@ -74,102 +74,36 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         mGroupTitle = findViewById(R.id.groupTitle);
         mCounter = mCounterViewModel.getCounter(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1));
 
-
-
         /*setting valueTextView size depending on value*/
         setTextViewSize();
-
 
         /*inflating menu, navigationIcon and set listeners*/
         mToolbar.inflateMenu(R.menu.menu_counter_activiry);
         mToolbar.setOnMenuItemClickListener(i->{
-
             switch (i.getItemId()){
-
                 case R.id.counterDelete:
-
                     new DeleteCounterDialog().show(getSupportFragmentManager(), "DialogCounterDelete");
-
                     break;
-
                 case R.id.counterEdit:
-
                     startActivity(new Intent(CounterActivity.this, CreateEditCounterActivity.class)
                             .putExtra(CreateEditCounterActivity.EXTRA_COUNTER_ID, mCounterId));
-
                     break;
-
                 case R.id.counterHistory:
-
                     startActivity(new Intent(CounterActivity.this, CounterHistoryActivity.class).
                             putExtra(CounterHistoryActivity.EXTRA_COUNTER_ID, mCounterId));
-
                     break;
-
             }
-
-
             return true;
         });
-
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(i-> finish());
 
-
-
-        /*each new counter value is set to textView*/
-        mCounter.observe(this, counter -> {
-
-
-            /*if counter == null that means it was deleted*/
-        if (counter != null) {
-
-            mCounterId = counter.id;
-            mValue_tv.setText(String.valueOf(counter.value));
-            mCounterTitle.setText(counter.title);
-            mGroupTitle.setText(counter.grope);
-
-            if (counter.maxValue != Long.parseLong("9999999999999999")) {
-
-                mAllInclusiveMAx_iv.setVisibility(View.GONE);
-                mMaxValue_tv.setVisibility(View.VISIBLE);
-                mMaxValue_tv.setText(String.valueOf(counter.maxValue));
-
-            }
-
-
-            if (counter.minValue != Long.parseLong("-9999999999999999")) {
-
-                mAllInclusiveMin_iv.setVisibility(View.GONE);
-                mMinValue_tv.setVisibility(View.VISIBLE);
-                mMinValue_tv.setText(String.valueOf(counter.minValue));
-
-            }
-
-            setTextViewSize();
-
-
-        }else {
-
-            finish();
-
-        }
-
-        });
-
+        /*each new counter value is setting to textView*/
+        setCounterValue();
 
         /*saving counter value to history*/
         mSaveToHistoryButton.setOnClickListener(v -> {
-
-            /*getting current data and time */
-            Date currentDate = new Date();
-            DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
-            String date = dateFormat.format(currentDate);
-
-                    mHistoryViewModel.insert(new CounterHistory(Objects.requireNonNull(
-                            mCounter.getValue()).value, date, mCounter.getValue().id));
-            Toast.makeText(this,  getString(R.string.CreateEditCounterCounterValueHint) + " " +
-                    mCounter.getValue().value + " " + getString(R.string.SaveToHistoryToast), Toast.LENGTH_SHORT).show();
+            saveCounterValueToHistory();
         });
 
         /*counter +*/
@@ -180,32 +114,71 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
 
         /*reset counter*/
         mResetButton.setOnClickListener(v->{
-
-            long oldValue = Objects.requireNonNull(mCounter.getValue()).value;
-            int value = 0;
-            mCounterViewModel.setValue(Objects.requireNonNull(mCounter.getValue()), value);
-            Snackbar.make(mLayout,"Counter reset", BaseTransientBottomBar.LENGTH_LONG)
-                    .setAction("UNDO", v1 ->
-                            mCounterViewModel.setValue(Objects.requireNonNull(mCounter.getValue()), oldValue)).show();
-
+            resetCounter();
         });
 
 
 
     }
 
+    private void resetCounter() {
+        long oldValue = Objects.requireNonNull(mCounter.getValue()).value;
+        int value = 0;
+        mCounterViewModel.setValue(Objects.requireNonNull(mCounter.getValue()), value);
+        Snackbar.make(mLayout,"Counter reset", BaseTransientBottomBar.LENGTH_LONG)
+                .setAction("UNDO", v1 ->
+                        mCounterViewModel.setValue(Objects.requireNonNull(mCounter.getValue()), oldValue)).show();
+    }
+
+    private void saveCounterValueToHistory() {
+        /*getting current data and time */
+        Date currentDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
+        String date = dateFormat.format(currentDate);
+
+        mHistoryViewModel.insert(new CounterHistory(Objects.requireNonNull(
+                mCounter.getValue()).value, date, mCounter.getValue().id));
+        Toast.makeText(this,  getString(R.string.CreateEditCounterCounterValueHint) + " " +
+                mCounter.getValue().value + " " + getString(R.string.SaveToHistoryToast), Toast.LENGTH_SHORT).show();
+    }
+
+    private void setCounterValue() {
+        mCounter.observe(this, counter -> {
+            /*if counter == null that means it was deleted*/
+        if (counter != null) {
+            mCounterId = counter.id;
+            mValue_tv.setText(String.valueOf(counter.value));
+            mCounterTitle.setText(counter.title);
+            mGroupTitle.setText(counter.grope);
+
+            if (counter.maxValue != Long.parseLong("9999999999999999")) {
+                mAllInclusiveMAx_iv.setVisibility(View.GONE);
+                mMaxValue_tv.setVisibility(View.VISIBLE);
+                mMaxValue_tv.setText(String.valueOf(counter.maxValue));
+            }
+
+            if (counter.minValue != Long.parseLong("-9999999999999999")) {
+                mAllInclusiveMin_iv.setVisibility(View.GONE);
+                mMinValue_tv.setVisibility(View.VISIBLE);
+                mMinValue_tv.setText(String.valueOf(counter.minValue));
+            }
+            setTextViewSize();
+        }else {
+            finish();
+        }
+
+        });
+    }
+
 
     /*delete counter*/
     @Override
     public void onDialogDeleteClick() {
-
         mCounterViewModel.delete(mCounter.getValue());
         mHistoryViewModel.delete(mCounterId);
-
     }
 
     private void incCounter(){
-
         long maxValue;
         long incOn;
         long value = Objects.requireNonNull(mCounter.getValue()).value;
@@ -214,19 +187,14 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         value += incOn;
 
         if (value > maxValue){
-
             Toast.makeText(this, "This is maximum", Toast.LENGTH_SHORT).show();
-
         }else {
-
             mCounterViewModel.setValue(mCounter.getValue(), value);
-
         }
         mIncButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
     }
 
     private void decCounter(){
-
         long minValue;
         long decOn;
         long value = Objects.requireNonNull(mCounter.getValue()).value;
@@ -235,13 +203,9 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         value -=decOn;
 
         if (value < minValue){
-
             Toast.makeText(this, "This is minimum", Toast.LENGTH_SHORT).show();
-
         }else {
-
             mCounterViewModel.setValue(mCounter.getValue(), value);
-
         }
         mDecButton.performHapticFeedback(HapticFeedbackConstants. LONG_PRESS);
     }
@@ -250,115 +214,75 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     private void setTextViewSize(){
 
         if (mValue_tv.getText().length() == 1){
-
             mValue_tv.setTextSize(150);
-
         }
 
         if (mValue_tv.getText().length() == 2){
-
             mValue_tv.setTextSize(150);
-
         }
 
         if (mValue_tv.getText().length() == 3){
-
             mValue_tv.setTextSize(130);
-
         }
 
         if (mValue_tv.getText().length() == 4){
-
             mValue_tv.setTextSize(120);
-
         }
 
         if (mValue_tv.getText().length() == 5){
-
             mValue_tv.setTextSize(110);
-
         }
 
         if (mValue_tv.getText().length() == 6){
-
             mValue_tv.setTextSize(100);
-
         }
 
         if (mValue_tv.getText().length() == 7){
-
             mValue_tv.setTextSize(90);
-
         }
 
         if (mValue_tv.getText().length() == 8){
-
             mValue_tv.setTextSize(80);
-
         }
 
         if (mValue_tv.getText().length() == 9){
-
             mValue_tv.setTextSize(70);
-
         }
 
         if (mValue_tv.getText().length() == 10){
-
             mValue_tv.setTextSize(60);
-
         }
 
         if (mValue_tv.getText().length() == 11){
-
             mValue_tv.setTextSize(60);
-
         }
 
         if (mValue_tv.getText().length() == 12){
-
             mValue_tv.setTextSize(50);
-
         }
 
         if (mValue_tv.getText().length() == 13){
-
             mValue_tv.setTextSize(50);
-
         }
 
         if (mValue_tv.getText().length() == 14){
-
             mValue_tv.setTextSize(40);
-
         }
 
         if (mValue_tv.getText().length() == 15){
-
             mValue_tv.setTextSize(40);
-
         }
 
         if (mValue_tv.getText().length() == 16){
-
             mValue_tv.setTextSize(40);
-
         }
 
         if (mValue_tv.getText().length() == 17){
-
             mValue_tv.setTextSize(40);
-
         }
 
         if (mValue_tv.getText().length() == 18){
-
             mValue_tv.setTextSize(40);
-
         }
-
     }
-
-
-
 }

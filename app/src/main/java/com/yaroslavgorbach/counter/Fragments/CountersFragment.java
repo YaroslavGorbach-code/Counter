@@ -33,7 +33,6 @@ public class CountersFragment extends Fragment {
 
         /*initialize RecyclerView and it listener*/
         mCountersList = new CounterList_rv(view.findViewById(R.id.countersList_rv), new CounterList_rv.ItemClickListener() {
-
             /*counter +*/
             @Override
             public void onPlusClick(Counter counter) {
@@ -45,15 +44,10 @@ public class CountersFragment extends Fragment {
                 value += incOn;
 
                 if (value > maxValue) {
-
                     Toast.makeText(view.getContext(), "This is maximum", Toast.LENGTH_SHORT).show();
-
                 } else {
-
                     mCounterViewModel.setValue(counter, value);
-
                 }
-
             }
 
             /*counter -*/
@@ -67,21 +61,15 @@ public class CountersFragment extends Fragment {
                 value -= decOn;
 
                 if (value < minValue) {
-
                     Toast.makeText(view.getContext(), "This is minimum", Toast.LENGTH_SHORT).show();
-
                 } else {
-
                     mCounterViewModel.setValue(counter, value);
-
                 }
-
             }
 
             /*open counterActivity*/
             @Override
             public void onOpen(Counter counter) {
-
                 startActivity(new Intent(view.getContext(), CounterActivity.class).
                         putExtra(CounterActivity.EXTRA_COUNTER_ID, counter.id));
             }
@@ -89,19 +77,15 @@ public class CountersFragment extends Fragment {
             //item moved
             @Override
             public void onMove(Counter counterFrom, Counter counterTo) {
-
                 Date dataFrom = counterFrom.createData;
                 Date dataTo = counterTo.createData;
-
                 if (!dataFrom.equals(dataTo)) {
                     counterTo.createData = dataFrom;
                     mCounterViewModel.update(counterTo);
 
                     counterFrom.createData = dataTo;
                     mCounterViewModel.update(counterFrom);
-
                 }
-
             }
         });
 

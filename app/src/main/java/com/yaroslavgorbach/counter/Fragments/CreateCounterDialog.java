@@ -25,7 +25,6 @@ import java.util.Set;
 public class CreateCounterDialog extends AppCompatDialogFragment {
 
     public interface AddCounterListener{
-
         void onAddClick(String title, String group);
         void onLaunchDetailedClick();
     }
@@ -38,13 +37,9 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         try {
-
             mListener = (AddCounterListener) context;
-
         } catch (ClassCastException e) {
-
             throw new ClassCastException("must implement AddCounterListenerListener");
         }
     }
@@ -55,8 +50,6 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
 
         @SuppressLint("InflateParams") View view = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_create_counter, null);
-
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setView(view)
@@ -69,35 +62,25 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
                     String group;
 
                     if(text_et.getText().toString().trim().isEmpty()){
-
                         text_et.setError("This field cannot be empty");
-
                     }else{
-
                         title = text_et.getText().toString();
                     }
 
                     /*if group is empty set null*/
                     if(mGroups_et.getText().toString().trim().isEmpty()){
-
                         group = null;
-
                     }else{
-
                         group = mGroups_et.getText().toString();
                     }
 
                     /*passing variables to create a counter*/
                     if (!(title.trim().isEmpty())){
-
                         mListener.onAddClick(title, group);
-
                     }
 
                 })
-
                 .setNegativeButton(R.string.AddCounterDialogCounterNegativeButton, (dialog, which) -> {
-
                 });
 
 
@@ -106,8 +89,18 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
             mViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
 
         /*each new group sets into dropdown_menu*/
-        mViewModel.getGroups().observe(this, strings -> {
+        setGroups(view);
 
+        /*start CreateCounterDetailed_AND_EditCounterActivity*/
+            view.findViewById(R.id.LaunchDetailed).setOnClickListener(v -> {
+                mListener.onLaunchDetailedClick();
+                dismiss();
+            });
+         return builder.create();
+    }
+
+    private void setGroups(View view) {
+        mViewModel.getGroups().observe(this, strings -> {
             /*delete the same groups*/
             Set<String> set = new HashSet<>(strings);
             String[] result = set.toArray(new String[0]);
@@ -120,17 +113,5 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
             mGroups_et.setAdapter(adapter);
 
         });
-
-
-        /*start CreateCounterDetailed_AND_EditCounterActivity*/
-            view.findViewById(R.id.LaunchDetailed).setOnClickListener(v -> {
-
-                mListener.onLaunchDetailedClick();
-                dismiss();
-
-            });
-
-         return builder.create();
-
     }
 }

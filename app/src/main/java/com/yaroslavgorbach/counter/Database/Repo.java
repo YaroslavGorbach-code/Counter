@@ -16,11 +16,8 @@ public class Repo {
 
    private CounterDao mCounterDao;
    private CounterHistoryDao mCounterHistoryDao;
-
    private LiveData<List<Counter>> mAll_counters;
    private LiveData<List<String>> mGroups;
-
-
 
     public Repo(Application application){
 

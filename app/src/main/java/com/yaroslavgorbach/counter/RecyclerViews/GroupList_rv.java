@@ -82,15 +82,11 @@ public class GroupList_rv {
                     super(LayoutInflater.from(parent.getContext()).inflate(R.layout.group_i, parent, false));
                    mItem = itemView.findViewById(R.id.item_group_i);
                    mTitle = itemView.findViewById(R.id.group_title_i);
-
-                    mItem.setOnClickListener(v-> mListener.onOpen(mData.get(getAdapterPosition())));
-
+                   mItem.setOnClickListener(v-> mListener.onOpen(mData.get(getAdapterPosition())));
                 }
 
                 private void bind(String string){
-
                     mTitle.setText(string);
-
                 }
             }
 

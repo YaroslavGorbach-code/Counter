@@ -8,8 +8,8 @@
         <item>Sort by value </item>
     </string-array>
     <string name="NavigationViewToolbar">Groups</string>
-    <string name="AllCountersItem">All Counters</string>
-    <string name="MainActivityToolbar">All Counters</string>
+    <string name="AllCountersItem">All counters</string>
+    <string name="MainActivityToolbar">All сounters</string>
     <string name="CounterActivitySaveToHistory">Save to history</string>
     <string name="CounterActivityMax">Max</string>
     <string name="CounterActivityMin">Min</string>
@@ -22,14 +22,14 @@
     <string name="AddCounterDialogCounterPositiveButton">Create</string>
     <string name="AddCounterDialogCounterNegativeButton">Cancel</string>
     <string name="CreateEditCounterCounterTitleHint">Counter tittle</string>
-    <string name="CreateEditCounterCounterTitleText">New Counter</string>
+    <string name="CreateEditCounterCounterTitleText">New сounter</string>
     <string name="CreateEditCounterCounterValueHint">Value</string>
     <string name="CreateEditCounterCounterValueText">0</string>
     <string name="CreateEditCounterCounterStepHint">Step</string>
     <string name="CreateEditCounterCounterStepText">1</string>
     <string name="CreateEditCounterCounterMaxValueHint">Max value</string>
     <string name="CreateEditCounterCounterMinValueHint">Min value</string>
-    <string name="DeleteCounterDialogTitle">Delete Counter?</string>
+    <string name="DeleteCounterDialogTitle">Delete сounter?</string>
     <string name="DeleteCounterDialogText">This action can not be undone</string>
     <string name="DeleteCounterDialogPositiveButton">Yes</string>
     <string name="DeleteCounterDialogNegativeButton">Cancel</string>

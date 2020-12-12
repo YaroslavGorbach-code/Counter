@@ -30,7 +30,6 @@ public class CounterHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter_history);
 
-
         /*initialize fields*/
         mHistoryViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
         mToolbar = findViewById(R.id.toolbar_history);
@@ -40,6 +39,43 @@ public class CounterHistoryActivity extends AppCompatActivity {
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(i-> finish());
 
+        setAdapterForHistoryItems();
+
+        /*setting listener for selected item in spinner*/
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sortList(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+    }
+
+    private void sortList(int position) {
+        String[] choose = getResources().getStringArray(R.array.history_sort_items);
+
+        if(choose[position].equals("Sort by time") || choose[position].equals("Сортировка по дате")){
+            /*update list of history sort by time*/
+            mHistoryViewModel.getCounterHistoryList(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1))
+                    .observe(CounterHistoryActivity.this, counterHistories -> {
+
+                        mHistoryList.setHistory(counterHistories);
+
+                    });
+
+        }else {
+            /*update list of history sort by value*/
+            mHistoryViewModel.getCounterHistoryListSortByValue(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1))
+                    .observe(CounterHistoryActivity.this, counterHistories -> {
+                        mHistoryList.setHistory(counterHistories);
+                    });
+        }
+    }
+
+    private void setAdapterForHistoryItems() {
         mHistoryList = new CounterHistoryList_rv(findViewById(R.id.counterHistory_rv),
                 new CounterHistoryList_rv.HistoryItemClickListener() {
                     @Override
@@ -58,45 +94,6 @@ public class CounterHistoryActivity extends AppCompatActivity {
                 ArrayAdapter.createFromResource(this, R.array.history_sort_items, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            mSpinner.setAdapter(adapter);
-
-        /*setting listener for selected item in spinner*/
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                String[] choose = getResources().getStringArray(R.array.history_sort_items);
-
-                if(choose[position].equals("Sort by time")){
-
-                    /*update list of history sort by time*/
-                    mHistoryViewModel.getCounterHistoryList(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1))
-                            .observe(CounterHistoryActivity.this, counterHistories -> {
-
-                                mHistoryList.setHistory(counterHistories);
-
-                            });
-
-                }else {
-
-                    /*update list of history sort by value*/
-                    mHistoryViewModel.getCounterHistoryListSortByValue(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1))
-                            .observe(CounterHistoryActivity.this, counterHistories -> {
-
-                                mHistoryList.setHistory(counterHistories);
-
-                            });
-
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
+        mSpinner.setAdapter(adapter);
     }
 }
