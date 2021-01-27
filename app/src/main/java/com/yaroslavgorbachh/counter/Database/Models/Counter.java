@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.Models;
+package com.yaroslavgorbachh.counter.Database.Models;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -19,9 +19,7 @@ public class Counter {
     public String grope;
     public Date createData;
 
-
-
-    public Counter( String title, long value, long maxValue, long minValue, long step, String grope, Date createData) {
+    public Counter(String title, long value, long maxValue, long minValue, long step, String grope, Date createData) {
         this.title = title;
         this.value = value;
         this.maxValue = maxValue;
@@ -30,8 +28,6 @@ public class Counter {
         this.grope = grope;
         this.createData = createData;
     }
-
-
 
     public void setId(long id) {
         this.id = id;

@@ -1,63 +1,53 @@
 package com.yaroslavgorbachh.counter.Database;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.Database.Daos.CounterDao;
 import com.yaroslavgorbachh.counter.Database.Daos.CounterHistoryDao;
-import com.yaroslavgorbachh.counter.Models.Counter;
-import com.yaroslavgorbachh.counter.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.Database.Models.Counter;
+import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 
 import java.util.List;
 
 public class Repo {
 
-   private CounterDao mCounterDao;
-   private CounterHistoryDao mCounterHistoryDao;
-   private LiveData<List<Counter>> mAll_counters;
-   private LiveData<List<String>> mGroups;
+   private final CounterDao mCounterDao;
+   private final CounterHistoryDao mCounterHistoryDao;
 
     public Repo(Application application){
-
        CounterDatabase database = CounterDatabase.getInstance(application);
        mCounterHistoryDao = database.CounterHistoryDao();
         mCounterDao = database.counterDao();
-        mAll_counters = mCounterDao.getAllCounters();
-        mGroups = mCounterDao.getGroups();
-
    }
 
     public void insert(Counter counter){
-//     new InsertCounterAsyncTask(mCounterDao).execute(counter);
         new Thread(() -> mCounterDao.insert(counter)).start();
     }
 
     public void delete(Counter counter){
-       new DeleteCounterAsyncTask(mCounterDao).execute(counter);
+        new Thread(() -> mCounterDao.delete(counter)).start();
     }
 
     public void update(Counter counter){
-       new UpdateCounterAsyncTask(mCounterDao).execute(counter);
+        new Thread(() -> mCounterDao.update(counter)).start();
     }
 
-
-
     public void insert(CounterHistory counterHistory){
-        new InsertHistoryAsyncTask(mCounterHistoryDao).execute(counterHistory);
+        new Thread(() -> mCounterHistoryDao.insert(counterHistory)).start();
     }
 
     public void delete(long counterId){
-        new DeleteHistoryAsyncTask(mCounterHistoryDao).execute(counterId);
+        new Thread(() -> mCounterHistoryDao.delete(counterId)).start();
     }
 
     public void delete(CounterHistory counterHistory){
-        new DeleteHistory2AsyncTask(mCounterHistoryDao).execute(counterHistory);
+        new Thread(() -> mCounterHistoryDao.delete(counterHistory)).start();
     }
 
     public void update(CounterHistory counterHistory){
-        new UpdateHistoryAsyncTask(mCounterHistoryDao).execute(counterHistory);
+        new Thread(() -> mCounterHistoryDao.update(counterHistory)).start();
     }
 
     public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId){
@@ -68,10 +58,8 @@ public class Repo {
         return mCounterHistoryDao.getCounterHistoryListSortByValue(counterId);
     }
 
-
-
     public LiveData<List<Counter>> getAllCounters(){
-       return mAll_counters;
+       return mCounterDao.getAllCounters();
     }
 
     public LiveData<List<Counter>> getCountersByGroup(String group){
@@ -83,110 +71,8 @@ public class Repo {
     }
 
     public LiveData<List<String>> getGroups(){
-        return mGroups;
+        return mCounterDao.getGroups();
     }
-
-
-
-
-    public static class InsertCounterAsyncTask extends AsyncTask<Counter, Void, Void>{
-        private CounterDao counterDao;
-
-        private InsertCounterAsyncTask(CounterDao counterDao) {
-            this.counterDao = counterDao;
-        }
-
-        @Override
-        protected Void doInBackground(Counter... counters) {
-            counterDao.insert(counters[0]);
-            return null;
-        }
-    }
-
-    public static class DeleteCounterAsyncTask extends AsyncTask<Counter, Void, Void>{
-        private CounterDao counterDao;
-
-        private DeleteCounterAsyncTask(CounterDao counterDao) {
-            this.counterDao = counterDao;
-        }
-
-        @Override
-        protected Void doInBackground(Counter... counters) {
-            counterDao.delete(counters[0]);
-            return null;
-        }
-    }
-
-    public static class UpdateCounterAsyncTask extends AsyncTask<Counter, Void, Void>{
-        private CounterDao counterDao;
-
-        private UpdateCounterAsyncTask(CounterDao counterDao) {
-            this.counterDao = counterDao;
-        }
-
-        @Override
-        protected Void doInBackground(Counter... counters) {
-            counterDao.update(counters[0]);
-            return null;
-        }
-    }
-
-    public static class InsertHistoryAsyncTask extends AsyncTask<CounterHistory, Void, Void>{
-        private CounterHistoryDao counterHistoryDao;
-
-        private InsertHistoryAsyncTask(CounterHistoryDao counterHistoryDao) {
-            this.counterHistoryDao = counterHistoryDao;
-        }
-
-        @Override
-        protected Void doInBackground(CounterHistory... counterHistories) {
-            counterHistoryDao.insert(counterHistories[0]);
-            return null;
-        }
-    }
-
-    public static class DeleteHistoryAsyncTask extends AsyncTask<Long, Void, Void>{
-        private CounterHistoryDao counterHistoryDao;
-
-        private DeleteHistoryAsyncTask(CounterHistoryDao counterHistoryDao) {
-            this.counterHistoryDao = counterHistoryDao;
-        }
-
-        @Override
-        protected Void doInBackground(Long... longs) {
-            counterHistoryDao.delete(longs[0]);
-            return null;
-        }
-    }
-
-    public static class DeleteHistory2AsyncTask extends AsyncTask<CounterHistory, Void, Void>{
-        private CounterHistoryDao counterHistoryDao;
-
-        private DeleteHistory2AsyncTask(CounterHistoryDao counterHistoryDao) {
-            this.counterHistoryDao = counterHistoryDao;
-        }
-
-        @Override
-        protected Void doInBackground(CounterHistory... counterHistories) {
-            counterHistoryDao.delete(counterHistories[0]);
-            return null;
-        }
-    }
-
-    public static class UpdateHistoryAsyncTask extends AsyncTask<CounterHistory, Void, Void>{
-        private CounterHistoryDao counterHistoryDao;
-
-        private UpdateHistoryAsyncTask(CounterHistoryDao counterHistoryDao) {
-            this.counterHistoryDao = counterHistoryDao;
-        }
-
-        @Override
-        protected Void doInBackground(CounterHistory... counterHistories) {
-            counterHistoryDao.update(counterHistories[0]);
-            return null;
-        }
-    }
-
 }
 
 

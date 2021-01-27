@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.Fragments;
+package com.yaroslavgorbachh.counter.Fragments.Dialogs;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.yaroslavgorbachh.counter.Database.ViewModels.CounterViewModel;
+import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbachh.counter.R;
 
 import java.util.HashSet;

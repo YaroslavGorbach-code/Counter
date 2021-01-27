@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.yaroslavgorbachh.counter.Models.Counter;
+import com.yaroslavgorbachh.counter.Database.Models.Counter;
 
 import java.util.List;
 

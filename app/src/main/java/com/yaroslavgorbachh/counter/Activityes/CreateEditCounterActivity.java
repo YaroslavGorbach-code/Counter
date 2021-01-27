@@ -10,8 +10,8 @@ import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.Database.ViewModels.CounterViewModel;
-import com.yaroslavgorbachh.counter.Models.Counter;
+import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
+import com.yaroslavgorbachh.counter.Database.Models.Counter;
 
 import java.util.Date;
 import java.util.HashSet;

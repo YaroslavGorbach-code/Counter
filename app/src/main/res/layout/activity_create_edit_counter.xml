@@ -6,23 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".Activityes.CreateEditCounterActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_counterCreateActivity"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
+        android:background="?android:colorBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/CreateEditCounterCounterTitleText"
+        app:titleTextColor="#FFC51162" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_counterCreateActivity"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:colorBackground"
-            app:title="@string/CreateEditCounterCounterTitleText"
-            app:titleTextColor="#FFC51162"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextField"
@@ -35,7 +29,7 @@
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_counterCreateActivity">
 
 
         <com.google.android.material.textfield.TextInputEditText

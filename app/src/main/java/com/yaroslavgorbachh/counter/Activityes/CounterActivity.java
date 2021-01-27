@@ -17,12 +17,12 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbachh.counter.Database.ViewModels.CounterViewModel;
+import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbachh.counter.FastCountButton;
-import com.yaroslavgorbachh.counter.Fragments.DeleteCounterDialog;
-import com.yaroslavgorbachh.counter.Database.ViewModels.HistoryViewModel;
-import com.yaroslavgorbachh.counter.Models.Counter;
-import com.yaroslavgorbachh.counter.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.Fragments.Dialogs.DeleteCounterDialog;
+import com.yaroslavgorbachh.counter.ViewModels.HistoryViewModel;
+import com.yaroslavgorbachh.counter.Database.Models.Counter;
+import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.R;
 
 import java.text.DateFormat;

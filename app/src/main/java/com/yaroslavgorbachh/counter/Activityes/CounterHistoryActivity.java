@@ -11,10 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.yaroslavgorbachh.counter.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.RecyclerViews.CounterHistoryList_rv;
-import com.yaroslavgorbachh.counter.Database.ViewModels.HistoryViewModel;
+import com.yaroslavgorbachh.counter.ViewModels.HistoryViewModel;
 
 public class CounterHistoryActivity extends AppCompatActivity {
 

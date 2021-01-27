@@ -14,9 +14,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.yaroslavgorbachh.counter.RecyclerViews.CounterList_rv;
-import com.yaroslavgorbachh.counter.Models.Counter;
+import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Activityes.CounterActivity;
-import com.yaroslavgorbachh.counter.Database.ViewModels.CounterViewModel;
+import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbachh.counter.R;
 
 import java.util.Date;

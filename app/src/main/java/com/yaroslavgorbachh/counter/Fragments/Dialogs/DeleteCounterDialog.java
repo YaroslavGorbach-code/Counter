@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.Fragments;
+package com.yaroslavgorbachh.counter.Fragments.Dialogs;
 
 import android.app.Dialog;
 import android.content.Context;

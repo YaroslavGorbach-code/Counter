@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 
 import java.util.ArrayList;
 import java.util.List;
