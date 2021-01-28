@@ -17,28 +17,22 @@ import java.util.List;
 public class GroupList_rv {
 
     public interface Listener{
-
         void onOpen(String tittle);
-
     }
 
     private final GroupAdapter mAdapter = new GroupAdapter();
     private Listener mListener;
 
     public GroupList_rv(RecyclerView rv, Listener Listener) {
-
         mListener = Listener;
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rv.getContext());
         rv.setLayoutManager(mLayoutManager);
         rv.setAdapter(mAdapter);
         rv.setHasFixedSize(true);
-
     }
 
         public void setGroups (List<String> list) {
-
         mAdapter.setData(list);
-
         }
 
         private class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.Vh> {

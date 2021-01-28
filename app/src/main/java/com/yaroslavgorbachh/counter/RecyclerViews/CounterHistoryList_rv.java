@@ -35,21 +35,17 @@ public class CounterHistoryList_rv {
     }
 
         public void setHistory (List<CounterHistory> list) {
-
         mAdapter.setData(list);
-
         }
 
         private class Adapter extends RecyclerView.Adapter<Adapter.Vh> {
-
+            private Adapter(){
+                setHasStableIds(true);
+            }
             private List<CounterHistory> mData = new ArrayList<>();
             private void setData(List<CounterHistory> data) {
                 mData = data;
                 notifyDataSetChanged();
-            }
-
-            Adapter(){
-                setHasStableIds(true);
             }
 
             @NonNull
@@ -60,9 +56,7 @@ public class CounterHistoryList_rv {
 
             @Override
             public void onBindViewHolder(@NonNull Vh holder, int position) {
-
                 holder.bind(mData.get(position));
-
             }
 
             @Override
@@ -76,18 +70,13 @@ public class CounterHistoryList_rv {
             }
 
             private  class Vh extends RecyclerView.ViewHolder {
-
-
                 private TextView mValue;
                 private TextView mCreateData;
                 private ImageView mHistoryDelete;
 
-
-
                 public Vh(@NonNull ViewGroup parent) {
-
-                    super(LayoutInflater.from(parent.getContext()).inflate(R.layout.counter_history_i, parent, false));
-
+                    super(LayoutInflater.from(parent.getContext()).inflate(R.layout.counter_history_i,
+                            parent, false));
                    mValue = itemView.findViewById(R.id.history_value);
                    mCreateData = itemView.findViewById(R.id.historyData);
                    mHistoryDelete = itemView.findViewById(R.id.deleteHistory);
@@ -99,17 +88,11 @@ public class CounterHistoryList_rv {
                    });
 
                 }
-
                 private void bind(CounterHistory counterHistory){
-
                     mValue.setText(String.valueOf(counterHistory.value));
                     mCreateData.setText(counterHistory.data);
-
                 }
             }
-
         }
-
-
     }
 

@@ -11,10 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.RecyclerViews.CounterHistoryList_rv;
-import com.yaroslavgorbachh.counter.ViewModels.HistoryViewModel;
+import com.yaroslavgorbachh.counter.ViewModels.CounterHistoryViewModel;
 
 public class CounterHistoryActivity extends AppCompatActivity {
 
@@ -22,15 +21,17 @@ public class CounterHistoryActivity extends AppCompatActivity {
     private Spinner mSpinner;
     private Toolbar mToolbar;
     public static final String EXTRA_COUNTER_ID = "EXTRA_COUNTER_ID";
-    private HistoryViewModel mHistoryViewModel;
+    private CounterHistoryViewModel mViewModel;
+    private long mCounterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter_history);
 
+        mCounterId = getIntent().getLongExtra(EXTRA_COUNTER_ID, -1);
         /*initialize fields*/
-        mHistoryViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(CounterHistoryViewModel.class);
         mToolbar = findViewById(R.id.toolbar_history);
         mSpinner = findViewById(R.id.spinner);
 
@@ -38,7 +39,10 @@ public class CounterHistoryActivity extends AppCompatActivity {
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(i-> finish());
 
-        setAdapterForHistoryItems();
+        setAdapterForSpinner();
+
+        mHistoryList = new CounterHistoryList_rv(findViewById(R.id.counterHistory_rv),
+                counterHistory -> mViewModel.delete(counterHistory));
 
         /*setting listener for selected item in spinner*/
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -55,34 +59,22 @@ public class CounterHistoryActivity extends AppCompatActivity {
 
     private void sortList(int position) {
         String[] choose = getResources().getStringArray(R.array.history_sort_items);
-
         if(choose[position].equals("Sort by time") || choose[position].equals("Сортировка по дате")){
             /*update list of history sort by time*/
-            mHistoryViewModel.getCounterHistoryList(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1))
+            mViewModel.getCounterHistoryList(mCounterId)
                     .observe(CounterHistoryActivity.this, counterHistories -> {
-
                         mHistoryList.setHistory(counterHistories);
-
                     });
-
         }else {
             /*update list of history sort by value*/
-            mHistoryViewModel.getCounterHistoryListSortByValue(getIntent().getLongExtra(EXTRA_COUNTER_ID, -1))
+            mViewModel.getCounterHistoryListSortByValue(mCounterId)
                     .observe(CounterHistoryActivity.this, counterHistories -> {
                         mHistoryList.setHistory(counterHistories);
                     });
         }
     }
 
-    private void setAdapterForHistoryItems() {
-        mHistoryList = new CounterHistoryList_rv(findViewById(R.id.counterHistory_rv),
-                new CounterHistoryList_rv.HistoryItemClickListener() {
-                    @Override
-                    public void onDelete(CounterHistory counterHistory) {
-                        mHistoryViewModel.delete(counterHistory);
-                    }
-                });
-
+    private void setAdapterForSpinner() {
         /*set toolTipText*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mSpinner.setTooltipText("Chose sort");
@@ -92,7 +84,6 @@ public class CounterHistoryActivity extends AppCompatActivity {
         ArrayAdapter<?> adapter =
                 ArrayAdapter.createFromResource(this, R.array.history_sort_items, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         mSpinner.setAdapter(adapter);
     }
 }
