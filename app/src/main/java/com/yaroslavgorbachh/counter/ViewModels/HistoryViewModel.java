@@ -21,19 +21,19 @@ public class HistoryViewModel extends AndroidViewModel {
     }
 
     public void insert(CounterHistory counterHistory){
-        mRepo.insert(counterHistory);
+        mRepo.insertCounterHistory(counterHistory);
     }
 
     public void delete(long counterId){
-        mRepo.delete(counterId);
+        mRepo.deleteCounterHistory(counterId);
     }
 
     public void delete(CounterHistory counterHistory){
-        mRepo.delete(counterHistory);
+        mRepo.deleteCounterHistory(counterHistory);
     }
 
     public void update(CounterHistory counterHistory){
-        mRepo.update(counterHistory);
+        mRepo.updateCounterHistory(counterHistory);
     }
 
     public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId){

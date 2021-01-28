@@ -22,31 +22,31 @@ public class Repo {
         mCounterDao = database.counterDao();
    }
 
-    public void insert(Counter counter){
+    public void insertCounter(Counter counter){
         new Thread(() -> mCounterDao.insert(counter)).start();
     }
 
-    public void delete(Counter counter){
+    public void deleteCounter(Counter counter){
         new Thread(() -> mCounterDao.delete(counter)).start();
     }
 
-    public void update(Counter counter){
+    public void updateCounter(Counter counter){
         new Thread(() -> mCounterDao.update(counter)).start();
     }
 
-    public void insert(CounterHistory counterHistory){
+    public void insertCounterHistory(CounterHistory counterHistory){
         new Thread(() -> mCounterHistoryDao.insert(counterHistory)).start();
     }
 
-    public void delete(long counterId){
+    public void deleteCounterHistory(long counterId){
         new Thread(() -> mCounterHistoryDao.delete(counterId)).start();
     }
 
-    public void delete(CounterHistory counterHistory){
+    public void deleteCounterHistory(CounterHistory counterHistory){
         new Thread(() -> mCounterHistoryDao.delete(counterHistory)).start();
     }
 
-    public void update(CounterHistory counterHistory){
+    public void updateCounterHistory(CounterHistory counterHistory){
         new Thread(() -> mCounterHistoryDao.update(counterHistory)).start();
     }
 

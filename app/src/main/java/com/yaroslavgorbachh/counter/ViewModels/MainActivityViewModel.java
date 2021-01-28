@@ -5,17 +5,13 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Database.Repo;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 public class MainActivityViewModel extends AndroidViewModel {
@@ -41,6 +37,6 @@ public class MainActivityViewModel extends AndroidViewModel {
         currentDate.getTime();
         Counter counter = new Counter(title, 0, Long.parseLong("9999999999999999"),
                 Long.parseLong("-9999999999999999"), 1, group, currentDate);
-        mRepo.insert(counter);
+        mRepo.insertCounter(counter);
     }
 }

@@ -19,60 +19,43 @@ public class CounterViewModel extends AndroidViewModel {
 
     public CounterViewModel(@NonNull Application application) {
         super(application);
-
         mRepo = new Repo(application);
         mAllCounters = mRepo.getAllCounters();
         mGroups = mRepo.getGroups();
-
-
     }
-
     public void insert(Counter counter){
-
-        mRepo.insert(counter);
-
+        mRepo.insertCounter(counter);
     }
 
     public void delete(Counter counter){
-
-        mRepo.delete(counter);
-
+        mRepo.deleteCounter(counter);
     }
 
     public void update(Counter counter){
-
-        mRepo.update(counter);
-
+        mRepo.updateCounter(counter);
     }
 
     public void setValue(Counter counter, long value){
-
         counter.value = value;
-        mRepo.update(counter);
-
+        mRepo.updateCounter(counter);
     }
 
     public LiveData<Counter> getCounter(long id){
-
       return mRepo.getCounter(id);
     }
 
     public LiveData<List<Counter>> getAllCounters(){
-
         return mAllCounters;
-
     }
 
     public LiveData<List<Counter>> getCountersByGroup(String group){
-
         return mRepo.getCountersByGroup(group);
-
     }
 
     public LiveData<List<String>> getGroups(){
-
         return mGroups;
-
     }
+
+
 
 }

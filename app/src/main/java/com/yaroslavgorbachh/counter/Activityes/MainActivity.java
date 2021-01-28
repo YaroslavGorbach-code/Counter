@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
     private Toolbar mToolbar;
     private DrawerLayout mDrawer;
     private LinearLayout mAllCounters_navigationItem;
-    private CountersFragment mCountersFragment;
 
 
     @Override
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
         mToolbar = findViewById(R.id.toolbar_mainActivity);
         mDrawer = findViewById(R.id.drawer);
         mAllCounters_navigationItem = findViewById(R.id.AllCounters);
-        mCountersFragment = new CountersFragment();
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         /*inflating menu and set listeners*/
@@ -58,7 +56,8 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
 
         /*setting the fragment with all the counters*/
         mAllCounters_navigationItem.setOnClickListener(i->{
-            getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, mCountersFragment).commit();
+            CountersFragment fragment = new CountersFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, fragment).commit();
             mToolbar.setTitle(R.string.AllCountersItem);
             mDrawer.closeDrawer(GravityCompat.START);
         });
@@ -71,8 +70,9 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
             public void onOpen(String string) {
                 Bundle arg = new Bundle();
                 arg.putString("group_title", string);
-                mCountersFragment.setArguments(arg);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, mCountersFragment).commit();
+                CountersFragment fragment = new CountersFragment();
+                fragment.setArguments(arg);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_list_counters, fragment).commit();
                 mToolbar.setTitle(string);
                 mDrawer.closeDrawer(GravityCompat.START);
             }
