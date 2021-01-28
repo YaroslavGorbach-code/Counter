@@ -13,10 +13,11 @@ import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Fragments.CountersFragment;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.CreateCounterDialog;
 import com.yaroslavgorbachh.counter.RecyclerViews.GroupList_rv;
+import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.ViewModels.MainActivityViewModel;
 
 
-public class MainActivity extends AppCompatActivity implements CreateCounterDialog.AddCounterListener {
+public class MainActivity extends AppCompatActivity{
 
     private GroupList_rv mGroupsList;
     private MainActivityViewModel mViewModel;
@@ -78,19 +79,9 @@ public class MainActivity extends AppCompatActivity implements CreateCounterDial
             }
         });
 
-        mViewModel.getGroups().observe(this, strings -> {
-             mGroupsList.setGroups(mViewModel.deleteTheSameGroups(strings));
+        mViewModel.getGroups().observe(this, groups -> {
+             mGroupsList.setGroups(Utility.deleteTheSameGroups(groups));
         });
     }
-    /*create new counter*/
-    @Override
-    public void onAddClick(String title, String group) {
-        mViewModel.insertCounter(title, group);
-    }
 
-    /*launch exact creation counter*/
-    @Override
-    public void onLaunchDetailedClick() {
-        startActivity(new Intent(MainActivity.this, CreateEditCounterActivity.class ));
-    }
 }

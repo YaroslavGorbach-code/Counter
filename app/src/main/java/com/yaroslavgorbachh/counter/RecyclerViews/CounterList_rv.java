@@ -130,12 +130,12 @@ public class CounterList_rv {
 
                 new FastCountButton(mPlus, () -> {
                     mItemClickListener.onPlusClick(mData.get(getAdapterPosition()));
-                    mPlus.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                   // mPlus.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 });
 
                 new FastCountButton(mMinus, () ->{
                     mItemClickListener.onMinusClick(mData.get(getAdapterPosition()));
-                    mMinus.performHapticFeedback(HapticFeedbackConstants. LONG_PRESS);
+                   // mMinus.performHapticFeedback(HapticFeedbackConstants. LONG_PRESS);
                 });
             }
 

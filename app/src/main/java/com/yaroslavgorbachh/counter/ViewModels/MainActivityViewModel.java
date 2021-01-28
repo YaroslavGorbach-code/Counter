@@ -25,18 +25,4 @@ public class MainActivityViewModel extends AndroidViewModel {
     public LiveData<List<String>> getGroups() {
        return mRepo.getGroups();
     }
-
-    /*delete the same groups*/
-    public List<String> deleteTheSameGroups(List<String> strings){
-        Set<String> set = new HashSet<>(strings);
-        return Arrays.asList(set.toArray(new String[0]));
-    }
-
-    public void insertCounter(String title, String group){
-        Date currentDate = new Date();
-        currentDate.getTime();
-        Counter counter = new Counter(title, 0, Long.parseLong("9999999999999999"),
-                Long.parseLong("-9999999999999999"), 1, group, currentDate);
-        mRepo.insertCounter(counter);
-    }
 }

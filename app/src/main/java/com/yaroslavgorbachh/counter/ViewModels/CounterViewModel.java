@@ -1,61 +1,88 @@
 package com.yaroslavgorbachh.counter.ViewModels;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-
-import com.yaroslavgorbachh.counter.Database.Repo;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
-
-import java.util.List;
+import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.Database.Repo;
+import com.yaroslavgorbachh.counter.R;
 
 public class CounterViewModel extends AndroidViewModel {
+    private final Repo mRepo;
+    private long mOldValue;
+    public LiveData<Counter> mCounter;
 
-    private Repo mRepo;
-    private LiveData<List<Counter>> mAllCounters;
-    private LiveData<List<String>> mGroups;
-
-    public CounterViewModel(@NonNull Application application) {
+    public CounterViewModel(@NonNull Application application, long counterId) {
         super(application);
         mRepo = new Repo(application);
-        mAllCounters = mRepo.getAllCounters();
-        mGroups = mRepo.getGroups();
-    }
-    public void insert(Counter counter){
-        mRepo.insertCounter(counter);
+        mCounter = mRepo.getCounter(counterId);
     }
 
-    public void delete(Counter counter){
-        mRepo.deleteCounter(counter);
+    public void incCounter() {
+        long maxValue;
+        long incOn;
+        long value = Objects.requireNonNull(mCounter.getValue()).value;
+        incOn = mCounter.getValue().step;
+        maxValue = mCounter.getValue().maxValue;
+        value += incOn;
+
+        if (value > maxValue){
+            Toast.makeText(getApplication(), "This is maximum", Toast.LENGTH_SHORT).show();
+        }else {
+            mCounter.getValue().value = value;
+            mRepo.updateCounter(mCounter.getValue());
+        }
     }
 
-    public void update(Counter counter){
-        mRepo.updateCounter(counter);
+    public void decCounter(){
+        long minValue;
+        long decOn;
+        long value = Objects.requireNonNull(mCounter.getValue()).value;
+        decOn = mCounter.getValue().step;
+        minValue = mCounter.getValue().minValue;
+        value -=decOn;
+
+        if (value < minValue){
+            Toast.makeText(getApplication(), "This is minimum", Toast.LENGTH_SHORT).show();
+        }else {
+            mCounter.getValue().value = value;
+            mRepo.updateCounter(mCounter.getValue());
+        }
     }
 
-    public void setValue(Counter counter, long value){
-        counter.value = value;
-        mRepo.updateCounter(counter);
+    public void resetCounter(){
+        mOldValue = Objects.requireNonNull(mCounter.getValue()).value;
+        mCounter.getValue().value = 0;
+        mRepo.updateCounter(mCounter.getValue());
     }
 
-    public LiveData<Counter> getCounter(long id){
-      return mRepo.getCounter(id);
+    public void restoreValue(){
+        Objects.requireNonNull(mCounter.getValue()).value = mOldValue;
+        mRepo.updateCounter(mCounter.getValue());
     }
 
-    public LiveData<List<Counter>> getAllCounters(){
-        return mAllCounters;
+    public void saveValueToHistory(){
+        Date currentDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
+        String date = dateFormat.format(currentDate);
+        mRepo.insertCounterHistory(new CounterHistory(Objects.requireNonNull(
+                mCounter.getValue()).value, date, mCounter.getValue().id));
+        Toast.makeText(getApplication(), getApplication().getString(R.string.CreateEditCounterCounterValueHint) + " " +
+                mCounter.getValue().value + " " + getApplication().getString(R.string.SaveToHistoryToast), Toast.LENGTH_SHORT).show();
     }
 
-    public LiveData<List<Counter>> getCountersByGroup(String group){
-        return mRepo.getCountersByGroup(group);
+    public void deleteCounter(){
+        mRepo.deleteCounterHistory(Objects.requireNonNull(mCounter.getValue()).id);
+        mRepo.deleteCounter(mCounter.getValue());
     }
-
-    public LiveData<List<String>> getGroups(){
-        return mGroups;
-    }
-
-
 
 }

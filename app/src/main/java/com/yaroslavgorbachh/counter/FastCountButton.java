@@ -29,13 +29,11 @@ public class FastCountButton implements View.OnTouchListener, Handler.Callback {
                 mView.setPressed(true);
                 mHandler.sendEmptyMessageDelayed(FAST_COUNT_MSG, ViewConfiguration.getLongPressTimeout());
                 break;
-
             case MotionEvent.ACTION_UP:
                 if (!mFastCounting) {
                     mView.performClick();
                 }
-                //no break
-
+                // no break
             case MotionEvent.ACTION_CANCEL:
                 mHandler.removeMessages(FAST_COUNT_MSG);
                 mFastCounting = false;

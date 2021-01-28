@@ -6,13 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
+import com.yaroslavgorbachh.counter.ViewModels.CreateEditCounterViewModel;
 
-public class CounterViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+public class CreateEditCounterViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
-    private long id;
-    private Application application;
-   public CounterViewModelFactory(Application application, long id){
+    private final long id;
+    private final Application application;
+   public CreateEditCounterViewModelFactory(Application application, long id){
         super();
         this.id = id;
         this.application = application;
@@ -21,8 +21,8 @@ public class CounterViewModelFactory extends ViewModelProvider.NewInstanceFactor
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if(modelClass.isAssignableFrom(CounterViewModel.class)){
-            return (T) new CounterViewModel(application, id);
+        if(modelClass.isAssignableFrom(CreateEditCounterViewModel.class)){
+            return (T) new CreateEditCounterViewModel(application, id);
         }else {
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

@@ -16,55 +16,33 @@ import androidx.lifecycle.ViewModelProvider;
 import com.yaroslavgorbachh.counter.RecyclerViews.CounterList_rv;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Activityes.CounterActivity;
-import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.ViewModels.CountersViewModel;
 
 import java.util.Date;
 
 public class CountersFragment extends Fragment {
     private CounterList_rv mCountersList;
-    private CounterViewModel mCounterViewModel;
+    private CountersViewModel mViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.list_of_counters_fragment, container, false);
-        mCounterViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(CountersViewModel.class);
 
         /*initialize RecyclerView and it listener*/
         mCountersList = new CounterList_rv(view.findViewById(R.id.countersList_rv), new CounterList_rv.ItemClickListener() {
             /*counter +*/
             @Override
             public void onPlusClick(Counter counter) {
-                long maxValue;
-                long incOn;
-                long value = counter.value;
-                maxValue = counter.maxValue;
-                incOn = counter.step;
-                value += incOn;
-
-                if (value > maxValue) {
-                    Toast.makeText(view.getContext(), "This is maximum", Toast.LENGTH_SHORT).show();
-                } else {
-                    mCounterViewModel.setValue(counter, value);
-                }
+                mViewModel.incCounter(counter);
             }
 
             /*counter -*/
             @Override
             public void onMinusClick(Counter counter) {
-                long minValue;
-                long decOn;
-                minValue = counter.minValue;
-                long value = counter.value;
-                decOn = counter.step;
-                value -= decOn;
-
-                if (value < minValue) {
-                    Toast.makeText(view.getContext(), "This is minimum", Toast.LENGTH_SHORT).show();
-                } else {
-                    mCounterViewModel.setValue(counter, value);
-                }
+               mViewModel.decCounter(counter);
             }
 
             /*open counterActivity*/
@@ -77,15 +55,7 @@ public class CountersFragment extends Fragment {
             //item moved
             @Override
             public void onMove(Counter counterFrom, Counter counterTo) {
-                Date dataFrom = counterFrom.createData;
-                Date dataTo = counterTo.createData;
-                if (!dataFrom.equals(dataTo)) {
-                    counterTo.createData = dataFrom;
-                    mCounterViewModel.update(counterTo);
-
-                    counterFrom.createData = dataTo;
-                    mCounterViewModel.update(counterFrom);
-                }
+                mViewModel.countersMoved(counterFrom, counterTo);
             }
         });
 
@@ -96,12 +66,12 @@ public class CountersFragment extends Fragment {
          in the counter_table*/
         if(getArguments()!=null){
 
-            mCounterViewModel.getCountersByGroup(getArguments().getString("group_title"))
+            mViewModel.getCountersByGroup(getArguments().getString("group_title"))
                     .observe(getViewLifecycleOwner(), counters -> mCountersList.setCounters(counters));
 
         }else{
 
-            mCounterViewModel.getAllCounters()
+            mViewModel.getAllCounters()
                     .observe(getViewLifecycleOwner(), counters -> mCountersList.setCounters(counters));
         }
 

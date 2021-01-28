@@ -2,37 +2,23 @@ package com.yaroslavgorbachh.counter.Activityes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.DeleteCounterDialog;
-import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel_new;
+import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbachh.counter.ViewModels.Factories.CounterViewModelFactory;
-import com.yaroslavgorbachh.counter.ViewModels.HistoryViewModel;
-import com.yaroslavgorbachh.counter.Database.Models.Counter;
-import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.R;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
 
 public class CounterActivity extends AppCompatActivity implements DeleteCounterDialog.DeleteDialogListener {
     public static final String EXTRA_COUNTER_ID = "EXTRA_COUNTER_ID";
@@ -40,7 +26,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     private TextView mIncButton;
     private TextView mDecButton;
     private ImageButton mResetButton;
-    private CounterViewModel_new mViewModel;
+    private CounterViewModel mViewModel;
     private Toolbar mToolbar;
     private TextView mCounterTitle;
     private View mLayout;
@@ -73,7 +59,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         mGroupTitle = findViewById(R.id.groupTitle);
         mCounterId = getIntent().getLongExtra(EXTRA_COUNTER_ID, -1);
         mViewModel = new ViewModelProvider(this, new CounterViewModelFactory(getApplication(),
-                mCounterId)).get(CounterViewModel_new.class);
+                mCounterId)).get(CounterViewModel.class);
 
         /*inflating menu, navigationIcon and set listeners*/
         mToolbar.inflateMenu(R.menu.menu_counter_activiry);
