@@ -11,8 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activityes.CounterHistoryActivity"></activity>
-        <activity android:name=".Activityes.CreateEditCounterActivity" />
+        <activity android:name=".Fragments.CounterHistoryFragment"></activity>
+        <activity android:name=".Fragments.CreateEditCounterFragment" />
         <activity android:name=".Activityes.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activityes.CounterActivity" />
+        <activity android:name=".Fragments.CounterFragment" />
     </application>
 
 </manifest>

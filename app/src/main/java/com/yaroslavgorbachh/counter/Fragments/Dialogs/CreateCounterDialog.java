@@ -1,8 +1,6 @@
 package com.yaroslavgorbachh.counter.Fragments.Dialogs;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,16 +13,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.yaroslavgorbachh.counter.Activityes.CreateEditCounterActivity;
-import com.yaroslavgorbachh.counter.Activityes.MainActivity;
+import com.yaroslavgorbachh.counter.Fragments.CountersFragmentDirections;
+import com.yaroslavgorbachh.counter.Fragments.CreateEditCounterFragment;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.ViewModels.CreateCounterDialogViewModel;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class CreateCounterDialog extends AppCompatDialogFragment {
     private AutoCompleteTextView mGroups_et;
@@ -36,6 +35,8 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
 
        View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_create_counter, null);
        mViewModel = new ViewModelProvider(this).get(CreateCounterDialogViewModel.class);
+        /*initialize fields*/
+        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setView(view)
@@ -69,18 +70,16 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
                 .setNegativeButton(R.string.AddCounterDialogCounterNegativeButton, (dialog, which) -> {
                 });
 
-
-        /*initialize fields*/
-        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
-          //  mViewModel = new ViewModelProvider(this).get(CounterViewModel.class);
-
         /*each new group sets into dropdown_menu*/
         setGroups(view);
 
         /*start CreateCounterDetailed_AND_EditCounterActivity*/
             view.findViewById(R.id.LaunchDetailed).setOnClickListener(v -> {
-                startActivity(new Intent(getContext(), CreateEditCounterActivity.class ));
                 dismiss();
+                NavHostFragment navHostFragment = (NavHostFragment) getParentFragmentManager().findFragmentById(R.id.hostFragment);
+                NavController navController = navHostFragment.getNavController();
+                NavDirections action = CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2();
+                navController.navigate(action);
             });
          return builder.create();
     }

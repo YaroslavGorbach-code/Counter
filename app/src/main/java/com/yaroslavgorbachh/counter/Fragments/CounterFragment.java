@@ -1,12 +1,18 @@
-package com.yaroslavgorbachh.counter.Activityes;
+package com.yaroslavgorbachh.counter.Fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,8 +26,7 @@ import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbachh.counter.ViewModels.Factories.CounterViewModelFactory;
 import com.yaroslavgorbachh.counter.R;
 
-public class CounterActivity extends AppCompatActivity implements DeleteCounterDialog.DeleteDialogListener {
-    public static final String EXTRA_COUNTER_ID = "EXTRA_COUNTER_ID";
+public class CounterFragment extends Fragment{
     private TextView mValue_tv;
     private TextView mIncButton;
     private TextView mDecButton;
@@ -38,27 +43,27 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
     private TextView mMinValue_tv;
     private TextView mGroupTitle;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_counter);
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_counter, container, false);
         /*initialize fields*/
-        mValue_tv = findViewById(R.id.value);
-        mIncButton = findViewById(R.id.inc_value);
-        mDecButton = findViewById(R.id.dec_value);
-        mResetButton = findViewById(R.id.reset_value);
-        mToolbar = findViewById(R.id.counterActivity_toolbar);
-        mCounterTitle = findViewById(R.id.counterTitle);
-        mLayout = findViewById(R.id.counterLayout);
-        mSaveToHistoryButton = findViewById(R.id.saveToHistoryButton);
-        mAllInclusiveMAx_iv = findViewById(R.id.iconAllInclusiveMax);
-        mAllInclusiveMin_iv = findViewById(R.id.iconAllInclusiveMin);
-        mMaxValue_tv = findViewById(R.id.maxValue);
-        mMinValue_tv = findViewById(R.id.minValue);
-        mGroupTitle = findViewById(R.id.groupTitle);
-        mCounterId = getIntent().getLongExtra(EXTRA_COUNTER_ID, -1);
-        mViewModel = new ViewModelProvider(this, new CounterViewModelFactory(getApplication(),
+        mValue_tv = view.findViewById(R.id.value);
+        mIncButton = view.findViewById(R.id.inc_value);
+        mDecButton = view.findViewById(R.id.dec_value);
+        mResetButton = view.findViewById(R.id.reset_value);
+        mToolbar = view.findViewById(R.id.counterActivity_toolbar);
+        mCounterTitle = view.findViewById(R.id.counterTitle);
+        mLayout = view.findViewById(R.id.counterLayout);
+        mSaveToHistoryButton = view.findViewById(R.id.saveToHistoryButton);
+        mAllInclusiveMAx_iv = view.findViewById(R.id.iconAllInclusiveMax);
+        mAllInclusiveMin_iv = view.findViewById(R.id.iconAllInclusiveMin);
+        mMaxValue_tv = view.findViewById(R.id.maxValue);
+        mMinValue_tv = view.findViewById(R.id.minValue);
+        mGroupTitle = view.findViewById(R.id.groupTitle);
+        mCounterId = CounterFragmentArgs.fromBundle(getArguments()).getCounterId();
+        mViewModel = new ViewModelProvider(this, new CounterViewModelFactory(requireActivity().getApplication(),
                 mCounterId)).get(CounterViewModel.class);
 
         /*inflating menu, navigationIcon and set listeners*/
@@ -66,24 +71,26 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
         mToolbar.setOnMenuItemClickListener(i -> {
             switch (i.getItemId()) {
                 case R.id.counterDelete:
-                    new DeleteCounterDialog().show(getSupportFragmentManager(), "DialogCounterDelete");
+                    new DeleteCounterDialog(() -> mViewModel.deleteCounter())
+                            .show(getChildFragmentManager(), "DialogCounterDelete");
                     break;
                 case R.id.counterEdit:
-                    startActivity(new Intent(CounterActivity.this, CreateEditCounterActivity.class)
-                            .putExtra(CreateEditCounterActivity.EXTRA_COUNTER_ID, mCounterId));
+                    Navigation.findNavController(view).navigate(CounterFragmentDirections.
+                            actionCounterFragmentToCreateEditCounterFragment().setCounterId(mCounterId));
                     break;
                 case R.id.counterHistory:
-                    startActivity(new Intent(CounterActivity.this, CounterHistoryActivity.class).
-                            putExtra(CounterHistoryActivity.EXTRA_COUNTER_ID, mCounterId));
+                    Navigation.findNavController(view).navigate(CounterFragmentDirections.
+                            actionCounterFragmentToCounterHistoryFragment().setCounterId(mCounterId));
                     break;
             }
             return true;
         });
+
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        mToolbar.setNavigationOnClickListener(i -> finish());
+        mToolbar.setNavigationOnClickListener(i -> Navigation.findNavController(view).popBackStack());
 
         /*each new counter value is setting to textView*/
-        mViewModel.mCounter.observe(this, counter -> {
+        mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
             /*if counter == null that means it was deleted*/
             if (counter != null) {
                 mValue_tv.setText(String.valueOf(counter.value));
@@ -103,7 +110,7 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
                 }
                 setTextViewSize();
             } else {
-                finish();
+                Navigation.findNavController(view).popBackStack();
             }
         });
 
@@ -130,14 +137,9 @@ public class CounterActivity extends AppCompatActivity implements DeleteCounterD
                         mViewModel.restoreValue();
                     }).show();
         });
-    }
 
-    /*delete counter*/
-    @Override
-    public void onDialogDeleteClick() {
-        mViewModel.deleteCounter();
+        return view;
     }
-
 
     /*method for changing the font size when changing the value of the counter*/
     private void setTextViewSize() {

@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyItemTouchHelper extends ItemTouchHelper.Callback {
 
-   private ItemTouchHelperAdapter mAdapter;
-    public MyItemTouchHelper(ItemTouchHelperAdapter adapter) {
-        mAdapter = adapter;
+   private ItemTouchHelperAdapter mItemTouchHelperAdapter;
+    public MyItemTouchHelper(ItemTouchHelperAdapter itemTouchHelperAdapter) {
+        mItemTouchHelperAdapter = itemTouchHelperAdapter;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MyItemTouchHelper extends ItemTouchHelper.Callback {
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
                           @NonNull RecyclerView.ViewHolder target) {
-        mAdapter.onMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        mItemTouchHelperAdapter.onMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         return true;
     }
 

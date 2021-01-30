@@ -1,34 +1,34 @@
-package com.yaroslavgorbachh.counter.Activityes;
+package com.yaroslavgorbachh.counter.Fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LiveData;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.ViewModels.CreateEditCounterViewModel;
 import com.yaroslavgorbachh.counter.ViewModels.Factories.CreateEditCounterViewModelFactory;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-
-public class CreateEditCounterActivity extends AppCompatActivity {
-
+public class CreateEditCounterFragment extends Fragment {
     private String mTitle;
     private long mValue;
     private long mStep;
     private String mGroup;
     private long mMaxValue;
     private long mMinValue;
+    private long mCounterId;
 
     private TextInputEditText mTitle_et;
     private TextInputEditText mValue_et;
@@ -38,31 +38,33 @@ public class CreateEditCounterActivity extends AppCompatActivity {
     private AutoCompleteTextView mGroups_et;
     private CreateEditCounterViewModel mViewModel;
     private Toolbar mToolbar;
-    public static final String EXTRA_COUNTER_ID = "EXTRA_COUNTER_ID";
 
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_edit_counter);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_create_edit_counter, container, false);
 
         /*initialize fields*/
-        mTitle_et = findViewById(R.id.counterTitle_addCounter_detailed);
-        mValue_et = findViewById(R.id.counterValue_addCounter_detailed);
-        mStep_et = findViewById(R.id.counterStep_addCounter_detailed);
-        mMaxValue_et = findViewById(R.id.counterMaxValue_addCounter_detailed);
-        mMinValue_et = findViewById(R.id.counterMinValue_addCounter_detailed);
-        mToolbar = findViewById(R.id.toolbar_counterCreateActivity);
-        mViewModel = new ViewModelProvider(this, new CreateEditCounterViewModelFactory(getApplication(),
-                getIntent().getLongExtra(EXTRA_COUNTER_ID, -1))).get(CreateEditCounterViewModel.class);
-        mGroups_et = findViewById(R.id.filled_exposed_dropdown);
+        mTitle_et = view.findViewById(R.id.counterTitle_addCounter_detailed);
+        mValue_et = view.findViewById(R.id.counterValue_addCounter_detailed);
+        mStep_et = view.findViewById(R.id.counterStep_addCounter_detailed);
+        mMaxValue_et = view.findViewById(R.id.counterMaxValue_addCounter_detailed);
+        mMinValue_et = view.findViewById(R.id.counterMinValue_addCounter_detailed);
+        mToolbar = view.findViewById(R.id.toolbar_counterCreateActivity);
+        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown);
+        mCounterId = CreateEditCounterFragmentArgs.fromBundle(getArguments()).getCounterId();
+        mViewModel = new ViewModelProvider(this, new CreateEditCounterViewModelFactory(requireActivity().getApplication(),
+                mCounterId)).get(CreateEditCounterViewModel.class);
 
         /*set navigationIcon, inflate menu, and set listeners*/
         mToolbar.setNavigationIcon(R.drawable.ic_close);
-        mToolbar.setNavigationOnClickListener(i -> finish());
+        mToolbar.setNavigationOnClickListener(i -> {
+            Navigation.findNavController(view).popBackStack();
+        });
+
         mToolbar.inflateMenu(R.menu.menu_counter_create_activity);
 
-        mViewModel.mCounter.observe(this, counter -> {
+        mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
             /*if counter == null that means that counter will be created*/
             if (counter == null) {
                 mTitle = "";
@@ -98,14 +100,16 @@ public class CreateEditCounterActivity extends AppCompatActivity {
         });
 
         /*each new group sets into dropdown_menu*/
-        mViewModel.getGroups().observe(this, groups -> {
+        mViewModel.getGroups().observe(getViewLifecycleOwner(), groups -> {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                    CreateEditCounterActivity.this,
+                    requireContext(),
                     R.layout.dropdown_menu_popup_item,
                     Utility.deleteTheSameGroups(groups));
             mGroups_et.setAdapter(adapter);
         });
+        return view;
     }
+
 
     private void createCounter() {
         /*if title is empty show error*/
@@ -155,7 +159,7 @@ public class CreateEditCounterActivity extends AppCompatActivity {
                 && !(String.valueOf(mTitle_et.getText()).trim().isEmpty())
                 && !(String.valueOf(mStep_et.getText()).trim().isEmpty())) {
             mViewModel.updateCreateCounter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup);
-                finish();
+            Navigation.findNavController(getView()).popBackStack();
         }
     }
 }

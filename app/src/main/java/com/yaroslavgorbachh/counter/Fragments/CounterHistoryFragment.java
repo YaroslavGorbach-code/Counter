@@ -1,12 +1,16 @@
-package com.yaroslavgorbachh.counter.Activityes;
+package com.yaroslavgorbachh.counter.Fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -15,33 +19,34 @@ import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.RecyclerViews.CounterHistoryList_rv;
 import com.yaroslavgorbachh.counter.ViewModels.CounterHistoryViewModel;
 
-public class CounterHistoryActivity extends AppCompatActivity {
+public class CounterHistoryFragment extends Fragment {
 
     private CounterHistoryList_rv mHistoryList;
     private Spinner mSpinner;
     private Toolbar mToolbar;
-    public static final String EXTRA_COUNTER_ID = "EXTRA_COUNTER_ID";
     private CounterHistoryViewModel mViewModel;
     private long mCounterId;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_counter_history);
 
-        mCounterId = getIntent().getLongExtra(EXTRA_COUNTER_ID, -1);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_counter_history, container, false);
+        mCounterId = CounterHistoryFragmentArgs.fromBundle(getArguments()).getCounterId();
+
         /*initialize fields*/
         mViewModel = new ViewModelProvider(this).get(CounterHistoryViewModel.class);
-        mToolbar = findViewById(R.id.toolbar_history);
-        mSpinner = findViewById(R.id.spinner);
+        mToolbar = view.findViewById(R.id.toolbar_history);
+        mSpinner = view.findViewById(R.id.spinner);
 
         /*initialize navigation listener*/
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        mToolbar.setNavigationOnClickListener(i-> finish());
+        mToolbar.setNavigationOnClickListener(i-> getChildFragmentManager().popBackStack());
 
         setAdapterForSpinner();
 
-        mHistoryList = new CounterHistoryList_rv(findViewById(R.id.counterHistory_rv),
+        mHistoryList = new CounterHistoryList_rv(view.findViewById(R.id.counterHistory_rv),
                 counterHistory -> mViewModel.delete(counterHistory));
 
         /*setting listener for selected item in spinner*/
@@ -54,7 +59,7 @@ public class CounterHistoryActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
+        return view;
     }
 
     private void sortList(int position) {
@@ -62,13 +67,13 @@ public class CounterHistoryActivity extends AppCompatActivity {
         if(choose[position].equals("Sort by time") || choose[position].equals("Сортировка по дате")){
             /*update list of history sort by time*/
             mViewModel.getCounterHistoryList(mCounterId)
-                    .observe(CounterHistoryActivity.this, counterHistories -> {
+                    .observe(CounterHistoryFragment.this, counterHistories -> {
                         mHistoryList.setHistory(counterHistories);
                     });
         }else {
             /*update list of history sort by value*/
             mViewModel.getCounterHistoryListSortByValue(mCounterId)
-                    .observe(CounterHistoryActivity.this, counterHistories -> {
+                    .observe(CounterHistoryFragment.this, counterHistories -> {
                         mHistoryList.setHistory(counterHistories);
                     });
         }
@@ -82,7 +87,7 @@ public class CounterHistoryActivity extends AppCompatActivity {
 
         /*creating adapter for spinner*/
         ArrayAdapter<?> adapter =
-                ArrayAdapter.createFromResource(this, R.array.history_sort_items, android.R.layout.simple_spinner_item);
+                ArrayAdapter.createFromResource(requireContext(), R.array.history_sort_items, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
     }

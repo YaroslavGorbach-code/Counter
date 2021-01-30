@@ -23,19 +23,8 @@ public class DeleteCounterDialog extends AppCompatDialogFragment {
 
     }
 
-    // Override the Fragment.onAttach() method to instantiate the DeleteDialogListener
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-
-            mListener = (DeleteDialogListener) context;
-
-        } catch (ClassCastException e) {
-
-            throw new ClassCastException(getActivity().toString()
-                    + " must implement DeleteDialogListener");
-        }
+   public DeleteCounterDialog(DeleteDialogListener listener){
+        mListener = listener;
     }
 
     @NonNull
@@ -44,7 +33,9 @@ public class DeleteCounterDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.DeleteCounterDialogTitle)
                 .setMessage(R.string.DeleteCounterDialogText)
-                .setPositiveButton(R.string.DeleteCounterDialogPositiveButton, (dialog, which) -> mListener.onDialogDeleteClick())
+                .setPositiveButton(R.string.DeleteCounterDialogPositiveButton, (dialog, which) -> {
+                    mListener.onDialogDeleteClick();
+                })
                 .setNegativeButton(R.string.DeleteCounterDialogNegativeButton, null);
 
         return builder.create();
