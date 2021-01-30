@@ -1,6 +1,7 @@
 package com.yaroslavgorbachh.counter.ViewModels;
 
 import android.app.Application;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -33,7 +34,7 @@ public class CreateEditCounterViewModel extends AndroidViewModel {
             Date currentDate = new Date();
             currentDate.getTime();
             Counter newCounter = new Counter(title, value, maxValue, minValue, step, grope, currentDate);
-            mRepo.insertCounter(newCounter);
+            new Handler().postDelayed(() ->  mRepo.insertCounter(newCounter),500);
         } else {
             /*if mCounter != null update counter*/
             Objects.requireNonNull(mCounter.getValue()).value = value;
@@ -42,7 +43,6 @@ public class CreateEditCounterViewModel extends AndroidViewModel {
             Objects.requireNonNull(mCounter.getValue()).minValue = minValue;
             Objects.requireNonNull(mCounter.getValue()).step = step;
             Objects.requireNonNull(mCounter.getValue()).title = title;
-            mRepo.updateCounter(Objects.requireNonNull(mCounter.getValue()));
         }
     }
 }

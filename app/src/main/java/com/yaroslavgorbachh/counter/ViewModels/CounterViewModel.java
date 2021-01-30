@@ -1,6 +1,7 @@
 package com.yaroslavgorbachh.counter.ViewModels;
 
 import android.app.Application;
+import android.os.Handler;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.Database.Repo;
@@ -79,10 +81,9 @@ public class CounterViewModel extends AndroidViewModel {
         Toast.makeText(getApplication(), getApplication().getString(R.string.CreateEditCounterCounterValueHint) + " " +
                 mCounter.getValue().value + " " + getApplication().getString(R.string.SaveToHistoryToast), Toast.LENGTH_SHORT).show();
     }
-
     public void deleteCounter(){
         mRepo.deleteCounterHistory(Objects.requireNonNull(mCounter.getValue()).id);
-        mRepo.deleteCounter(mCounter.getValue());
+        new Handler().postDelayed(() -> mRepo.deleteCounter(mCounter.getValue()),500);
     }
 
 }

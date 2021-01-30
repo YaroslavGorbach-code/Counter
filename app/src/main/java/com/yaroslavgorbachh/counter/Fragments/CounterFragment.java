@@ -71,8 +71,10 @@ public class CounterFragment extends Fragment{
         mToolbar.setOnMenuItemClickListener(i -> {
             switch (i.getItemId()) {
                 case R.id.counterDelete:
-                    new DeleteCounterDialog(() -> mViewModel.deleteCounter())
-                            .show(getChildFragmentManager(), "DialogCounterDelete");
+                    new DeleteCounterDialog(()->{
+                       mViewModel.deleteCounter();
+                       Navigation.findNavController(view).popBackStack();
+                    }).show(getChildFragmentManager(), "DialogCounterDelete");
                     break;
                 case R.id.counterEdit:
                     Navigation.findNavController(view).navigate(CounterFragmentDirections.
