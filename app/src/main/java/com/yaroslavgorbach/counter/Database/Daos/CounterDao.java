@@ -33,7 +33,7 @@ public interface CounterDao {
     LiveData<List<String>> getGroups();
 
 
-    @Query("SELECT * FROM counter_table WHERE grope =:group ORDER BY createData ")
+    @Query("SELECT * FROM counter_table WHERE grope =:group ORDER BY createData DESC")
     LiveData<List<Counter>> getCountersByGroup(String group);
 
 }

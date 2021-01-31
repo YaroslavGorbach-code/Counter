@@ -44,6 +44,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             notifyDataSetChanged();
         }
 
+
         @NonNull
         @Override
         public CountersAdapter.Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

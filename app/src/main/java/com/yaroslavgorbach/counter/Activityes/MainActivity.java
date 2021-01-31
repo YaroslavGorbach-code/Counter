@@ -1,33 +1,42 @@
 package com.yaroslavgorbach.counter.Activityes;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import com.google.android.material.appbar.MaterialToolbar;
-import com.yaroslavgorbach.counter.R;
+import com.google.android.material.navigation.NavigationView;
+import com.yaroslavgorbach.counter.Fragments.CountersFragment;
+import com.yaroslavgorbach.counter.Fragments.CountersFragmentDirections;
 import com.yaroslavgorbach.counter.Fragments.Dialogs.CreateCounterDialog;
+import com.yaroslavgorbach.counter.R;
 import com.yaroslavgorbach.counter.RecyclerViews.GroupList_rv;
 import com.yaroslavgorbach.counter.Utility;
 import com.yaroslavgorbach.counter.ViewModels.MainActivityViewModel;
 
-
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private GroupList_rv mGroupsList;
     private MainActivityViewModel mViewModel;
     private DrawerLayout mDrawer;
     private LinearLayout mAllCounters_navigationItem;
+    private NavigationView mNavigationDrawerView;
+    private NavController mNavController;
+    private MaterialToolbar mMaterialToolbar;
+    private String mTittle;
 
 
     @Override
@@ -36,24 +45,22 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         /*initialize fields*/
-        mDrawer = findViewById(R.id.drawer);
         mAllCounters_navigationItem = findViewById(R.id.AllCounters);
+        mNavigationDrawerView = findViewById(R.id.navigationDrawerView);
+        mDrawer = findViewById(R.id.drawer);
+        mMaterialToolbar = findViewById(R.id.toolbar_mainActivity);
+        mMaterialToolbar.setTitle(getResources().getString(R.string.AllCountersItem));
+        mNavController = Navigation.findNavController(this, R.id.hostFragment);
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         setUpNavControllers();
-
-        /*adding toggle*/
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar,
-//                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        mDrawer.addDrawerListener(toggle);
-//        toggle.syncState();
 
 
         /*setting the fragment with all the counters*/
         mAllCounters_navigationItem.setOnClickListener(i->{
-//            CountersFragment fragment = new CountersFragment();
-//            getSupportFragmentManager().beginTransaction().replace(R.id.hostFragment, fragment).commit();
-//            mToolbar.setTitle(R.string.AllCountersItem);
+            NavDirections action = CountersFragmentDirections.actionCountersFragmentSelf();
+            mNavController.navigate(action);
             mDrawer.closeDrawer(GravityCompat.START);
+            mMaterialToolbar.setTitle(getResources().getString(R.string.AllCountersItem));
         });
 
         /*initialize RecyclerView and it listener for groups*/
@@ -62,50 +69,55 @@ public class MainActivity extends AppCompatActivity{
             /*setting the fragment with all the counters which belong to a certain group*/
             @Override
             public void onOpen(String string) {
-//                Bundle arg = new Bundle();
-//                arg.putString("group_title", string);
-//                CountersFragment fragment = new CountersFragment();
-//                fragment.setArguments(arg);
-//                getSupportFragmentManager().beginTransaction().replace(R.id.hostFragment, fragment).commit();
-//                mToolbar.setTitle(string);
+                NavDirections action = CountersFragmentDirections.actionCountersFragmentSelf().setGroup(string);
+                mNavController.navigate(action);
                 mDrawer.closeDrawer(GravityCompat.START);
+                mMaterialToolbar.setTitle(string);
+                mTittle = string;
             }
         });
 
         mViewModel.getGroups().observe(this, groups -> {
-             mGroupsList.setGroups(Utility.deleteTheSameGroups(groups));
+            mGroupsList.setGroups(Utility.deleteTheSameGroups(groups));
         });
     }
 
     @SuppressLint("NonConstantResourceId")
     private void setUpNavControllers() {
-        MaterialToolbar toolbar = findViewById(R.id.toolbar_mainActivity);
-        toolbar.inflateMenu(R.menu.menu_counter_main_activity);
-        toolbar.setOnMenuItemClickListener(i->{
+        AppBarConfiguration appBarConfiguration;
+        mMaterialToolbar.inflateMenu(R.menu.menu_counter_main_activity);
+        mMaterialToolbar.setOnMenuItemClickListener(i->{
             if (i.getItemId() == R.id.counterAdd) {
                 new CreateCounterDialog().show(getSupportFragmentManager(), "Add Counter");
             }
             return true;
         });
 
-        NavController navController = Navigation.findNavController(this, R.id.hostFragment);
-        AppBarConfiguration appBarConfiguration =
-                new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 
-        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+        appBarConfiguration = new AppBarConfiguration.Builder(mNavController.getGraph())
+                .setDrawerLayout(mDrawer)
+                .build();
+        NavigationUI.setupWithNavController(mMaterialToolbar, mNavController, appBarConfiguration);
+        NavigationUI.setupWithNavController(mNavigationDrawerView, mNavController);
+
+
+        mNavController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
                 case R.id.counterFragment:
-                    toolbar.setVisibility(View.GONE);
+                    mMaterialToolbar.setVisibility(View.GONE);
                     break;
                 case R.id.createEditCounterFragment:
-                    toolbar.setVisibility(View.GONE);
+                    mMaterialToolbar.setVisibility(View.GONE);
                     break;
                 case R.id.countersFragment:
-                    toolbar.setVisibility(View.VISIBLE);
+                    mMaterialToolbar.setVisibility(View.VISIBLE);
+                    if (mTittle==null){
+                        mTittle = getResources().getString(R.string.AllCountersItem);
+                    }
+                    mMaterialToolbar.setTitle(mTittle);
                     break;
                 case R.id.counterHistoryFragment:
-                    toolbar.setVisibility(View.GONE);
+                    mMaterialToolbar.setVisibility(View.GONE);
                     break;
             }
         });

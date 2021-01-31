@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.Database.Repo;
@@ -16,9 +17,12 @@ import java.util.List;
 public class CountersViewModel extends AndroidViewModel {
 
     private final Repo mRepo;
+    public LiveData<List<Counter>> mCounters;
+    public LiveData<List<Counter>> mFilteredCounters;
     public CountersViewModel(@NonNull Application application) {
         super(application);
         mRepo = new Repo(application);
+        mCounters = mRepo.getAllCounters();
     }
 
     public void incCounter(Counter counter) {
@@ -66,11 +70,7 @@ public class CountersViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Counter>> getCountersByGroup(String group_title) {
-       return mRepo.getCountersByGroup(group_title);
-    }
-
-    public LiveData<List<Counter>> getAllCounters() {
-        return mRepo.getAllCounters();
+        return mRepo.getCountersByGroup(group_title);
     }
 
     public LiveData<List<String>> getGroups() {

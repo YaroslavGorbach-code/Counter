@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.Database.Repo;
 
 import java.util.List;
@@ -17,8 +18,8 @@ public class MainActivityViewModel extends AndroidViewModel {
         super(application);
         mRepo = new Repo(application);
     }
-
     public LiveData<List<String>> getGroups() {
        return mRepo.getGroups();
     }
+
 }
