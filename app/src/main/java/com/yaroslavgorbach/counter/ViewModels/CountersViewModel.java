@@ -18,7 +18,6 @@ public class CountersViewModel extends AndroidViewModel {
 
     private final Repo mRepo;
     public LiveData<List<Counter>> mCounters;
-    public LiveData<List<Counter>> mFilteredCounters;
     public CountersViewModel(@NonNull Application application) {
         super(application);
         mRepo = new Repo(application);
@@ -71,10 +70,6 @@ public class CountersViewModel extends AndroidViewModel {
 
     public LiveData<List<Counter>> getCountersByGroup(String group_title) {
         return mRepo.getCountersByGroup(group_title);
-    }
-
-    public LiveData<List<String>> getGroups() {
-        return mRepo.getGroups();
     }
 
 }

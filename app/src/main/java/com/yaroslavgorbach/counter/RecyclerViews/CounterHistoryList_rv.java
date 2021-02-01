@@ -43,6 +43,8 @@ public class CounterHistoryList_rv {
                 setHasStableIds(true);
             }
             private List<CounterHistory> mData = new ArrayList<>();
+
+
             private void setData(List<CounterHistory> data) {
                 mData = data;
                 notifyDataSetChanged();

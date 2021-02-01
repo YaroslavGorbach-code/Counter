@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyItemTouchHelper extends ItemTouchHelper.Callback {
 
-   private ItemTouchHelperAdapter mItemTouchHelperAdapter;
+    private final ItemTouchHelperAdapter mItemTouchHelperAdapter;
     public MyItemTouchHelper(ItemTouchHelperAdapter itemTouchHelperAdapter) {
         mItemTouchHelperAdapter = itemTouchHelperAdapter;
     }
@@ -32,6 +32,7 @@ public class MyItemTouchHelper extends ItemTouchHelper.Callback {
                 itemViewHolder.onSelectedChanged();
             }
         }
+        super.onSelectedChanged(viewHolder, actionState);
     }
 
     @Override
@@ -52,12 +53,22 @@ public class MyItemTouchHelper extends ItemTouchHelper.Callback {
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
                           @NonNull RecyclerView.ViewHolder target) {
-        mItemTouchHelperAdapter.onMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        mItemTouchHelperAdapter.onMove(viewHolder.getBindingAdapterPosition(), target.getBindingAdapterPosition());
+        if (viewHolder instanceof ItemTouchHelperViewHolder) {
+            ItemTouchHelperViewHolder itemViewHolder =
+                    (ItemTouchHelperViewHolder) viewHolder;
+            itemViewHolder.onDragging(viewHolder);
+        }
         return true;
     }
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
+    }
+
+    @Override
+    public int interpolateOutOfBoundsScroll(@NonNull RecyclerView recyclerView, int viewSize, int viewSizeOutOfBounds, int totalSize, long msSinceStartScroll) {
+        return super.interpolateOutOfBoundsScroll(recyclerView, viewSize, viewSizeOutOfBounds, totalSize, msSinceStartScroll);
     }
 }
