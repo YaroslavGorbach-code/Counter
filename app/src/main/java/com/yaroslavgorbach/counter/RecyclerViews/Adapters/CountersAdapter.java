@@ -104,14 +104,16 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 });
 
                 new FastCountButton(mMinus, () ->{
-                    mCounterItemListeners.onMinusClick(mData.get(getBindingAdapterPosition()));
+                    // mCounterItemListeners.onMinusClick(mData.get(getBindingAdapterPosition()));
                     // mMinus.performHapticFeedback(HapticFeedbackConstants. LONG_PRESS);
+                    mCounterSelection.decSelectedCounters();
                 });
             }
 
             private void bind(Counter counter) {
                 mTitle.setText(counter.title);
                 mValue.setText(String.valueOf(counter.value));
+                mCounterSelection.setVhBackground(counter,this);
             }
 
             @Override

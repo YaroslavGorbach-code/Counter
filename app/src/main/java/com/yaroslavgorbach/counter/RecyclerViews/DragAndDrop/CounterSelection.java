@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.Database.Repo;
 import com.yaroslavgorbach.counter.R;
+import com.yaroslavgorbach.counter.RecyclerViews.Adapters.CountersAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CounterSelection {
-    private Repo mRepo;
+    private final Repo mRepo;
 
     public boolean isSelectionMod = false;
     private final List<Counter> mSelectedCounters = new ArrayList<>();
@@ -26,7 +27,6 @@ public class CounterSelection {
 
 
     public void selectCounter(Counter newCounter, RecyclerView.ViewHolder viewHolder) {
-
         boolean isAlreadySelected = false;
         for (Counter oldCounter : mSelectedCounters) {
             if (newCounter.id == oldCounter.id) {
@@ -35,7 +35,6 @@ public class CounterSelection {
                 break;
             }
         }
-
             if (!isAlreadySelected) {
                 isSelectionMod = true;
                 mSelectedCounters.add(newCounter);
@@ -84,9 +83,33 @@ public class CounterSelection {
 
     }
 
+    public void setVhBackground(Counter newCounter, CountersAdapter.Vh vh) {
+        boolean isAlreadySelected = false;
+        for (Counter oldCounter : mSelectedCounters) {
+            if (newCounter.id == oldCounter.id) {
+                vh.itemView.setBackgroundResource(R.drawable.item_selected);
+                isAlreadySelected = true;
+                break;
+            }
+        }
+
+        if (!isAlreadySelected) {
+            if (mDraggingHolder==null){
+                vh.itemView.setBackgroundResource(0);
+            }
+        }
+    }
+
     public void incSelectedCounters(){
         for (Counter counter:mSelectedCounters){
             counter.value++;
+            mRepo.updateCounter(counter);
+        }
+    }
+
+    public void decSelectedCounters(){
+        for (Counter counter:mSelectedCounters){
+            counter.value--;
             mRepo.updateCounter(counter);
         }
     }
