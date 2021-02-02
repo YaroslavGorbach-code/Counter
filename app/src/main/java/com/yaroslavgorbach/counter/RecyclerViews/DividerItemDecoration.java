@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbach.counter.R;
@@ -18,7 +19,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDrawOver(@NonNull Canvas c, RecyclerView parent, @NonNull RecyclerView.State state) {
         int left = 30;
         int right = parent.getWidth() - 30;
 
@@ -33,6 +34,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
+
         }
     }
 }

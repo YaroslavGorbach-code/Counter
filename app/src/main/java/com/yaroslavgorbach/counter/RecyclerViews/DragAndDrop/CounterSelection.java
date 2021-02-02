@@ -1,8 +1,6 @@
 package com.yaroslavgorbach.counter.RecyclerViews.DragAndDrop;
 
 import android.app.Application;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -42,13 +40,13 @@ public class CounterSelection {
 
     private void setItemSelectedBackground(RecyclerView.ViewHolder vh){
         vh.itemView.setBackgroundResource(R.drawable.item_selected);
-        vh.itemView.setElevation(20);
+        vh.itemView.setElevation(5);
     }
 
     private void setItemDraggingBackground(RecyclerView.ViewHolder viewHolder){
         mDraggingHolder = viewHolder;
-        mDraggingHolder.itemView.setBackgroundResource(R.drawable.item_dragging_2);
-        mDraggingHolder.itemView.setElevation(20F);
+        mDraggingHolder.itemView.setBackgroundResource(R.drawable.item_dragging);
+        mDraggingHolder.itemView.setElevation(25F);
     }
 
     private void unSelectCounter(Counter counter, RecyclerView.ViewHolder viewHolder){

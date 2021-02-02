@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -109,7 +110,7 @@ public class CountersFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
+//        mRecyclerView.addItemDecoration(dividerItemDecoration);
         mAdapter.itemTouchHelper.attachToRecyclerView(mRecyclerView);
         mAdapter.setStateRestorationPolicy(PREVENT_WHEN_EMPTY);
         mRecyclerView.setAdapter(mAdapter);

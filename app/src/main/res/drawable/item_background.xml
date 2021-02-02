@@ -2,6 +2,7 @@
         android:color="#D1D1D1">
         <item>
             <shape android:shape="rectangle">
+                <corners android:radius="7dp"/>
                 <solid android:color="?android:colorBackground"/>
             </shape>
         </item>
