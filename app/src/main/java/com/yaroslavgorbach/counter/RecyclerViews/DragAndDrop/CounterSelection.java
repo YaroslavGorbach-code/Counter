@@ -18,7 +18,6 @@ import java.util.List;
 public class CounterSelection {
 
     private final Repo mRepo;
-    private final Application application;
 
     private final MutableLiveData<Boolean> _isSelectionMod = new MutableLiveData<>(false);
     public LiveData<Boolean> isSelectionMod = _isSelectionMod;
@@ -28,19 +27,18 @@ public class CounterSelection {
 
     public CounterSelection(Application application){
         mRepo = new Repo(application);
-        this.application = application;
     }
 
 
     private void setDefaultBackground(RecyclerView.ViewHolder vh) {
         vh.itemView.setBackgroundResource(R.drawable.item_background);
-        vh.itemView.setElevation(0F);
+        vh.itemView.setElevation(7F);
         Log.println(Log.VERBOSE,"CounterSelection", "setDefBg");
     }
 
     private void setItemSelectedBackground(RecyclerView.ViewHolder vh){
         vh.itemView.setBackgroundResource(R.drawable.item_selected);
-        vh.itemView.setElevation(5);
+        vh.itemView.setElevation(8f);
     }
 
     private void setItemDraggingBackground(RecyclerView.ViewHolder viewHolder){

@@ -107,10 +107,8 @@ public class CountersFragment extends Fragment {
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(mRecyclerView.getContext());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
-//        mRecyclerView.addItemDecoration(dividerItemDecoration);
         mAdapter.itemTouchHelper.attachToRecyclerView(mRecyclerView);
         mAdapter.setStateRestorationPolicy(PREVENT_WHEN_EMPTY);
         mRecyclerView.setAdapter(mAdapter);
