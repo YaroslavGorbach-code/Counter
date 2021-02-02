@@ -1,6 +1,9 @@
 package com.yaroslavgorbach.counter.RecyclerViews.DragAndDrop;
 
 import android.app.Application;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -15,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CounterSelection {
+
     private final Repo mRepo;
+    private final Application application;
 
     private final MutableLiveData<Boolean> _isSelectionMod = new MutableLiveData<>(false);
     public LiveData<Boolean> isSelectionMod = _isSelectionMod;
@@ -25,7 +30,37 @@ public class CounterSelection {
 
     public CounterSelection(Application application){
         mRepo = new Repo(application);
+        this.application = application;
     }
+
+
+    private void setDefaultBackground(RecyclerView.ViewHolder vh) {
+        vh.itemView.setBackgroundResource(R.drawable.item_background);
+        vh.itemView.setElevation(0F);
+        Log.println(Log.VERBOSE,"CounterSelection", "setDefBg");
+    }
+
+    private void setItemSelectedBackground(RecyclerView.ViewHolder vh){
+        vh.itemView.setBackgroundResource(R.drawable.item_selected);
+        vh.itemView.setElevation(20);
+    }
+
+    private void setItemDraggingBackground(RecyclerView.ViewHolder viewHolder){
+        mDraggingHolder = viewHolder;
+        mDraggingHolder.itemView.setBackgroundResource(R.drawable.item_dragging_2);
+        mDraggingHolder.itemView.setElevation(20F);
+    }
+
+    private void unSelectCounter(Counter counter, RecyclerView.ViewHolder viewHolder){
+        Log.println(Log.VERBOSE,"CounterSelection", "itemUnSelected");
+        setDefaultBackground(viewHolder);
+        if (mSelectedVhs.size()==1){
+            _isSelectionMod.setValue(false);
+        }
+        mSelectedCounters.remove(counter);
+        mSelectedVhs.remove(viewHolder);
+    }
+
 
     public void selectCounter(Counter newCounter, RecyclerView.ViewHolder viewHolder) {
         boolean isAlreadySelected = false;
@@ -39,37 +74,27 @@ public class CounterSelection {
             if (!isAlreadySelected) {
                 if (!_isSelectionMod.getValue())
                 _isSelectionMod.setValue(true);
+                Log.println(Log.VERBOSE,"CounterSelection", "itemSelected");
                 mSelectedCounters.add(newCounter);
                 mSelectedVhs.add(viewHolder);
-                setDefaultBackground(viewHolder);
-                viewHolder.itemView.setBackgroundResource(R.drawable.item_selected);
+                setItemSelectedBackground(viewHolder);
             }
         }
-
-    private void unSelectCounter(Counter counter, RecyclerView.ViewHolder viewHolder){
-        if (mSelectedVhs.size()==1){
-            _isSelectionMod.setValue(false);
-        }
-        mSelectedCounters.remove(counter);
-        mSelectedVhs.remove(viewHolder);
-        setDefaultBackground(viewHolder);
-    }
 
     public void clearAllSelections(){
         _isSelectionMod.setValue(false);
         for (RecyclerView.ViewHolder vh : mSelectedVhs) {
             setDefaultBackground(vh);
         }
+        Log.println(Log.VERBOSE,"CounterSelection", "selectionsCleared");
         mSelectedVhs.clear();
         mSelectedCounters.clear();
     }
 
     public void dragHolder(RecyclerView.ViewHolder viewHolder){
+        Log.println(Log.VERBOSE,"CounterSelection", "startDragging");
         clearAllSelections();
-        setDefaultBackground(viewHolder);
-        mDraggingHolder = viewHolder;
-        mDraggingHolder.itemView.setBackgroundResource(R.drawable.item_dragging_2);
-        mDraggingHolder.itemView.setElevation(30F);
+        setItemDraggingBackground(viewHolder);
     }
 
     public void clearDragHolderBackground(){
@@ -80,17 +105,11 @@ public class CounterSelection {
 
     }
 
-    private void setDefaultBackground(RecyclerView.ViewHolder vh) {
-        vh.itemView.setBackgroundResource(0);
-        vh.itemView.setBackgroundColor(0);
-        vh.itemView.setElevation(0F);
-    }
-
-    public void setVhBackground(Counter newCounter, CountersAdapter.Vh vh) {
+    public void bingVhBackground(Counter newCounter, CountersAdapter.Vh vh) {
         boolean isAlreadySelected = false;
         for (Counter oldCounter : mSelectedCounters) {
             if (newCounter.id == oldCounter.id) {
-                vh.itemView.setBackgroundResource(R.drawable.item_selected);
+                setItemSelectedBackground(vh);
                 isAlreadySelected = true;
                 break;
             }
@@ -98,7 +117,7 @@ public class CounterSelection {
 
         if (!isAlreadySelected) {
             if (mDraggingHolder==null){
-                vh.itemView.setBackgroundResource(0);
+                setDefaultBackground(vh);
             }
         }
     }

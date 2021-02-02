@@ -53,13 +53,20 @@ public class MyItemTouchHelper extends ItemTouchHelper.Callback {
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
                           @NonNull RecyclerView.ViewHolder target) {
-        mItemTouchHelperAdapter.onMove(viewHolder.getBindingAdapterPosition(), target.getBindingAdapterPosition());
         if (viewHolder instanceof ItemTouchHelperViewHolder) {
             ItemTouchHelperViewHolder itemViewHolder =
                     (ItemTouchHelperViewHolder) viewHolder;
             itemViewHolder.onDragging(viewHolder);
         }
         return true;
+    }
+
+
+    @Override
+    public void onMoved(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, int fromPos, @NonNull RecyclerView.ViewHolder target, int toPos, int x, int y) {
+        super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
+        mItemTouchHelperAdapter.onMoved(viewHolder.getBindingAdapterPosition(), target.getBindingAdapterPosition());
+
     }
 
     @Override

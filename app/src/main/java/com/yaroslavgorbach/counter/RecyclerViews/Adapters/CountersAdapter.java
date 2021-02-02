@@ -30,7 +30,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         void onPlusClick(Counter counter);
         void onMinusClick(Counter counter);
         void onOpen(Counter counter);
-        void onMove(Counter counterFrom, Counter counterTo);
+        void onMoved(Counter counterFrom, Counter counterTo);
     }
         public final CounterSelection counterSelection;
 
@@ -73,11 +73,11 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         }
 
         @Override
-        public void onMove(int fromPos, int toPos) {
+        public void onMoved(int fromPos, int toPos) {
             Counter deleted = mData.remove(fromPos);
             mData.add(toPos, deleted);
             notifyItemMoved(fromPos, toPos);
-            mCounterItemListeners.onMove(mData.get(fromPos), mData.get(toPos));
+            mCounterItemListeners.onMoved(mData.get(fromPos), mData.get(toPos));
         }
 
 
@@ -112,7 +112,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             private void bind(Counter counter) {
                 mTitle.setText(counter.title);
                 mValue.setText(String.valueOf(counter.value));
-                counterSelection.setVhBackground(counter,this);
+                counterSelection.bingVhBackground(counter,this);
             }
 
             @Override

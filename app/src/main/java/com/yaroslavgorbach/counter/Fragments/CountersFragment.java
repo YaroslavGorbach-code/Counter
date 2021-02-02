@@ -87,7 +87,7 @@ public class CountersFragment extends Fragment {
             }
 
             @Override
-            public void onMove(Counter counterFrom, Counter counterTo) {
+            public void onMoved(Counter counterFrom, Counter counterTo) {
                 mViewModel.countersMoved(counterFrom, counterTo);
             }
         }, getActivity().getApplication());
