@@ -2,6 +2,7 @@ package com.yaroslavgorbach.counter.RecyclerViews.Adapters;
 
 import android.app.Application;
 import android.view.GestureDetector;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,7 +32,8 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         void onOpen(Counter counter);
         void onMove(Counter counterFrom, Counter counterTo);
     }
-        private final CounterSelection mCounterSelection;
+        public final CounterSelection counterSelection;
+
         private List<Counter> mData = new ArrayList<>();
         private final CounterItemListeners mCounterItemListeners;
         private final ItemTouchHelper.Callback callback = new MyItemTouchHelper(this);
@@ -39,7 +41,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
         public CountersAdapter(CounterItemListeners counterItemListeners, Application application) {
             setHasStableIds(true);
-            mCounterSelection = new CounterSelection(application);
+            counterSelection = new CounterSelection(application);
             mCounterItemListeners = counterItemListeners;
        }
 
@@ -97,23 +99,20 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 itemView.setOnTouchListener(this);
 
                 new FastCountButton(mPlus, () -> {
-                    //mCounterItemListeners.onPlusClick(mData.get(getBindingAdapterPosition()));
+                     mCounterItemListeners.onPlusClick(mData.get(getBindingAdapterPosition()));
                     // mPlus.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                    mCounterSelection.incSelectedCounters();
-
                 });
 
                 new FastCountButton(mMinus, () ->{
-                    // mCounterItemListeners.onMinusClick(mData.get(getBindingAdapterPosition()));
+                     mCounterItemListeners.onMinusClick(mData.get(getBindingAdapterPosition()));
                     // mMinus.performHapticFeedback(HapticFeedbackConstants. LONG_PRESS);
-                    mCounterSelection.decSelectedCounters();
                 });
             }
 
             private void bind(Counter counter) {
                 mTitle.setText(counter.title);
                 mValue.setText(String.valueOf(counter.value));
-                mCounterSelection.setVhBackground(counter,this);
+                counterSelection.setVhBackground(counter,this);
             }
 
             @Override
@@ -122,12 +121,12 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
             @Override
             public void clearView() {
-                mCounterSelection.clearDragHolderBackground();
+                counterSelection.clearDragHolderBackground();
             }
 
             @Override
             public void onDragging(RecyclerView.ViewHolder holder) {
-                mCounterSelection.dragHolder(holder);
+                counterSelection.dragHolder(holder);
             }
 
             @Override
@@ -141,8 +140,8 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                if (mCounterSelection.isSelectionMod){
-                    mCounterSelection.selectCounter(mData.get(getBindingAdapterPosition()),this);
+                if (counterSelection.isSelectionMod.getValue()){
+                    counterSelection.selectCounter(mData.get(getBindingAdapterPosition()),this);
                 }else {
                     mCounterItemListeners.onOpen(mData.get(getBindingAdapterPosition()));
                 }
@@ -156,9 +155,11 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
             @Override
             public void onLongPress(MotionEvent e) {
-                itemView.performLongClick();
-                itemTouchHelper.startDrag(this);
-                mCounterSelection.selectCounter(mData.get(getBindingAdapterPosition()),this);
+                itemView.performHapticFeedback(HapticFeedbackConstants. LONG_PRESS);
+                if(!counterSelection.isSelectionMod.getValue()){
+                    itemTouchHelper.startDrag(this);
+                }
+                counterSelection.selectCounter(mData.get(getBindingAdapterPosition()),this);
             }
 
 
@@ -185,5 +186,4 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 return true;
             }
         }
-
 }
