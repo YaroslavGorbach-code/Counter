@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -36,8 +37,8 @@ public class CountersFragment extends Fragment {
     private CountersAdapter mAdapter;
     private String mGroup;
 
-    private ExtendedFloatingActionButton mIncAllSelectedCounters_bt;
-    private ExtendedFloatingActionButton mDecAllSelectedCounters_bt;
+    private TextView mIncAllSelectedCounters_bt;
+    private TextView mDecAllSelectedCounters_bt;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,11 +125,11 @@ public class CountersFragment extends Fragment {
 
         mAdapter.counterSelection.isSelectionMod.observe(getViewLifecycleOwner(), isSelectionMod ->{
             if (isSelectionMod){
-                mDecAllSelectedCounters_bt.show();
-                mIncAllSelectedCounters_bt.show();
+                mDecAllSelectedCounters_bt.setVisibility(View.VISIBLE);
+                mIncAllSelectedCounters_bt.setVisibility(View.VISIBLE);
             }else {
-                mDecAllSelectedCounters_bt.hide();
-                mIncAllSelectedCounters_bt.hide();
+                mDecAllSelectedCounters_bt.setVisibility(View.GONE);
+                mIncAllSelectedCounters_bt.setVisibility(View.GONE);
             }
         });
 

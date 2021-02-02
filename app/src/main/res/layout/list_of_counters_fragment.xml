@@ -13,32 +13,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/allSelectedDec"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:backgroundTint="#fafafa"
-        android:text="-"
+        android:text="−"
         android:textAlignment="center"
-        android:textSize="30sp"
-        app:fabSize="normal"
-        app:iconTint="@null"
+        android:textColor="?colorAccent"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="@+id/allSelectedInc"
         app:layout_constraintEnd_toStartOf="@+id/allSelectedInc"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/allSelectedInc"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="#fafafa"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:text="+"
+        android:backgroundTint="#fafafa"
         android:textAlignment="center"
-        android:textSize="30sp"
-        app:fabSize="normal"
-        app:iconTint="@null"
+        android:textColor="?colorAccent"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

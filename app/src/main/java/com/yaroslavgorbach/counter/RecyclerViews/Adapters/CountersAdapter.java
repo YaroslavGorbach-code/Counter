@@ -171,7 +171,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 mGestureDetector.onTouchEvent(event);
-
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         itemView.setPressed(true);
