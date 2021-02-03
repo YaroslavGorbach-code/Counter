@@ -23,11 +23,11 @@ public class CounterSelection {
 
     private final MutableLiveData<Boolean> mSelectionMod = new MutableLiveData<>(false);
     public LiveData<Boolean> selectionMod = mSelectionMod;
-    private final List<Counter> mSelectedCounters = new ArrayList<>();
+    private List<Counter> mSelectedCounters = new ArrayList<>();
     private final List<RecyclerView.ViewHolder> mSelectedVhs = new ArrayList<>();
     private RecyclerView.ViewHolder mDraggingHolder;
 
-    private  List<Bundle> mCopyBeforeReset;
+    private  List<Counter> mCopyBeforeReset;
 
 
     public CounterSelection(Application application){
@@ -56,6 +56,7 @@ public class CounterSelection {
         Log.println(Log.VERBOSE,"CounterSelection", "itemUnSelected");
         setDefaultBackground(viewHolder);
         if (mSelectedVhs.size()==1){
+            if (mSelectedCounters.size()==1)
             mSelectionMod.setValue(false);
         }
         mSelectedCounters.remove(counter);
@@ -144,22 +145,21 @@ public class CounterSelection {
     }
 
     public void resetSelectedCounters() {
-//        mCopyBeforeReset = new ArrayList<>();
+        mCopyBeforeReset = new ArrayList<>();
         for (Counter counter : mSelectedCounters) {
-//            Bundle copy = new Bundle();
-//            copy.putLong("id", counter.id);
-//            copy.putLong("value", counter.value);
-//            mCopyBeforeReset.add(copy);
-
+            Counter copy = new Counter(counter.title, counter.value,
+                    counter.maxValue, counter.minValue, counter.step, counter.grope, counter.createData);
+            copy.setId(counter.id);
+            mCopyBeforeReset.add(copy);
             counter.value = 0;
             mRepo.updateCounter(counter);
         }
     }
 
     public void undoReset() {
-//        for (Bundle bundle : mCopyBeforeReset) {
-//            mRepo.changeCounterValue(bundle.getLong("id"), bundle.getLong("value"));
-//        }
-//        mCopyBeforeReset.clear();
+        for (Counter counter: mCopyBeforeReset) {
+            mRepo.updateCounter(counter);
+        }
+        mSelectedCounters = mCopyBeforeReset;
     }
 }
