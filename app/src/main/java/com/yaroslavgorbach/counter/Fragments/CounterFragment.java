@@ -5,7 +5,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -46,6 +49,7 @@ public class CounterFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
+
         /*initialize fields*/
         mValue_tv = view.findViewById(R.id.value);
         mIncButton = view.findViewById(R.id.inc_value);
@@ -60,7 +64,7 @@ public class CounterFragment extends Fragment{
         mMaxValue_tv = view.findViewById(R.id.maxValue);
         mMinValue_tv = view.findViewById(R.id.minValue);
         mGroupTitle = view.findViewById(R.id.groupTitle);
-        mCounterId = CounterFragmentArgs.fromBundle(getArguments()).getCounterId();
+        mCounterId = CounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
         mViewModel = new ViewModelProvider(this, new CounterViewModelFactory(requireActivity().getApplication(),
                 mCounterId)).get(CounterViewModel.class);
 
