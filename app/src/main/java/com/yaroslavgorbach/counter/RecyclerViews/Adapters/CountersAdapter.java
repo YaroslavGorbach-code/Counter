@@ -27,7 +27,6 @@ import java.util.List;
 
 public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> implements ItemTouchHelperAdapter{
 
-
     public interface CounterItemListeners {
         void onPlusClick(Counter counter);
         void onMinusClick(Counter counter);
@@ -61,10 +60,10 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             notifyDataSetChanged();
         }
 
-        public void clearSelectedCounters(){
+         public void clearSelectedCounters(){
             mCounterSelection.clearAllSelectedCounters();
             notifyDataSetChanged();
-        }
+         }
 
          public void decSelectedCounters() {
             mCounterSelection.decSelectedCounters();
@@ -86,7 +85,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             mCounterSelection.deleteSelectedCounters();
          }
 
-
+         public LiveData<Integer> getSelectedCountersCount(){return mCounterSelection.getSelectedCountersCount();}
 
     @NonNull
         @Override

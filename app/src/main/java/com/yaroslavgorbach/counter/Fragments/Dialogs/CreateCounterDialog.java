@@ -33,8 +33,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
 
        View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_create_counter, null);
        mViewModel = new ViewModelProvider(this).get(CreateCounterDialogViewModel.class);
-        /*initialize fields*/
-        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
+       mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setView(view)
@@ -74,10 +73,6 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
         /*start CreateCounterDetailed_AND_EditCounterActivity*/
             view.findViewById(R.id.LaunchDetailed).setOnClickListener(v -> {
                 dismiss();
-//                NavHostFragment navHostFragment = (NavHostFragment) getParentFragmentManager().findFragmentById(R.id.hostFragment);
-//                NavController navController = navHostFragment.getNavController();
-//                NavDirections action = CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2();
-//                navController.navigate(action);
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
                 navController.navigate(CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2());
             });

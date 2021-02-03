@@ -27,6 +27,8 @@ import com.yaroslavgorbach.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbach.counter.ViewModels.Factories.CounterViewModelFactory;
 import com.yaroslavgorbach.counter.R;
 
+import java.util.ArrayList;
+
 public class CounterFragment extends Fragment{
     private TextView mValue_tv;
     private TextView mIncButton;
@@ -76,7 +78,7 @@ public class CounterFragment extends Fragment{
                     new DeleteCounterDialog(()->{
                        mViewModel.deleteCounter();
                        Navigation.findNavController(view).popBackStack();
-                    }).show(getChildFragmentManager(), "DialogCounterDelete");
+                    }, 1).show(getChildFragmentManager(), "DialogCounterDelete");
                     break;
                 case R.id.counterEdit:
                     Navigation.findNavController(view).navigate(CounterFragmentDirections.

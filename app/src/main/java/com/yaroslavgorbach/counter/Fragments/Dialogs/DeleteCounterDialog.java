@@ -8,12 +8,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.R;
+
+import java.util.List;
 
 
 public class DeleteCounterDialog extends AppCompatDialogFragment {
 
   private DeleteDialogListener mListener;
+  private int mCount;
 
 
     public interface DeleteDialogListener {
@@ -22,15 +26,25 @@ public class DeleteCounterDialog extends AppCompatDialogFragment {
 
     }
 
-   public DeleteCounterDialog(DeleteDialogListener listener){
+   public DeleteCounterDialog(DeleteDialogListener listener, int count){
         mListener = listener;
+        mCount = count;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        String title;
+
+        if (mCount > 1){
+            title = "Удалить счетчики?";
+        }else {
+            title = "Удалить счетчик?";
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
-                .setTitle(R.string.DeleteCounterDialogTitle)
+                .setTitle(title)
+                // R.string.DeleteCounterDialogTitle
                 .setMessage(R.string.DeleteCounterDialogText)
                 .setPositiveButton(R.string.DeleteCounterDialogPositiveButton, (dialog, which) -> {
                     mListener.onDialogDeleteClick();

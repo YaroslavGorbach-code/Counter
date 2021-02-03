@@ -27,10 +27,11 @@ public class CounterSelection {
     private final List<RecyclerView.ViewHolder> mSelectedVhs = new ArrayList<>();
     private RecyclerView.ViewHolder mDraggingHolder;
 
-    private  List<Counter> mCopyBeforeReset;
+    private List<Counter> mCopyBeforeReset;
+    private final MutableLiveData<Integer> mCountSelected = new MutableLiveData<>(mSelectedCounters.size());
 
 
-    public CounterSelection(Application application){
+    public CounterSelection(Application application) {
         mRepo = new Repo(application);
     }
 
@@ -38,27 +39,23 @@ public class CounterSelection {
     private void setDefaultBackground(RecyclerView.ViewHolder vh) {
         vh.itemView.setBackgroundResource(R.drawable.item_background);
         vh.itemView.setElevation(7F);
-        Log.println(Log.VERBOSE,"CounterSelection", "setDefBg");
     }
 
-    private void setItemSelectedBackground(RecyclerView.ViewHolder vh){
+    private void setItemSelectedBackground(RecyclerView.ViewHolder vh) {
         vh.itemView.setBackgroundResource(R.drawable.item_selected);
         vh.itemView.setElevation(8f);
     }
 
-    private void setItemDraggingBackground(RecyclerView.ViewHolder viewHolder){
+    private void setItemDraggingBackground(RecyclerView.ViewHolder viewHolder) {
         mDraggingHolder = viewHolder;
         mDraggingHolder.itemView.setBackgroundResource(R.drawable.item_dragging);
         mDraggingHolder.itemView.setElevation(25F);
     }
 
-    private void unSelectCounter(Counter counter, RecyclerView.ViewHolder viewHolder){
-        Log.println(Log.VERBOSE,"CounterSelection", "itemUnSelected");
+    private void unSelectCounter(Counter counter, RecyclerView.ViewHolder viewHolder) {
         setDefaultBackground(viewHolder);
-        if (mSelectedVhs.size()==1){
-            if (mSelectedCounters.size()==1)
-            mSelectionMod.setValue(false);
-        }
+            if (mSelectedCounters.size() == 1)
+                mSelectionMod.setValue(false);
         mSelectedCounters.remove(counter);
         mSelectedVhs.remove(viewHolder);
     }
@@ -73,40 +70,41 @@ public class CounterSelection {
                 break;
             }
         }
-            if (!isAlreadySelected) {
-                if (!mSelectionMod.getValue())
+        if (!isAlreadySelected) {
+            if (!mSelectionMod.getValue())
                 mSelectionMod.setValue(true);
-                Log.println(Log.VERBOSE,"CounterSelection", "itemSelected");
-                mSelectedCounters.add(newCounter);
-                mSelectedVhs.add(viewHolder);
-                setItemSelectedBackground(viewHolder);
-            }
-        }
 
-    public void clearAllSelectedCounters(){
+            mSelectedCounters.add(newCounter);
+            mSelectedVhs.add(viewHolder);
+            setItemSelectedBackground(viewHolder);
+        }
+        mCountSelected.setValue(mSelectedCounters.size());
+    }
+
+    public void clearAllSelectedCounters() {
         mSelectionMod.setValue(false);
         for (RecyclerView.ViewHolder vh : mSelectedVhs) {
             setDefaultBackground(vh);
         }
-        Log.println(Log.VERBOSE,"CounterSelection", "selectionsCleared");
         mSelectedVhs.clear();
         mSelectedCounters.clear();
+        mCountSelected.setValue(0);
     }
 
     public void selectAllCounters(List<Counter> counters) {
         mSelectedCounters.clear();
         mSelectedCounters.addAll(counters);
         mSelectionMod.setValue(true);
+        mCountSelected.setValue(counters.size());
     }
 
-    public void dragHolder(RecyclerView.ViewHolder viewHolder){
-        Log.println(Log.VERBOSE,"CounterSelection", "startDragging");
+    public void dragHolder(RecyclerView.ViewHolder viewHolder) {
         clearAllSelectedCounters();
         setItemDraggingBackground(viewHolder);
     }
 
-    public void clearDragHolderBackground(){
-        if (mDraggingHolder!=null){
+    public void clearDragHolderBackground() {
+        if (mDraggingHolder != null) {
             setDefaultBackground(mDraggingHolder);
             mDraggingHolder = null;
         }
@@ -124,21 +122,21 @@ public class CounterSelection {
         }
 
         if (!isAlreadySelected) {
-            if (mDraggingHolder==null){
+            if (mDraggingHolder == null) {
                 setDefaultBackground(vh);
             }
         }
     }
 
-    public void incSelectedCounters(){
-        for (Counter counter:mSelectedCounters){
+    public void incSelectedCounters() {
+        for (Counter counter : mSelectedCounters) {
             counter.value += counter.step;
             mRepo.updateCounter(counter);
         }
     }
 
-    public void decSelectedCounters(){
-        for (Counter counter:mSelectedCounters){
+    public void decSelectedCounters() {
+        for (Counter counter : mSelectedCounters) {
             counter.value -= counter.step;
             mRepo.updateCounter(counter);
         }
@@ -154,20 +152,28 @@ public class CounterSelection {
             counter.value = 0;
             mRepo.updateCounter(counter);
         }
+        mCountSelected.setValue(mSelectedCounters.size());
     }
 
     public void undoReset() {
-        for (Counter counter: mCopyBeforeReset) {
+        for (Counter counter : mCopyBeforeReset) {
             mRepo.updateCounter(counter);
         }
         mSelectedCounters = mCopyBeforeReset;
         mSelectionMod.setValue(mSelectedCounters != null);
+        mCountSelected.setValue(mSelectedCounters.size());
     }
 
     public void deleteSelectedCounters() {
-        for (Counter counter: mSelectedCounters) {
+        for (Counter counter : mSelectedCounters) {
             mRepo.deleteCounter(counter);
         }
         mSelectionMod.setValue(false);
+        mCountSelected.setValue(0);
+        mSelectedCounters.clear();
+    }
+
+    public LiveData<Integer> getSelectedCountersCount() {
+        return mCountSelected;
     }
 }

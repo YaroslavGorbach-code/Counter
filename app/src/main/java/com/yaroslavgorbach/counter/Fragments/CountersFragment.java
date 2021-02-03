@@ -15,6 +15,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -31,6 +32,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbach.counter.FastCountButton;
 import com.yaroslavgorbach.counter.Fragments.Dialogs.CreateCounterDialog;
+import com.yaroslavgorbach.counter.Fragments.Dialogs.DeleteCounterDialog;
 import com.yaroslavgorbach.counter.RecyclerViews.Adapters.CountersAdapter;
 import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.R;
@@ -55,6 +57,7 @@ public class CountersFragment extends Fragment {
 
     private TextView mIncAllSelectedCounters_bt;
     private TextView mDecAllSelectedCounters_bt;
+    private String mTittle;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,8 +90,7 @@ public class CountersFragment extends Fragment {
         mToolbar = view.findViewById(R.id.toolbar_mainActivity);
         mDrawer = view.findViewById(R.id.drawer);
         mRecyclerView = view.findViewById(R.id.countersList_rv);
-        mToolbar.setTitle(getResources().getString(R.string.AllCountersItem));
-
+        mTittle = getResources().getString(R.string.AllCountersItem);
 
         /*navController set up*/
         mNavController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
@@ -99,8 +101,6 @@ public class CountersFragment extends Fragment {
         NavigationUI.setupWithNavController(mToolbar, mNavController, appBarConfiguration);
         NavigationUI.setupWithNavController(mNavigationDrawerView, mNavController);
         mNavigationIcon = mToolbar.getNavigationIcon();
-
-
 
         /*set up the fragment with all the counters*/
         mAllCounters_navigationItem.setOnClickListener(i->{
@@ -120,7 +120,7 @@ public class CountersFragment extends Fragment {
                 mNavController.navigate(action);
 //                mDrawer.closeDrawer(GravityCompat.START);
 //                mToolbar.setTitle(string);
-//                mTittle = string;
+                  mTittle = string;
             }
         });
 
@@ -183,57 +183,73 @@ public class CountersFragment extends Fragment {
 
         /*set up listeners for selection mod*/
         mAdapter.selectionMod.observe(getViewLifecycleOwner(), isSelectionMod ->{
-            if (isSelectionMod){
-                mDecAllSelectedCounters_bt.setVisibility(View.VISIBLE);
-                mIncAllSelectedCounters_bt.setVisibility(View.VISIBLE);
-                mToolbar.setNavigationIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close, null));
-                mToolbar.getMenu().clear();
-                mToolbar.inflateMenu(R.menu.menu_selection_mod);
-
-                mToolbar.setNavigationOnClickListener(v -> {
-                    mAdapter.clearSelectedCounters();
+                setUpToolbar(isSelectionMod);
+                mAdapter.getSelectedCountersCount().observe(getViewLifecycleOwner(), count -> {
+                    mToolbar.setTitle("Выбрано: " + count);
+                    if (count==0)
+                        mToolbar.setTitle(mTittle);
                 });
-
-                mToolbar.setOnMenuItemClickListener(menuItem->{
-
-                    switch (menuItem.getItemId()){
-                        case R.id.selectAllCounter:
-                            mAdapter.selectAllCounters();
-                            break;
-                        case R.id.resetSelected:
-                            mAdapter.resetSelectedCounters();
-                            Snackbar.make(view, "Counters reseated", BaseTransientBottomBar.LENGTH_LONG)
-                                    .setAction("UNDO", v1 -> {
-                                        mAdapter.undoReset();
-                                    }).show();
-                            break;
-                        case R.id.deleteSelected:
-                            mAdapter.deleteSelectedCounters();
-                            break;
-
-                    }
-
-                    return true;
-                });
-            }else {
-                mDecAllSelectedCounters_bt.setVisibility(View.GONE);
-                mIncAllSelectedCounters_bt.setVisibility(View.GONE);
-                mToolbar.setNavigationIcon(mNavigationIcon);
-                mToolbar.getMenu().clear();
-                mToolbar.inflateMenu(R.menu.menu_counter_main_activity);
-
-                mToolbar.setOnMenuItemClickListener(i->{
-                    if (i.getItemId() == R.id.counterAdd) {
-                        new CreateCounterDialog().show(getParentFragmentManager(), "Add Counter");
-                    }
-                    return true;
-                });
-
-                mToolbar.setNavigationOnClickListener(v -> {
-                    mDrawer.open();
-                });
-            }
         });
+
+    }
+
+    private void setUpToolbar(boolean isSelectionMod) {
+        if (isSelectionMod){
+            mDecAllSelectedCounters_bt.setVisibility(View.VISIBLE);
+            mIncAllSelectedCounters_bt.setVisibility(View.VISIBLE);
+            mToolbar.setNavigationIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close, null));
+            mToolbar.getMenu().clear();
+            mToolbar.inflateMenu(R.menu.menu_selection_mod);
+
+            mToolbar.setNavigationOnClickListener(v -> {
+                mAdapter.clearSelectedCounters();
+            });
+
+            mToolbar.setOnMenuItemClickListener(menuItem->{
+
+                switch (menuItem.getItemId()){
+                    case R.id.selectAllCounter:
+                        mAdapter.selectAllCounters();
+                        break;
+                    case R.id.resetSelected:
+                        mAdapter.resetSelectedCounters();
+                        Snackbar.make(requireView(), "Counters reseated", BaseTransientBottomBar.LENGTH_LONG)
+                                .setAction("UNDO", v1 -> {
+                                    mAdapter.undoReset();
+                                }).show();
+                        break;
+                    case R.id.deleteSelected:
+                        new DeleteCounterDialog(()->{
+                            mAdapter.deleteSelectedCounters();
+                        }, mAdapter.getSelectedCountersCount().getValue())
+                                .show(getChildFragmentManager(), "DialogCounterDelete");
+                        break;
+
+                }
+
+                return true;
+            });
+
+        }else {
+            mDecAllSelectedCounters_bt.setVisibility(View.GONE);
+            mIncAllSelectedCounters_bt.setVisibility(View.GONE);
+            mToolbar.setNavigationIcon(mNavigationIcon);
+            mToolbar.getMenu().clear();
+            mToolbar.inflateMenu(R.menu.menu_counter_main_activity);
+            mToolbar.setTitle(mTittle);
+
+            mToolbar.setOnMenuItemClickListener(i->{
+                if (i.getItemId() == R.id.counterAdd) {
+                    new CreateCounterDialog().show(getParentFragmentManager(), "Add Counter");
+                }
+                return true;
+            });
+
+            mToolbar.setNavigationOnClickListener(v -> {
+                mDrawer.open();
+            });
+
+        }
 
     }
 }
