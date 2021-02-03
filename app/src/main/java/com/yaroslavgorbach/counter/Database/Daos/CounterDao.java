@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -36,4 +37,6 @@ public interface CounterDao {
     @Query("SELECT * FROM counter_table WHERE grope =:group ORDER BY createData DESC")
     LiveData<List<Counter>> getCountersByGroup(String group);
 
+    @Query("UPDATE counter_table SET value =:value WHERE id = :id")
+    void changeValue(long id, long value);
 }

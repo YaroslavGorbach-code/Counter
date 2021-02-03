@@ -27,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbach.counter.FastCountButton;
 import com.yaroslavgorbach.counter.Fragments.Dialogs.CreateCounterDialog;
 import com.yaroslavgorbach.counter.RecyclerViews.Adapters.CountersAdapter;
@@ -35,8 +37,6 @@ import com.yaroslavgorbach.counter.R;
 import com.yaroslavgorbach.counter.RecyclerViews.GroupList_rv;
 import com.yaroslavgorbach.counter.Utility;
 import com.yaroslavgorbach.counter.ViewModels.CountersViewModel;
-
-import java.util.Objects;
 
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
 
@@ -52,7 +52,6 @@ public class CountersFragment extends Fragment {
     private LinearLayout mAllCounters_navigationItem;
     private NavigationView mNavigationDrawerView;
     private NavController mNavController;
-    private String mTittle;
 
     private TextView mIncAllSelectedCounters_bt;
     private TextView mDecAllSelectedCounters_bt;
@@ -65,8 +64,8 @@ public class CountersFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (mAdapter.counterSelection.isSelectionMod.getValue()){
-                    mAdapter.counterSelection.clearAllSelections();
+                if (mAdapter.selectionMod.getValue()){
+                    mAdapter.clearSelectedCounters();
                 }else {
                     requireActivity().finish();
                 }
@@ -88,16 +87,8 @@ public class CountersFragment extends Fragment {
         mToolbar = view.findViewById(R.id.toolbar_mainActivity);
         mDrawer = view.findViewById(R.id.drawer);
         mRecyclerView = view.findViewById(R.id.countersList_rv);
-
-        /*toolbar set up*/
-        mToolbar.inflateMenu(R.menu.menu_counter_main_activity);
         mToolbar.setTitle(getResources().getString(R.string.AllCountersItem));
-        mToolbar.setOnMenuItemClickListener(i->{
-            if (i.getItemId() == R.id.counterAdd) {
-                new CreateCounterDialog().show(getParentFragmentManager(), "Add Counter");
-            }
-            return true;
-        });
+
 
         /*navController set up*/
         mNavController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
@@ -187,22 +178,55 @@ public class CountersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         /*set up listeners on buttons witch appears when selection mod is active*/
-        new FastCountButton(mDecAllSelectedCounters_bt, ()-> mAdapter.counterSelection.decSelectedCounters());
-        new FastCountButton(mIncAllSelectedCounters_bt, ()-> mAdapter.counterSelection.incSelectedCounters());
+        new FastCountButton(mDecAllSelectedCounters_bt, ()-> mAdapter.decSelectedCounters());
+        new FastCountButton(mIncAllSelectedCounters_bt, ()-> mAdapter.incSelectedCounters());
 
         /*set up listeners for selection mod*/
-        mAdapter.counterSelection.isSelectionMod.observe(getViewLifecycleOwner(), isSelectionMod ->{
+        mAdapter.selectionMod.observe(getViewLifecycleOwner(), isSelectionMod ->{
             if (isSelectionMod){
                 mDecAllSelectedCounters_bt.setVisibility(View.VISIBLE);
                 mIncAllSelectedCounters_bt.setVisibility(View.VISIBLE);
                 mToolbar.setNavigationIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close, null));
+                mToolbar.getMenu().clear();
+                mToolbar.inflateMenu(R.menu.menu_selection_mod);
+
                 mToolbar.setNavigationOnClickListener(v -> {
-                    mAdapter.counterSelection.clearAllSelections();
+                    mAdapter.clearSelectedCounters();
+                });
+
+                mToolbar.setOnMenuItemClickListener(menuItem->{
+
+                    switch (menuItem.getItemId()){
+                        case R.id.selectAllCounter:
+                            mAdapter.selectAllCounters();
+                            break;
+                        case R.id.resetSelected:
+                            mAdapter.resetSelectedCounters();
+                            Snackbar.make(view, "Counters reseated", BaseTransientBottomBar.LENGTH_LONG)
+                                    .setAction("UNDO", v1 -> {
+                                        mAdapter.undoReset();
+                                    }).show();
+                            break;
+                        case R.id.deleteSelected:
+
+                    }
+
+                    return true;
                 });
             }else {
                 mDecAllSelectedCounters_bt.setVisibility(View.GONE);
                 mIncAllSelectedCounters_bt.setVisibility(View.GONE);
                 mToolbar.setNavigationIcon(mNavigationIcon);
+                mToolbar.getMenu().clear();
+                mToolbar.inflateMenu(R.menu.menu_counter_main_activity);
+
+                mToolbar.setOnMenuItemClickListener(i->{
+                    if (i.getItemId() == R.id.counterAdd) {
+                        new CreateCounterDialog().show(getParentFragmentManager(), "Add Counter");
+                    }
+                    return true;
+                });
+
                 mToolbar.setNavigationOnClickListener(v -> {
                     mDrawer.open();
                 });

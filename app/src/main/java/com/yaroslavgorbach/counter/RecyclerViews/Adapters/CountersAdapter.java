@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,14 +27,17 @@ import java.util.List;
 
 public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> implements ItemTouchHelperAdapter{
 
+
     public interface CounterItemListeners {
         void onPlusClick(Counter counter);
         void onMinusClick(Counter counter);
         void onOpen(Counter counter);
         void onMoved(Counter counterFrom, Counter counterTo);
     }
-        public final CounterSelection counterSelection;
 
+        public LiveData<Boolean> selectionMod;
+
+        private final CounterSelection mCounterSelection;
         private List<Counter> mData = new ArrayList<>();
         private final CounterItemListeners mCounterItemListeners;
         private final ItemTouchHelper.Callback callback = new MyItemTouchHelper(this);
@@ -41,17 +45,45 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
         public CountersAdapter(CounterItemListeners counterItemListeners, Application application) {
             setHasStableIds(true);
-            counterSelection = new CounterSelection(application);
+            mCounterSelection = new CounterSelection(application);
             mCounterItemListeners = counterItemListeners;
-       }
+            selectionMod = mCounterSelection.selectionMod;
+        }
+
 
         public void setData(List<Counter> data) {
             mData = data;
             notifyDataSetChanged();
         }
+        
+        public void selectAllCounters(){
+            mCounterSelection.selectAllCounters(mData);
+            notifyDataSetChanged();
+        }
+
+        public void clearSelectedCounters(){
+            mCounterSelection.clearAllSelectedCounters();
+            notifyDataSetChanged();
+        }
+
+         public void decSelectedCounters() {
+            mCounterSelection.decSelectedCounters();
+         }
+
+         public void incSelectedCounters() {
+            mCounterSelection.incSelectedCounters();
+         }
+
+         public void resetSelectedCounters() {
+            mCounterSelection.resetSelectedCounters();
+         }
+
+         public void undoReset() {
+            mCounterSelection.undoReset();
+         }
 
 
-        @NonNull
+    @NonNull
         @Override
         public CountersAdapter.Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             return new CountersAdapter.Vh(parent);
@@ -112,7 +144,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             private void bind(Counter counter) {
                 mTitle.setText(counter.title);
                 mValue.setText(String.valueOf(counter.value));
-                counterSelection.bingVhBackground(counter,this);
+                mCounterSelection.bingVhBackground(counter,this);
             }
 
             @Override
@@ -121,12 +153,12 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
             @Override
             public void clearView() {
-                counterSelection.clearDragHolderBackground();
+                mCounterSelection.clearDragHolderBackground();
             }
 
             @Override
             public void onDragging(RecyclerView.ViewHolder holder) {
-                counterSelection.dragHolder(holder);
+                mCounterSelection.dragHolder(holder);
             }
 
             @Override
@@ -140,8 +172,8 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                if (counterSelection.isSelectionMod.getValue()){
-                    counterSelection.selectCounter(mData.get(getBindingAdapterPosition()),this);
+                if (mCounterSelection.selectionMod.getValue()){
+                    mCounterSelection.selectCounter(mData.get(getBindingAdapterPosition()),this);
                 }else {
                     mCounterItemListeners.onOpen(mData.get(getBindingAdapterPosition()));
                 }
@@ -156,10 +188,10 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             @Override
             public void onLongPress(MotionEvent e) {
                 itemView.performHapticFeedback(HapticFeedbackConstants. LONG_PRESS);
-                if(!counterSelection.isSelectionMod.getValue()){
+                if(!mCounterSelection.selectionMod.getValue()){
                     itemTouchHelper.startDrag(this);
                 }
-                counterSelection.selectCounter(mData.get(getBindingAdapterPosition()),this);
+                mCounterSelection.selectCounter(mData.get(getBindingAdapterPosition()),this);
             }
 
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/SelectAll_selection_menu"
+        android:id="@+id/selectAllCounter"
+        />
+
+    <item android:title="@string/Reset_selection_menu"
+        android:id="@+id/resetSelected"
+        />
+
+    <item android:title="@string/Delete_selection_menu"
+        android:id="@+id/deleteSelected"
+        />
+
+</menu>

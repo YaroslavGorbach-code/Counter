@@ -35,5 +35,9 @@
     <string name="DeleteCounterDialogPositiveButton">Да</string>
     <string name="DeleteCounterDialogNegativeButton">Отмена</string>
     <string name="SaveToHistoryToast">сохранено в историю</string>
+    <string name="Reset_selection_menu">Сбросить выбранные</string>
+    <string name="Delete_selection_menu">Удалить выбранные</string>
+    <string name="SelectAll_selection_menu">Выбрать все</string>
+
 
 </resources>
