@@ -34,10 +34,6 @@ public class Repo {
         new Thread(() -> mCounterDao.update(counter)).start();
     }
 
-    public void changeCounterValue(long id, long value) {
-        new Thread(() -> mCounterDao.changeValue(id, value)).start();
-    }
-
     public void insertCounterHistory(CounterHistory counterHistory){
         new Thread(() -> mCounterHistoryDao.insert(counterHistory)).start();
     }

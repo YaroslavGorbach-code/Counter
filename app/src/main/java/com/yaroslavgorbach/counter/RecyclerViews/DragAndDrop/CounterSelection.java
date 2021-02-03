@@ -132,14 +132,14 @@ public class CounterSelection {
 
     public void incSelectedCounters(){
         for (Counter counter:mSelectedCounters){
-            counter.value++;
+            counter.value += counter.step;
             mRepo.updateCounter(counter);
         }
     }
 
     public void decSelectedCounters(){
         for (Counter counter:mSelectedCounters){
-            counter.value--;
+            counter.value -= counter.step;
             mRepo.updateCounter(counter);
         }
     }
@@ -161,5 +161,13 @@ public class CounterSelection {
             mRepo.updateCounter(counter);
         }
         mSelectedCounters = mCopyBeforeReset;
+        mSelectionMod.setValue(mSelectedCounters != null);
+    }
+
+    public void deleteSelectedCounters() {
+        for (Counter counter: mSelectedCounters) {
+            mRepo.deleteCounter(counter);
+        }
+        mSelectionMod.setValue(false);
     }
 }

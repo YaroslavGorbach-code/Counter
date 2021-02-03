@@ -37,6 +37,4 @@ public interface CounterDao {
     @Query("SELECT * FROM counter_table WHERE grope =:group ORDER BY createData DESC")
     LiveData<List<Counter>> getCountersByGroup(String group);
 
-    @Query("UPDATE counter_table SET value =:value WHERE id = :id")
-    void changeValue(long id, long value);
 }

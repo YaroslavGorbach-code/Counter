@@ -82,6 +82,11 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             mCounterSelection.undoReset();
          }
 
+         public void deleteSelectedCounters() {
+            mCounterSelection.deleteSelectedCounters();
+         }
+
+
 
     @NonNull
         @Override

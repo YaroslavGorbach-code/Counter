@@ -208,6 +208,8 @@ public class CountersFragment extends Fragment {
                                     }).show();
                             break;
                         case R.id.deleteSelected:
+                            mAdapter.deleteSelectedCounters();
+                            break;
 
                     }
 

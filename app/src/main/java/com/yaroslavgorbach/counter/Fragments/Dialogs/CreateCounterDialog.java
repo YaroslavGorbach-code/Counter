@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -73,10 +74,12 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
         /*start CreateCounterDetailed_AND_EditCounterActivity*/
             view.findViewById(R.id.LaunchDetailed).setOnClickListener(v -> {
                 dismiss();
-                NavHostFragment navHostFragment = (NavHostFragment) getParentFragmentManager().findFragmentById(R.id.hostFragment);
-                NavController navController = navHostFragment.getNavController();
-                NavDirections action = CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2();
-                navController.navigate(action);
+//                NavHostFragment navHostFragment = (NavHostFragment) getParentFragmentManager().findFragmentById(R.id.hostFragment);
+//                NavController navController = navHostFragment.getNavController();
+//                NavDirections action = CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2();
+//                navController.navigate(action);
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
+                navController.navigate(CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2());
             });
          return builder.create();
     }
