@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -134,6 +136,20 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 mGestureDetector = new GestureDetector(parent.getContext(),this);
                 itemView.setOnTouchListener(this);
 
+                mCounterSelection.selectionMod.observe((LifecycleOwner) itemView.getContext(), aBoolean -> {
+                    if (aBoolean){
+                        mMinus.setClickable(false);
+                        mPlus.setClickable(false);
+                        mPlus.setEnabled(false);
+                        mMinus.setEnabled(false);
+                    }else {
+                        mMinus.setClickable(true);
+                        mPlus.setClickable(true);
+                        mPlus.setEnabled(true);
+                        mMinus.setEnabled(true);
+                    }
+                });
+
                 new FastCountButton(mPlus, () -> {
                      mCounterItemListeners.onPlusClick(mData.get(getBindingAdapterPosition()));
                     // mPlus.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
@@ -149,6 +165,8 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 mTitle.setText(counter.title);
                 mValue.setText(String.valueOf(counter.value));
                 mCounterSelection.bingVhBackground(counter,this);
+
+
             }
 
             @Override
@@ -209,7 +227,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 mGestureDetector.onTouchEvent(event);
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        itemView.setPressed(true);
+                        itemView.setPressed(!mCounterSelection.selectionMod.getValue());
                         break;
                     case MotionEvent.ACTION_UP:
                         itemView.performClick();
