@@ -176,4 +176,8 @@ public class CounterSelection {
     public LiveData<Integer> getSelectedCountersCount() {
         return mCountSelected;
     }
+
+    public Counter getSelectedCounter() {
+        return mSelectedCounters.get(0);
+    }
 }

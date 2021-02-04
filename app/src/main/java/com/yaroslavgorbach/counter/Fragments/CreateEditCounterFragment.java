@@ -52,6 +52,7 @@ public class CreateEditCounterFragment extends Fragment {
         mMinValue_et = view.findViewById(R.id.counterMinValue_addCounter_detailed);
         mToolbar = view.findViewById(R.id.toolbar_counterCreateActivity);
         mGroups_et = view.findViewById(R.id.filled_exposed_dropdown);
+
         mCounterId = CreateEditCounterFragmentArgs.fromBundle(getArguments()).getCounterId();
         mViewModel = new ViewModelProvider(this, new CreateEditCounterViewModelFactory(requireActivity().getApplication(),
                 mCounterId)).get(CreateEditCounterViewModel.class);
@@ -61,7 +62,6 @@ public class CreateEditCounterFragment extends Fragment {
         mToolbar.setNavigationOnClickListener(i -> {
             Navigation.findNavController(view).popBackStack();
         });
-
         mToolbar.inflateMenu(R.menu.menu_counter_create_activity);
 
         mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
@@ -147,7 +147,7 @@ public class CreateEditCounterFragment extends Fragment {
             mMinValue = Long.parseLong(String.valueOf(mMinValue_et.getText()));
         }
 
-        /*if group is empty show error*/
+        /*if group is empty set no group*/
         if (mGroups_et.getText().toString().trim().isEmpty()) {
             mGroup = null;
         } else {

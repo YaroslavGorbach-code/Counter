@@ -26,6 +26,9 @@
             app:popEnterAnim="@anim/fragment_open_enter"
             app:popUpTo="@id/countersFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_countersFragment_to_createEditCounterFragment"
+            app:destination="@id/createEditCounterFragment" />
     </fragment>
     <fragment
         android:id="@+id/counterFragment"

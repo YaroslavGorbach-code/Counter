@@ -188,6 +188,7 @@ public class CountersFragment extends Fragment {
                     mToolbar.setTitle("Выбрано: " + count);
                     if (count==0)
                         mToolbar.setTitle(mTittle);
+                    mToolbar.getMenu().getItem(0).setVisible(count <= 1);
                 });
         });
 
@@ -208,6 +209,12 @@ public class CountersFragment extends Fragment {
             mToolbar.setOnMenuItemClickListener(menuItem->{
 
                 switch (menuItem.getItemId()){
+                    case R.id.editSelected:
+                       Counter counter = mAdapter.getSelectedCounter();
+                        Navigation.findNavController(getView()).navigate(CountersFragmentDirections.
+                                actionCountersFragmentToCreateEditCounterFragment().setCounterId(counter.id));
+                        break;
+
                     case R.id.selectAllCounter:
                         mAdapter.selectAllCounters();
                         break;

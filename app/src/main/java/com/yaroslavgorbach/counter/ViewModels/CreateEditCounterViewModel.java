@@ -43,6 +43,7 @@ public class CreateEditCounterViewModel extends AndroidViewModel {
             Objects.requireNonNull(mCounter.getValue()).minValue = minValue;
             Objects.requireNonNull(mCounter.getValue()).step = step;
             Objects.requireNonNull(mCounter.getValue()).title = title;
+            mRepo.updateCounter(mCounter.getValue());
         }
     }
 }
