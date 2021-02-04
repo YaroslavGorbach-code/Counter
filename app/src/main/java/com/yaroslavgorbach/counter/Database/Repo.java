@@ -42,10 +42,6 @@ public class Repo {
         new Thread(() -> mCounterHistoryDao.delete(counterId)).start();
     }
 
-    public void deleteCounterHistory(CounterHistory counterHistory){
-        new Thread(() -> mCounterHistoryDao.delete(counterHistory)).start();
-    }
-
     public void updateCounterHistory(CounterHistory counterHistory){
         new Thread(() -> mCounterHistoryDao.update(counterHistory)).start();
     }

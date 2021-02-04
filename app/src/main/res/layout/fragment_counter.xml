@@ -85,7 +85,6 @@
             android:layout_height="wrap_content"
             android:text="@string/CounterActivitySaveToHistory"
             android:textSize="10sp"
-            app:icon="@drawable/ic_done"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -151,7 +150,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:orientation="horizontal">
 
       <ImageButton
@@ -167,11 +166,11 @@
         <TextView
             android:id="@+id/dec_value"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="−"
             android:gravity="center"
-            android:textSize="80sp"
+            android:textSize="60sp"
             android:textColor="#FFC51162"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="8dp"
@@ -185,7 +184,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="+"
-        android:textSize="130sp"
+        android:textSize="120sp"
         android:layout_margin="16dp"
         android:gravity="center"
         android:textColor="#FFC51162"

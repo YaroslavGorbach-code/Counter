@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             app:title="@string/CounterActivityHistory_m"
             app:titleTextColor="#FFC51162"
+            app:menu="@menu/menu_counter_history"
             android:background="?android:colorBackground"
             app:navigationIcon="@drawable/ic_arrow_back"/>
     </com.google.android.material.appbar.AppBarLayout>

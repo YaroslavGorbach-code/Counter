@@ -1,4 +1,4 @@
-package com.yaroslavgorbach.counter.RecyclerViews;
+package com.yaroslavgorbach.counter.RecyclerViews.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -39,7 +39,6 @@ public class GroupList_rv {
             private List<String> mData = new ArrayList<>();
 
             private void setData(List<String> data) {
-
                 mData = data;
                 notifyDataSetChanged();
 

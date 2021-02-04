@@ -27,7 +27,7 @@ public class CounterHistoryViewModel extends AndroidViewModel {
         return mRepo.getCounterHistoryListSortByValue(counterId);
     }
 
-    public void delete(CounterHistory counterHistory) {
-            mRepo.deleteCounterHistory(counterHistory);
+    public void clean(long id) {
+            mRepo.deleteCounterHistory(id);
     }
 }

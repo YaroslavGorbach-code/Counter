@@ -1,4 +1,4 @@
-package com.yaroslavgorbach.counter.RecyclerViews;
+package com.yaroslavgorbach.counter.RecyclerViews.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -11,21 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbach.counter.R;
 import com.yaroslavgorbach.counter.Database.Models.CounterHistory;
+import com.yaroslavgorbach.counter.RecyclerViews.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CounterHistoryList_rv {
 
-    public interface HistoryItemClickListener{
-        void onDelete(CounterHistory counterHistory);
-    }
-
     private final Adapter mAdapter = new Adapter();
-    private final HistoryItemClickListener mHistoryItemClickListener;
 
-    public CounterHistoryList_rv(RecyclerView rv, HistoryItemClickListener historyItemClickListener) {
-        mHistoryItemClickListener = historyItemClickListener;
+    public CounterHistoryList_rv(RecyclerView rv) {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rv.getContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext());
         rv.setLayoutManager(mLayoutManager);
@@ -43,7 +38,6 @@ public class CounterHistoryList_rv {
                 setHasStableIds(true);
             }
             private List<CounterHistory> mData = new ArrayList<>();
-
 
             private void setData(List<CounterHistory> data) {
                 mData = data;
@@ -74,20 +68,13 @@ public class CounterHistoryList_rv {
             private  class Vh extends RecyclerView.ViewHolder {
                 private TextView mValue;
                 private TextView mCreateData;
-                private ImageView mHistoryDelete;
 
                 public Vh(@NonNull ViewGroup parent) {
                     super(LayoutInflater.from(parent.getContext()).inflate(R.layout.counter_history_i,
                             parent, false));
                    mValue = itemView.findViewById(R.id.history_value);
                    mCreateData = itemView.findViewById(R.id.historyData);
-                   mHistoryDelete = itemView.findViewById(R.id.deleteHistory);
 
-                   mHistoryDelete.setOnClickListener(v ->{
-                       if(getAdapterPosition()!=-1) {
-                           mHistoryItemClickListener.onDelete(mData.get(getAdapterPosition()));
-                       }
-                   });
 
                 }
                 private void bind(CounterHistory counterHistory){

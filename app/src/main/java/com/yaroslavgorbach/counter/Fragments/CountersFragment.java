@@ -15,7 +15,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -36,7 +35,7 @@ import com.yaroslavgorbach.counter.Fragments.Dialogs.DeleteCounterDialog;
 import com.yaroslavgorbach.counter.RecyclerViews.Adapters.CountersAdapter;
 import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.R;
-import com.yaroslavgorbach.counter.RecyclerViews.GroupList_rv;
+import com.yaroslavgorbach.counter.RecyclerViews.Adapters.GroupList_rv;
 import com.yaroslavgorbach.counter.Utility;
 import com.yaroslavgorbach.counter.ViewModels.CountersViewModel;
 

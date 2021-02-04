@@ -208,9 +208,8 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save to history"
+        android:text="@string/CounterActivitySaveToHistory"
         android:textSize="10sp"
-        app:icon="@drawable/ic_done"
         app:layout_constraintEnd_toEndOf="@+id/dec_value"
         app:layout_constraintStart_toStartOf="@+id/reset_value"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout" />

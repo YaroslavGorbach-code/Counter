@@ -5,10 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,7 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.yaroslavgorbach.counter.R;
-import com.yaroslavgorbach.counter.RecyclerViews.CounterHistoryList_rv;
+import com.yaroslavgorbach.counter.RecyclerViews.Adapters.CounterHistoryList_rv;
 import com.yaroslavgorbach.counter.ViewModels.CounterHistoryViewModel;
 
 public class CounterHistoryFragment extends Fragment {
@@ -42,12 +44,16 @@ public class CounterHistoryFragment extends Fragment {
 
         /*initialize navigation listener*/
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        mToolbar.setNavigationOnClickListener(i-> getChildFragmentManager().popBackStack());
+        mToolbar.setNavigationOnClickListener(i-> Navigation.findNavController(view).popBackStack());
+
+        mToolbar.setOnMenuItemClickListener(item -> {
+            mViewModel.clean(mCounterId);
+            return true;
+        });
 
         setAdapterForSpinner();
 
-        mHistoryList = new CounterHistoryList_rv(view.findViewById(R.id.counterHistory_rv),
-                counterHistory -> mViewModel.delete(counterHistory));
+        mHistoryList = new CounterHistoryList_rv(view.findViewById(R.id.counterHistory_rv));
 
         /*setting listener for selected item in spinner*/
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
