@@ -66,11 +66,11 @@ public class DrawerMenuItemClickHelper {
     }
 
     private void setDefaultBackground(View view){
-        view.setBackgroundResource(R.drawable.item_background);
+        view.setBackgroundResource(R.drawable.group_item);
     }
 
     private void setSelectedBackground(View view){
-        view.setBackgroundResource(R.drawable.item_selected);
+        view.setBackgroundResource(R.drawable.group_item_selected);
     }
 
 }

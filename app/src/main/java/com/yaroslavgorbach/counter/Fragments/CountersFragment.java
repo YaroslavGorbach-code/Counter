@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -41,6 +43,8 @@ import com.yaroslavgorbach.counter.RecyclerViews.Adapters.GroupsAdapter;
 import com.yaroslavgorbach.counter.Utility;
 import com.yaroslavgorbach.counter.ViewModels.CountersViewModel;
 
+import java.util.List;
+
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
 
 public class CountersFragment extends Fragment {
@@ -58,9 +62,9 @@ public class CountersFragment extends Fragment {
 
     private TextView mIncAllSelectedCounters_bt;
     private TextView mDecAllSelectedCounters_bt;
-    //private String mTittle;
 
     private String currentItem;
+    private Observer<List<Counter>> mObserver;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +74,7 @@ public class CountersFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (mCountersAdapter.selectionMod.getValue()){
+                if (mCountersAdapter.getSelectionMod().getValue()){
                     mCountersAdapter.clearSelectedCounters();
                 }else {
                     requireActivity().finish();
@@ -94,8 +98,6 @@ public class CountersFragment extends Fragment {
         mCounters_rv = view.findViewById(R.id.counters_list);
         mGroups_rv = view.findViewById(R.id.groupsList_rv);
 
-//        currentItem = getResources().getString(R.string.AllCountersItem);
-//        mToolbar.setTitle(currentItem);
 
         /*navController set up*/
         mNavController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
@@ -109,6 +111,9 @@ public class CountersFragment extends Fragment {
 
         /*when click set up the adapter with all the counters*/
         mAllCounters_navigationItem.setOnClickListener(i->{
+
+
+
             mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
             new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 400);
 
@@ -124,6 +129,8 @@ public class CountersFragment extends Fragment {
 
         mViewModel.getGroups().observe(getViewLifecycleOwner(), groups -> {
                 mGroupsAdapter.setGroups(Utility.deleteTheSameGroups(groups));
+
+                mViewModel.getCountersByGroup(null).removeObservers(getViewLifecycleOwner());
         });
 
         /*set up rv with counters*/
@@ -160,6 +167,8 @@ public class CountersFragment extends Fragment {
             if(selectedItem.equals(getResources().getString(R.string.AllCountersItem))){
                 currentItem = getResources().getString(R.string.AllCountersItem);
                 mToolbar.setTitle(currentItem);
+                mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
+
                 mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
                     mCountersAdapter.setData(counters);
                 });
@@ -172,9 +181,8 @@ public class CountersFragment extends Fragment {
                         mCountersAdapter.setData(counters);
                     }
                 });
-                currentItem = selectedItem;
             }
-
+            currentItem = selectedItem;
             new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 400);
         });
 
@@ -197,7 +205,7 @@ public class CountersFragment extends Fragment {
         new FastCountButton(mIncAllSelectedCounters_bt, ()-> mCountersAdapter.incSelectedCounters());
 
         /*set up listeners for selection mod*/
-        mCountersAdapter.selectionMod.observe(getViewLifecycleOwner(), isSelectionMod ->{
+        mCountersAdapter.getSelectionMod().observe(getViewLifecycleOwner(), isSelectionMod ->{
                 setUpToolbar(isSelectionMod);
                 mCountersAdapter.getSelectedCountersCount().observe(getViewLifecycleOwner(), count -> {
                     mToolbar.setTitle("Выбрано: " + count);

@@ -37,7 +37,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         void onMoved(Counter counterFrom, Counter counterTo);
     }
 
-        public LiveData<Boolean> selectionMod;
         private final CounterSelection mCounterSelection;
         private List<Counter> mData = new ArrayList<>();
         private final CounterItemListeners mCounterItemListeners;
@@ -48,7 +47,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             setHasStableIds(true);
             mCounterSelection = new CounterSelection(application);
             mCounterItemListeners = counterItemListeners;
-            selectionMod = mCounterSelection.selectionMod;
         }
 
 
@@ -93,6 +91,10 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             return mCounterSelection.getSelectedCounter();
           }
 
+         public LiveData<Boolean> getSelectionMod(){
+            return mCounterSelection.selectionMod;
+         }
+
 
 
     @NonNull
@@ -118,10 +120,13 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
         @Override
         public void onMoved(int fromPos, int toPos) {
-            Counter deleted = mData.remove(fromPos);
-            mData.add(toPos, deleted);
-            notifyItemMoved(fromPos, toPos);
-            mCounterItemListeners.onMoved(mData.get(fromPos), mData.get(toPos));
+            if (fromPos != -1 && toPos != -1){
+                Counter deleted = mData.remove(fromPos);
+                mData.add(toPos, deleted);
+                notifyItemMoved(fromPos, toPos);
+                mCounterItemListeners.onMoved(mData.get(fromPos), mData.get(toPos));
+            }
+
         }
 
 
