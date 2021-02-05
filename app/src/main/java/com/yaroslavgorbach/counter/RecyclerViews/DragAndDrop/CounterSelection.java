@@ -180,4 +180,5 @@ public class CounterSelection {
     public Counter getSelectedCounter() {
         return mSelectedCounters.get(0);
     }
+
 }

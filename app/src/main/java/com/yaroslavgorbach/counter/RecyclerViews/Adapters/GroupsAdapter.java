@@ -29,12 +29,13 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
         notifyDataSetChanged();
     }
 
-    public LiveData<String> getSelectedGroup() {
+    public LiveData<String> getSelectedItem() {
         return mDrawerMenuItemClickHelper.getSelectedItem();
     }
 
     public void allCountersItemSelected(View view) {
         mDrawerMenuItemClickHelper.allCountersItemSelected(view);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -69,7 +70,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
 
         public void bind(String s) {
             mTitle.setText(s);
-            mDrawerMenuItemClickHelper.bindBackground(this);
+            mDrawerMenuItemClickHelper.bindBackground(s,this);
         }
 
         @Override
@@ -81,6 +82,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
                 case MotionEvent.ACTION_UP:
                     itemView.performClick();
                     mDrawerMenuItemClickHelper.selectRvItem(mData.get(getBindingAdapterPosition()), this);
+                    notifyDataSetChanged();
                     //no break
                 case MotionEvent.ACTION_CANCEL:
                     itemView.setPressed(false);

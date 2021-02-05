@@ -2,6 +2,8 @@ package com.yaroslavgorbach.counter.Fragments;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +58,9 @@ public class CountersFragment extends Fragment {
 
     private TextView mIncAllSelectedCounters_bt;
     private TextView mDecAllSelectedCounters_bt;
+    //private String mTittle;
 
-    private String currentGroup;
+    private String currentItem;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,8 +94,8 @@ public class CountersFragment extends Fragment {
         mCounters_rv = view.findViewById(R.id.counters_list);
         mGroups_rv = view.findViewById(R.id.groupsList_rv);
 
-        currentGroup = getResources().getString(R.string.AllCountersItem);
-        mToolbar.setTitle(currentGroup);
+//        currentItem = getResources().getString(R.string.AllCountersItem);
+//        mToolbar.setTitle(currentItem);
 
         /*navController set up*/
         mNavController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
@@ -106,8 +109,9 @@ public class CountersFragment extends Fragment {
 
         /*when click set up the adapter with all the counters*/
         mAllCounters_navigationItem.setOnClickListener(i->{
-            mDrawer.closeDrawer(GravityCompat.START);
             mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
+            new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 400);
+
         });
 
         /*initialize RecyclerView and listener for groups*/
@@ -119,7 +123,7 @@ public class CountersFragment extends Fragment {
         mGroups_rv.setHasFixedSize(true);
 
         mViewModel.getGroups().observe(getViewLifecycleOwner(), groups -> {
-            mGroupsAdapter.setGroups(Utility.deleteTheSameGroups(groups));
+                mGroupsAdapter.setGroups(Utility.deleteTheSameGroups(groups));
         });
 
         /*set up rv with counters*/
@@ -147,30 +151,32 @@ public class CountersFragment extends Fragment {
             }
         }, requireActivity().getApplication());
 
-        mGroupsAdapter.getSelectedGroup().observe(getViewLifecycleOwner(), selectedGroup -> {
-            mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
-            mDrawer.closeDrawer(GravityCompat.START);
+        /*set up all counters in the adapter when first open*/
+        mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
 
-            if(selectedGroup == null){
-                currentGroup = getResources().getString(R.string.AllCountersItem);
-                mToolbar.setTitle(currentGroup);
+        mGroupsAdapter.getSelectedItem().observe(getViewLifecycleOwner(), selectedItem -> {
+            mCountersAdapter.clearSelectedCounters();
+
+            if(selectedItem.equals(getResources().getString(R.string.AllCountersItem))){
+                currentItem = getResources().getString(R.string.AllCountersItem);
+                mToolbar.setTitle(currentItem);
                 mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
                     mCountersAdapter.setData(counters);
                 });
+
             }else {
-                mToolbar.setTitle(selectedGroup);
-                mViewModel.getCountersByGroup(selectedGroup).observe(getViewLifecycleOwner(), counters -> {
-                    if (currentGroup ==null || currentGroup.equals(selectedGroup) ){
+                mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
+                mToolbar.setTitle(selectedItem);
+                mViewModel.getCountersByGroup(selectedItem).observe(getViewLifecycleOwner(), counters -> {
+                    if (currentItem.equals(selectedItem) ){
                         mCountersAdapter.setData(counters);
                     }
                 });
-                currentGroup = selectedGroup;
+                currentItem = selectedItem;
             }
 
+            new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 400);
         });
-
-        /*set up all counters in the adapter when first open*/
-        mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(mCounters_rv.getContext());
@@ -196,7 +202,7 @@ public class CountersFragment extends Fragment {
                 mCountersAdapter.getSelectedCountersCount().observe(getViewLifecycleOwner(), count -> {
                     mToolbar.setTitle("Выбрано: " + count);
                     if (count==0)
-                        mToolbar.setTitle(currentGroup);
+                        mToolbar.setTitle(currentItem);
                     mToolbar.getMenu().getItem(0).setVisible(count <= 1);
                 });
         });
@@ -252,7 +258,7 @@ public class CountersFragment extends Fragment {
             mToolbar.setNavigationIcon(mNavigationIcon);
             mToolbar.getMenu().clear();
             mToolbar.inflateMenu(R.menu.menu_counter_main_activity);
-            mToolbar.setTitle(currentGroup);
+            mToolbar.setTitle(currentItem);
 
             mToolbar.setOnMenuItemClickListener(i->{
                 if (i.getItemId() == R.id.counterAdd) {

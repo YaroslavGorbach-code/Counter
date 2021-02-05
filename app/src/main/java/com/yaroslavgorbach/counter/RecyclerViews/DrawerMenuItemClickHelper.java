@@ -10,7 +10,7 @@ import com.yaroslavgorbach.counter.R;
 
 public class DrawerMenuItemClickHelper {
 
-    private MutableLiveData<String> selectedGroup = new MutableLiveData<>();
+    private final MutableLiveData<String> selectedGroup = new MutableLiveData<>();
     private RecyclerView.ViewHolder mSelected_vh;
     private View mAllCountersItem_v;
 
@@ -19,7 +19,6 @@ public class DrawerMenuItemClickHelper {
         if (mSelected_vh != null){
             setDefaultBackground(mSelected_vh.itemView);
             mSelected_vh = null;
-            selectedGroup.setValue(null);
         }
 
         if (mAllCountersItem_v != null){
@@ -37,13 +36,17 @@ public class DrawerMenuItemClickHelper {
         return selectedGroup;
     }
 
-
-    public void bindBackground(RecyclerView.ViewHolder viewHolder){
-        if (viewHolder == mSelected_vh){
+    public void bindBackground(String s, RecyclerView.ViewHolder viewHolder){
+        if (mSelected_vh!=null){
+            setDefaultBackground(mSelected_vh.itemView);
+            mSelected_vh=null;
+        }
+        if (s.equals(selectedGroup.getValue())) {
             setSelectedBackground(viewHolder.itemView);
         }else {
             setDefaultBackground(viewHolder.itemView);
         }
+
     }
 
     public void allCountersItemSelected(View view) {
@@ -57,8 +60,7 @@ public class DrawerMenuItemClickHelper {
             mSelected_vh = null;
         }
 
-        // TODO: 2/5/2021 возможно изменить на allCounters
-        selectedGroup.setValue(null);
+        selectedGroup.setValue(view.getResources().getString(R.string.AllCountersItem));
         mAllCountersItem_v = view;
         setSelectedBackground(mAllCountersItem_v);
     }

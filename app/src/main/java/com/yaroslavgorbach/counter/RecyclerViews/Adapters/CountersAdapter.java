@@ -30,7 +30,6 @@ import java.util.List;
 public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> implements ItemTouchHelperAdapter{
 
 
-
     public interface CounterItemListeners {
         void onPlusClick(Counter counter);
         void onMinusClick(Counter counter);
@@ -39,7 +38,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     }
 
         public LiveData<Boolean> selectionMod;
-
         private final CounterSelection mCounterSelection;
         private List<Counter> mData = new ArrayList<>();
         private final CounterItemListeners mCounterItemListeners;
@@ -95,6 +93,8 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             return mCounterSelection.getSelectedCounter();
           }
 
+
+
     @NonNull
         @Override
         public CountersAdapter.Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -143,11 +143,13 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 itemView.setOnTouchListener(this);
 
                 new FastCountButton(mPlus, () -> {
+                    if (getBindingAdapterPosition()!=-1)
                      mCounterItemListeners.onPlusClick(mData.get(getBindingAdapterPosition()));
                     // mPlus.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 });
 
                 new FastCountButton(mMinus, () ->{
+                    if (getBindingAdapterPosition()!=-1)
                      mCounterItemListeners.onMinusClick(mData.get(getBindingAdapterPosition()));
                     // mMinus.performHapticFeedback(HapticFeedbackConstants. LONG_PRESS);
                 });
