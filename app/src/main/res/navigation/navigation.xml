@@ -6,7 +6,7 @@
     app:startDestination="@id/countersFragment">
     <fragment
         android:id="@+id/countersFragment"
-        tools:layout="@layout/list_of_counters_fragment"
+        tools:layout="@layout/counters_fragment"
         android:name="com.yaroslavgorbach.counter.Fragments.CountersFragment"
         android:label="@string/AllCountersItem" >
         <action
@@ -15,17 +15,6 @@
         <action
             android:id="@+id/action_countersFragment_to_createEditCounterFragment2"
             app:destination="@id/createEditCounterFragment" />
-        <argument
-            android:name="group"
-            app:argType="string"
-            android:defaultValue="null" />
-        <action
-            android:id="@+id/action_countersFragment_self"
-            app:destination="@id/countersFragment"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:popEnterAnim="@anim/fragment_open_enter"
-            app:popUpTo="@id/countersFragment"
-            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_countersFragment_to_createEditCounterFragment"
             app:destination="@id/createEditCounterFragment" />
