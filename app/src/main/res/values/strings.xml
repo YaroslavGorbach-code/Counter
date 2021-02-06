@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Сounter</string>
+
     <string name="navigation_drawer_close">Navigation drawer close</string>
     <string name="navigation_drawer_open">Navigation drawer open</string>
 
@@ -42,6 +43,37 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="DrawerSettings">Settings</string>
     <string name="Rate">Rate</string>
+
+    <!-- Preference Display -->
+    <string name="display_header">Display</string>
+    <string name="nightMod">Night mode</string>
+    <string name="left_hand_mod">Left hand mod</string>
+    <string name="keep_screen_on">Keep screen on</string>
+
+    <!-- Preference Feedback -->
+    <string name="feedBack_header">Feedback</string>
+    <string name="clickSound">Click sound</string>
+    <string name="clickVibration">Vibration</string>
+    <string name="clickSpeak">Speech output</string>
+
+    <!-- Preference Control -->
+    <string name="control_header">Control</string>
+    <string name="use_volume_buttons">Use volume buttons</string>
+    <string name="fast_count_speed">Speed of fast counting</string>
+    <string name="summary_fast_count_speed">Activates by long press on +/- buttons</string>
+
+
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
 
 
 </resources>
