@@ -1,6 +1,7 @@
 package com.yaroslavgorbach.counter.ViewModels;
 
 import android.app.Application;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -76,6 +77,5 @@ public class CountersViewModel extends AndroidViewModel {
     public LiveData<List<String>> getGroups() {
         return mRepo.getGroups();
     }
-
 
 }

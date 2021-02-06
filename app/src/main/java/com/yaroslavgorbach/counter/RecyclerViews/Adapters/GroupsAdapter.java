@@ -37,6 +37,10 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
         mDrawerMenuItemClickHelper.allCountersItemSelected(view);
         notifyDataSetChanged();
     }
+    public void restoreSelectedItem(String string) {
+        mDrawerMenuItemClickHelper.restoreSelectedItem(string);
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -53,6 +57,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
     public int getItemCount() {
         return mData.size();
     }
+
 
 
 

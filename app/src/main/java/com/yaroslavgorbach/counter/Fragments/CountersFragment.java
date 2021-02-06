@@ -3,7 +3,6 @@ package com.yaroslavgorbach.counter.Fragments;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -43,11 +41,9 @@ import com.yaroslavgorbach.counter.RecyclerViews.Adapters.GroupsAdapter;
 import com.yaroslavgorbach.counter.Utility;
 import com.yaroslavgorbach.counter.ViewModels.CountersViewModel;
 
-import java.util.List;
-
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
 
-public class CountersFragment extends Fragment {
+public class CountersFragment extends Fragment{
     private CountersViewModel mViewModel;
     private RecyclerView mCounters_rv;
     private RecyclerView mGroups_rv;
@@ -63,9 +59,22 @@ public class CountersFragment extends Fragment {
     private TextView mDecAllSelectedCounters_bt;
     private String currentItem;
 
+    private static final String CURRENT_GROUP = "CURRENT_GROUP";
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(CURRENT_GROUP, currentItem);
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState!=null)
+            currentItem = savedInstanceState.getString(CURRENT_GROUP);
 
         /*callback for callback for handling back press button*/
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -81,10 +90,16 @@ public class CountersFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.counters_fragment, container, false);
+
+        Log.println(Log.VERBOSE, "life","viewCreate");
+
+
         mViewModel = new ViewModelProvider(this).get(CountersViewModel.class);
         mDecAllSelectedCounters_bt = view.findViewById(R.id.allSelectedDec);
         mIncAllSelectedCounters_bt = view.findViewById(R.id.allSelectedInc);
@@ -109,7 +124,7 @@ public class CountersFragment extends Fragment {
         mAllCounters_navigationItem.setOnClickListener(i->{
             mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
             new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 200);
-        });
+        });;
 
         /*initialize RecyclerView and listener for groups*/
         mGroupsAdapter = new GroupsAdapter();
@@ -147,21 +162,28 @@ public class CountersFragment extends Fragment {
             }
         }, requireActivity().getApplication());
 
-        /*set up all counters in the adapter when first open*/
-        mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
+
+        if (currentItem != null && !currentItem.equals(getResources().getString(R.string.AllCountersItem))) {
+            mGroupsAdapter.restoreSelectedItem(currentItem);
+        } else {
+            /*set up all counters in the adapter when first open*/
+            mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
+        }
+
 
         mGroupsAdapter.getSelectedItem().observe(getViewLifecycleOwner(), selectedItem -> {
 
             if(selectedItem.equals(getResources().getString(R.string.AllCountersItem))){
                 currentItem = getResources().getString(R.string.AllCountersItem);
+               // mGroupTittle_sp.edit().putString(GROUP_TITLE, null).apply();
                 mToolbar.setTitle(currentItem);
                 mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
-
                 mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
                     mCountersAdapter.setData(counters);
                 });
 
             }else {
+               // mGroupTittle_sp.edit().putString(GROUP_TITLE, selectedItem).apply();
                 mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
                 mToolbar.setTitle(selectedItem);
                 mViewModel.getCountersByGroup(selectedItem).observe(getViewLifecycleOwner(), counters -> {
@@ -171,15 +193,18 @@ public class CountersFragment extends Fragment {
                 });
             }
             currentItem = selectedItem;
-            new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 200);
             mCountersAdapter.clearSelectedCounters();
-
+            new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 200);
         });
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(mCounters_rv.getContext());
         mCounters_rv.setLayoutManager(layoutManager);
-       // mCounters_rv.setHasFixedSize(true);
+        mCounters_rv.setHasFixedSize(true);
+        mCounters_rv.getItemAnimator().setAddDuration(0);
+        mCounters_rv.getItemAnimator().setChangeDuration(0);
+        mCounters_rv.getItemAnimator().setRemoveDuration(0);
+
         mCountersAdapter.itemTouchHelper.attachToRecyclerView(mCounters_rv);
         mCountersAdapter.setStateRestorationPolicy(PREVENT_WHEN_EMPTY);
         mCounters_rv.setAdapter(mCountersAdapter);
@@ -244,7 +269,6 @@ public class CountersFragment extends Fragment {
                         }, mCountersAdapter.getSelectedCountersCount().getValue())
                                 .show(getChildFragmentManager(), "DialogCounterDelete");
                         break;
-
                 }
 
                 return true;
@@ -270,7 +294,6 @@ public class CountersFragment extends Fragment {
             });
 
         }
-
     }
 
 }

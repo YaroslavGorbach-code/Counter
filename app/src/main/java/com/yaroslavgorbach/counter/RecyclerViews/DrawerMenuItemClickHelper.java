@@ -10,7 +10,7 @@ import com.yaroslavgorbach.counter.R;
 
 public class DrawerMenuItemClickHelper {
 
-    private final MutableLiveData<String> selectedGroup = new MutableLiveData<>();
+    private final MutableLiveData<String> selectedItem = new MutableLiveData<>();
     private RecyclerView.ViewHolder mSelected_vh;
     private View mAllCountersItem_v;
 
@@ -27,13 +27,13 @@ public class DrawerMenuItemClickHelper {
         }
 
         mSelected_vh = vh;
-        selectedGroup.setValue(string);
+        selectedItem.setValue(string);
         setSelectedBackground(mSelected_vh.itemView);
 
     }
 
     public LiveData<String> getSelectedItem(){
-        return selectedGroup;
+        return selectedItem;
     }
 
     public void bindBackground(String s, RecyclerView.ViewHolder viewHolder){
@@ -41,7 +41,7 @@ public class DrawerMenuItemClickHelper {
             setDefaultBackground(mSelected_vh.itemView);
             mSelected_vh=null;
         }
-        if (s.equals(selectedGroup.getValue())) {
+        if (s.equals(selectedItem.getValue())) {
             setSelectedBackground(viewHolder.itemView);
         }else {
             setDefaultBackground(viewHolder.itemView);
@@ -60,7 +60,7 @@ public class DrawerMenuItemClickHelper {
             mSelected_vh = null;
         }
 
-        selectedGroup.setValue(view.getResources().getString(R.string.AllCountersItem));
+        selectedItem.setValue(view.getResources().getString(R.string.AllCountersItem));
         mAllCountersItem_v = view;
         setSelectedBackground(mAllCountersItem_v);
     }
@@ -73,4 +73,7 @@ public class DrawerMenuItemClickHelper {
         view.setBackgroundResource(R.drawable.group_item_selected);
     }
 
+    public void restoreSelectedItem(String string) {
+        selectedItem.setValue(string);
+    }
 }
