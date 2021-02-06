@@ -9,7 +9,7 @@ import android.view.ViewConfiguration;
 
 public class FastCountButton implements View.OnTouchListener, Handler.Callback {
 
-    private static final int FAST_COUNT_INTERVAL_MS = 100;
+    private static final int FAST_COUNT_INTERVAL_MS = 80;
     private static final int FAST_COUNT_MSG = 0;
 
     private final Handler mHandler = new Handler(this);

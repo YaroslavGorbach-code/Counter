@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,7 +48,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             mCounterSelection = new CounterSelection(application);
             mCounterItemListeners = counterItemListeners;
         }
-
 
         public void setData(List<Counter> data) {
             mData = data;
@@ -95,8 +94,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             return mCounterSelection.selectionMod;
          }
 
-
-
     @NonNull
         @Override
         public CountersAdapter.Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -123,8 +120,8 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             if (fromPos != -1 && toPos != -1){
                 Counter deleted = mData.remove(fromPos);
                 mData.add(toPos, deleted);
-                notifyItemMoved(fromPos, toPos);
                 mCounterItemListeners.onMoved(mData.get(fromPos), mData.get(toPos));
+                notifyItemMoved(fromPos, toPos);
             }
 
         }
@@ -224,6 +221,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 if(!mCounterSelection.selectionMod.getValue()){
                     itemTouchHelper.startDrag(this);
                 }
+                if (getBindingAdapterPosition()!=-1)
                 mCounterSelection.selectCounter(mData.get(getBindingAdapterPosition()),this);
             }
 

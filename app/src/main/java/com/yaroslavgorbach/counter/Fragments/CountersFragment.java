@@ -59,12 +59,9 @@ public class CountersFragment extends Fragment {
     private LinearLayout mAllCounters_navigationItem;
     private NavigationView mNavigationDrawerView;
     private NavController mNavController;
-
     private TextView mIncAllSelectedCounters_bt;
     private TextView mDecAllSelectedCounters_bt;
-
     private String currentItem;
-    private Observer<List<Counter>> mObserver;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,7 +95,6 @@ public class CountersFragment extends Fragment {
         mCounters_rv = view.findViewById(R.id.counters_list);
         mGroups_rv = view.findViewById(R.id.groupsList_rv);
 
-
         /*navController set up*/
         mNavController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
         AppBarConfiguration appBarConfiguration;
@@ -111,17 +107,12 @@ public class CountersFragment extends Fragment {
 
         /*when click set up the adapter with all the counters*/
         mAllCounters_navigationItem.setOnClickListener(i->{
-
-
-
             mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
-            new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 400);
-
+            new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 200);
         });
 
         /*initialize RecyclerView and listener for groups*/
         mGroupsAdapter = new GroupsAdapter();
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(requireContext());
         mGroups_rv.setLayoutManager(mLayoutManager);
         mGroups_rv.setAdapter(mGroupsAdapter);
@@ -129,8 +120,6 @@ public class CountersFragment extends Fragment {
 
         mViewModel.getGroups().observe(getViewLifecycleOwner(), groups -> {
                 mGroupsAdapter.setGroups(Utility.deleteTheSameGroups(groups));
-
-                mViewModel.getCountersByGroup(null).removeObservers(getViewLifecycleOwner());
         });
 
         /*set up rv with counters*/
@@ -162,7 +151,6 @@ public class CountersFragment extends Fragment {
         mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
 
         mGroupsAdapter.getSelectedItem().observe(getViewLifecycleOwner(), selectedItem -> {
-            mCountersAdapter.clearSelectedCounters();
 
             if(selectedItem.equals(getResources().getString(R.string.AllCountersItem))){
                 currentItem = getResources().getString(R.string.AllCountersItem);
@@ -183,13 +171,15 @@ public class CountersFragment extends Fragment {
                 });
             }
             currentItem = selectedItem;
-            new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 400);
+            new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 200);
+            mCountersAdapter.clearSelectedCounters();
+
         });
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(mCounters_rv.getContext());
         mCounters_rv.setLayoutManager(layoutManager);
-        mCounters_rv.setHasFixedSize(true);
+       // mCounters_rv.setHasFixedSize(true);
         mCountersAdapter.itemTouchHelper.attachToRecyclerView(mCounters_rv);
         mCountersAdapter.setStateRestorationPolicy(PREVENT_WHEN_EMPTY);
         mCounters_rv.setAdapter(mCountersAdapter);
