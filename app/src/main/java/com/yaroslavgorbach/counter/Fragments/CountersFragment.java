@@ -1,9 +1,9 @@
 package com.yaroslavgorbach.counter.Fragments;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +31,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbach.counter.Activityes.SettingsActivity;
 import com.yaroslavgorbach.counter.FastCountButton;
 import com.yaroslavgorbach.counter.Fragments.Dialogs.CreateCounterDialog;
 import com.yaroslavgorbach.counter.Fragments.Dialogs.DeleteCounterDialog;
@@ -52,22 +53,15 @@ public class CountersFragment extends Fragment{
     private Drawable mNavigationIcon;
     private GroupsAdapter mGroupsAdapter;
     private DrawerLayout mDrawer;
-    private LinearLayout mAllCounters_navigationItem;
+    private LinearLayout mAllCounters_drawerItem;
     private NavigationView mNavigationDrawerView;
     private NavController mNavController;
     private TextView mIncAllSelectedCounters_bt;
     private TextView mDecAllSelectedCounters_bt;
     private String currentItem;
+    private LinearLayout mSettingsDrawerItem;
 
     private static final String CURRENT_GROUP = "CURRENT_GROUP";
-
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(CURRENT_GROUP, currentItem);
-    }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,18 +91,16 @@ public class CountersFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.counters_fragment, container, false);
 
-        Log.println(Log.VERBOSE, "life","viewCreate");
-
-
         mViewModel = new ViewModelProvider(this).get(CountersViewModel.class);
         mDecAllSelectedCounters_bt = view.findViewById(R.id.allSelectedDec);
         mIncAllSelectedCounters_bt = view.findViewById(R.id.allSelectedInc);
-        mAllCounters_navigationItem = view.findViewById(R.id.AllCounters);
+        mAllCounters_drawerItem = view.findViewById(R.id.AllCounters);
         mNavigationDrawerView = view.findViewById(R.id.navigationDrawerView);
         mToolbar = view.findViewById(R.id.toolbar_mainActivity);
         mDrawer = view.findViewById(R.id.drawer);
         mCounters_rv = view.findViewById(R.id.counters_list);
         mGroups_rv = view.findViewById(R.id.groupsList_rv);
+        mSettingsDrawerItem = view.findViewById(R.id.settings);
 
         /*navController set up*/
         mNavController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
@@ -121,10 +113,15 @@ public class CountersFragment extends Fragment{
         mNavigationIcon = mToolbar.getNavigationIcon();
 
         /*when click set up the adapter with all the counters*/
-        mAllCounters_navigationItem.setOnClickListener(i->{
-            mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
+        mAllCounters_drawerItem.setOnClickListener(i->{
+            mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
             new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 200);
-        });;
+        });
+
+        mSettingsDrawerItem.setOnClickListener(i->{
+            Intent startSettingsActivity = new Intent(getContext(), SettingsActivity.class);
+            startActivity(startSettingsActivity);
+        });
 
         /*initialize RecyclerView and listener for groups*/
         mGroupsAdapter = new GroupsAdapter();
@@ -167,7 +164,7 @@ public class CountersFragment extends Fragment{
             mGroupsAdapter.restoreSelectedItem(currentItem);
         } else {
             /*set up all counters in the adapter when first open*/
-            mGroupsAdapter.allCountersItemSelected(mAllCounters_navigationItem);
+            mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
         }
 
 
@@ -295,6 +292,14 @@ public class CountersFragment extends Fragment{
 
         }
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(CURRENT_GROUP, currentItem);
+    }
+
+
 
 }
 
