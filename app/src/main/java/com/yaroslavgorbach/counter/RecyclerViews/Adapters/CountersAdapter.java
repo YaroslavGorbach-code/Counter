@@ -38,6 +38,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     }
 
         private final CounterSelection mCounterSelection;
+
         private List<Counter> mData = new ArrayList<>();
         private final CounterItemListeners mCounterItemListeners;
         private final ItemTouchHelper.Callback callback = new MyItemTouchHelper(this);
@@ -53,6 +54,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             mData = data;
             notifyDataSetChanged();
         }
+
         
         public void selectAllCounters(){
             mCounterSelection.selectAllCounters(mData);
@@ -94,7 +96,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             return mCounterSelection.selectionMod;
          }
 
-    @NonNull
+        @NonNull
         @Override
         public CountersAdapter.Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             return new CountersAdapter.Vh(parent);
@@ -123,7 +125,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 mCounterItemListeners.onMoved(mData.get(fromPos), mData.get(toPos));
                 notifyItemMoved(fromPos, toPos);
             }
-
         }
 
 
@@ -144,23 +145,27 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 mGestureDetector = new GestureDetector(parent.getContext(),this);
                 itemView.setOnTouchListener(this);
 
-                new FastCountButton(mPlus, () -> {
+                 new FastCountButton(mPlus, () -> {
                     if (getBindingAdapterPosition()!=-1)
-                     mCounterItemListeners.onPlusClick(mData.get(getBindingAdapterPosition()));
+                        mCounterItemListeners.onPlusClick(mData.get(getBindingAdapterPosition()));
                     // mPlus.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 });
 
                 new FastCountButton(mMinus, () ->{
                     if (getBindingAdapterPosition()!=-1)
-                     mCounterItemListeners.onMinusClick(mData.get(getBindingAdapterPosition()));
+                        mCounterItemListeners.onMinusClick(mData.get(getBindingAdapterPosition()));
                     // mMinus.performHapticFeedback(HapticFeedbackConstants. LONG_PRESS);
                 });
+
+
             }
 
             private void bind(Counter counter) {
                 mTitle.setText(counter.title);
                 mValue.setText(String.valueOf(counter.value));
                 mCounterSelection.bingVhBackground(counter,this);
+
+                // TODO: 2/7/2021 возможно не правельно устанавливать лисенер в байнде
                 mCounterSelection.selectionMod.observe((LifecycleOwner) itemView.getContext(), aBoolean -> {
                     if (aBoolean){
                         mMinus.setClickable(false);

@@ -1,5 +1,7 @@
 package com.yaroslavgorbach.counter;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.view.HapticFeedbackConstants;
@@ -7,20 +9,32 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
+
 public class FastCountButton implements View.OnTouchListener, Handler.Callback {
+
+    public static final int MAX = 300;
+    public static final int MIN = 10;
 
     private static final int FAST_COUNT_INTERVAL_MS = 80;
     private static final int FAST_COUNT_MSG = 0;
 
+    private int mFastCountInterval;
     private final Handler mHandler = new Handler(this);
     private final View mView;
     private boolean mFastCounting;
+
 
     public FastCountButton(View view, Runnable action) {
         mView = view;
         view.setOnClickListener(v -> action.run());
         view.setOnTouchListener(this);
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        mFastCountInterval = MAX - mSharedPreferences.getInt("fastCountSpeed", 200) + MIN;
+
     }
+
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -54,8 +68,12 @@ public class FastCountButton implements View.OnTouchListener, Handler.Callback {
                 mView.getParent().requestDisallowInterceptTouchEvent(true);
             }
             mView.performClick();
-            mHandler.sendEmptyMessageDelayed(FAST_COUNT_MSG, FAST_COUNT_INTERVAL_MS);
+            mHandler.sendEmptyMessageDelayed(FAST_COUNT_MSG, mFastCountInterval);
         }
         return false;
+    }
+
+    public void changeInterval(int interval){
+        mFastCountInterval = interval;
     }
 }

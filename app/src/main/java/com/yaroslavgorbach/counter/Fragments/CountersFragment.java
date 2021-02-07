@@ -1,14 +1,17 @@
 package com.yaroslavgorbach.counter.Fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -42,9 +45,12 @@ import com.yaroslavgorbach.counter.RecyclerViews.Adapters.GroupsAdapter;
 import com.yaroslavgorbach.counter.Utility;
 import com.yaroslavgorbach.counter.ViewModels.CountersViewModel;
 
+
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
 
-public class CountersFragment extends Fragment{
+
+
+public class CountersFragment extends Fragment  {
     private CountersViewModel mViewModel;
     private RecyclerView mCounters_rv;
     private RecyclerView mGroups_rv;
@@ -82,6 +88,7 @@ public class CountersFragment extends Fragment{
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
 
@@ -159,6 +166,14 @@ public class CountersFragment extends Fragment{
             }
         }, requireActivity().getApplication());
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mCounters_rv.getContext());
+        mCounters_rv.setLayoutManager(layoutManager);
+        mCounters_rv.setHasFixedSize(true);
+        mCounters_rv.getItemAnimator().setAddDuration(0);
+        mCounters_rv.getItemAnimator().setChangeDuration(0);
+        mCounters_rv.getItemAnimator().setRemoveDuration(0);
+        mCountersAdapter.itemTouchHelper.attachToRecyclerView(mCounters_rv);
+        mCountersAdapter.setStateRestorationPolicy(PREVENT_WHEN_EMPTY);
 
         if (currentItem != null && !currentItem.equals(getResources().getString(R.string.AllCountersItem))) {
             mGroupsAdapter.restoreSelectedItem(currentItem);
@@ -167,12 +182,9 @@ public class CountersFragment extends Fragment{
             mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
         }
 
-
         mGroupsAdapter.getSelectedItem().observe(getViewLifecycleOwner(), selectedItem -> {
-
             if(selectedItem.equals(getResources().getString(R.string.AllCountersItem))){
                 currentItem = getResources().getString(R.string.AllCountersItem);
-               // mGroupTittle_sp.edit().putString(GROUP_TITLE, null).apply();
                 mToolbar.setTitle(currentItem);
                 mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
                 mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
@@ -180,7 +192,6 @@ public class CountersFragment extends Fragment{
                 });
 
             }else {
-               // mGroupTittle_sp.edit().putString(GROUP_TITLE, selectedItem).apply();
                 mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
                 mToolbar.setTitle(selectedItem);
                 mViewModel.getCountersByGroup(selectedItem).observe(getViewLifecycleOwner(), counters -> {
@@ -193,28 +204,12 @@ public class CountersFragment extends Fragment{
             mCountersAdapter.clearSelectedCounters();
             new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 200);
         });
-
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mCounters_rv.getContext());
-        mCounters_rv.setLayoutManager(layoutManager);
-        mCounters_rv.setHasFixedSize(true);
-        mCounters_rv.getItemAnimator().setAddDuration(0);
-        mCounters_rv.getItemAnimator().setChangeDuration(0);
-        mCounters_rv.getItemAnimator().setRemoveDuration(0);
-
-        mCountersAdapter.itemTouchHelper.attachToRecyclerView(mCounters_rv);
-        mCountersAdapter.setStateRestorationPolicy(PREVENT_WHEN_EMPTY);
-        mCounters_rv.setAdapter(mCountersAdapter);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        /*set up listeners on buttons witch appears when selection mod is active*/
-        new FastCountButton(mDecAllSelectedCounters_bt, ()-> mCountersAdapter.decSelectedCounters());
-        new FastCountButton(mIncAllSelectedCounters_bt, ()-> mCountersAdapter.incSelectedCounters());
 
         /*set up listeners for selection mod*/
         mCountersAdapter.getSelectionMod().observe(getViewLifecycleOwner(), isSelectionMod ->{
@@ -227,6 +222,15 @@ public class CountersFragment extends Fragment{
                 });
         });
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        /*set up listeners on buttons witch appears when selection mod is active*/
+        new FastCountButton(mDecAllSelectedCounters_bt, ()-> mCountersAdapter.decSelectedCounters());
+        new FastCountButton(mIncAllSelectedCounters_bt, ()-> mCountersAdapter.incSelectedCounters());
+        mCounters_rv.setAdapter(mCountersAdapter);
     }
 
     private void setUpToolbar(boolean isSelectionMod) {
@@ -298,7 +302,6 @@ public class CountersFragment extends Fragment{
         super.onSaveInstanceState(outState);
         outState.putString(CURRENT_GROUP, currentItem);
     }
-
 
 
 }

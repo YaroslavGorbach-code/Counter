@@ -40,7 +40,9 @@
         <SeekBarPreference
             app:key="fastCountSpeed"
             app:summary="@string/summary_fast_count_speed"
-            app:defaultValue="50"
+            app:defaultValue="200"
+            app:min="10"
+            android:max="300"
             app:title="@string/fast_count_speed"
 
             />
