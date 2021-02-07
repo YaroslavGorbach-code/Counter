@@ -10,13 +10,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +60,7 @@ public class CounterFragment extends Fragment {
     private TextView mMinValue_tv;
     private TextView mGroupTitle;
     private BroadcastReceiver mMessageReceiver;
+    private boolean mVibrationIsAllowed;
 
 
     @Nullable
@@ -140,11 +144,18 @@ public class CounterFragment extends Fragment {
         /*counter +*/
         new FastCountButton(mIncButton, () -> {
             mViewModel.incCounter();
+
+            if (mVibrationIsAllowed)
+            mIncButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         });
 
         /*counter -*/
         new FastCountButton(mDecButton, () -> {
             mViewModel.decCounter();
+
+            if (mVibrationIsAllowed)
+            mIncButton.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+
         });
 
         /*reset counter*/
@@ -165,9 +176,13 @@ public class CounterFragment extends Fragment {
                 switch (intent.getIntExtra(KEYCODE_EXTRA,-1)){
                     case KEYCODE_VOLUME_DOWN:
                         mViewModel.decCounter();
+                        if (mVibrationIsAllowed)
+                            mIncButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                         break;
                     case KEYCODE_VOLUME_UP:
                         mViewModel.incCounter();
+                        if (mVibrationIsAllowed)
+                            mIncButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                         break;
                 }
             }
@@ -228,6 +243,13 @@ public class CounterFragment extends Fragment {
                 break;
 
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        mVibrationIsAllowed = mSharedPreferences.getBoolean("clickVibration", false);
     }
 
     @Override

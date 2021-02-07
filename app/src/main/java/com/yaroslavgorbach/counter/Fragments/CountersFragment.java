@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -64,6 +67,9 @@ public class CountersFragment extends Fragment  {
     private TextView mDecAllSelectedCounters_bt;
     private String currentItem;
     private LinearLayout mSettingsDrawerItem;
+
+    private boolean mVibrationIsAllowed;
+
 
     private static final String CURRENT_GROUP = "CURRENT_GROUP";
     private BroadcastReceiver mMessageReceiver;
@@ -141,11 +147,15 @@ public class CountersFragment extends Fragment  {
             @Override
             public void onPlusClick(Counter counter) {
                 mViewModel.incCounter(counter);
+                if (mVibrationIsAllowed)
+                    mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             }
 
             @Override
             public void onMinusClick(Counter counter) {
                 mViewModel.decCounter(counter);
+                if (mVibrationIsAllowed)
+                    mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             }
 
             @Override
@@ -171,9 +181,13 @@ public class CountersFragment extends Fragment  {
                 switch (intent.getIntExtra(KEYCODE_EXTRA,-1)){
                     case KEYCODE_VOLUME_DOWN:
                         mCountersAdapter.decSelectedCounters();
+                        if (mVibrationIsAllowed && mCountersAdapter.getSelectionMod().getValue())
+                            mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                         break;
                     case KEYCODE_VOLUME_UP:
                         mCountersAdapter.incSelectedCounters();
+                        if (mVibrationIsAllowed && mCountersAdapter.getSelectionMod().getValue())
+                            mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                         break;
                 }
             }
@@ -246,10 +260,21 @@ public class CountersFragment extends Fragment  {
     @Override
     public void onStart() {
         super.onStart();
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        mVibrationIsAllowed = mSharedPreferences.getBoolean("clickVibration", false);
+
         mCounters_rv.setAdapter(mCountersAdapter);
         /*set up listeners on buttons witch appears when selection mod is active*/
-        new FastCountButton(mDecAllSelectedCounters_bt, ()-> mCountersAdapter.decSelectedCounters());
-        new FastCountButton(mIncAllSelectedCounters_bt, ()-> mCountersAdapter.incSelectedCounters());
+        new FastCountButton(mDecAllSelectedCounters_bt, ()-> {
+            mCountersAdapter.decSelectedCounters();
+            if (mVibrationIsAllowed)
+                mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+        });
+        new FastCountButton(mIncAllSelectedCounters_bt, ()-> {
+            mCountersAdapter.incSelectedCounters();
+            if (mVibrationIsAllowed)
+                mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+        });
     }
 
     private void setUpToolbar(boolean isSelectionMod) {
