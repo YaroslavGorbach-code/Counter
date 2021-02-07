@@ -1,18 +1,17 @@
 package com.yaroslavgorbach.counter.Fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +20,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -28,8 +28,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -44,11 +42,11 @@ import com.yaroslavgorbach.counter.R;
 import com.yaroslavgorbach.counter.RecyclerViews.Adapters.GroupsAdapter;
 import com.yaroslavgorbach.counter.Utility;
 import com.yaroslavgorbach.counter.ViewModels.CountersViewModel;
-
-
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
-
-
+import static com.yaroslavgorbach.counter.Activityes.MainActivity.KEYCODE_EXTRA;
+import static com.yaroslavgorbach.counter.Activityes.MainActivity.KEYCODE_VOLUME_DOWN;
+import static com.yaroslavgorbach.counter.Activityes.MainActivity.KEYCODE_VOLUME_UP;
+import static com.yaroslavgorbach.counter.Activityes.MainActivity.ON_KEY_DOWN_BROADCAST;
 
 public class CountersFragment extends Fragment  {
     private CountersViewModel mViewModel;
@@ -68,11 +66,11 @@ public class CountersFragment extends Fragment  {
     private LinearLayout mSettingsDrawerItem;
 
     private static final String CURRENT_GROUP = "CURRENT_GROUP";
+    private BroadcastReceiver mMessageReceiver;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (savedInstanceState!=null)
             currentItem = savedInstanceState.getString(CURRENT_GROUP);
 
@@ -88,10 +86,7 @@ public class CountersFragment extends Fragment  {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-
     }
-
-
 
     @Nullable
     @Override
@@ -166,6 +161,30 @@ public class CountersFragment extends Fragment  {
             }
         }, requireActivity().getApplication());
 
+
+        // Our handler for received Intents. This will be called whenever an Intent
+        // with an action named "custom-event-name" is broadcasted.
+        mMessageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Get extra data included in the Intent
+                switch (intent.getIntExtra(KEYCODE_EXTRA,-1)){
+                    case KEYCODE_VOLUME_DOWN:
+                        mCountersAdapter.decSelectedCounters();
+                        break;
+                    case KEYCODE_VOLUME_UP:
+                        mCountersAdapter.incSelectedCounters();
+                        break;
+                }
+            }
+        };
+
+        // Register to receive messages.
+        // We are registering an observer (mMessageReceiver) to receive Intents
+        // with actions named "custom-event-name".
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter(ON_KEY_DOWN_BROADCAST));
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(mCounters_rv.getContext());
         mCounters_rv.setLayoutManager(layoutManager);
         mCounters_rv.setHasFixedSize(true);
@@ -227,10 +246,10 @@ public class CountersFragment extends Fragment  {
     @Override
     public void onStart() {
         super.onStart();
+        mCounters_rv.setAdapter(mCountersAdapter);
         /*set up listeners on buttons witch appears when selection mod is active*/
         new FastCountButton(mDecAllSelectedCounters_bt, ()-> mCountersAdapter.decSelectedCounters());
         new FastCountButton(mIncAllSelectedCounters_bt, ()-> mCountersAdapter.incSelectedCounters());
-        mCounters_rv.setAdapter(mCountersAdapter);
     }
 
     private void setUpToolbar(boolean isSelectionMod) {
@@ -293,8 +312,13 @@ public class CountersFragment extends Fragment  {
             mToolbar.setNavigationOnClickListener(v -> {
                 mDrawer.open();
             });
-
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver);
     }
 
     @Override
@@ -302,7 +326,6 @@ public class CountersFragment extends Fragment  {
         super.onSaveInstanceState(outState);
         outState.putString(CURRENT_GROUP, currentItem);
     }
-
 
 }
 

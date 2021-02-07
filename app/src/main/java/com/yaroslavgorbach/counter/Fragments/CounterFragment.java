@@ -5,12 +5,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +35,12 @@ import com.yaroslavgorbach.counter.R;
 
 import java.util.ArrayList;
 
-public class CounterFragment extends Fragment{
+import static com.yaroslavgorbach.counter.Activityes.MainActivity.KEYCODE_EXTRA;
+import static com.yaroslavgorbach.counter.Activityes.MainActivity.KEYCODE_VOLUME_DOWN;
+import static com.yaroslavgorbach.counter.Activityes.MainActivity.KEYCODE_VOLUME_UP;
+import static com.yaroslavgorbach.counter.Activityes.MainActivity.ON_KEY_DOWN_BROADCAST;
+
+public class CounterFragment extends Fragment {
     private TextView mValue_tv;
     private TextView mIncButton;
     private TextView mDecButton;
@@ -45,13 +56,14 @@ public class CounterFragment extends Fragment{
     private TextView mMaxValue_tv;
     private TextView mMinValue_tv;
     private TextView mGroupTitle;
+    private BroadcastReceiver mMessageReceiver;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
-
         /*initialize fields*/
         mValue_tv = view.findViewById(R.id.value);
         mIncButton = view.findViewById(R.id.inc_value);
@@ -75,9 +87,9 @@ public class CounterFragment extends Fragment{
         mToolbar.setOnMenuItemClickListener(i -> {
             switch (i.getItemId()) {
                 case R.id.counterDelete:
-                    new DeleteCounterDialog(()->{
-                       mViewModel.deleteCounter();
-                       Navigation.findNavController(view).popBackStack();
+                    new DeleteCounterDialog(() -> {
+                        mViewModel.deleteCounter();
+                        Navigation.findNavController(view).popBackStack();
                     }, 1).show(getChildFragmentManager(), "DialogCounterDelete");
                     break;
                 case R.id.counterEdit:
@@ -144,8 +156,32 @@ public class CounterFragment extends Fragment{
                     }).show();
         });
 
+        // Our handler for received Intents. This will be called whenever an Intent
+        // with an action named "custom-event-name" is broadcasted.
+           mMessageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Get extra data included in the Intent
+                switch (intent.getIntExtra(KEYCODE_EXTRA,-1)){
+                    case KEYCODE_VOLUME_DOWN:
+                        mViewModel.decCounter();
+                        break;
+                    case KEYCODE_VOLUME_UP:
+                        mViewModel.incCounter();
+                        break;
+                }
+            }
+        };
+
+        // Register to receive messages.
+        // We are registering an observer (mMessageReceiver) to receive Intents
+        // with actions named "custom-event-name".
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter(ON_KEY_DOWN_BROADCAST));
         return view;
     }
+
+
 
     /*method for changing the font size when changing the value of the counter*/
     private void setTextViewSize() {
@@ -192,5 +228,11 @@ public class CounterFragment extends Fragment{
                 break;
 
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver);
     }
 }

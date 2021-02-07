@@ -41,7 +41,7 @@
             app:key="fastCountSpeed"
             app:summary="@string/summary_fast_count_speed"
             app:defaultValue="200"
-            app:min="10"
+            app:min="30"
             android:max="300"
             app:title="@string/fast_count_speed"
 

@@ -15,9 +15,7 @@ import androidx.preference.PreferenceManager;
 public class FastCountButton implements View.OnTouchListener, Handler.Callback {
 
     public static final int MAX = 300;
-    public static final int MIN = 10;
-
-    private static final int FAST_COUNT_INTERVAL_MS = 80;
+    public static final int MIN = 30;
     private static final int FAST_COUNT_MSG = 0;
 
     private int mFastCountInterval;
