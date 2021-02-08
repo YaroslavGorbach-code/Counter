@@ -111,7 +111,7 @@ public class CounterSelection {
 
     }
 
-    public void bingVhBackground(Counter newCounter, CountersAdapter.Vh vh) {
+    public void bindVhBackground(Counter newCounter, CountersAdapter.Vh vh) {
         boolean isAlreadySelected = false;
         for (Counter oldCounter : mSelectedCounters) {
             if (newCounter.id == oldCounter.id) {

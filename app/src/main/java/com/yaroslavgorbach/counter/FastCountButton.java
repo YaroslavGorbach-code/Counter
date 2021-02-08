@@ -21,7 +21,7 @@ public class FastCountButton implements View.OnTouchListener, Handler.Callback {
     private int mFastCountInterval;
     private final Handler mHandler = new Handler(this);
     private final View mView;
-    private boolean mFastCounting;
+    public boolean mFastCounting;
 
 
     public FastCountButton(View view, Runnable action) {
