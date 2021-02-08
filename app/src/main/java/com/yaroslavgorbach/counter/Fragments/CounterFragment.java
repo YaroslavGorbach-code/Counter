@@ -6,10 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
 
 import android.content.BroadcastReceiver;
@@ -17,8 +14,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.AudioAttributes;
+import android.media.SoundPool;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +28,12 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbach.counter.Accessibility;
 import com.yaroslavgorbach.counter.FastCountButton;
 import com.yaroslavgorbach.counter.Fragments.Dialogs.DeleteCounterDialog;
 import com.yaroslavgorbach.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbach.counter.ViewModels.Factories.CounterViewModelFactory;
 import com.yaroslavgorbach.counter.R;
-
-import java.util.ArrayList;
 
 import static com.yaroslavgorbach.counter.Activityes.MainActivity.KEYCODE_EXTRA;
 import static com.yaroslavgorbach.counter.Activityes.MainActivity.KEYCODE_VOLUME_DOWN;
@@ -60,8 +57,7 @@ public class CounterFragment extends Fragment {
     private TextView mMinValue_tv;
     private TextView mGroupTitle;
     private BroadcastReceiver mMessageReceiver;
-    private boolean mVibrationIsAllowed;
-
+    private Accessibility mAccessibility;
 
     @Nullable
     @Override
@@ -144,18 +140,15 @@ public class CounterFragment extends Fragment {
         /*counter +*/
         new FastCountButton(mIncButton, () -> {
             mViewModel.incCounter();
-
-            if (mVibrationIsAllowed)
-            mIncButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            mAccessibility.playIncSoundEffect();
+            mAccessibility.playIncVibrationEffect(getView());
         });
 
         /*counter -*/
         new FastCountButton(mDecButton, () -> {
             mViewModel.decCounter();
-
-            if (mVibrationIsAllowed)
-            mIncButton.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-
+            mAccessibility.playDecSoundEffect();
+            mAccessibility.playDecVibrationEffect(getView());
         });
 
         /*reset counter*/
@@ -167,8 +160,6 @@ public class CounterFragment extends Fragment {
                     }).show();
         });
 
-        // Our handler for received Intents. This will be called whenever an Intent
-        // with an action named "custom-event-name" is broadcasted.
            mMessageReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -176,13 +167,13 @@ public class CounterFragment extends Fragment {
                 switch (intent.getIntExtra(KEYCODE_EXTRA,-1)){
                     case KEYCODE_VOLUME_DOWN:
                         mViewModel.decCounter();
-                        if (mVibrationIsAllowed)
-                            mIncButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                        mAccessibility.playDecVibrationEffect(getView());
+                        mAccessibility.playDecSoundEffect();
                         break;
                     case KEYCODE_VOLUME_UP:
                         mViewModel.incCounter();
-                        if (mVibrationIsAllowed)
-                            mIncButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                        mAccessibility.playIncVibrationEffect(getView());
+                        mAccessibility.playIncSoundEffect();
                         break;
                 }
             }
@@ -190,7 +181,6 @@ public class CounterFragment extends Fragment {
 
         // Register to receive messages.
         // We are registering an observer (mMessageReceiver) to receive Intents
-        // with actions named "custom-event-name".
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver,
                 new IntentFilter(ON_KEY_DOWN_BROADCAST));
         return view;
@@ -248,8 +238,7 @@ public class CounterFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        mVibrationIsAllowed = mSharedPreferences.getBoolean("clickVibration", false);
+        mAccessibility = new Accessibility(requireContext());
     }
 
     @Override

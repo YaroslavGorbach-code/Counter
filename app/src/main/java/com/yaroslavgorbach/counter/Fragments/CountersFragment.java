@@ -35,6 +35,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbach.counter.Accessibility;
 import com.yaroslavgorbach.counter.Activityes.SettingsActivity;
 import com.yaroslavgorbach.counter.FastCountButton;
 import com.yaroslavgorbach.counter.Fragments.Dialogs.CreateCounterDialog;
@@ -67,8 +68,7 @@ public class CountersFragment extends Fragment  {
     private TextView mDecAllSelectedCounters_bt;
     private String currentItem;
     private LinearLayout mSettingsDrawerItem;
-
-    private boolean mVibrationIsAllowed;
+    private Accessibility mAccessibility;
 
 
     private static final String CURRENT_GROUP = "CURRENT_GROUP";
@@ -147,15 +147,15 @@ public class CountersFragment extends Fragment  {
             @Override
             public void onPlusClick(Counter counter) {
                 mViewModel.incCounter(counter);
-                if (mVibrationIsAllowed)
-                    mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                mAccessibility.playIncSoundEffect();
+                mAccessibility.playIncVibrationEffect(getView());
             }
 
             @Override
             public void onMinusClick(Counter counter) {
                 mViewModel.decCounter(counter);
-                if (mVibrationIsAllowed)
-                    mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                mAccessibility.playDecSoundEffect();
+                mAccessibility.playDecVibrationEffect(getView());
             }
 
             @Override
@@ -181,14 +181,22 @@ public class CountersFragment extends Fragment  {
                 switch (intent.getIntExtra(KEYCODE_EXTRA,-1)){
                     case KEYCODE_VOLUME_DOWN:
                         mCountersAdapter.decSelectedCounters();
-                        if (mVibrationIsAllowed && mCountersAdapter.getSelectionMod().getValue())
-                            mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                        break;
+                        if (mCountersAdapter.getSelectionMod().getValue()){
+                            mAccessibility.playDecSoundEffect();
+                            mAccessibility.playDecVibrationEffect(getView());
+                            break;
+                        }else {
+                            // TODO: 2/8/2021 уменьшить громкость
+                        }
                     case KEYCODE_VOLUME_UP:
                         mCountersAdapter.incSelectedCounters();
-                        if (mVibrationIsAllowed && mCountersAdapter.getSelectionMod().getValue())
-                            mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                        break;
+                        if (mCountersAdapter.getSelectionMod().getValue()){
+                            mAccessibility.playIncSoundEffect();
+                            mAccessibility.playIncVibrationEffect(getView());
+                            break;
+                        }else {
+                            // TODO: 2/8/2021 увеличить громкость
+                        }
                 }
             }
         };
@@ -260,20 +268,18 @@ public class CountersFragment extends Fragment  {
     @Override
     public void onStart() {
         super.onStart();
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        mVibrationIsAllowed = mSharedPreferences.getBoolean("clickVibration", false);
-
+        mAccessibility = new Accessibility(requireContext());
         mCounters_rv.setAdapter(mCountersAdapter);
         /*set up listeners on buttons witch appears when selection mod is active*/
         new FastCountButton(mDecAllSelectedCounters_bt, ()-> {
             mCountersAdapter.decSelectedCounters();
-            if (mVibrationIsAllowed)
-                mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            mAccessibility.playDecSoundEffect();
+            mAccessibility.playDecVibrationEffect(getView());
         });
         new FastCountButton(mIncAllSelectedCounters_bt, ()-> {
             mCountersAdapter.incSelectedCounters();
-            if (mVibrationIsAllowed)
-                mDecAllSelectedCounters_bt.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            mAccessibility.playIncSoundEffect();
+            mAccessibility.playIncVibrationEffect(getView());
         });
     }
 
@@ -290,14 +296,12 @@ public class CountersFragment extends Fragment  {
             });
 
             mToolbar.setOnMenuItemClickListener(menuItem->{
-
                 switch (menuItem.getItemId()){
                     case R.id.editSelected:
                        Counter counter = mCountersAdapter.getSelectedCounter();
                         Navigation.findNavController(getView()).navigate(CountersFragmentDirections.
                                 actionCountersFragmentToCreateEditCounterFragment().setCounterId(counter.id));
                         break;
-
                     case R.id.selectAllCounter:
                         mCountersAdapter.selectAllCounters();
                         break;
@@ -315,7 +319,6 @@ public class CountersFragment extends Fragment  {
                                 .show(getChildFragmentManager(), "DialogCounterDelete");
                         break;
                 }
-
                 return true;
             });
 
