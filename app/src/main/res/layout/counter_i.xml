@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    app:cardCornerRadius="7dp"
+    app:cardCornerRadius="5dp"
     android:background="?colorSurface"
     app:rippleColor="@null"
     android:clickable="true"
@@ -53,25 +53,28 @@
             app:layout_constraintStart_toStartOf="@+id/value_i"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/item_button_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/minus_i"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:text="−"
+                android:layout_gravity="center"
                 android:textColor="?colorAccent"
-                android:textSize="30sp" />
+                android:textSize="25sp" />
 
             <View
                 android:id="@+id/view"
@@ -80,17 +83,21 @@
                 android:layout_gravity="center"
                 android:background="#FFFFFF" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/plus_i"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
                 android:gravity="center"
+
+                android:layout_gravity="center"
                 android:text="+"
                 android:textColor="?colorAccent"
-                android:textSize="30sp" />
+                android:textSize="25sp" />
 
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
 

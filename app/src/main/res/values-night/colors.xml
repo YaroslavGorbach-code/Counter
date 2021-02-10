@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFC51162</color>
-    <color name="colorPrimaryDark">#66FF7AB6</color>
-    <color name="colorAccent">#FFC51162</color>
+    <color name="colorPrimary">#BA3D67</color>
+    <color name="colorPrimaryDark">#BA3D67</color>
+    <color name="colorAccent">#BA3D67</color>
     <color name="itemDraggingColor">#FFD1D1</color>
+    <color name="counterItemButtonsColor">#121212</color>
+    <color name="dividerLineColor">#4DFFFFFF</color>
+    <color name="statusBarColor">#F8F5F5</color>
+
+
 
 
 

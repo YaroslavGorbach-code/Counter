@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -57,7 +58,7 @@ public class CountersFragment extends Fragment  {
     private RecyclerView mCounters_rv;
     private RecyclerView mGroups_rv;
     private CountersAdapter mCountersAdapter;
-    private MaterialToolbar mToolbar;
+    private Toolbar mToolbar;
     private Drawable mNavigationIcon;
     private GroupsAdapter mGroupsAdapter;
     private DrawerLayout mDrawer;

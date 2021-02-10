@@ -27,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbach.counter.Accessibility;
@@ -45,7 +46,7 @@ public class CounterFragment extends Fragment {
     private TextView mValue_tv;
     private TextView mIncButton;
     private TextView mDecButton;
-    private ImageButton mResetButton;
+    private MaterialButton mResetButton;
     private CounterViewModel mViewModel;
     private Toolbar mToolbar;
     private TextView mCounterTitle;

@@ -19,7 +19,7 @@ public class Repo {
     public Repo(Application application){
        CounterDatabase database = CounterDatabase.getInstance(application);
        mCounterHistoryDao = database.CounterHistoryDao();
-        mCounterDao = database.counterDao();
+       mCounterDao = database.counterDao();
    }
 
     public void insertCounter(Counter counter){
