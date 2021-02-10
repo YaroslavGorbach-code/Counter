@@ -2,6 +2,7 @@ package com.yaroslavgorbach.counter.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -142,6 +143,7 @@ public class CounterFragment extends Fragment {
             mViewModel.incCounter();
             mAccessibility.playIncSoundEffect();
             mAccessibility.playIncVibrationEffect(getView());
+
         });
 
         /*counter -*/
@@ -149,6 +151,7 @@ public class CounterFragment extends Fragment {
             mViewModel.decCounter();
             mAccessibility.playDecSoundEffect();
             mAccessibility.playDecVibrationEffect(getView());
+
         });
 
         /*reset counter*/

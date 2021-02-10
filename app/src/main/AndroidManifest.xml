@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activityes.SettingsActivity"></activity>
+        <activity android:name=".Activityes.SettingsActivity"/>
         <activity android:name=".Activityes.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,7 +3,8 @@
     <PreferenceCategory app:title="@string/display_header">
         <SwitchPreferenceCompat
             app:key="nightMod"
-            app:title="@string/nightMod" />
+            app:title="@string/nightMod"
+            app:defaultValue="false"/>
         <SwitchPreferenceCompat
             app:key="keepScreenOn"
             app:title="@string/keep_screen_on"

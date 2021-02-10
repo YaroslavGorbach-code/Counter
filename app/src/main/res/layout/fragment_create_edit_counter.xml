@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/CreateEditCounterCounterTitleText"
-        app:titleTextColor="#FFC51162" />
+        app:titleTextColor="?colorAccent" />
 
 
     <com.google.android.material.textfield.TextInputLayout

@@ -134,8 +134,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             private final TextView mValue;
             private final TextView mPlus;
             private final TextView mMinus;
-            private FastCountButton mFastInc;
-            private FastCountButton mFastDec;
 
             public Vh(@NonNull ViewGroup parent) {
                 super(LayoutInflater.from(parent.getContext()).inflate(R.layout.counter_i, parent, false));
@@ -146,13 +144,12 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                 mGestureDetector = new GestureDetector(parent.getContext(),this);
                 itemView.setOnTouchListener(this);
 
-                 mFastInc = new FastCountButton(mPlus, () -> {
+                 new FastCountButton(mPlus, () -> {
                     if (getBindingAdapterPosition()!=-1)
                         mCounterItemListeners.onPlusClick(mData.get(getBindingAdapterPosition()));
-
                 });
 
-                mFastDec = new FastCountButton(mMinus, () ->{
+                new FastCountButton(mMinus, () ->{
                     if (getBindingAdapterPosition()!=-1)
                         mCounterItemListeners.onMinusClick(mData.get(getBindingAdapterPosition()));
                 });
@@ -163,6 +160,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             private void bind(Counter counter) {
                 mTitle.setText(counter.title);
                 mValue.setText(String.valueOf(counter.value));
+                mCounterSelection.getDefaultBackground(itemView.getBackground());
                 mCounterSelection.bindVhBackground(counter,this);
 
                 // TODO: 2/7/2021 возможно не правельно устанавливать лисенер в байнде

@@ -2,6 +2,7 @@ package com.yaroslavgorbach.counter.RecyclerViews.DragAndDrop;
 
 import android.app.Application;
 import android.content.ContentValues;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -20,7 +21,7 @@ import java.util.List;
 public class CounterSelection {
 
     private final Repo mRepo;
-
+    private  Drawable mDefaultBackground = null;
     private final MutableLiveData<Boolean> mSelectionMod = new MutableLiveData<>(false);
     public LiveData<Boolean> selectionMod = mSelectionMod;
     private List<Counter> mSelectedCounters = new ArrayList<>();
@@ -37,18 +38,21 @@ public class CounterSelection {
 
 
     private void setDefaultBackground(RecyclerView.ViewHolder vh) {
-        vh.itemView.setBackgroundResource(R.drawable.item_background);
+        vh.itemView.setBackground(mDefaultBackground);
+        vh.itemView.findViewById(R.id.counter_item).setBackgroundResource(0);
         vh.itemView.setElevation(7F);
     }
 
     private void setItemSelectedBackground(RecyclerView.ViewHolder vh) {
-        vh.itemView.setBackgroundResource(R.drawable.item_selected);
+        vh.itemView.findViewById(R.id.counter_item).setBackgroundResource(R.drawable.item_selected);
         vh.itemView.setElevation(8f);
     }
 
+
+
     private void setItemDraggingBackground(RecyclerView.ViewHolder viewHolder) {
         mDraggingHolder = viewHolder;
-        mDraggingHolder.itemView.setBackgroundResource(R.drawable.item_dragging);
+        mDraggingHolder.itemView.setBackground(mDefaultBackground);
         mDraggingHolder.itemView.setElevation(25F);
     }
 
@@ -181,4 +185,8 @@ public class CounterSelection {
         return mSelectedCounters.get(0);
     }
 
+    public void getDefaultBackground(Drawable background) {
+        if (mDefaultBackground == null)
+            mDefaultBackground = background;
+    }
 }

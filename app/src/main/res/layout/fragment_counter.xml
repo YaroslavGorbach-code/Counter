@@ -16,23 +16,23 @@
         android:background="?android:colorBackground">
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/counterTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:ellipsize="end"
-        android:text="title"
-        android:textSize="20dp"
+        tools:text="title"
+        android:textSize="20sp"
         android:padding="10dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:gravity="center"
         />
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/groupTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="group title"
+        tools:text="group title"
         android:gravity="center"
         />
 
@@ -41,8 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="0"
-        android:textSize="150dp"
+        tools:text="0"
+        tools:textSize="150sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:gravity="center"
         />
@@ -61,7 +61,7 @@
             android:layout_marginTop="13dp"
             android:layout_marginBottom="16dp"
             android:text="@string/CounterActivityMin"
-            android:textColor="#FFC51162"
+            android:textColor="?colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -78,18 +78,18 @@
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/saveToHistoryButton"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/CounterActivitySaveToHistory"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
             app:layout_constraintEnd_toStartOf="@+id/textView"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/minValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
             android:ellipsize="end"
             android:gravity="start"
             android:singleLine="true"
-            android:textColor="#FFC51162"
+            android:textColor="?colorAccent"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/textView4"
             app:layout_constraintEnd_toStartOf="@+id/saveToHistoryButton"
@@ -130,13 +130,13 @@
             tools:text="123"
             tools:visibility="visible" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/maxValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="9dp"
             android:ellipsize="end"
-            android:textColor="#FFC51162"
+            android:textColor="?colorAccent"
             android:visibility="gone"
             tools:visibility="visible"
             android:gravity="end"
@@ -163,7 +163,7 @@
           android:layout_marginStart="16dp"
           android:layout_marginEnd="8dp"/>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/dec_value"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -175,7 +175,7 @@
             android:focusable="true"
             android:gravity="center"
             android:textSize="60sp"
-            android:textColor="#FFC51162"
+            android:textColor="?colorAccent"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="8dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -183,7 +183,7 @@
 
     </LinearLayout>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/inc_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
         android:hapticFeedbackEnabled="true"
         android:clickable="true"
         android:focusable="true"
-        android:textColor="#FFC51162"
+        android:textColor="?colorAccent"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:background="@drawable/button_background"/>
 
