@@ -160,7 +160,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             private void bind(Counter counter) {
                 mTitle.setText(counter.title);
                 mValue.setText(String.valueOf(counter.value));
-                mCounterSelection.getDefaultBackground(itemView.getBackground());
+                mCounterSelection.setDefaultBackground(itemView.getBackground());
                 mCounterSelection.bindVhBackground(counter,this);
 
                 // TODO: 2/7/2021 возможно не правельно устанавливать лисенер в байнде

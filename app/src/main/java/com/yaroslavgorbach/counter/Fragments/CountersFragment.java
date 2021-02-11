@@ -150,6 +150,7 @@ public class CountersFragment extends Fragment  {
                 mViewModel.incCounter(counter);
                 mAccessibility.playIncSoundEffect();
                 mAccessibility.playIncVibrationEffect(getView());
+                mAccessibility.speechOutput(String.valueOf(counter.value));
             }
 
             @Override
@@ -157,6 +158,7 @@ public class CountersFragment extends Fragment  {
                 mViewModel.decCounter(counter);
                 mAccessibility.playDecSoundEffect();
                 mAccessibility.playDecVibrationEffect(getView());
+                mAccessibility.speechOutput(String.valueOf(counter.value));
             }
 
             @Override

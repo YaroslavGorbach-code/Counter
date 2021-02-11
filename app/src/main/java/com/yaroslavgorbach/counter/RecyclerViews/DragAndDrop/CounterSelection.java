@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yaroslavgorbach.counter.Accessibility;
 import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.Database.Repo;
 import com.yaroslavgorbach.counter.R;
@@ -30,40 +31,13 @@ public class CounterSelection {
 
     private List<Counter> mCopyBeforeReset;
     private final MutableLiveData<Integer> mCountSelected = new MutableLiveData<>(mSelectedCounters.size());
+    private Accessibility mAccessibility;
 
 
     public CounterSelection(Application application) {
         mRepo = new Repo(application);
+        mAccessibility = new Accessibility(application);
     }
-
-
-    private void setDefaultBackground(RecyclerView.ViewHolder vh) {
-        vh.itemView.setBackground(mDefaultBackground);
-        vh.itemView.findViewById(R.id.counter_item).setBackgroundResource(0);
-        vh.itemView.setElevation(7F);
-    }
-
-    private void setItemSelectedBackground(RecyclerView.ViewHolder vh) {
-        vh.itemView.findViewById(R.id.counter_item).setBackgroundResource(R.drawable.item_selected);
-        vh.itemView.setElevation(8f);
-    }
-
-
-
-    private void setItemDraggingBackground(RecyclerView.ViewHolder viewHolder) {
-        mDraggingHolder = viewHolder;
-        mDraggingHolder.itemView.setBackground(mDefaultBackground);
-        mDraggingHolder.itemView.setElevation(25F);
-    }
-
-    private void unSelectCounter(Counter counter, RecyclerView.ViewHolder viewHolder) {
-        setDefaultBackground(viewHolder);
-            if (mSelectedCounters.size() == 1)
-                mSelectionMod.setValue(false);
-        mSelectedCounters.remove(counter);
-        mSelectedVhs.remove(viewHolder);
-    }
-
 
     public void selectCounter(Counter newCounter, RecyclerView.ViewHolder viewHolder) {
         boolean isAlreadySelected = false;
@@ -185,8 +159,37 @@ public class CounterSelection {
         return mSelectedCounters.get(0);
     }
 
-    public void getDefaultBackground(Drawable background) {
+    public void setDefaultBackground(Drawable background) {
         if (mDefaultBackground == null)
             mDefaultBackground = background;
     }
+
+
+    private void setDefaultBackground(RecyclerView.ViewHolder vh) {
+        vh.itemView.setBackground(mDefaultBackground);
+        vh.itemView.findViewById(R.id.counter_item).setBackgroundResource(0);
+        vh.itemView.setElevation(7F);
+    }
+
+    private void setItemSelectedBackground(RecyclerView.ViewHolder vh) {
+        vh.itemView.findViewById(R.id.counter_item).setBackgroundResource(R.drawable.item_selected);
+        vh.itemView.setElevation(8f);
+    }
+
+
+
+    private void setItemDraggingBackground(RecyclerView.ViewHolder viewHolder) {
+        mDraggingHolder = viewHolder;
+        mDraggingHolder.itemView.setBackground(mDefaultBackground);
+        mDraggingHolder.itemView.setElevation(25F);
+    }
+
+    private void unSelectCounter(Counter counter, RecyclerView.ViewHolder viewHolder) {
+        setDefaultBackground(viewHolder);
+        if (mSelectedCounters.size() == 1)
+            mSelectionMod.setValue(false);
+        mSelectedCounters.remove(counter);
+        mSelectedVhs.remove(viewHolder);
+    }
+
 }

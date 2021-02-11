@@ -114,6 +114,7 @@ public class CounterFragment extends Fragment {
             /*if counter == null that means it was deleted*/
             if (counter != null) {
                 mValue_tv.setText(String.valueOf(counter.value));
+                mAccessibility.speechOutput(String.valueOf(counter.value));
                 mCounterTitle.setText(counter.title);
                 mGroupTitle.setText(counter.grope);
 
@@ -144,7 +145,6 @@ public class CounterFragment extends Fragment {
             mViewModel.incCounter();
             mAccessibility.playIncSoundEffect();
             mAccessibility.playIncVibrationEffect(getView());
-
         });
 
         /*counter -*/

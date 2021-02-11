@@ -4,17 +4,24 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
+import android.speech.tts.TextToSpeech;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 
 import androidx.preference.PreferenceManager;
+
+import java.util.Locale;
 
 public class Accessibility {
 
     private final SoundPool mSoundPool;
     private final int mSoundIncId;
     private final int mSoundDecId;
-    private boolean mVibrationIsAllowed;
+    private final boolean mVibrationIsAllowed;
+    private final boolean mClickSoundIsAllowed;
+    private final boolean mSpeechOutputIsAllowed;
+
+    TextToSpeech t1;
 
 
     public Accessibility(Context context){
@@ -29,16 +36,26 @@ public class Accessibility {
        mSoundDecId = mSoundPool.load(context, R.raw.dec_click_sound, 1);
        mSoundIncId = mSoundPool.load(context, R.raw.inc_click_sound, 1);
 
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        mVibrationIsAllowed = mSharedPreferences.getBoolean("clickVibration", false);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        mVibrationIsAllowed = sharedPreferences.getBoolean("clickVibration", false);
+        mClickSoundIsAllowed = sharedPreferences.getBoolean("clickSound", false);
+        mSpeechOutputIsAllowed = sharedPreferences.getBoolean("clickSpeak", false);
 
+
+        t1 = new TextToSpeech(context, status -> {
+            if(status != TextToSpeech.ERROR) {
+                t1.setLanguage(Locale.getDefault());
+            }
+        });
    }
 
     public void playIncSoundEffect(){
+        if (mClickSoundIsAllowed)
         mSoundPool.play(mSoundIncId, 1, 1, 1, 0, 1f);
     }
 
     public void playDecSoundEffect(){
+        if (mClickSoundIsAllowed)
         mSoundPool.play(mSoundDecId, 1, 1, 1, 0, 1f);
     }
 
@@ -50,5 +67,10 @@ public class Accessibility {
     public void playDecVibrationEffect(View view){
         if (mVibrationIsAllowed)
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+    }
+
+    public void speechOutput(String text){
+        if (mSpeechOutputIsAllowed)
+        t1.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 }

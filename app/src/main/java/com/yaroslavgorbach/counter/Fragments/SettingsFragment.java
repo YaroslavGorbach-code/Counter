@@ -1,10 +1,13 @@
 package com.yaroslavgorbach.counter.Fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.yaroslavgorbach.counter.R;
@@ -12,12 +15,12 @@ import com.yaroslavgorbach.counter.R;
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener{
 
+
     @Override
     public void onStart() {
         super.onStart();
         getPreferenceManager().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
-
     }
 
     @Override
@@ -34,6 +37,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         if (key.equals("nightMod") && !sharedPreferences.getBoolean("nightMod", false)){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+        if (key.equals("keepScreenOn") && sharedPreferences.getBoolean("keepScreenOn", false)){
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+        if (key.equals("keepScreenOn") && !sharedPreferences.getBoolean("keepScreenOn", false)){
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        }
+
     }
 
     @Override

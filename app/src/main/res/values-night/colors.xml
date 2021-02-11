@@ -7,6 +7,11 @@
     <color name="counterItemButtonsColor">#121212</color>
     <color name="dividerLineColor">#4DFFFFFF</color>
     <color name="statusBarColor">#F8F5F5</color>
+    <color name="groupItemSelectedColor">#33C51162</color>
+    <color name="groupItemBackgroundColor">#303030</color>
+
+
+
 
 
 
