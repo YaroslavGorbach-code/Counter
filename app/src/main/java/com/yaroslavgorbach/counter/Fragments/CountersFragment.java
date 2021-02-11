@@ -56,19 +56,15 @@ import static com.yaroslavgorbach.counter.Activityes.MainActivity.ON_KEY_DOWN_BR
 public class CountersFragment extends Fragment  {
     private CountersViewModel mViewModel;
     private RecyclerView mCounters_rv;
-    private RecyclerView mGroups_rv;
     private CountersAdapter mCountersAdapter;
     private Toolbar mToolbar;
     private Drawable mNavigationIcon;
     private GroupsAdapter mGroupsAdapter;
     private DrawerLayout mDrawer;
     private LinearLayout mAllCounters_drawerItem;
-    private NavigationView mNavigationDrawerView;
-    private NavController mNavController;
     private TextView mIncAllSelectedCounters_bt;
     private TextView mDecAllSelectedCounters_bt;
     private String currentItem;
-    private LinearLayout mSettingsDrawerItem;
     private Accessibility mAccessibility;
 
 
@@ -104,15 +100,15 @@ public class CountersFragment extends Fragment  {
         mDecAllSelectedCounters_bt = view.findViewById(R.id.allSelectedDec);
         mIncAllSelectedCounters_bt = view.findViewById(R.id.allSelectedInc);
         mAllCounters_drawerItem = view.findViewById(R.id.AllCounters);
-        mNavigationDrawerView = view.findViewById(R.id.navigationDrawerView);
+        NavigationView mNavigationDrawerView = view.findViewById(R.id.navigationDrawerView);
         mToolbar = view.findViewById(R.id.toolbar_mainActivity);
         mDrawer = view.findViewById(R.id.drawer);
         mCounters_rv = view.findViewById(R.id.counters_list);
-        mGroups_rv = view.findViewById(R.id.groupsList_rv);
-        mSettingsDrawerItem = view.findViewById(R.id.settings);
+        RecyclerView mGroups_rv = view.findViewById(R.id.groupsList_rv);
+        LinearLayout mSettingsDrawerItem = view.findViewById(R.id.settings);
 
         /*navController set up*/
-        mNavController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
+        NavController mNavController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
         AppBarConfiguration appBarConfiguration;
         appBarConfiguration = new AppBarConfiguration.Builder(mNavController.getGraph())
                 .setDrawerLayout(mDrawer)
@@ -148,17 +144,13 @@ public class CountersFragment extends Fragment  {
             @Override
             public void onPlusClick(Counter counter) {
                 mViewModel.incCounter(counter);
-                mAccessibility.playIncSoundEffect();
-                mAccessibility.playIncVibrationEffect(getView());
-                mAccessibility.speechOutput(String.valueOf(counter.value));
+                mAccessibility.playIncFeedback(getView(),String.valueOf(counter.value));
             }
 
             @Override
             public void onMinusClick(Counter counter) {
                 mViewModel.decCounter(counter);
-                mAccessibility.playDecSoundEffect();
-                mAccessibility.playDecVibrationEffect(getView());
-                mAccessibility.speechOutput(String.valueOf(counter.value));
+                mAccessibility.playDecFeedback(getView(),String.valueOf(counter.value));
             }
 
             @Override
@@ -183,19 +175,15 @@ public class CountersFragment extends Fragment  {
                 // Get extra data included in the Intent
                 switch (intent.getIntExtra(KEYCODE_EXTRA,-1)){
                     case KEYCODE_VOLUME_DOWN:
-                        mCountersAdapter.decSelectedCounters();
                         if (mCountersAdapter.getSelectionMod().getValue()){
-                            mAccessibility.playDecSoundEffect();
-                            mAccessibility.playDecVibrationEffect(getView());
+                            decSelectedCounters();
                             break;
                         }else {
                             // TODO: 2/8/2021 уменьшить громкость
                         }
                     case KEYCODE_VOLUME_UP:
-                        mCountersAdapter.incSelectedCounters();
                         if (mCountersAdapter.getSelectionMod().getValue()){
-                            mAccessibility.playIncSoundEffect();
-                            mAccessibility.playIncVibrationEffect(getView());
+                            incSelectedCounters();
                             break;
                         }else {
                             // TODO: 2/8/2021 увеличить громкость
@@ -271,19 +259,39 @@ public class CountersFragment extends Fragment  {
     @Override
     public void onStart() {
         super.onStart();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (sharedPreferences.getBoolean("leftHandMod", false ) && !mCountersAdapter.mLeftHandMod){
+            getActivity().recreate();
+        }
+        if (!sharedPreferences.getBoolean("leftHandMod", false ) && mCountersAdapter.mLeftHandMod){
+            getActivity().recreate();
+        }
+
+        if (sharedPreferences.getBoolean("leftHandMod", false )){
+            mDecAllSelectedCounters_bt.setText("+");
+            mIncAllSelectedCounters_bt.setText("−");
+            /*set up listeners on buttons witch appears when selection mod is active*/
+            new FastCountButton(mDecAllSelectedCounters_bt, this::incSelectedCounters);
+            new FastCountButton(mIncAllSelectedCounters_bt, this::decSelectedCounters);
+        }else {
+            mIncAllSelectedCounters_bt.setText("+");
+            mDecAllSelectedCounters_bt.setText("−");
+            /*set up listeners on buttons witch appears when selection mod is active*/
+            new FastCountButton(mDecAllSelectedCounters_bt, this::decSelectedCounters);
+            new FastCountButton(mIncAllSelectedCounters_bt, this::incSelectedCounters);
+        }
         mAccessibility = new Accessibility(requireContext());
         mCounters_rv.setAdapter(mCountersAdapter);
-        /*set up listeners on buttons witch appears when selection mod is active*/
-        new FastCountButton(mDecAllSelectedCounters_bt, ()-> {
-            mCountersAdapter.decSelectedCounters();
-            mAccessibility.playDecSoundEffect();
-            mAccessibility.playDecVibrationEffect(getView());
-        });
-        new FastCountButton(mIncAllSelectedCounters_bt, ()-> {
-            mCountersAdapter.incSelectedCounters();
-            mAccessibility.playIncSoundEffect();
-            mAccessibility.playIncVibrationEffect(getView());
-        });
+    }
+
+    private void incSelectedCounters() {
+        mCountersAdapter.incSelectedCounters();
+        mAccessibility.playIncFeedback(getView(), null);
+    }
+
+    private void decSelectedCounters() {
+        mCountersAdapter.decSelectedCounters();
+        mAccessibility.playDecFeedback(getView(), null);
     }
 
     private void setUpToolbar(boolean isSelectionMod) {

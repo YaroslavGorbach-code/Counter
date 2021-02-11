@@ -65,7 +65,13 @@ public class CounterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_counter, container, false);
+        View view;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (sharedPreferences.getBoolean("leftHandMod", false )){
+          view = inflater.inflate(R.layout.fragment_counter_left_hand, container, false);
+        }else {
+            view = inflater.inflate(R.layout.fragment_counter, container, false);
+        }
         /*initialize fields*/
         mValue_tv = view.findViewById(R.id.value);
         mIncButton = view.findViewById(R.id.inc_value);
@@ -114,6 +120,7 @@ public class CounterFragment extends Fragment {
             /*if counter == null that means it was deleted*/
             if (counter != null) {
                 mValue_tv.setText(String.valueOf(counter.value));
+                // TODO: 2/11/2021 пееделать
                 mAccessibility.speechOutput(String.valueOf(counter.value));
                 mCounterTitle.setText(counter.title);
                 mGroupTitle.setText(counter.grope);
@@ -143,16 +150,13 @@ public class CounterFragment extends Fragment {
         /*counter +*/
         new FastCountButton(mIncButton, () -> {
             mViewModel.incCounter();
-            mAccessibility.playIncSoundEffect();
-            mAccessibility.playIncVibrationEffect(getView());
+            mAccessibility.playIncFeedback(getView(), null);
         });
 
         /*counter -*/
         new FastCountButton(mDecButton, () -> {
             mViewModel.decCounter();
-            mAccessibility.playDecSoundEffect();
-            mAccessibility.playDecVibrationEffect(getView());
-
+            mAccessibility.playDecFeedback(getView(), null);
         });
 
         /*reset counter*/
@@ -171,13 +175,11 @@ public class CounterFragment extends Fragment {
                 switch (intent.getIntExtra(KEYCODE_EXTRA,-1)){
                     case KEYCODE_VOLUME_DOWN:
                         mViewModel.decCounter();
-                        mAccessibility.playDecVibrationEffect(getView());
-                        mAccessibility.playDecSoundEffect();
+                        mAccessibility.playDecFeedback(getView(), null);
                         break;
                     case KEYCODE_VOLUME_UP:
                         mViewModel.incCounter();
-                        mAccessibility.playIncVibrationEffect(getView());
-                        mAccessibility.playIncSoundEffect();
+                        mAccessibility.playIncFeedback(getView(), null);
                         break;
                 }
             }

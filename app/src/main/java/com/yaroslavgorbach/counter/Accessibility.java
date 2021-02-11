@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 
@@ -20,7 +21,6 @@ public class Accessibility {
     private final boolean mVibrationIsAllowed;
     private final boolean mClickSoundIsAllowed;
     private final boolean mSpeechOutputIsAllowed;
-
     TextToSpeech t1;
 
 
@@ -49,22 +49,34 @@ public class Accessibility {
         });
    }
 
-    public void playIncSoundEffect(){
+    public void playIncFeedback(View view, String text){
+        playIncSoundEffect();
+        playIncVibrationEffect(view);
+        speechOutput(text);
+    }
+
+    public void playDecFeedback(View view, String text){
+        playDecSoundEffect();
+        playDecVibrationEffect(view);
+        speechOutput(text);
+    }
+
+    private void playIncSoundEffect(){
         if (mClickSoundIsAllowed)
         mSoundPool.play(mSoundIncId, 1, 1, 1, 0, 1f);
     }
 
-    public void playDecSoundEffect(){
+    private void playDecSoundEffect(){
         if (mClickSoundIsAllowed)
         mSoundPool.play(mSoundDecId, 1, 1, 1, 0, 1f);
     }
 
-    public void playIncVibrationEffect(View view){
+    private void playIncVibrationEffect(View view){
         if (mVibrationIsAllowed)
             view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
     }
 
-    public void playDecVibrationEffect(View view){
+    private void playDecVibrationEffect(View view){
         if (mVibrationIsAllowed)
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
     }
@@ -73,4 +85,5 @@ public class Accessibility {
         if (mSpeechOutputIsAllowed)
         t1.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
+
 }

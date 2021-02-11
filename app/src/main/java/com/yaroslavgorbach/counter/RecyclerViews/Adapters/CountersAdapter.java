@@ -1,6 +1,8 @@
 package com.yaroslavgorbach.counter.RecyclerViews.Adapters;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.text.Layout;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +31,7 @@ import java.util.List;
 
 public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> implements ItemTouchHelperAdapter{
 
+    public final boolean mLeftHandMod;
 
     public interface CounterItemListeners {
         void onPlusClick(Counter counter);
@@ -47,6 +51,8 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             setHasStableIds(true);
             mCounterSelection = new CounterSelection(application);
             mCounterItemListeners = counterItemListeners;
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application);
+            mLeftHandMod = sharedPreferences.getBoolean("leftHandMod", false);
         }
 
         public void setData(List<Counter> data) {
@@ -98,7 +104,11 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         @NonNull
         @Override
         public CountersAdapter.Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new CountersAdapter.Vh(parent);
+            if (mLeftHandMod){
+                return new CountersAdapter.Vh(parent, R.layout.counter_left_hend_i);
+            }else {
+                return new CountersAdapter.Vh(parent, R.layout.counter_i);
+            }
         }
 
         @Override
@@ -135,12 +145,13 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             private final TextView mPlus;
             private final TextView mMinus;
 
-            public Vh(@NonNull ViewGroup parent) {
-                super(LayoutInflater.from(parent.getContext()).inflate(R.layout.counter_i, parent, false));
+            public Vh(@NonNull ViewGroup parent, int idLayout) {
+                super(LayoutInflater.from(parent.getContext()).inflate(idLayout, parent, false));
                 mTitle = itemView.findViewById(R.id.title_i);
                 mValue = itemView.findViewById(R.id.value_i);
                 mPlus = itemView.findViewById(R.id.plus_i);
                 mMinus = itemView.findViewById(R.id.minus_i);
+
                 mGestureDetector = new GestureDetector(parent.getContext(),this);
                 itemView.setOnTouchListener(this);
 
