@@ -49,14 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // TODO: 2/7/2021 сделать так чтобы не реагировала когда в врагменте со счетчиками
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mAllowedVolumeButtons){
             Intent intent = new Intent(ON_KEY_DOWN_BROADCAST).putExtra(KEYCODE_EXTRA, KEYCODE_VOLUME_UP);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             return true;
         }
 
-        // TODO: 2/7/2021 сделать так чтобы не реагировала когда в врагменте со счетчиками
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && mAllowedVolumeButtons){
             Intent intent = new Intent(ON_KEY_DOWN_BROADCAST).putExtra(KEYCODE_EXTRA, KEYCODE_VOLUME_DOWN);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);

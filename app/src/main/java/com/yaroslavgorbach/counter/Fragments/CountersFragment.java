@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.HapticFeedbackConstants;
@@ -66,6 +67,8 @@ public class CountersFragment extends Fragment  {
     private TextView mDecAllSelectedCounters_bt;
     private String currentItem;
     private Accessibility mAccessibility;
+    private AudioManager mAudioManager;
+
 
 
     private static final String CURRENT_GROUP = "CURRENT_GROUP";
@@ -106,6 +109,7 @@ public class CountersFragment extends Fragment  {
         mCounters_rv = view.findViewById(R.id.counters_list);
         RecyclerView mGroups_rv = view.findViewById(R.id.groupsList_rv);
         LinearLayout mSettingsDrawerItem = view.findViewById(R.id.settings);
+        mAudioManager = (AudioManager) requireContext().getSystemService(Context.AUDIO_SERVICE);
 
         /*navController set up*/
         NavController mNavController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
@@ -177,17 +181,17 @@ public class CountersFragment extends Fragment  {
                     case KEYCODE_VOLUME_DOWN:
                         if (mCountersAdapter.getSelectionMod().getValue()){
                             decSelectedCounters();
-                            break;
                         }else {
-                            // TODO: 2/8/2021 уменьшить громкость
+                            mAudioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
                         }
+                        break;
                     case KEYCODE_VOLUME_UP:
                         if (mCountersAdapter.getSelectionMod().getValue()){
                             incSelectedCounters();
-                            break;
                         }else {
-                            // TODO: 2/8/2021 увеличить громкость
+                          mAudioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
                         }
+                        break;
                 }
             }
         };
