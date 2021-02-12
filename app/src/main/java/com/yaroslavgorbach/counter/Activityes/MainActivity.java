@@ -20,24 +20,18 @@ public class MainActivity extends AppCompatActivity {
     private boolean mAllowedVolumeButtons;
     private SharedPreferences mSharedPreferences;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (mSharedPreferences.getBoolean("nightMod", false)){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
+        setTheme(mSharedPreferences);
         setContentView(R.layout.activity_main);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        /* depending on pref keeps screen on or let it off*/
         mAllowedVolumeButtons = mSharedPreferences.getBoolean("useVolumeButtons", false);
         if (mSharedPreferences.getBoolean("keepScreenOn", true)) {
             MainActivity.this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -66,5 +60,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    /* depending on pref sets theme*/
+    private void setTheme(SharedPreferences sharedPreferences) {
+        if (sharedPreferences.getBoolean("nightMod", false)){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 }
