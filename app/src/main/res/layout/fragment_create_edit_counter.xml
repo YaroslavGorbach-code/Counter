@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/CreateEditCounterCounterValueHint"
-            android:maxLength="16"
+            android:maxLength="18"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
             android:text="@string/CreateEditCounterCounterValueText"
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/CreateEditCounterCounterStepHint"
-            android:maxLength="16"
+            android:maxLength="18"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
             android:text="@string/CreateEditCounterCounterStepText"
@@ -113,7 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/CreateEditCounterCounterMaxValueHint"
-            android:maxLength="16"
+            android:maxLength="18"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
 
@@ -138,10 +138,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/CreateEditCounterCounterMinValueHint"
-            android:maxLength="17"
+            android:maxLength="18"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
-
 
             />
     </com.google.android.material.textfield.TextInputLayout>

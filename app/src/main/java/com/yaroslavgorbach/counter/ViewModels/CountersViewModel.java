@@ -35,10 +35,12 @@ public class CountersViewModel extends AndroidViewModel {
 
         if (value > maxValue) {
             Toast.makeText(getApplication(), "This is maximum", Toast.LENGTH_SHORT).show();
+            counter.value = maxValue;
         } else {
-            counter.value = value;
-            mRepo.updateCounter(counter);
+            counter.value = Math.max(counter.minValue, value);
+            Toast.makeText(getApplication(), "This is minimum", Toast.LENGTH_SHORT).show();
         }
+        mRepo.updateCounter(counter);
     }
 
     public void decCounter(Counter counter) {
@@ -49,12 +51,14 @@ public class CountersViewModel extends AndroidViewModel {
         decOn = counter.step;
         value -= decOn;
 
-        if (value < minValue) {
+        if (value < minValue){
             Toast.makeText(getApplication(), "This is minimum", Toast.LENGTH_SHORT).show();
-        } else {
-            counter.value = value;
-            mRepo.updateCounter(counter);
+            counter.value = minValue;
+        }else {
+            counter.value = Math.min(counter.maxValue, value);
+            Toast.makeText(getApplication(), "This is maximum", Toast.LENGTH_SHORT).show();
         }
+        mRepo.updateCounter(counter);
     }
 
     public void countersMoved(Counter counterFrom, Counter counterTo) {
@@ -73,9 +77,7 @@ public class CountersViewModel extends AndroidViewModel {
         return mRepo.getCountersByGroup(group_title);
     }
 
-
     public LiveData<List<String>> getGroups() {
         return mRepo.getGroups();
     }
-
 }

@@ -46,7 +46,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
                     String group;
 
                     if(text_et.getText().toString().trim().isEmpty()){
-                        text_et.setError("This field cannot be empty");
+                        text_et.setError("This field can not be empty");
                     }else{
                         title = text_et.getText().toString();
                     }

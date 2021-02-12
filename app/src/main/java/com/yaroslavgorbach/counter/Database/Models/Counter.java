@@ -7,6 +7,8 @@ import java.util.Date;
 
 @Entity(tableName = "counter_table")
 public class Counter {
+    public final static long COUNTER_MAX_VALUE = 999999999999999999L;
+    public final static long COUNTER_MIN_VALUE = -999999999999999999L;
 
     @PrimaryKey(autoGenerate = true)
     public long id;

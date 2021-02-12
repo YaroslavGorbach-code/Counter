@@ -38,8 +38,8 @@ public abstract class CounterDatabase extends RoomDatabase {
             mDao = sInstance.counterDao();
             currentDate.getTime();
             new Thread(() -> {
-                mDao.insert(new Counter("New counter",0, Long.parseLong("9999999999999999"),
-                        Long.parseLong("-9999999999999999"),
+                mDao.insert(new Counter("New counter",0, Counter.COUNTER_MAX_VALUE,
+                        Counter.COUNTER_MIN_VALUE,
                         1, null, currentDate ));
             }).start();
         }

@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/AddCounterDialogTitle"
-        android:textColor="#FFC51162"
+        android:textColor="?colorAccent"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/outlinedTextField"

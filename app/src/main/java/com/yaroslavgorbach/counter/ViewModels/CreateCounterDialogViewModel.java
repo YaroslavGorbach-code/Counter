@@ -23,8 +23,8 @@ public class CreateCounterDialogViewModel extends AndroidViewModel {
     public void createCounter(String title, String group) {
             Date currentDate = new Date();
             currentDate.getTime();
-            Counter counter = new Counter(title, 0, Long.parseLong("9999999999999999"),
-                    Long.parseLong("-9999999999999999"), 1, group, currentDate);
+            Counter counter = new Counter(title, 0, Counter.COUNTER_MAX_VALUE,
+                    Counter.COUNTER_MIN_VALUE, 1, group, currentDate);
             mRepo.insertCounter(counter);
     }
 

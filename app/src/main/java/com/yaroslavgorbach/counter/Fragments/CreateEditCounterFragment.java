@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.R;
 import com.yaroslavgorbach.counter.Utility;
 import com.yaroslavgorbach.counter.ViewModels.CreateEditCounterViewModel;
@@ -28,7 +29,6 @@ public class CreateEditCounterFragment extends Fragment {
     private String mGroup;
     private long mMaxValue;
     private long mMinValue;
-    private long mCounterId;
 
     private TextInputEditText mTitle_et;
     private TextInputEditText mValue_et;
@@ -53,9 +53,9 @@ public class CreateEditCounterFragment extends Fragment {
         mToolbar = view.findViewById(R.id.toolbar_counterCreateActivity);
         mGroups_et = view.findViewById(R.id.filled_exposed_dropdown);
 
-        mCounterId = CreateEditCounterFragmentArgs.fromBundle(getArguments()).getCounterId();
+        long counterId = CreateEditCounterFragmentArgs.fromBundle(getArguments()).getCounterId();
         mViewModel = new ViewModelProvider(this, new CreateEditCounterViewModelFactory(requireActivity().getApplication(),
-                mCounterId)).get(CreateEditCounterViewModel.class);
+                counterId)).get(CreateEditCounterViewModel.class);
 
         /*set navigationIcon, inflate menu, and set listeners*/
         mToolbar.setNavigationIcon(R.drawable.ic_close);
@@ -84,17 +84,17 @@ public class CreateEditCounterFragment extends Fragment {
                 mValue_et.setText(String.valueOf(counter.value));
                 mStep_et.setText(String.valueOf(counter.step));
                 mGroups_et.setText(counter.grope);
-                if (counter.maxValue != Long.parseLong("9999999999999999")) {
+                if (counter.maxValue != Counter.COUNTER_MAX_VALUE) {
                     mMaxValue_et.setText(String.valueOf(counter.maxValue));
                 }
-                if (counter.minValue != Long.parseLong("-9999999999999999")) {
+                if (counter.minValue != Counter.COUNTER_MIN_VALUE) {
                     mMinValue_et.setText(String.valueOf(counter.minValue));
                 }
             }
 
             /*create new counter*/
             mToolbar.setOnMenuItemClickListener(i -> {
-                createCounter();
+                updateCreateCounter();
                 return true;
             });
         });
@@ -111,38 +111,44 @@ public class CreateEditCounterFragment extends Fragment {
     }
 
 
-    private void createCounter() {
+    private void updateCreateCounter() {
         /*if title is empty show error*/
-        if (mTitle_et.getText().toString().trim().isEmpty()) {
-            mTitle_et.setError("This field cannot be empty");
+        if (String.valueOf(mTitle_et.getText()).trim().isEmpty()) {
+            mTitle_et.setError("This field can not be empty");
         } else {
             mTitle = mTitle_et.getText().toString();
         }
 
         /*if value is empty show error*/
         if (String.valueOf(mValue_et.getText()).trim().isEmpty()) {
-            mValue_et.setError("This field cannot be empty");
+            mValue_et.setError("This field can not be empty");
         } else {
             mValue = Long.parseLong(String.valueOf(mValue_et.getText()));
         }
 
-        /*if step is empty show error*/
-        if (String.valueOf(mStep_et.getText()).trim().isEmpty()) {
-            mStep_et.setError("This field cannot be empty");
+        /*if step is empty or 0 show error*/
+        if (String.valueOf(mStep_et.getText()).trim().isEmpty()
+                || String.valueOf(mStep_et.getText()).matches("0+")
+                || String.valueOf(mStep_et.getText()).matches("-")) {
+            mStep_et.setError("This field can not be empty or 0");
+            mStep_et.setText(null);
         } else {
             mStep = Long.parseLong(String.valueOf(mStep_et.getText()));
         }
 
+
         /*if maxValue is empty set default value if is not set value from editText*/
-        if (String.valueOf(mMaxValue_et.getText()).trim().isEmpty()) {
-            mMaxValue = Long.parseLong("9999999999999999");
-        } else {
+        if (String.valueOf(mMaxValue_et.getText()).trim().isEmpty()
+                || String.valueOf(mMaxValue_et.getText()).matches("-")) {
+            mMaxValue = Counter.COUNTER_MAX_VALUE;
+        }else {
             mMaxValue = Long.parseLong(String.valueOf(mMaxValue_et.getText()));
         }
 
         /*if minValue is empty set default value if is not set value from editText*/
-        if (String.valueOf(mMinValue_et.getText()).trim().isEmpty()) {
-            mMinValue = Long.parseLong("-9999999999999999");
+        if (String.valueOf(mMinValue_et.getText()).trim().isEmpty()
+                || String.valueOf(mMinValue_et.getText()).matches("-")) {
+            mMinValue = Counter.COUNTER_MIN_VALUE;
         } else {
             mMinValue = Long.parseLong(String.valueOf(mMinValue_et.getText()));
         }

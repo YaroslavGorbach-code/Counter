@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbach.counter.Accessibility;
+import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.FastCountButton;
 import com.yaroslavgorbach.counter.Fragments.Dialogs.DeleteCounterDialog;
 import com.yaroslavgorbach.counter.ViewModels.CounterViewModel;
@@ -125,13 +127,13 @@ public class CounterFragment extends Fragment {
                 mCounterTitle.setText(counter.title);
                 mGroupTitle.setText(counter.grope);
 
-                if (counter.maxValue != Long.parseLong("9999999999999999")) {
+                if (counter.maxValue != Counter.COUNTER_MAX_VALUE) {
                     mAllInclusiveMAx_iv.setVisibility(View.GONE);
                     mMaxValue_tv.setVisibility(View.VISIBLE);
                     mMaxValue_tv.setText(String.valueOf(counter.maxValue));
                 }
 
-                if (counter.minValue != Long.parseLong("-9999999999999999")) {
+                if (counter.minValue != Counter.COUNTER_MIN_VALUE) {
                     mAllInclusiveMin_iv.setVisibility(View.GONE);
                     mMinValue_tv.setVisibility(View.VISIBLE);
                     mMinValue_tv.setText(String.valueOf(counter.minValue));
@@ -235,6 +237,7 @@ public class CounterFragment extends Fragment {
             case 15:
             case 16:
             case 18:
+            case 19:
                 mValue_tv.setTextSize(40);
                 break;
 

@@ -31,12 +31,10 @@ public class CounterSelection {
 
     private List<Counter> mCopyBeforeReset;
     private final MutableLiveData<Integer> mCountSelected = new MutableLiveData<>(mSelectedCounters.size());
-    private Accessibility mAccessibility;
 
 
     public CounterSelection(Application application) {
         mRepo = new Repo(application);
-        mAccessibility = new Accessibility(application);
     }
 
     public void selectCounter(Counter newCounter, RecyclerView.ViewHolder viewHolder) {
@@ -109,6 +107,9 @@ public class CounterSelection {
     public void incSelectedCounters() {
         for (Counter counter : mSelectedCounters) {
             counter.value += counter.step;
+            if (counter.value > counter.maxValue){
+                counter.value = counter.maxValue;
+            }
             mRepo.updateCounter(counter);
         }
     }
@@ -116,6 +117,9 @@ public class CounterSelection {
     public void decSelectedCounters() {
         for (Counter counter : mSelectedCounters) {
             counter.value -= counter.step;
+            if (counter.value < counter.minValue){
+                counter.value = counter.minValue;
+            }
             mRepo.updateCounter(counter);
         }
     }
@@ -127,7 +131,11 @@ public class CounterSelection {
                     counter.maxValue, counter.minValue, counter.step, counter.grope, counter.createData);
             copy.setId(counter.id);
             mCopyBeforeReset.add(copy);
-            counter.value = 0;
+            if (counter.minValue > 0){
+                counter.value = counter.minValue;
+            }else {
+                counter.value = 0;
+            }
             mRepo.updateCounter(counter);
         }
         mCountSelected.setValue(mSelectedCounters.size());

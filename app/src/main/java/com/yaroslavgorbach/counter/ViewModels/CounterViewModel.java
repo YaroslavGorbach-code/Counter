@@ -32,38 +32,54 @@ public class CounterViewModel extends AndroidViewModel {
     public void incCounter() {
         long maxValue;
         long incOn;
+        long minValue;
         long value = Objects.requireNonNull(mCounter.getValue()).value;
         incOn = mCounter.getValue().step;
         maxValue = mCounter.getValue().maxValue;
+        minValue = mCounter.getValue().minValue;
         value += incOn;
 
-        if (value > maxValue){
+        if (value > maxValue) {
             Toast.makeText(getApplication(), "This is maximum", Toast.LENGTH_SHORT).show();
-        }else {
-            mCounter.getValue().value = value;
-            mRepo.updateCounter(mCounter.getValue());
+            mCounter.getValue().value = maxValue;
+        } else {
+            mCounter.getValue().value = Math.max(minValue, value);
         }
+        if (mCounter.getValue().value == minValue){
+            Toast.makeText(getApplication(), "This is minimum", Toast.LENGTH_SHORT).show();
+        }
+        mRepo.updateCounter(mCounter.getValue());
     }
 
     public void decCounter(){
         long minValue;
         long decOn;
+        long maxValue;
         long value = Objects.requireNonNull(mCounter.getValue()).value;
         decOn = mCounter.getValue().step;
         minValue = mCounter.getValue().minValue;
-        value -=decOn;
+        maxValue = mCounter.getValue().maxValue;
+        value -= decOn;
 
         if (value < minValue){
             Toast.makeText(getApplication(), "This is minimum", Toast.LENGTH_SHORT).show();
+            mCounter.getValue().value = minValue;
         }else {
-            mCounter.getValue().value = value;
-            mRepo.updateCounter(mCounter.getValue());
+            mCounter.getValue().value = Math.min(maxValue, value);
         }
+        if (mCounter.getValue().value == maxValue){
+            Toast.makeText(getApplication(), "This is maximum", Toast.LENGTH_SHORT).show();
+        }
+        mRepo.updateCounter(mCounter.getValue());
     }
 
     public void resetCounter(){
         mOldValue = Objects.requireNonNull(mCounter.getValue()).value;
-        mCounter.getValue().value = 0;
+        if (mCounter.getValue().minValue > 0){
+            mCounter.getValue().value = mCounter.getValue().minValue;
+        }else {
+            mCounter.getValue().value = 0;
+        }
         mRepo.updateCounter(mCounter.getValue());
     }
 

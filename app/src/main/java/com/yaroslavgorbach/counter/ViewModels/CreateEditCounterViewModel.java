@@ -29,6 +29,12 @@ public class CreateEditCounterViewModel extends AndroidViewModel {
 
 
     public void updateCreateCounter(String title, long value, long maxValue, long minValue, long step, String grope) {
+        if (value > maxValue){
+            value = maxValue;
+        }
+        if (value < minValue){
+            value = minValue;
+        }
         /*if mCounter == null insert counter*/
         if (mCounter.getValue() == null) {
             Date currentDate = new Date();
