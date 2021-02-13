@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CreateCounterDialogViewModel extends AndroidViewModel {
 
-    private Repo mRepo;
+    private final Repo mRepo;
     public CreateCounterDialogViewModel(@NonNull Application application) {
         super(application);
         mRepo = new Repo(application);

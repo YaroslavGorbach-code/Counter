@@ -19,21 +19,21 @@ import com.yaroslavgorbach.counter.RecyclerViews.Adapters.CountersAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CounterSelection {
+public class CounterSelectionMod {
 
     private final Repo mRepo;
     private  Drawable mDefaultBackground = null;
     private final MutableLiveData<Boolean> mSelectionMod = new MutableLiveData<>(false);
-    public LiveData<Boolean> selectionMod = mSelectionMod;
     private List<Counter> mSelectedCounters = new ArrayList<>();
     private final List<RecyclerView.ViewHolder> mSelectedVhs = new ArrayList<>();
     private RecyclerView.ViewHolder mDraggingHolder;
-
     private List<Counter> mCopyBeforeReset;
     private final MutableLiveData<Integer> mCountSelected = new MutableLiveData<>(mSelectedCounters.size());
 
+    public LiveData<Boolean> selectionMod = mSelectionMod;
 
-    public CounterSelection(Application application) {
+
+    public CounterSelectionMod(Application application) {
         mRepo = new Repo(application);
     }
 
@@ -84,7 +84,6 @@ public class CounterSelection {
             setDefaultBackground(mDraggingHolder);
             mDraggingHolder = null;
         }
-
     }
 
     public void bindVhBackground(Counter newCounter, CountersAdapter.Vh vh) {

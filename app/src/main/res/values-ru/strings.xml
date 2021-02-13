@@ -8,41 +8,47 @@
             <item>Сортировка по значению</item>
         </string-array>
 
-    <string name="NavigationViewToolbar">Групы</string>
-    <string name="AllCountersItem">Все cчетчики</string>
-    <string name="MainActivityToolbar">Все счетчики</string>
-    <string name="CounterActivitySaveToHistory">Сохранить в историю</string>
-    <string name="CounterActivityMax">Max</string>
-    <string name="CounterActivityMin">Min</string>
-    <string name="CounterActivityHistory_m">История</string>
-    <string name="CounterActivityEdit_m">Редактировать</string>
-    <string name="CounterActivityDelete_m">Удалить</string>
-    <string name="AddCounterDialogTitle">Добавить счетчик</string>
-    <string name="AddCounterDialogCounterTitle">Имя счетчика</string>
-    <string name="AddCounterDialogCounterGroup">Група</string>
-    <string name="AddCounterDialogCounterPositiveButton">Создать</string>
-    <string name="AddCounterDialogCounterNegativeButton">Отмена</string>
-    <string name="CreateEditCounterCounterTitleHint">Имя Счетчика</string>
-    <string name="CreateEditCounterCounterTitleText">Новый счетчик</string>
-    <string name="CreateEditCounterCounterValueHint">Значение</string>
-    <string name="CreateEditCounterCounterValueText">0</string>
-    <string name="CreateEditCounterCounterStepHint">Шаг</string>
-    <string name="CreateEditCounterCounterStepText">1</string>
-    <string name="CreateEditCounterCounterMaxValueHint">Максимальное значение</string>
-    <string name="CreateEditCounterCounterMinValueHint">Минимальное значение</string>
-    <string name="DeleteCounterDialogTitle">Удалить счетчик?</string>
-    <string name="DeleteCounterDialogText">Это действие нельзя будет отменить</string>
-    <string name="DeleteCounterDialogPositiveButton">Да</string>
-    <string name="DeleteCounterDialogNegativeButton">Отмена</string>
-    <string name="SaveToHistoryToast">сохранено в историю</string>
-    <string name="Reset_selection_menu">Сбросить выбранные</string>
-    <string name="Delete_selection_menu">Удалить выбранные</string>
-    <string name="SelectAll_selection_menu">Выбрать все</string>
-    <string name="Edit_selection_menu">Редактировать</string>
-    <string name="Counter_history_menu_clean">Очистить</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="DrawerSettings">Настройки</string>
-    <string name="Rate">Оценить</string>
+    <string name="navigationViewToolbar">Групы</string>
+    <string name="allCountersItem">Все cчетчики</string>
+    <string name="mainActivityToolbar">Все счетчики</string>
+    <string name="counterActivitySaveToHistory">Сохранить в историю</string>
+    <string name="counterActivityMax">Max</string>
+    <string name="counterActivityMin">Min</string>
+    <string name="counterActivityHistory_m">История</string>
+    <string name="counterActivityEdit_m">Редактировать</string>
+    <string name="counterActivityDelete_m">Удалить</string>
+    <string name="addCounterDialogTitle">Добавить счетчик</string>
+    <string name="addCounterDialogCounterTitle">Имя счетчика</string>
+    <string name="addCounterDialogCounterGroup">Група</string>
+    <string name="addCounterDialogCounterPositiveButton">Создать</string>
+    <string name="addCounterDialogCounterNegativeButton">Отмена</string>
+    <string name="createEditCounterCounterTitleHint">Имя Счетчика</string>
+    <string name="createEditCounterCounterTitleText">Новый счетчик</string>
+    <string name="createEditCounterCounterValueHint">Значение</string>
+    <string name="createEditCounterCounterValueText">0</string>
+    <string name="createEditCounterCounterStepHint">Шаг</string>
+    <string name="createEditCounterCounterStepText">1</string>
+    <string name="createEditCounterCounterMaxValueHint">Максимальное значение</string>
+    <string name="createEditCounterCounterMinValueHint">Минимальное значение</string>
+    <string name="deleteCounterDialogTitle">Удалить счетчик?</string>
+    <string name="deleteCounterDialogText">Это действие нельзя будет отменить</string>
+    <string name="deleteCounterDialogPositiveButton">Да</string>
+    <string name="deleteCounterDialogNegativeButton">Отмена</string>
+    <string name="saveToHistoryToast">сохранено в историю</string>
+    <string name="resetSelectionMenu">Сбросить выбранные</string>
+    <string name="deleteSelectionMenu">Удалить выбранные</string>
+    <string name="selectAllSelectionMenu">Выбрать все</string>
+    <string name="editSelectionMenu">Редактировать</string>
+    <string name="counterHistoryMenuClean">Очистить</string>
+    <string name="helloBlankFragment">Hello blank fragment</string>
+    <string name="drawerSettings">Настройки</string>
+    <string name="rate">Оценить</string>
+    <string name="deleteCountersDeleteDialog">Удалить счетчики?</string>
+    <string name="deleteCounterDeleteDialog">Удалить счетчик?</string>
+    <string name="counterReset">Счетчик сброшен</string>
+    <string name="counterResetUndo">ОТМЕНИТЬ</string>
+
+
 
 
 

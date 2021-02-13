@@ -42,10 +42,6 @@ public class Repo {
         new Thread(() -> mCounterHistoryDao.delete(counterId)).start();
     }
 
-    public void updateCounterHistory(CounterHistory counterHistory){
-        new Thread(() -> mCounterHistoryDao.update(counterHistory)).start();
-    }
-
     public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId){
         return mCounterHistoryDao.getCounterHistoryList(counterId);
     }

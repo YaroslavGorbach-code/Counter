@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/CounterActivityHistory_m"
+    <item android:title="@string/counterActivityHistory_m"
         android:id="@+id/counterHistory"
         />
 
-    <item android:title="@string/CounterActivityEdit_m"
+    <item android:title="@string/counterActivityEdit_m"
         android:id="@+id/counterEdit"
         />
 
-    <item android:title="@string/CounterActivityDelete_m"
+    <item android:title="@string/counterActivityDelete_m"
         android:id="@+id/counterDelete"
         />
 

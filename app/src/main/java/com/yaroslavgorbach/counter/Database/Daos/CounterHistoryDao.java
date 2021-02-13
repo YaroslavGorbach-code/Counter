@@ -17,12 +17,6 @@ public interface CounterHistoryDao {
     @Insert
     void insert(CounterHistory CounterHistory);
 
-    @Update
-    void update(CounterHistory CounterHistory);
-
-    @Delete
-    void delete(CounterHistory counterHistory);
-
     @Query("DELETE FROM counterHistory_table WHERE counterId = :counterId")
     void delete(long counterId);
 

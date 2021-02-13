@@ -5,44 +5,53 @@
     <string name="navigation_drawer_open">Navigation drawer open</string>
 
     <string-array name="history_sort_items">
-        <item>Sort by time </item>
-        <item>Sort by value </item>
+        <item>Sort by date</item>
+        <item>Sort by value</item>
     </string-array>
-    <string name="NavigationViewToolbar">Groups</string>
-    <string name="AllCountersItem">All counters</string>
-    <string name="MainActivityToolbar">All сounters</string>
-    <string name="CounterActivitySaveToHistory">Save to history</string>
-    <string name="CounterActivityMax">Max</string>
-    <string name="CounterActivityMin">Min</string>
-    <string name="CounterActivityHistory_m">History</string>
-    <string name="CounterActivityEdit_m">Edit</string>
-    <string name="CounterActivityDelete_m">Delete</string>
-    <string name="AddCounterDialogTitle">Add counter</string>
-    <string name="AddCounterDialogCounterTitle">Counter title</string>
-    <string name="AddCounterDialogCounterGroup">Group</string>
-    <string name="AddCounterDialogCounterPositiveButton">Create</string>
-    <string name="AddCounterDialogCounterNegativeButton">Cancel</string>
-    <string name="CreateEditCounterCounterTitleHint">Counter tittle</string>
-    <string name="CreateEditCounterCounterTitleText">New сounter</string>
-    <string name="CreateEditCounterCounterValueHint">Value</string>
-    <string name="CreateEditCounterCounterValueText">0</string>
-    <string name="CreateEditCounterCounterStepHint">Step</string>
-    <string name="CreateEditCounterCounterStepText">1</string>
-    <string name="CreateEditCounterCounterMaxValueHint">Max value</string>
-    <string name="CreateEditCounterCounterMinValueHint">Min value</string>
-    <string name="DeleteCounterDialogTitle">Delete сounter?</string>
-    <string name="DeleteCounterDialogText">This action can not be undone</string>
-    <string name="DeleteCounterDialogPositiveButton">Yes</string>
-    <string name="DeleteCounterDialogNegativeButton">Cancel</string>
-    <string name="SaveToHistoryToast"> saved to counter history</string>
-    <string name="Reset_selection_menu">Reset selected</string>
-    <string name="Delete_selection_menu">Delete selected</string>
-    <string name="SelectAll_selection_menu">Select all</string>
-    <string name="Edit_selection_menu">Edit</string>
-    <string name="Counter_history_menu_clean">Clean</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="DrawerSettings">Settings</string>
-    <string name="Rate">Rate</string>
+    <string name="navigationViewToolbar">Groups</string>
+    <string name="allCountersItem">All counters</string>
+    <string name="mainActivityToolbar">All сounters</string>
+    <string name="counterActivitySaveToHistory">Save to history</string>
+    <string name="counterActivityMax">Max</string>
+    <string name="counterActivityMin">Min</string>
+    <string name="counterActivityHistory_m">History</string>
+    <string name="counterActivityEdit_m">Edit</string>
+    <string name="counterActivityDelete_m">Delete</string>
+    <string name="addCounterDialogTitle">Add counter</string>
+    <string name="addCounterDialogCounterTitle">Counter title</string>
+    <string name="addCounterDialogCounterGroup">Group</string>
+    <string name="addCounterDialogCounterPositiveButton">Create</string>
+    <string name="addCounterDialogCounterNegativeButton">Cancel</string>
+    <string name="createEditCounterCounterTitleHint">Counter tittle</string>
+    <string name="createEditCounterCounterTitleText">New сounter</string>
+    <string name="createEditCounterCounterValueHint">Value</string>
+    <string name="createEditCounterCounterValueText">0</string>
+    <string name="createEditCounterCounterStepHint">Step</string>
+    <string name="createEditCounterCounterStepText">1</string>
+    <string name="createEditCounterCounterMaxValueHint">Max value</string>
+    <string name="createEditCounterCounterMinValueHint">Min value</string>
+    <string name="deleteCounterDialogTitle">Delete сounter?</string>
+    <string name="deleteCounterDialogText">This action can not be undone</string>
+    <string name="deleteCounterDialogPositiveButton">Yes</string>
+    <string name="deleteCounterDialogNegativeButton">Cancel</string>
+    <string name="saveToHistoryToast"> saved to counter history</string>
+    <string name="resetSelectionMenu">Reset selected</string>
+    <string name="deleteSelectionMenu">Delete selected</string>
+    <string name="selectAllSelectionMenu">Select all</string>
+    <string name="editSelectionMenu">Edit</string>
+    <string name="counterHistoryMenuClean">Clean</string>
+    <string name="helloBlankFragment">Hello blank fragment</string>
+    <string name="drawerSettings">Settings</string>
+    <string name="rate">Rate</string>
+    <string name="deleteCountersDeleteDialog">Delete counters?</string>
+    <string name="deleteCounterDeleteDialog">Delete counter?</string>
+    <string name="counterReset">Counter was reset</string>
+    <string name="counterResetUndo">UNDO</string>
+    <string name="thisIsMaximum">This is maximum</string>
+    <string name="thisIsMinimum">This is minimum</string>
+
+
+
 
     <!-- Preference Display -->
     <string name="display_header">Display</string>

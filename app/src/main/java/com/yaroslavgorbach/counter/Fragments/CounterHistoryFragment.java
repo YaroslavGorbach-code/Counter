@@ -25,7 +25,6 @@ public class CounterHistoryFragment extends Fragment {
 
     private CounterHistoryList_rv mHistoryList;
     private Spinner mSpinner;
-    private Toolbar mToolbar;
     private CounterHistoryViewModel mViewModel;
     private long mCounterId;
 
@@ -39,20 +38,19 @@ public class CounterHistoryFragment extends Fragment {
 
         /*initialize fields*/
         mViewModel = new ViewModelProvider(this).get(CounterHistoryViewModel.class);
-        mToolbar = view.findViewById(R.id.toolbar_history);
+        Toolbar toolbar = view.findViewById(R.id.toolbar_history);
         mSpinner = view.findViewById(R.id.spinner);
 
         /*initialize navigation listener*/
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        mToolbar.setNavigationOnClickListener(i-> Navigation.findNavController(view).popBackStack());
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setNavigationOnClickListener(i-> Navigation.findNavController(view).popBackStack());
 
-        mToolbar.setOnMenuItemClickListener(item -> {
+        toolbar.setOnMenuItemClickListener(item -> {
             mViewModel.clean(mCounterId);
             return true;
         });
 
         setAdapterForSpinner();
-
         mHistoryList = new CounterHistoryList_rv(view.findViewById(R.id.counterHistory_rv));
 
         /*setting listener for selected item in spinner*/
@@ -70,7 +68,7 @@ public class CounterHistoryFragment extends Fragment {
 
     private void sortList(int position) {
         String[] choose = getResources().getStringArray(R.array.history_sort_items);
-        if(choose[position].equals("Sort by time") || choose[position].equals("Сортировка по дате")){
+        if(choose[position].equals("Sort by date") || choose[position].equals("Сортировка по дате")){
             /*update list of history sort by time*/
             mViewModel.getCounterHistoryList(mCounterId)
                     .observe(CounterHistoryFragment.this, counterHistories -> {
@@ -88,7 +86,7 @@ public class CounterHistoryFragment extends Fragment {
     private void setAdapterForSpinner() {
         /*set toolTipText*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mSpinner.setTooltipText("Chose sort");
+            mSpinner.setTooltipText("Choose sort");
         }
 
         /*creating adapter for spinner*/

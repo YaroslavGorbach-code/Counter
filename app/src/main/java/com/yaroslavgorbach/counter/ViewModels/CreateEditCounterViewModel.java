@@ -27,7 +27,6 @@ public class CreateEditCounterViewModel extends AndroidViewModel {
        return mRepo.getGroups();
     }
 
-
     public void updateCreateCounter(String title, long value, long maxValue, long minValue, long step, String grope) {
         if (value > maxValue){
             value = maxValue;

@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:colorBackground"
-            app:title="@string/MainActivityToolbar"
+            app:title="@string/mainActivityToolbar"
             app:titleTextColor="?colorAccent" />
     </com.google.android.material.appbar.AppBarLayout>
 

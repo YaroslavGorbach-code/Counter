@@ -8,27 +8,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.R;
-
-import java.util.List;
 
 
 public class DeleteCounterDialog extends AppCompatDialogFragment {
-
-  private DeleteDialogListener mListener;
-  private int mCount;
-
+  private final DeleteDialogListener mListener;
+  private final int mCountersCount;
 
     public interface DeleteDialogListener {
-
         void onDialogDeleteClick();
-
     }
 
    public DeleteCounterDialog(DeleteDialogListener listener, int count){
         mListener = listener;
-        mCount = count;
+        mCountersCount = count;
     }
 
     @NonNull
@@ -36,20 +29,19 @@ public class DeleteCounterDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         String title;
 
-        if (mCount > 1){
-            title = "Удалить счетчики?";
+        if (mCountersCount > 1){
+            title = getResources().getString(R.string.deleteCountersDeleteDialog);
         }else {
-            title = "Удалить счетчик?";
+            title = getResources().getString(R.string.deleteCounterDeleteDialog);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setTitle(title)
-                // R.string.DeleteCounterDialogTitle
-                .setMessage(R.string.DeleteCounterDialogText)
-                .setPositiveButton(R.string.DeleteCounterDialogPositiveButton, (dialog, which) -> {
+                .setMessage(R.string.deleteCounterDialogText)
+                .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which) -> {
                     mListener.onDialogDeleteClick();
                 })
-                .setNegativeButton(R.string.DeleteCounterDialogNegativeButton, null);
+                .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null);
 
         return builder.create();
     }

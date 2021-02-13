@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.Voice;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 
@@ -21,7 +20,7 @@ public class Accessibility {
     private final boolean mVibrationIsAllowed;
     private final boolean mClickSoundIsAllowed;
     private final boolean mSpeechOutputIsAllowed;
-    TextToSpeech t1;
+    private TextToSpeech mTextToSpeech;
 
 
     public Accessibility(Context context){
@@ -42,9 +41,9 @@ public class Accessibility {
         mSpeechOutputIsAllowed = sharedPreferences.getBoolean("clickSpeak", false);
 
 
-        t1 = new TextToSpeech(context, status -> {
+        mTextToSpeech = new TextToSpeech(context, status -> {
             if(status != TextToSpeech.ERROR) {
-                t1.setLanguage(Locale.getDefault());
+                mTextToSpeech.setLanguage(Locale.getDefault());
             }
         });
    }
@@ -83,7 +82,7 @@ public class Accessibility {
 
     public void speechOutput(String text){
         if (mSpeechOutputIsAllowed)
-        t1.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        mTextToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 
 }

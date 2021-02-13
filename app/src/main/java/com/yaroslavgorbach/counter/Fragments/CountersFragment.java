@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.appbar.MaterialToolbar;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,6 +54,8 @@ import static com.yaroslavgorbach.counter.Activityes.MainActivity.KEYCODE_VOLUME
 import static com.yaroslavgorbach.counter.Activityes.MainActivity.ON_KEY_DOWN_BROADCAST;
 
 public class CountersFragment extends Fragment  {
+    private static final String CURRENT_GROUP = "CURRENT_GROUP";
+
     private CountersViewModel mViewModel;
     private RecyclerView mCounters_rv;
     private CountersAdapter mCountersAdapter;
@@ -68,11 +69,10 @@ public class CountersFragment extends Fragment  {
     private String currentItem;
     private Accessibility mAccessibility;
     private AudioManager mAudioManager;
-
-
-
-    private static final String CURRENT_GROUP = "CURRENT_GROUP";
     private BroadcastReceiver mMessageReceiver;
+
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -211,7 +211,7 @@ public class CountersFragment extends Fragment  {
         mCountersAdapter.itemTouchHelper.attachToRecyclerView(mCounters_rv);
         mCountersAdapter.setStateRestorationPolicy(PREVENT_WHEN_EMPTY);
 
-        if (currentItem != null && !currentItem.equals(getResources().getString(R.string.AllCountersItem))) {
+        if (currentItem != null && !currentItem.equals(getResources().getString(R.string.allCountersItem))) {
             mGroupsAdapter.restoreSelectedItem(currentItem);
         } else {
             /*set up all counters in the adapter when first open*/
@@ -219,8 +219,8 @@ public class CountersFragment extends Fragment  {
         }
 
         mGroupsAdapter.getSelectedItem().observe(getViewLifecycleOwner(), selectedItem -> {
-            if(selectedItem.equals(getResources().getString(R.string.AllCountersItem))){
-                currentItem = getResources().getString(R.string.AllCountersItem);
+            if(selectedItem.equals(getResources().getString(R.string.allCountersItem))){
+                currentItem = getResources().getString(R.string.allCountersItem);
                 mToolbar.setTitle(currentItem);
                 mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
                 mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
@@ -249,7 +249,7 @@ public class CountersFragment extends Fragment  {
 
         /*set up listeners for selection mod*/
         mCountersAdapter.getSelectionMod().observe(getViewLifecycleOwner(), isSelectionMod ->{
-                setUpToolbar(isSelectionMod);
+                setUpToolbarConfiguration(isSelectionMod);
                 mCountersAdapter.getSelectedCountersCount().observe(getViewLifecycleOwner(), count -> {
                     mToolbar.setTitle("Выбрано: " + count);
                     if (count==0)
@@ -263,6 +263,7 @@ public class CountersFragment extends Fragment  {
     @Override
     public void onStart() {
         super.onStart();
+        /*we initialise all this methods in on start because their behavior can change depends on pref*/
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (sharedPreferences.getBoolean("leftHandMod", false ) && !mCountersAdapter.mLeftHandMod){
             getActivity().recreate();
@@ -274,13 +275,11 @@ public class CountersFragment extends Fragment  {
         if (sharedPreferences.getBoolean("leftHandMod", false )){
             mDecAllSelectedCounters_bt.setText("+");
             mIncAllSelectedCounters_bt.setText("−");
-            /*set up listeners on buttons witch appears when selection mod is active*/
             new FastCountButton(mDecAllSelectedCounters_bt, this::incSelectedCounters);
             new FastCountButton(mIncAllSelectedCounters_bt, this::decSelectedCounters);
         }else {
             mIncAllSelectedCounters_bt.setText("+");
             mDecAllSelectedCounters_bt.setText("−");
-            /*set up listeners on buttons witch appears when selection mod is active*/
             new FastCountButton(mDecAllSelectedCounters_bt, this::decSelectedCounters);
             new FastCountButton(mIncAllSelectedCounters_bt, this::incSelectedCounters);
         }
@@ -298,7 +297,8 @@ public class CountersFragment extends Fragment  {
         mAccessibility.playDecFeedback(getView(), null);
     }
 
-    private void setUpToolbar(boolean isSelectionMod) {
+    /*set up toolbar configuration depending on selection mod*/
+    private void setUpToolbarConfiguration(boolean isSelectionMod) {
         if (isSelectionMod){
             mDecAllSelectedCounters_bt.setVisibility(View.VISIBLE);
             mIncAllSelectedCounters_bt.setVisibility(View.VISIBLE);
@@ -369,6 +369,5 @@ public class CountersFragment extends Fragment  {
         super.onSaveInstanceState(outState);
         outState.putString(CURRENT_GROUP, currentItem);
     }
-
 }
 

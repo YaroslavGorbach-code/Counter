@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyItemTouchHelper extends ItemTouchHelper.Callback {
 
     private final ItemTouchHelperAdapter mItemTouchHelperAdapter;
+
     public MyItemTouchHelper(ItemTouchHelperAdapter itemTouchHelperAdapter) {
         mItemTouchHelperAdapter = itemTouchHelperAdapter;
     }
@@ -23,24 +24,11 @@ public class MyItemTouchHelper extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
-        // We only want the active item
-        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
-            if (viewHolder instanceof ItemTouchHelperViewHolder) {
-                ItemTouchHelperViewHolder itemViewHolder =
-                        (ItemTouchHelperViewHolder) viewHolder;
-                itemViewHolder.onSelectedChanged();
-            }
-        }
-        super.onSelectedChanged(viewHolder, actionState);
-    }
-
-    @Override
     public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-            if (viewHolder instanceof ItemTouchHelperViewHolder) {
-                ItemTouchHelperViewHolder itemViewHolder =
-                        (ItemTouchHelperViewHolder) viewHolder;
-                itemViewHolder.clearView();
+        if (viewHolder instanceof ItemTouchHelperViewHolder) {
+            ItemTouchHelperViewHolder itemViewHolder =
+                    (ItemTouchHelperViewHolder) viewHolder;
+            itemViewHolder.clearView();
         }
     }
 
@@ -61,7 +49,6 @@ public class MyItemTouchHelper extends ItemTouchHelper.Callback {
         return true;
     }
 
-
     @Override
     public void onMoved(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, int fromPos, @NonNull RecyclerView.ViewHolder target, int toPos, int x, int y) {
         super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
@@ -73,9 +60,5 @@ public class MyItemTouchHelper extends ItemTouchHelper.Callback {
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
     }
-
-    @Override
-    public int interpolateOutOfBoundsScroll(@NonNull RecyclerView recyclerView, int viewSize, int viewSizeOutOfBounds, int totalSize, long msSinceStartScroll) {
-        return super.interpolateOutOfBoundsScroll(recyclerView, viewSize, viewSizeOutOfBounds, totalSize, msSinceStartScroll);
-    }
 }
+

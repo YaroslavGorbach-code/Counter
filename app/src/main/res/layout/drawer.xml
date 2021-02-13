@@ -25,7 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/NavigationViewToolbar"
+            app:title="@string/navigationViewToolbar"
             app:titleTextColor="?colorAccent" />
 
         <LinearLayout
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:text="@string/AllCountersItem"
+                android:text="@string/allCountersItem"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textSize="15sp" />
 
@@ -79,7 +79,7 @@
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:text="@string/NavigationViewToolbar"
+            android:text="@string/navigationViewToolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/AllCounters" />
@@ -110,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:text="@string/DrawerSettings"
+                android:text="@string/drawerSettings"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textSize="15sp" />
 
@@ -141,7 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:text="@string/Rate"
+                android:text="@string/rate"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textSize="15sp" />
 

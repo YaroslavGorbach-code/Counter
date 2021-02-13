@@ -12,7 +12,6 @@ public class Counter {
 
     @PrimaryKey(autoGenerate = true)
     public long id;
-
     public String title;
     public long value;
     public long maxValue;

@@ -11,7 +11,6 @@ import com.yaroslavgorbach.counter.Fragments.SettingsFragment;
 import com.yaroslavgorbach.counter.R;
 
 public class SettingsActivity extends AppCompatActivity  {
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +20,7 @@ public class SettingsActivity extends AppCompatActivity  {
                 .beginTransaction()
                 .replace(R.id.settings_container, new SettingsFragment())
                 .commit();
-        mToolbar = findViewById(R.id.toolbar_settings);
+        Toolbar mToolbar = findViewById(R.id.toolbar_settings);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(v -> finish());
     }

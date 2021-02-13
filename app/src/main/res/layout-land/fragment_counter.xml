@@ -203,7 +203,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/CounterActivitySaveToHistory"
+        android:text="@string/counterActivitySaveToHistory"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/value"
         app:layout_constraintEnd_toEndOf="parent"

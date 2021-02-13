@@ -59,8 +59,6 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
     }
 
 
-
-
     public class Vh extends RecyclerView.ViewHolder implements View.OnTouchListener {
         private LinearLayout mItem;
         private TextView mTitle;

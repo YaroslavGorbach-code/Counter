@@ -8,7 +8,7 @@
         android:id="@+id/countersFragment"
         tools:layout="@layout/counters_fragment"
         android:name="com.yaroslavgorbach.counter.Fragments.CountersFragment"
-        android:label="@string/AllCountersItem" >
+        android:label="@string/allCountersItem" >
         <action
             android:id="@+id/action_countersFragment_to_counterFragment"
             app:destination="@id/counterFragment" />

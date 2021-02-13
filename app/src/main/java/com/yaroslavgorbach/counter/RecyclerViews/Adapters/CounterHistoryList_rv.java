@@ -33,7 +33,7 @@ public class CounterHistoryList_rv {
         mAdapter.setData(list);
         }
 
-        private class Adapter extends RecyclerView.Adapter<Adapter.Vh> {
+        private static class Adapter extends RecyclerView.Adapter<Adapter.Vh> {
             private Adapter(){
                 setHasStableIds(true);
             }
@@ -65,9 +65,9 @@ public class CounterHistoryList_rv {
                 return mData.get(position).id;
             }
 
-            private  class Vh extends RecyclerView.ViewHolder {
-                private TextView mValue;
-                private TextView mCreateData;
+            private static class Vh extends RecyclerView.ViewHolder {
+                private final TextView mValue;
+                private final TextView mCreateData;
 
                 public Vh(@NonNull ViewGroup parent) {
                     super(LayoutInflater.from(parent.getContext()).inflate(R.layout.counter_history_i,

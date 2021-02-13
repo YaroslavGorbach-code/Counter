@@ -61,7 +61,6 @@ public class CounterFragment extends Fragment {
     private TextView mMinValue_tv;
     private TextView mGroupTitle;
     private BroadcastReceiver mMessageReceiver;
-    private Accessibility mAccessibility;
 
     @Nullable
     @Override
@@ -69,11 +68,14 @@ public class CounterFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        /*depending on pref set layout*/
         if (sharedPreferences.getBoolean("leftHandMod", false )){
           view = inflater.inflate(R.layout.fragment_counter_left_hand, container, false);
         }else {
             view = inflater.inflate(R.layout.fragment_counter, container, false);
         }
+
         /*initialize fields*/
         mValue_tv = view.findViewById(R.id.value);
         mIncButton = view.findViewById(R.id.inc_value);
@@ -117,13 +119,13 @@ public class CounterFragment extends Fragment {
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(i -> Navigation.findNavController(view).popBackStack());
 
-        /*each new counter value is setting to textView*/
+        /*listener for current counter*/
         mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
+
             /*if counter == null that means it was deleted*/
             if (counter != null) {
+                mValue_tv.setTextSize(mViewModel.getValueTvSize());
                 mValue_tv.setText(String.valueOf(counter.value));
-                // TODO: 2/11/2021 пееделать
-                mAccessibility.speechOutput(String.valueOf(counter.value));
                 mCounterTitle.setText(counter.title);
                 mGroupTitle.setText(counter.grope);
 
@@ -138,7 +140,7 @@ public class CounterFragment extends Fragment {
                     mMinValue_tv.setVisibility(View.VISIBLE);
                     mMinValue_tv.setText(String.valueOf(counter.minValue));
                 }
-                setTextViewSize();
+
             } else {
                 Navigation.findNavController(view).popBackStack();
             }
@@ -151,21 +153,19 @@ public class CounterFragment extends Fragment {
 
         /*counter +*/
         new FastCountButton(mIncButton, () -> {
-            mViewModel.incCounter();
-            mAccessibility.playIncFeedback(getView(), null);
+            mViewModel.incCounter(getView());
         });
 
         /*counter -*/
         new FastCountButton(mDecButton, () -> {
-            mViewModel.decCounter();
-            mAccessibility.playDecFeedback(getView(), null);
+            mViewModel.decCounter(getView());
         });
 
         /*reset counter*/
         mResetButton.setOnClickListener(v -> {
             mViewModel.resetCounter();
-            Snackbar.make(mLayout, "Counter reset", BaseTransientBottomBar.LENGTH_LONG)
-                    .setAction("UNDO", v1 -> {
+            Snackbar.make(mLayout, getResources().getString(R.string.counterReset), BaseTransientBottomBar.LENGTH_LONG)
+                    .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
                         mViewModel.restoreValue();
                     }).show();
         });
@@ -176,78 +176,16 @@ public class CounterFragment extends Fragment {
                 // Get extra data included in the Intent
                 switch (intent.getIntExtra(KEYCODE_EXTRA,-1)){
                     case KEYCODE_VOLUME_DOWN:
-                        mViewModel.decCounter();
-                        mAccessibility.playDecFeedback(getView(), null);
+                        mViewModel.decCounter(getView());
                         break;
                     case KEYCODE_VOLUME_UP:
-                        mViewModel.incCounter();
-                        mAccessibility.playIncFeedback(getView(), null);
+                        mViewModel.incCounter(getView());
                         break;
                 }
             }
         };
 
-        // Register to receive messages.
-        // We are registering an observer (mMessageReceiver) to receive Intents
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver,
-                new IntentFilter(ON_KEY_DOWN_BROADCAST));
         return view;
-    }
-
-
-
-    /*method for changing the font size when changing the value of the counter*/
-    private void setTextViewSize() {
-        switch (mValue_tv.getText().length()) {
-            case 1:
-            case 2:
-                mValue_tv.setTextSize(150);
-                break;
-            case 3:
-                mValue_tv.setTextSize(130);
-                break;
-            case 4:
-                mValue_tv.setTextSize(120);
-                break;
-            case 5:
-                mValue_tv.setTextSize(110);
-                break;
-            case 6:
-                mValue_tv.setTextSize(100);
-                break;
-            case 7:
-                mValue_tv.setTextSize(90);
-                break;
-            case 8:
-                mValue_tv.setTextSize(80);
-                break;
-            case 9:
-                mValue_tv.setTextSize(70);
-                break;
-            case 10:
-            case 11:
-                mValue_tv.setTextSize(60);
-                break;
-            case 12:
-            case 13:
-                mValue_tv.setTextSize(50);
-                break;
-            case 14:
-            case 17:
-            case 15:
-            case 16:
-            case 18:
-            case 19:
-                mValue_tv.setTextSize(40);
-                break;
-
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAccessibility = new Accessibility(requireContext());
     }
 
     @Override
