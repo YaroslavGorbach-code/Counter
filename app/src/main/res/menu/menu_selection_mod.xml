@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:title="@string/editSelectionMenu"
         android:id="@+id/editSelected"
+        android:icon="@drawable/ic_edit"
+        app:showAsAction="ifRoom"
         />
 
     <item android:title="@string/selectAllSelectionMenu"
@@ -11,6 +14,8 @@
 
     <item android:title="@string/resetSelectionMenu"
         android:id="@+id/resetSelected"
+        android:icon="@drawable/ic_refresh"
+        app:showAsAction="ifRoom"
         />
 
     <item android:title="@string/deleteSelectionMenu"

@@ -8,20 +8,39 @@
         <item>Sort by date</item>
         <item>Sort by value</item>
     </string-array>
+
+    <!-- Counters fragment -->
     <string name="navigationViewToolbar">Groups</string>
+    <string name="countersFragmentToolbarTitle">All counters</string>
+    <string name="rate">Rate</string>
+    <string name="resetSelectionMenu">Reset selected</string>
+    <string name="deleteSelectionMenu">Delete selected</string>
+    <string name="selectAllSelectionMenu">Select all</string>
+    <string name="editSelectionMenu">Edit</string>
+    <string name="drawerSettings">Settings</string>
+
+
+    <!-- Counter fragment -->
     <string name="allCountersItem">All counters</string>
-    <string name="mainActivityToolbar">All сounters</string>
-    <string name="counterActivitySaveToHistory">Save to history</string>
-    <string name="counterActivityMax">Max</string>
-    <string name="counterActivityMin">Min</string>
-    <string name="counterActivityHistory_m">History</string>
-    <string name="counterActivityEdit_m">Edit</string>
-    <string name="counterActivityDelete_m">Delete</string>
+    <string name="saveToHistory">Save to history</string>
+    <string name="saveToHistoryToast"> saved to counter history</string>
+    <string name="max">Max</string>
+    <string name="min">Min</string>
+    <string name="counterFragmentEditMenu">Edit</string>
+    <string name="counterFragmentDeleteMenu">Delete</string>
+
+    <!-- History fragment -->
+    <string name="historyFragmentToolbarTitle">History</string>
+    <string name="counterHistoryMenuClean">Clean</string>
+
+    <!-- Add counter dialog -->
     <string name="addCounterDialogTitle">Add counter</string>
     <string name="addCounterDialogCounterTitle">Counter title</string>
     <string name="addCounterDialogCounterGroup">Group</string>
     <string name="addCounterDialogCounterPositiveButton">Create</string>
     <string name="addCounterDialogCounterNegativeButton">Cancel</string>
+
+    <!-- Create edit counter fragment -->
     <string name="createEditCounterCounterTitleHint">Counter tittle</string>
     <string name="createEditCounterCounterTitleText">New сounter</string>
     <string name="createEditCounterCounterValueHint">Value</string>
@@ -30,27 +49,22 @@
     <string name="createEditCounterCounterStepText">1</string>
     <string name="createEditCounterCounterMaxValueHint">Max value</string>
     <string name="createEditCounterCounterMinValueHint">Min value</string>
-    <string name="deleteCounterDialogTitle">Delete сounter?</string>
-    <string name="deleteCounterDialogText">This action can not be undone</string>
+
+    <!-- Delete counter dialog -->
+    <string name="deleteCounterDialogTitle">Delete counter?</string>
+    <string name="deleteCounterDialogText">This action cannot be undone</string>
     <string name="deleteCounterDialogPositiveButton">Yes</string>
     <string name="deleteCounterDialogNegativeButton">Cancel</string>
-    <string name="saveToHistoryToast"> saved to counter history</string>
-    <string name="resetSelectionMenu">Reset selected</string>
-    <string name="deleteSelectionMenu">Delete selected</string>
-    <string name="selectAllSelectionMenu">Select all</string>
-    <string name="editSelectionMenu">Edit</string>
-    <string name="counterHistoryMenuClean">Clean</string>
-    <string name="helloBlankFragment">Hello blank fragment</string>
-    <string name="drawerSettings">Settings</string>
-    <string name="rate">Rate</string>
     <string name="deleteCountersDeleteDialog">Delete counters?</string>
     <string name="deleteCounterDeleteDialog">Delete counter?</string>
+
+
+    <string name="helloBlankFragment">Hello blank fragment</string>
+
     <string name="counterReset">Counter was reset</string>
     <string name="counterResetUndo">UNDO</string>
     <string name="thisIsMaximum">This is maximum</string>
     <string name="thisIsMinimum">This is minimum</string>
-
-
 
 
     <!-- Preference Display -->
@@ -71,17 +85,6 @@
     <string name="fast_count_speed">Speed of fast counting</string>
     <string name="summary_fast_count_speed">Activates by long press on +/- buttons</string>
 
-
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="SettingToolbar">Settings</string>
 
 

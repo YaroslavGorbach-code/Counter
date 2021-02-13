@@ -8,21 +8,38 @@
             <item>Сортировка по значению</item>
         </string-array>
 
+    <!-- Counters fragment -->
     <string name="navigationViewToolbar">Групы</string>
+    <string name="countersFragmentToolbarTitle">Все счетчики</string>
+    <string name="rate">Оценить</string>
+    <string name="resetSelectionMenu">Сбросить выбранные</string>
+    <string name="deleteSelectionMenu">Удалить выбранные</string>
+    <string name="selectAllSelectionMenu">Выбрать все</string>
+    <string name="editSelectionMenu">Редактировать</string>
+    <string name="drawerSettings">Настройки</string>
+
+    <!-- Counter fragment -->
     <string name="allCountersItem">Все cчетчики</string>
-    <string name="mainActivityToolbar">Все счетчики</string>
-    <string name="counterActivitySaveToHistory">Сохранить в историю</string>
-    <string name="counterActivityMax">Max</string>
-    <string name="counterActivityMin">Min</string>
-    <string name="counterActivityHistory_m">История</string>
-    <string name="counterActivityEdit_m">Редактировать</string>
-    <string name="counterActivityDelete_m">Удалить</string>
+    <string name="saveToHistory">Сохранить в историю</string>
+    <string name="saveToHistoryToast">сохранено в историю</string>
+    <string name="max">Max</string>
+    <string name="min">Min</string>
+    <string name="counterFragmentEditMenu">Редактировать</string>
+    <string name="counterFragmentDeleteMenu">Удалить</string>
+
+    <!-- History fragment -->
+    <string name="historyFragmentToolbarTitle">История</string>
+    <string name="counterHistoryMenuClean">Очистить</string>
+
+    <!-- Add counter dialog -->
     <string name="addCounterDialogTitle">Добавить счетчик</string>
     <string name="addCounterDialogCounterTitle">Имя счетчика</string>
     <string name="addCounterDialogCounterGroup">Група</string>
     <string name="addCounterDialogCounterPositiveButton">Создать</string>
     <string name="addCounterDialogCounterNegativeButton">Отмена</string>
-    <string name="createEditCounterCounterTitleHint">Имя Счетчика</string>
+
+    <!-- Create edit counter fragment -->
+    <string name="createEditCounterCounterTitleHint">Имя cчетчика</string>
     <string name="createEditCounterCounterTitleText">Новый счетчик</string>
     <string name="createEditCounterCounterValueHint">Значение</string>
     <string name="createEditCounterCounterValueText">0</string>
@@ -30,26 +47,42 @@
     <string name="createEditCounterCounterStepText">1</string>
     <string name="createEditCounterCounterMaxValueHint">Максимальное значение</string>
     <string name="createEditCounterCounterMinValueHint">Минимальное значение</string>
+
+    <!-- Delete counter dialog -->
     <string name="deleteCounterDialogTitle">Удалить счетчик?</string>
     <string name="deleteCounterDialogText">Это действие нельзя будет отменить</string>
     <string name="deleteCounterDialogPositiveButton">Да</string>
     <string name="deleteCounterDialogNegativeButton">Отмена</string>
-    <string name="saveToHistoryToast">сохранено в историю</string>
-    <string name="resetSelectionMenu">Сбросить выбранные</string>
-    <string name="deleteSelectionMenu">Удалить выбранные</string>
-    <string name="selectAllSelectionMenu">Выбрать все</string>
-    <string name="editSelectionMenu">Редактировать</string>
-    <string name="counterHistoryMenuClean">Очистить</string>
-    <string name="helloBlankFragment">Hello blank fragment</string>
-    <string name="drawerSettings">Настройки</string>
-    <string name="rate">Оценить</string>
     <string name="deleteCountersDeleteDialog">Удалить счетчики?</string>
     <string name="deleteCounterDeleteDialog">Удалить счетчик?</string>
+
+
+    <string name="helloBlankFragment">Hello blank fragment</string>
     <string name="counterReset">Счетчик сброшен</string>
     <string name="counterResetUndo">ОТМЕНИТЬ</string>
+    <string name="thisIsMaximum">Это максимум</string>
+    <string name="thisIsMinimum">Это миниимум</string>
 
 
+    <!-- Preference Display -->
+    <string name="display_header">Дисплей</string>
+    <string name="nightMod">Ночной режим</string>
+    <string name="left_hand_mod">Режим для левой руки</string>
+    <string name="keep_screen_on">Не выключать экран</string>
+
+    <!-- Preference Feedback -->
+    <string name="feedBack_header">Обратная связь</string>
+    <string name="clickSound">Звук при клике</string>
+    <string name="clickVibration">Вибрация при клике</string>
+    <string name="clickSpeak">Озвучивать число</string>
+
+    <!-- Preference Control -->
+    <string name="control_header">Управление</string>
+    <string name="use_volume_buttons">Использовать клавиши громкости</string>
+    <string name="fast_count_speed">Скорость быстрого счета</string>
+    <string name="summary_fast_count_speed">Активируеться долгим нажатием на кнопки +/-</string>
 
 
+    <string name="SettingToolbar">Настройки</string>
 
 </resources>

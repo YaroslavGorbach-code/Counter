@@ -9,6 +9,8 @@
     <color name="statusBarColor">#090909</color>
     <color name="groupItemSelectedColor">#33C51162</color>
     <color name="groupItemBackgroundColor">?android:colorBackground</color>
+    <color name="counterValueColor">#000000</color>
+
 
 
     <color name="orange">#FF1744</color>

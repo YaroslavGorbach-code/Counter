@@ -35,10 +35,12 @@
 
         <SwitchPreferenceCompat
             app:key="useVolumeButtons"
+            app:singleLineTitle="false"
             app:title="@string/use_volume_buttons"
             app:defaultValue="true"/>
 
         <SeekBarPreference
+            app:singleLineTitle="false"
             app:key="fastCountSpeed"
             app:summary="@string/summary_fast_count_speed"
             app:defaultValue="200"

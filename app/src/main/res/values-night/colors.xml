@@ -9,6 +9,7 @@
     <color name="statusBarColor">#F8F5F5</color>
     <color name="groupItemSelectedColor">#33C51162</color>
     <color name="groupItemBackgroundColor">#303030</color>
+    <color name="counterValueColor">#DEFFFFFF</color>
 
 
     
