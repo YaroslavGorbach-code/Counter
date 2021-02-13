@@ -36,14 +36,15 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/value"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="229dp"
         android:layout_weight="1"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textSize="150sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/inc_value"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/inc_value"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         tools:text="0" />
 
@@ -53,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/value"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/value"
         app:layout_constraintTop_toBottomOf="@+id/groupTitle">
 
@@ -143,32 +144,32 @@
         android:id="@+id/reset_value"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="6dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="8dp"
         app:icon="@drawable/ic_refresh"
         app:iconGravity="textStart"
         app:layout_constraintBottom_toTopOf="@+id/inc_value"
-        app:layout_constraintEnd_toStartOf="@+id/dec_value"
+        app:layout_constraintEnd_toStartOf="@+id/value"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/value"
+        app:layout_constraintStart_toEndOf="@+id/dec_value"
         app:layout_constraintTop_toBottomOf="@+id/saveToHistoryButton" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/dec_value"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
+        android:layout_width="176dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="6dp"
         android:gravity="center"
         android:text="−"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="?colorAccent"
         android:textSize="50sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/reset_value"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/reset_value"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/saveToHistoryButton" />
 
     <com.google.android.material.button.MaterialButton
@@ -176,16 +177,17 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="6dp"
         android:gravity="center"
         android:text="+"
         android:textColor="?colorAccent"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/value"
+        app:layout_constraintEnd_toStartOf="@+id/value"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dec_value" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -206,7 +208,8 @@
         android:text="@string/CounterActivitySaveToHistory"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/value"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout" />
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

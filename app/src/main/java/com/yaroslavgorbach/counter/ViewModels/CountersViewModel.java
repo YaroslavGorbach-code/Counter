@@ -38,6 +38,8 @@ public class CountersViewModel extends AndroidViewModel {
             counter.value = maxValue;
         } else {
             counter.value = Math.max(counter.minValue, value);
+        }
+        if (counter.value == counter.minValue){
             Toast.makeText(getApplication(), "This is minimum", Toast.LENGTH_SHORT).show();
         }
         mRepo.updateCounter(counter);
@@ -56,6 +58,8 @@ public class CountersViewModel extends AndroidViewModel {
             counter.value = minValue;
         }else {
             counter.value = Math.min(counter.maxValue, value);
+        }
+        if (counter.value == counter.maxValue){
             Toast.makeText(getApplication(), "This is maximum", Toast.LENGTH_SHORT).show();
         }
         mRepo.updateCounter(counter);
