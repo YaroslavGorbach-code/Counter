@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.activity.OnBackPressedCallback;
@@ -70,6 +71,7 @@ public class CountersFragment extends Fragment  {
     private Accessibility mAccessibility;
     private AudioManager mAudioManager;
     private BroadcastReceiver mMessageReceiver;
+    private ImageView mIconThereAreNoGroups;
 
 
 
@@ -107,6 +109,7 @@ public class CountersFragment extends Fragment  {
         mToolbar = view.findViewById(R.id.toolbar_mainActivity);
         mDrawer = view.findViewById(R.id.drawer);
         mCounters_rv = view.findViewById(R.id.counters_list);
+        mIconThereAreNoGroups = view.findViewById(R.id.iconThereAreNoGroups);
         RecyclerView mGroups_rv = view.findViewById(R.id.groupsList_rv);
         LinearLayout mSettingsDrawerItem = view.findViewById(R.id.settings);
         mAudioManager = (AudioManager) requireContext().getSystemService(Context.AUDIO_SERVICE);
@@ -140,6 +143,16 @@ public class CountersFragment extends Fragment  {
         mGroups_rv.setHasFixedSize(true);
 
         mViewModel.getGroups().observe(getViewLifecycleOwner(), groups -> {
+            if (groups.size() > 0){
+                mGroups_rv.setVisibility(View.VISIBLE);
+                mIconThereAreNoGroups.setVisibility(View.GONE);
+            }else {
+                if (!mCountersAdapter.getSelectionMod().getValue()){
+                    mGroups_rv.setVisibility(View.GONE);
+                    mIconThereAreNoGroups.setVisibility(View.VISIBLE);
+                }
+
+            }
                 mGroupsAdapter.setGroups(Utility.deleteTheSameGroups(groups));
         });
 
@@ -232,6 +245,8 @@ public class CountersFragment extends Fragment  {
                     if (currentItem.equals(selectedItem) ){
                         mCountersAdapter.setData(counters);
                     }
+                    if (counters.size()<=0)
+                        mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
                 });
             }
             currentItem = selectedItem;

@@ -10,9 +10,11 @@
     <color name="groupItemSelectedColor">#33C51162</color>
     <color name="groupItemBackgroundColor">#303030</color>
     <color name="counterValueColor">#DEFFFFFF</color>
+    <color name="colorIconNoGroupBackground">#C61766</color>
+    <color name="colorIconNoGroupForeground">#c44d8b</color>
 
 
-    
+
     <color name="orange">#FF1744</color>
     <color name="red">#F50057</color>
     <color name="violet">#651FFF</color>

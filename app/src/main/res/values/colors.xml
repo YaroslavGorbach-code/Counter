@@ -10,6 +10,9 @@
     <color name="groupItemSelectedColor">#33C51162</color>
     <color name="groupItemBackgroundColor">?android:colorBackground</color>
     <color name="counterValueColor">#000000</color>
+    <color name="colorIconNoGroupBackground">#CA3F7D</color>
+    <color name="colorIconNoGroupForeground">#C86799</color>
+
 
 
 
