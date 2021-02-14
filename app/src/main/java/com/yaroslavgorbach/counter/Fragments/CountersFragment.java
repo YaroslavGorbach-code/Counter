@@ -196,9 +196,7 @@ public class CountersFragment extends Fragment  {
             }
         };
 
-        // Register to receive messages.
-        // We are registering an observer (mMessageReceiver) to receive Intents
-        // with actions named "custom-event-name".
+        /*Register to receive messages.*/
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver,
                 new IntentFilter(ON_KEY_DOWN_BROADCAST));
 
@@ -322,8 +320,9 @@ public class CountersFragment extends Fragment  {
                         break;
                     case R.id.resetSelected:
                         mCountersAdapter.resetSelectedCounters();
-                        Snackbar.make(requireView(), "Counters reseated", BaseTransientBottomBar.LENGTH_LONG)
-                                .setAction("UNDO", v1 -> {
+                        Snackbar.make(requireView(), getResources().getString(R.string
+                        .counterReset), BaseTransientBottomBar.LENGTH_LONG)
+                                .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
                                     mCountersAdapter.undoReset();
                                 }).show();
                         break;

@@ -84,10 +84,10 @@ public class CreateEditCounterFragment extends Fragment {
                 mValue_et.setText(String.valueOf(counter.value));
                 mStep_et.setText(String.valueOf(counter.step));
                 mGroups_et.setText(counter.grope);
-                if (counter.maxValue != Counter.COUNTER_MAX_VALUE) {
+                if (counter.maxValue != Counter.MAX_VALUE) {
                     mMaxValue_et.setText(String.valueOf(counter.maxValue));
                 }
-                if (counter.minValue != Counter.COUNTER_MIN_VALUE) {
+                if (counter.minValue != Counter.MIN_VALUE) {
                     mMinValue_et.setText(String.valueOf(counter.minValue));
                 }
             }
@@ -140,7 +140,7 @@ public class CreateEditCounterFragment extends Fragment {
         /*if maxValue is empty set default value if is not set value from editText*/
         if (String.valueOf(mMaxValue_et.getText()).trim().isEmpty()
                 || String.valueOf(mMaxValue_et.getText()).matches("-")) {
-            mMaxValue = Counter.COUNTER_MAX_VALUE;
+            mMaxValue = Counter.MAX_VALUE;
         }else {
             mMaxValue = Long.parseLong(String.valueOf(mMaxValue_et.getText()));
         }
@@ -148,7 +148,7 @@ public class CreateEditCounterFragment extends Fragment {
         /*if minValue is empty set default value if is not set value from editText*/
         if (String.valueOf(mMinValue_et.getText()).trim().isEmpty()
                 || String.valueOf(mMinValue_et.getText()).matches("-")) {
-            mMinValue = Counter.COUNTER_MIN_VALUE;
+            mMinValue = Counter.MIN_VALUE;
         } else {
             mMinValue = Long.parseLong(String.valueOf(mMinValue_et.getText()));
         }

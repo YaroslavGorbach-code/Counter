@@ -4,9 +4,14 @@ import android.app.Activity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class Utility {
@@ -24,6 +29,11 @@ public class Utility {
         if (view == null) {
             view = new View(activity);
         }
-        imm.hideSoftInputFromWindow(((View) view).getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static String formatDateToString(Date date){
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
+        return  dateFormat.format(date);
     }
 }

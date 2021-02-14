@@ -1,15 +1,12 @@
 package com.yaroslavgorbach.counter.ViewModels;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.Database.Repo;
@@ -71,15 +68,24 @@ public class CountersViewModel extends AndroidViewModel {
     }
 
     public void countersMoved(Counter counterFrom, Counter counterTo) {
-        Date dataFrom = counterFrom.createData;
-        Date dataTo = counterTo.createData;
+
+        Date dataFrom;
+        Date dataTo;
+        if (counterFrom.createDateSort!=null && counterTo.createDateSort!=null){
+            dataFrom = counterFrom.createDateSort;
+            dataTo = counterTo.createDateSort;
+        }else {
+            dataFrom = counterFrom.createDate;
+            dataTo = counterTo.createDate;
+        }
 
         if (!dataFrom.equals(dataTo)) {
-            counterTo.createData = dataFrom;
+            counterTo.createDateSort = dataFrom;
             mRepo.updateCounter(counterTo);
-            counterFrom.createData = dataTo;
+            counterFrom.createDateSort = dataTo;
             mRepo.updateCounter(counterFrom);
         }
+
     }
 
     public LiveData<List<Counter>> getCountersByGroup(String group_title) {

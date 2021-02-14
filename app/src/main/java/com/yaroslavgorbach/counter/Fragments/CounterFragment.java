@@ -2,7 +2,6 @@ package com.yaroslavgorbach.counter.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,23 +14,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.media.AudioAttributes;
-import android.media.SoundPool;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbach.counter.Accessibility;
 import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.FastCountButton;
 import com.yaroslavgorbach.counter.Fragments.Dialogs.DeleteCounterDialog;
@@ -112,6 +105,10 @@ public class CounterFragment extends Fragment {
                     Navigation.findNavController(view).navigate(CounterFragmentDirections.
                             actionCounterFragmentToCounterHistoryFragment().setCounterId(mCounterId));
                     break;
+                case R.id.aboutCounter:
+                    Navigation.findNavController(view).navigate(CounterFragmentDirections.
+                            actionCounterFragmentToAboutCounterFragment().setCounterId(mCounterId));
+                    break;
             }
             return true;
         });
@@ -129,13 +126,13 @@ public class CounterFragment extends Fragment {
                 mCounterTitle.setText(counter.title);
                 mGroupTitle.setText(counter.grope);
 
-                if (counter.maxValue != Counter.COUNTER_MAX_VALUE) {
+                if (counter.maxValue != Counter.MAX_VALUE) {
                     mAllInclusiveMAx_iv.setVisibility(View.GONE);
                     mMaxValue_tv.setVisibility(View.VISIBLE);
                     mMaxValue_tv.setText(String.valueOf(counter.maxValue));
                 }
 
-                if (counter.minValue != Counter.COUNTER_MIN_VALUE) {
+                if (counter.minValue != Counter.MIN_VALUE) {
                     mAllInclusiveMin_iv.setVisibility(View.GONE);
                     mMinValue_tv.setVisibility(View.VISIBLE);
                     mMinValue_tv.setText(String.valueOf(counter.minValue));
@@ -173,7 +170,6 @@ public class CounterFragment extends Fragment {
            mMessageReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                // Get extra data included in the Intent
                 switch (intent.getIntExtra(KEYCODE_EXTRA,-1)){
                     case KEYCODE_VOLUME_DOWN:
                         mViewModel.decCounter(getView());
@@ -184,6 +180,8 @@ public class CounterFragment extends Fragment {
                 }
             }
         };
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter(ON_KEY_DOWN_BROADCAST));
 
         return view;
     }

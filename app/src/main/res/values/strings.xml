@@ -85,6 +85,11 @@
     <string name="fast_count_speed">Speed of fast counting</string>
     <string name="summary_fast_count_speed">Activates by long press on +/- buttons</string>
 
+    <!-- About counter fragment -->
+    <string name="aboutCounter">About counter</string>
+
+
+
     <string name="SettingToolbar">Settings</string>
 
 

@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_counterFragment_to_createEditCounterFragment"
             app:destination="@id/createEditCounterFragment" />
+        <action
+            android:id="@+id/action_counterFragment_to_aboutCounterFragment"
+            app:destination="@id/aboutCounterFragment" />
     </fragment>
     <fragment
         android:id="@+id/counterHistoryFragment"
@@ -50,6 +53,16 @@
         android:name="com.yaroslavgorbach.counter.Fragments.CreateEditCounterFragment"
         android:label="fragment_create_edit_counter"
         tools:layout="@layout/fragment_create_edit_counter" >
+        <argument
+            android:name="counterId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutCounterFragment"
+        android:name="com.yaroslavgorbach.counter.Fragments.AboutCounterFragment"
+        android:label="fragment_about_counter"
+        tools:layout="@layout/fragment_about_counter" >
         <argument
             android:name="counterId"
             app:argType="long"

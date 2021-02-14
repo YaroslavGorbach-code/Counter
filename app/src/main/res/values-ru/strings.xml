@@ -82,6 +82,8 @@
     <string name="fast_count_speed">Скорость быстрого счета</string>
     <string name="summary_fast_count_speed">Активируеться долгим нажатием на кнопки +/-</string>
 
+    <!-- About counter fragment -->
+    <string name="aboutCounter">О счетчике</string>
 
     <string name="SettingToolbar">Настройки</string>
 

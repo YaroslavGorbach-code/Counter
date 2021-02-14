@@ -24,7 +24,7 @@ public interface CounterDao {
     @Delete
     void delete(Counter counter);
 
-    @Query("SELECT * FROM counter_table ORDER BY createData DESC")
+    @Query("SELECT * FROM counter_table ORDER BY createDataSort DESC")
     LiveData<List<Counter>> getAllCounters();
 
     @Query("SELECT * FROM counter_table WHERE id = :id")
@@ -33,7 +33,7 @@ public interface CounterDao {
     @Query("SELECT grope FROM counter_table WHERE grope<>'' ORDER BY grope ASC")
     LiveData<List<String>> getGroups();
 
-    @Query("SELECT * FROM counter_table WHERE grope =:group ORDER BY createData DESC")
+    @Query("SELECT * FROM counter_table WHERE grope =:group ORDER BY createDataSort DESC")
     LiveData<List<Counter>> getCountersByGroup(String group);
 
 }

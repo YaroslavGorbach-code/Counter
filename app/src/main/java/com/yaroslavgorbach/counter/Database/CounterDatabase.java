@@ -6,6 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.yaroslavgorbach.counter.Database.Daos.CounterDao;
@@ -15,7 +16,7 @@ import com.yaroslavgorbach.counter.Database.Models.CounterHistory;
 
 import java.util.Date;
 
-@Database(entities = {Counter.class, CounterHistory.class },  version = 24)
+@Database(entities = {Counter.class, CounterHistory.class },  version = 25)
 @TypeConverters({Converters.class})
 public abstract class CounterDatabase extends RoomDatabase {
     private static CounterDatabase sInstance;
@@ -26,21 +27,36 @@ public abstract class CounterDatabase extends RoomDatabase {
         if (sInstance == null){
             sInstance = Room.databaseBuilder(context.getApplicationContext(),CounterDatabase.class, "counter.db")
                     .addCallback(rdc)
+                    .addMigrations(MIGRATION_24_25)
                     .build();
         }
         return sInstance;
     }
 
+
+    static final Migration MIGRATION_24_25 = new Migration(24, 25) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE counter_table ADD COLUMN createDataSort INTEGER DEFAULT null ");
+            database.execSQL("ALTER TABLE counter_table ADD COLUMN lastResetData INTEGER DEFAULT null");
+            database.execSQL("ALTER TABLE counter_table ADD COLUMN lastResetValue INTEGER NOT NULL DEFAULT 0 ");
+            database.execSQL("ALTER TABLE counter_table ADD COLUMN counterMaxValue INTEGER NOT NULL DEFAULT 0 ");
+            database.execSQL("ALTER TABLE counter_table ADD COLUMN counterMinValue INTEGER NOT NULL DEFAULT 0 ");
+        }
+    };
+
+
     private static final RoomDatabase.Callback rdc = new RoomDatabase.Callback() {
         public void onCreate(SupportSQLiteDatabase db) {
             CounterDao mDao;
-            Date currentDate = new Date();
             mDao = sInstance.counterDao();
+            Date currentDate = new Date();
             currentDate.getTime();
             new Thread(() -> {
-                mDao.insert(new Counter("New counter",0, Counter.COUNTER_MAX_VALUE,
-                        Counter.COUNTER_MIN_VALUE,
-                        1, null, currentDate ));
+                mDao.insert(new Counter("New counter",0, Counter.MAX_VALUE,
+                        Counter.MIN_VALUE,
+                        1, null, currentDate, currentDate, null,
+                        0, 0, 0 ));
             }).start();
         }
 

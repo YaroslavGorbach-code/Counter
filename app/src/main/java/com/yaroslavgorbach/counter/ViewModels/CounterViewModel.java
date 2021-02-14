@@ -22,6 +22,7 @@ import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.Database.Models.CounterHistory;
 import com.yaroslavgorbach.counter.Database.Repo;
 import com.yaroslavgorbach.counter.R;
+import com.yaroslavgorbach.counter.Utility;
 
 public class CounterViewModel extends AndroidViewModel {
     private final Repo mRepo;
@@ -57,9 +58,12 @@ public class CounterViewModel extends AndroidViewModel {
         } else {
             mCounter.getValue().value = Math.max(minValue, value);
         }
-        if (mCounter.getValue().value == minValue){
+        if (mCounter.getValue().value == minValue)
             Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
-        }
+
+        if (mCounter.getValue().value > mCounter.getValue().counterMaxValue)
+          mCounter.getValue().counterMaxValue = mCounter.getValue().value;
+
         mAccessibility.playIncFeedback(view, String.valueOf(mCounter.getValue().value));
         mRepo.updateCounter(mCounter.getValue());
     }
@@ -80,15 +84,20 @@ public class CounterViewModel extends AndroidViewModel {
         }else {
             mCounter.getValue().value = Math.min(maxValue, value);
         }
-        if (mCounter.getValue().value == maxValue){
+        if (mCounter.getValue().value == maxValue)
             Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
-        }
+
+        if (mCounter.getValue().value < mCounter.getValue().counterMinValue)
+            mCounter.getValue().counterMinValue = mCounter.getValue().value;
+
         mAccessibility.playDecFeedback(view, String.valueOf(mCounter.getValue().value));
         mRepo.updateCounter(mCounter.getValue());
     }
 
     public void resetCounter(){
         mOldValue = Objects.requireNonNull(mCounter.getValue()).value;
+        mCounter.getValue().lastResetValue = mOldValue;
+        mCounter.getValue().lastResetDate = new Date();
         if (mCounter.getValue().minValue > 0){
             mCounter.getValue().value = mCounter.getValue().minValue;
         }else {
@@ -105,11 +114,8 @@ public class CounterViewModel extends AndroidViewModel {
     }
 
     public void saveValueToHistory(){
-        Date currentDate = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
-        String date = dateFormat.format(currentDate);
         mRepo.insertCounterHistory(new CounterHistory(Objects.requireNonNull(
-                mCounter.getValue()).value, date, mCounter.getValue().id));
+                mCounter.getValue()).value, Utility.formatDateToString(new Date()), mCounter.getValue().id));
         Toast.makeText(getApplication(), getApplication().getString(R.string.createEditCounterCounterValueHint) + " " +
                 mCounter.getValue().value + " " + getApplication().getString(R.string.saveToHistoryToast), Toast.LENGTH_SHORT).show();
     }

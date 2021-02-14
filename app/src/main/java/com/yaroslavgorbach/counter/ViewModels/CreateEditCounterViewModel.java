@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.Database.Repo;
+import com.yaroslavgorbach.counter.Utility;
 
 import java.util.Date;
 import java.util.List;
@@ -36,9 +37,8 @@ public class CreateEditCounterViewModel extends AndroidViewModel {
         }
         /*if mCounter == null insert counter*/
         if (mCounter.getValue() == null) {
-            Date currentDate = new Date();
-            currentDate.getTime();
-            Counter newCounter = new Counter(title, value, maxValue, minValue, step, grope, currentDate);
+            Counter newCounter = new Counter(title, value, maxValue, minValue, step, grope,
+                    new Date(), new Date(), null, 0, 0, 0);
             new Handler().postDelayed(() ->  mRepo.insertCounter(newCounter),500);
         } else {
             /*if mCounter != null update counter*/

@@ -1,22 +1,20 @@
 package com.yaroslavgorbach.counter.RecyclerViews.DragAndDrop;
 
 import android.app.Application;
-import android.content.ContentValues;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaroslavgorbach.counter.Accessibility;
 import com.yaroslavgorbach.counter.Database.Models.Counter;
 import com.yaroslavgorbach.counter.Database.Repo;
 import com.yaroslavgorbach.counter.R;
 import com.yaroslavgorbach.counter.RecyclerViews.Adapters.CountersAdapter;
+import com.yaroslavgorbach.counter.Utility;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CounterSelectionMod {
@@ -109,6 +107,8 @@ public class CounterSelectionMod {
             if (counter.value > counter.maxValue){
                 counter.value = counter.maxValue;
             }
+            if (counter.value > counter.counterMaxValue)
+                counter.counterMaxValue = counter.value;
             mRepo.updateCounter(counter);
         }
     }
@@ -119,6 +119,8 @@ public class CounterSelectionMod {
             if (counter.value < counter.minValue){
                 counter.value = counter.minValue;
             }
+            if (counter.value < counter.counterMinValue)
+                counter.counterMinValue = counter.value;
             mRepo.updateCounter(counter);
         }
     }
@@ -127,9 +129,15 @@ public class CounterSelectionMod {
         mCopyBeforeReset = new ArrayList<>();
         for (Counter counter : mSelectedCounters) {
             Counter copy = new Counter(counter.title, counter.value,
-                    counter.maxValue, counter.minValue, counter.step, counter.grope, counter.createData);
+                    counter.maxValue, counter.minValue, counter.step,
+                    counter.grope, counter.createDate, counter.createDateSort,
+                    counter.lastResetDate, counter.lastResetValue,
+                    counter.counterMaxValue, counter.counterMinValue);
             copy.setId(counter.id);
             mCopyBeforeReset.add(copy);
+            counter.lastResetValue = counter.value;
+            counter.lastResetDate = new Date();
+
             if (counter.minValue > 0){
                 counter.value = counter.minValue;
             }else {
