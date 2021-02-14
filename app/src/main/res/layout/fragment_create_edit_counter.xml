@@ -62,9 +62,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/createEditCounterCounterValueHint"
-            android:maxLength="18"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
+            android:maxLength="18"
             android:text="@string/createEditCounterCounterValueText"
 
             />
@@ -88,9 +88,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/createEditCounterCounterStepHint"
-            android:maxLength="18"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
+            android:maxLength="18"
             android:text="@string/createEditCounterCounterStepText"
 
             />
@@ -101,11 +101,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/outlinedTextField4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField1">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/outlinedTextField4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/outlinedTextField4"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField2">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -113,9 +115,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/createEditCounterCounterMaxValueHint"
-            android:maxLength="18"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
+            android:maxLength="18"
 
 
             />
@@ -126,10 +128,11 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/outlinedTextField3"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/outlinedTextField3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/outlinedTextField2">
 
 
@@ -138,9 +141,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/createEditCounterCounterMinValueHint"
-            android:maxLength="18"
             android:imeOptions="actionDone"
             android:inputType="numberSigned"
+            android:maxLength="18"
 
             />
     </com.google.android.material.textfield.TextInputLayout>

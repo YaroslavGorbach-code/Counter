@@ -94,6 +94,7 @@
     <string name="maxValue">Максимум</string>
     <string name="lastReset">Последний сброс</string>
     <string name="no">Нет</string>
+    <string name="created">Создан: %1$s</string>
 
 
 </resources>

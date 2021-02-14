@@ -1,5 +1,6 @@
 package com.yaroslavgorbach.counter.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -53,7 +54,7 @@ public class AboutCounterFragment extends Fragment {
 
         viewModel.counter.observe(getViewLifecycleOwner(), counter -> {
             mCounterName.setText(counter.title);
-            mCreateData.setText(Utility.formatDateToString(counter.createDate));
+            mCreateData.setText(getString(R.string.created, Utility.formatDateToString(counter.createDate)));
             mLastResetedValue.setText(String.valueOf(counter.lastResetValue));
             mCounterValue.setText(String.valueOf(counter.value));
             mCounterStep.setText(String.valueOf(counter.step));

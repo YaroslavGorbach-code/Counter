@@ -97,6 +97,7 @@
     <string name="maxValue">Max</string>
     <string name="lastReset">Last reset</string>
     <string name="no">No</string>
+    <string name="created">Created: %1$s</string>
 
 
 </resources>
