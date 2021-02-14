@@ -43,7 +43,7 @@
             android:layout_gravity="top|center"
             android:layout_marginTop="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Reseted value"
+            android:text="@string/valueBeforeReset"
             android:textSize="16sp" />
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_gravity="top|center"
             android:layout_marginTop="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Value"
+            android:text="@string/value"
             android:textSize="16sp" />
 
         <TextView
@@ -107,7 +107,7 @@
             android:layout_gravity="top|center"
             android:layout_marginTop="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Step"
+            android:text="@string/step"
             android:textSize="16sp" />
 
         <TextView
@@ -138,7 +138,7 @@
             android:layout_gravity="top|center"
             android:layout_marginTop="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Group"
+            android:text="@string/group"
             android:textSize="16sp" />
 
         <TextView
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="12dp"
-            android:text="no" />
+            android:text="@string/no" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -171,7 +171,7 @@
             android:layout_gravity="top|center"
             android:layout_marginTop="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Min value"
+            android:text="@string/minValue"
             android:textSize="16sp" />
 
         <TextView
@@ -201,7 +201,7 @@
             android:layout_gravity="top|center"
             android:layout_marginTop="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Max value"
+            android:text="@string/maxValue"
             android:textSize="16sp" />
 
         <TextView
@@ -234,7 +234,7 @@
             android:layout_marginTop="5dp"
             android:gravity="center|top"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Last reset"
+            android:text="@string/lastReset"
             android:textSize="20sp" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -243,7 +243,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:text="no"
+            android:text="@string/no"
             android:textSize="15sp"/>
     </com.google.android.material.card.MaterialCardView>
 
@@ -267,7 +267,7 @@
             android:layout_marginTop="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:layout_gravity="center|top"
-            android:text="Counter name"
+            android:text="@string/counterName"
             android:textSize="20sp" />
 
         <com.google.android.material.textview.MaterialTextView

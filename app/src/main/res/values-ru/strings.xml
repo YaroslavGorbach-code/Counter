@@ -69,6 +69,7 @@
     <string name="nightMod">Ночной режим</string>
     <string name="left_hand_mod">Режим для левой руки</string>
     <string name="keep_screen_on">Не выключать экран</string>
+    <string name="SettingToolbar">Настройки</string>
 
     <!-- Preference Feedback -->
     <string name="feedBack_header">Обратная связь</string>
@@ -84,7 +85,15 @@
 
     <!-- About counter fragment -->
     <string name="aboutCounter">О счетчике</string>
+    <string name="counterName">Имя счетчика</string>
+    <string name="valueBeforeReset">Значение до сброса</string>
+    <string name="value">Значение</string>
+    <string name="step">Шаг</string>
+    <string name="group">Група</string>
+    <string name="minValue">Минимум</string>
+    <string name="maxValue">Максимум</string>
+    <string name="lastReset">Последний сброс</string>
+    <string name="no">Нет</string>
 
-    <string name="SettingToolbar">Настройки</string>
 
 </resources>

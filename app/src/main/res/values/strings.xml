@@ -72,6 +72,7 @@
     <string name="nightMod">Night mode</string>
     <string name="left_hand_mod">Left hand mod</string>
     <string name="keep_screen_on">Keep screen on</string>
+    <string name="SettingToolbar">Settings</string>
 
     <!-- Preference Feedback -->
     <string name="feedBack_header">Feedback</string>
@@ -87,10 +88,15 @@
 
     <!-- About counter fragment -->
     <string name="aboutCounter">About counter</string>
-
-
-
-    <string name="SettingToolbar">Settings</string>
+    <string name="counterName">Counter name</string>
+    <string name="valueBeforeReset">Value before reset</string>
+    <string name="value">Value</string>
+    <string name="step">Step</string>
+    <string name="group">Group</string>
+    <string name="minValue">Min</string>
+    <string name="maxValue">Max</string>
+    <string name="lastReset">Last reset</string>
+    <string name="no">No</string>
 
 
 </resources>

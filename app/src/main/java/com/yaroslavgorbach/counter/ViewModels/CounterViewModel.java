@@ -61,8 +61,13 @@ public class CounterViewModel extends AndroidViewModel {
         if (mCounter.getValue().value == minValue)
             Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
 
+        //  if step is positive
         if (mCounter.getValue().value > mCounter.getValue().counterMaxValue)
           mCounter.getValue().counterMaxValue = mCounter.getValue().value;
+
+        //  if step is negative
+        if (mCounter.getValue().value < mCounter.getValue().counterMinValue)
+            mCounter.getValue().counterMinValue = mCounter.getValue().value;
 
         mAccessibility.playIncFeedback(view, String.valueOf(mCounter.getValue().value));
         mRepo.updateCounter(mCounter.getValue());
@@ -87,8 +92,13 @@ public class CounterViewModel extends AndroidViewModel {
         if (mCounter.getValue().value == maxValue)
             Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
 
+        //  if step is negative
         if (mCounter.getValue().value < mCounter.getValue().counterMinValue)
             mCounter.getValue().counterMinValue = mCounter.getValue().value;
+
+        //  if step is positive
+        if (mCounter.getValue().value > mCounter.getValue().counterMaxValue)
+            mCounter.getValue().counterMaxValue = mCounter.getValue().value;
 
         mAccessibility.playDecFeedback(view, String.valueOf(mCounter.getValue().value));
         mRepo.updateCounter(mCounter.getValue());
