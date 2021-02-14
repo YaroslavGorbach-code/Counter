@@ -98,7 +98,7 @@
             android:id="@+id/iconThereAreNoGroups"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             android:src="@drawable/ic_no_groups_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

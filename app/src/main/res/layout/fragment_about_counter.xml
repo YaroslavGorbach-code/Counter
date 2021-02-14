@@ -24,6 +24,7 @@
             app:titleTextColor="?colorAccent" />
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView2"
         android:layout_width="0dp"

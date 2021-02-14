@@ -12,6 +12,10 @@
     <color name="counterValueColor">#DEFFFFFF</color>
     <color name="colorIconNoGroupBackground">#C61766</color>
     <color name="colorIconNoGroupForeground">#c44d8b</color>
+    <color name="colorIconNoCountersForeground">#2C2B2B</color>
+    <color name="colorIconNoCountersBackground">#303030</color>
+    <color name="colorIconNoCountersPlus">#BA3D67</color>
+
 
 
 
