@@ -3,6 +3,8 @@ package com.yaroslavgorbach.counter.Fragments;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.yaroslavgorbach.counter.R;
@@ -40,6 +43,8 @@ public class CounterHistoryFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(CounterHistoryViewModel.class);
         Toolbar toolbar = view.findViewById(R.id.toolbar_history);
         mSpinner = view.findViewById(R.id.spinner);
+
+//        mIconAndTextThereAreNoCounters = view.findViewById(R.id.iconAndTextThereAreNoCounters);
 
         /*initialize navigation listener*/
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
@@ -73,12 +78,22 @@ public class CounterHistoryFragment extends Fragment {
             mViewModel.getCounterHistoryList(mCounterId)
                     .observe(CounterHistoryFragment.this, counterHistories -> {
                         mHistoryList.setHistory(counterHistories);
+//                        if (counterHistories.size() <= 0){
+//                            mIconAndTextThereAreNoCounters.setVisibility(View.VISIBLE);
+//                        }else {
+//                            mIconAndTextThereAreNoCounters.setVisibility(View.GONE);
+//                        }
                     });
         }else {
             /*update list of history sort by value*/
             mViewModel.getCounterHistoryListSortByValue(mCounterId)
                     .observe(CounterHistoryFragment.this, counterHistories -> {
                         mHistoryList.setHistory(counterHistories);
+//                        if (counterHistories.size() <= 0){
+//                            mIconAndTextThereAreNoCounters.setVisibility(View.VISIBLE);
+//                        }else {
+//                            mIconAndTextThereAreNoCounters.setVisibility(View.GONE);
+//                        }
                     });
         }
     }

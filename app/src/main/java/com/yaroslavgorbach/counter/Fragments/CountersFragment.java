@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -73,9 +74,7 @@ public class CountersFragment extends Fragment  {
     private AudioManager mAudioManager;
     private BroadcastReceiver mMessageReceiver;
     private ImageView mIconThereAreNoGroups;
-    private AppCompatImageView mIconThereAreNoCounters;
-
-
+    private ConstraintLayout mIconAndTextThereAreNoCounters;
 
 
     @Override
@@ -112,7 +111,7 @@ public class CountersFragment extends Fragment  {
         mDrawer = view.findViewById(R.id.drawer);
         mCounters_rv = view.findViewById(R.id.counters_list);
         mIconThereAreNoGroups = view.findViewById(R.id.iconThereAreNoGroups);
-        mIconThereAreNoCounters = view.findViewById(R.id.iconThereAreNoCounters);
+        mIconAndTextThereAreNoCounters = view.findViewById(R.id.iconAndTextThereAreNoCounters);
         RecyclerView mGroups_rv = view.findViewById(R.id.groupsList_rv);
         LinearLayout mSettingsDrawerItem = view.findViewById(R.id.settings);
         mAudioManager = (AudioManager) requireContext().getSystemService(Context.AUDIO_SERVICE);
@@ -138,7 +137,7 @@ public class CountersFragment extends Fragment  {
             startActivity(startSettingsActivity);
         });
 
-        mIconThereAreNoCounters.setOnClickListener(v -> {
+        view.findViewById(R.id.iconThereAreNoCounters).setOnClickListener(v -> {
             new CreateCounterDialog().show(getParentFragmentManager(), "Add Counter");
         });
 
@@ -242,11 +241,13 @@ public class CountersFragment extends Fragment  {
                 mToolbar.setTitle(currentItem);
                 mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
                 mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
-                    mCountersAdapter.setData(counters);
-                    if (counters.size()<=0){
-                        mIconThereAreNoCounters.setVisibility(View.VISIBLE);
-                    }else {
-                        mIconThereAreNoCounters.setVisibility(View.GONE);
+                    if (currentItem.equals(selectedItem)){
+                        mCountersAdapter.setData(counters);
+                        if (counters.size()<=0){
+                            mIconAndTextThereAreNoCounters.setVisibility(View.VISIBLE);
+                        }else {
+                            mIconAndTextThereAreNoCounters.setVisibility(View.GONE);
+                        }
                     }
                 });
 
@@ -254,11 +255,12 @@ public class CountersFragment extends Fragment  {
                 mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
                 mToolbar.setTitle(selectedItem);
                 mViewModel.getCountersByGroup(selectedItem).observe(getViewLifecycleOwner(), counters -> {
+
                     if (currentItem.equals(selectedItem) ){
                         mCountersAdapter.setData(counters);
+                        if (counters.size()<=0)
+                            mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
                     }
-                    if (counters.size()<=0)
-                        mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
                 });
             }
             currentItem = selectedItem;
