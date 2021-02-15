@@ -8,6 +8,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -16,9 +18,11 @@ import java.util.Set;
 
 public class Utility {
     /*delete the same groups*/
-    static public List<String> deleteTheSameGroups(List<String> strings){
+    static public List<String> deleteTheSameGroups(List<String> strings) {
         Set<String> set = new HashSet<>(strings);
-        return Arrays.asList(set.toArray(new String[0]));
+        List<String> mList = Arrays.asList(set.toArray(new String[0]));
+        Collections.sort(mList);
+        return mList;
     }
 
     public static void hideKeyboard(Activity activity) {

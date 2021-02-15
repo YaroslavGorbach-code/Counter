@@ -45,18 +45,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iconThereAreNoCounters"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/iconAndTextThereAreNoHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_gravity="center|center_vertical"
-        android:src="@drawable/ic_no_history"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconThereAreNoCounters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_no_history"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="There no history yet"
+            app:layout_constraintEnd_toEndOf="@+id/iconThereAreNoCounters"
+            app:layout_constraintStart_toStartOf="@+id/iconThereAreNoCounters"
+            app:layout_constraintTop_toBottomOf="@+id/iconThereAreNoCounters" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

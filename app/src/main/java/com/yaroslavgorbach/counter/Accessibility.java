@@ -68,6 +68,7 @@ public class Accessibility {
     private void playDecSoundEffect(){
         if (mClickSoundIsAllowed)
         mSoundPool.play(mSoundDecId, 1, 1, 1, 0, 1f);
+
     }
 
     private void playIncVibrationEffect(View view){

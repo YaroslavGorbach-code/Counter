@@ -30,6 +30,7 @@ public class CounterHistoryFragment extends Fragment {
     private Spinner mSpinner;
     private CounterHistoryViewModel mViewModel;
     private long mCounterId;
+    private ConstraintLayout mIconAndTextThereNoHistory;
 
 
     @Nullable
@@ -44,7 +45,7 @@ public class CounterHistoryFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar_history);
         mSpinner = view.findViewById(R.id.spinner);
 
-//        mIconAndTextThereAreNoCounters = view.findViewById(R.id.iconAndTextThereAreNoCounters);
+        mIconAndTextThereNoHistory = view.findViewById(R.id.iconAndTextThereAreNoHistory);
 
         /*initialize navigation listener*/
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
@@ -78,22 +79,22 @@ public class CounterHistoryFragment extends Fragment {
             mViewModel.getCounterHistoryList(mCounterId)
                     .observe(CounterHistoryFragment.this, counterHistories -> {
                         mHistoryList.setHistory(counterHistories);
-//                        if (counterHistories.size() <= 0){
-//                            mIconAndTextThereAreNoCounters.setVisibility(View.VISIBLE);
-//                        }else {
-//                            mIconAndTextThereAreNoCounters.setVisibility(View.GONE);
-//                        }
+                        if (counterHistories.size() <= 0){
+                            mIconAndTextThereNoHistory.setVisibility(View.VISIBLE);
+                        }else {
+                            mIconAndTextThereNoHistory.setVisibility(View.GONE);
+                        }
                     });
         }else {
             /*update list of history sort by value*/
             mViewModel.getCounterHistoryListSortByValue(mCounterId)
                     .observe(CounterHistoryFragment.this, counterHistories -> {
                         mHistoryList.setHistory(counterHistories);
-//                        if (counterHistories.size() <= 0){
-//                            mIconAndTextThereAreNoCounters.setVisibility(View.VISIBLE);
-//                        }else {
-//                            mIconAndTextThereAreNoCounters.setVisibility(View.GONE);
-//                        }
+                        if (counterHistories.size() <= 0){
+                            mIconAndTextThereNoHistory.setVisibility(View.VISIBLE);
+                        }else {
+                            mIconAndTextThereNoHistory.setVisibility(View.GONE);
+                        }
                     });
         }
     }

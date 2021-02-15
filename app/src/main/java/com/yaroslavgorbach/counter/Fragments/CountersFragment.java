@@ -75,6 +75,7 @@ public class CountersFragment extends Fragment  {
     private BroadcastReceiver mMessageReceiver;
     private ImageView mIconThereAreNoGroups;
     private ConstraintLayout mIconAndTextThereAreNoCounters;
+    private ConstraintLayout mThereAreNoGroupsTextAndIcon;
 
 
     @Override
@@ -112,6 +113,7 @@ public class CountersFragment extends Fragment  {
         mCounters_rv = view.findViewById(R.id.counters_list);
         mIconThereAreNoGroups = view.findViewById(R.id.iconThereAreNoGroups);
         mIconAndTextThereAreNoCounters = view.findViewById(R.id.iconAndTextThereAreNoCounters);
+        mThereAreNoGroupsTextAndIcon = view.findViewById(R.id.thereAreNoGroupsTextAndIcon);
         RecyclerView mGroups_rv = view.findViewById(R.id.groupsList_rv);
         LinearLayout mSettingsDrawerItem = view.findViewById(R.id.settings);
         mAudioManager = (AudioManager) requireContext().getSystemService(Context.AUDIO_SERVICE);
@@ -151,11 +153,11 @@ public class CountersFragment extends Fragment  {
         mViewModel.getGroups().observe(getViewLifecycleOwner(), groups -> {
             if (groups.size() > 0){
                 mGroups_rv.setVisibility(View.VISIBLE);
-                mIconThereAreNoGroups.setVisibility(View.GONE);
+                mThereAreNoGroupsTextAndIcon.setVisibility(View.GONE);
             }else {
                 if (!mCountersAdapter.getSelectionMod().getValue()){
                     mGroups_rv.setVisibility(View.GONE);
-                    mIconThereAreNoGroups.setVisibility(View.VISIBLE);
+                    mThereAreNoGroupsTextAndIcon.setVisibility(View.VISIBLE);
                 }
 
             }

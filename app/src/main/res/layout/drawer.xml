@@ -25,11 +25,12 @@
             app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
         <TextView
+            android:id="@+id/textView7"
+            style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="Counter"
-            style="@style/TextAppearance.AppCompat.Caption"
             android:textColor="?colorAccent"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
@@ -94,14 +95,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iconThereAreNoGroups"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/thereAreNoGroupsTextAndIcon"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:src="@drawable/ic_no_groups_icon"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="There are no groups yet"
+                app:layout_constraintEnd_toEndOf="@+id/iconThereAreNoGroups"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/iconThereAreNoGroups"
+                app:layout_constraintTop_toBottomOf="@+id/iconThereAreNoGroups" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iconThereAreNoGroups"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_no_groups_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView5"
