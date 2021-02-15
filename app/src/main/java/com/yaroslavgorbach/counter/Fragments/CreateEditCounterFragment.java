@@ -120,8 +120,10 @@ public class CreateEditCounterFragment extends Fragment {
         }
 
         /*if value is empty show error*/
-        if (String.valueOf(mValue_et.getText()).trim().isEmpty()) {
+        if (String.valueOf(mValue_et.getText()).trim().isEmpty() ||
+                String.valueOf(mValue_et.getText()).matches("-") ) {
             mValue_et.setError("This field can not be empty");
+            mValue_et.setText(null);
         } else {
             mValue = Long.parseLong(String.valueOf(mValue_et.getText()));
         }

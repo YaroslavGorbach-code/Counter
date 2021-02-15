@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="There are no groups yet"
+                android:text="@string/there_are_no_groups_yet"
                 app:layout_constraintEnd_toEndOf="@+id/iconThereAreNoGroups"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/iconThereAreNoGroups"

@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,6 @@ public class CountersFragment extends Fragment  {
     private Accessibility mAccessibility;
     private AudioManager mAudioManager;
     private BroadcastReceiver mMessageReceiver;
-    private ImageView mIconThereAreNoGroups;
     private ConstraintLayout mIconAndTextThereAreNoCounters;
     private ConstraintLayout mThereAreNoGroupsTextAndIcon;
 
@@ -111,7 +111,6 @@ public class CountersFragment extends Fragment  {
         mToolbar = view.findViewById(R.id.toolbar_mainActivity);
         mDrawer = view.findViewById(R.id.drawer);
         mCounters_rv = view.findViewById(R.id.counters_list);
-        mIconThereAreNoGroups = view.findViewById(R.id.iconThereAreNoGroups);
         mIconAndTextThereAreNoCounters = view.findViewById(R.id.iconAndTextThereAreNoCounters);
         mThereAreNoGroupsTextAndIcon = view.findViewById(R.id.thereAreNoGroupsTextAndIcon);
         RecyclerView mGroups_rv = view.findViewById(R.id.groupsList_rv);
@@ -159,7 +158,6 @@ public class CountersFragment extends Fragment  {
                     mGroups_rv.setVisibility(View.GONE);
                     mThereAreNoGroupsTextAndIcon.setVisibility(View.VISIBLE);
                 }
-
             }
                 mGroupsAdapter.setGroups(Utility.deleteTheSameGroups(groups));
         });
@@ -243,6 +241,7 @@ public class CountersFragment extends Fragment  {
                 mToolbar.setTitle(currentItem);
                 mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
                 mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
+                    Log.v("teg", selectedItem);
                     if (currentItem.equals(selectedItem)){
                         mCountersAdapter.setData(counters);
                         if (counters.size()<=0){
@@ -257,7 +256,7 @@ public class CountersFragment extends Fragment  {
                 mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
                 mToolbar.setTitle(selectedItem);
                 mViewModel.getCountersByGroup(selectedItem).observe(getViewLifecycleOwner(), counters -> {
-
+                    Log.v("teg", selectedItem);
                     if (currentItem.equals(selectedItem) ){
                         mCountersAdapter.setData(counters);
                         if (counters.size()<=0)
@@ -377,7 +376,11 @@ public class CountersFragment extends Fragment  {
 
             mToolbar.setOnMenuItemClickListener(i->{
                 if (i.getItemId() == R.id.counterAdd) {
-                    new CreateCounterDialog().show(getParentFragmentManager(), "Add Counter");
+                    if (currentItem.equals(getResources().getString(R.string.allCountersItem))){
+                        CreateCounterDialog.newInstance(null).show(getParentFragmentManager(),"addCounter");
+                    }else {
+                        CreateCounterDialog.newInstance(currentItem).show(getParentFragmentManager(),"addCounter");
+                    }
                 }
                 return true;
             });

@@ -45,29 +45,37 @@ public class CounterViewModel extends AndroidViewModel {
     public void incCounter(View view) {
         long maxValue;
         long incOn;
-        long minValue;
         long value = Objects.requireNonNull(mCounter.getValue()).value;
         incOn = mCounter.getValue().step;
         maxValue = mCounter.getValue().maxValue;
-        minValue = mCounter.getValue().minValue;
         value += incOn;
+
+//        if (value > maxValue) {
+//            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
+//            mCounter.getValue().value = maxValue;
+//        } else {
+//            mCounter.getValue().value = Math.max(minValue, value);
+//        }
+//        if (mCounter.getValue().value == minValue)
+//            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
+//
+//        //  if step is positive
+//        if (mCounter.getValue().value > mCounter.getValue().counterMaxValue)
+//          mCounter.getValue().counterMaxValue = mCounter.getValue().value;
+//
+//        //  if step is negative
+//        if (mCounter.getValue().value < mCounter.getValue().counterMinValue)
+//            mCounter.getValue().counterMinValue = mCounter.getValue().value;
 
         if (value > maxValue) {
             Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
             mCounter.getValue().value = maxValue;
         } else {
-            mCounter.getValue().value = Math.max(minValue, value);
+            mCounter.getValue().value = Math.max(mCounter.getValue().minValue, value);
         }
-        if (mCounter.getValue().value == minValue)
+        if (mCounter.getValue().value == mCounter.getValue().minValue){
             Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
-
-        //  if step is positive
-        if (mCounter.getValue().value > mCounter.getValue().counterMaxValue)
-          mCounter.getValue().counterMaxValue = mCounter.getValue().value;
-
-        //  if step is negative
-        if (mCounter.getValue().value < mCounter.getValue().counterMinValue)
-            mCounter.getValue().counterMinValue = mCounter.getValue().value;
+        }
 
         mAccessibility.playIncFeedback(view, String.valueOf(mCounter.getValue().value));
         mRepo.updateCounter(mCounter.getValue());
@@ -83,22 +91,32 @@ public class CounterViewModel extends AndroidViewModel {
         maxValue = mCounter.getValue().maxValue;
         value -= decOn;
 
+//        if (value < minValue){
+//            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
+//            mCounter.getValue().value = minValue;
+//        }else {
+//            mCounter.getValue().value = Math.min(maxValue, value);
+//        }
+//        if (mCounter.getValue().value == maxValue)
+//            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
+//
+//        //  if step is negative
+//        if (mCounter.getValue().value < mCounter.getValue().counterMinValue)
+//            mCounter.getValue().counterMinValue = mCounter.getValue().value;
+//
+//        //  if step is positive
+//        if (mCounter.getValue().value > mCounter.getValue().counterMaxValue)
+//            mCounter.getValue().counterMaxValue = mCounter.getValue().value;
+
         if (value < minValue){
-            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
             mCounter.getValue().value = minValue;
         }else {
-            mCounter.getValue().value = Math.min(maxValue, value);
+            mCounter.getValue().value = Math.min(mCounter.getValue().maxValue, value);
         }
-        if (mCounter.getValue().value == maxValue)
-            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
-
-        //  if step is negative
-        if (mCounter.getValue().value < mCounter.getValue().counterMinValue)
-            mCounter.getValue().counterMinValue = mCounter.getValue().value;
-
-        //  if step is positive
-        if (mCounter.getValue().value > mCounter.getValue().counterMaxValue)
-            mCounter.getValue().counterMaxValue = mCounter.getValue().value;
+        if (mCounter.getValue().value == mCounter.getValue().maxValue){
+            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
+        }
 
         mAccessibility.playDecFeedback(view, String.valueOf(mCounter.getValue().value));
         mRepo.updateCounter(mCounter.getValue());

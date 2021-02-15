@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="There no history yet"
+            android:text="@string/there_no_history_yet"
             app:layout_constraintEnd_toEndOf="@+id/iconThereAreNoCounters"
             app:layout_constraintStart_toStartOf="@+id/iconThereAreNoCounters"
             app:layout_constraintTop_toBottomOf="@+id/iconThereAreNoCounters" />

@@ -18,7 +18,10 @@
     <string name="selectAllSelectionMenu">Select all</string>
     <string name="editSelectionMenu">Edit</string>
     <string name="drawerSettings">Settings</string>
-
+    <string name="there_are_no_active_counters">There are no active counters</string>
+    <string name="click_on_the_button_below_to_create">click on the button below to create</string>
+    <string name="there_are_no_groups_yet">There are no groups</string>
+    <string name="there_no_history_yet">There no history</string>
 
     <!-- Counter fragment -->
     <string name="allCountersItem">All counters</string>

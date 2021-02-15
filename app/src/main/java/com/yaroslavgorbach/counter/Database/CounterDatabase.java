@@ -1,6 +1,7 @@
 package com.yaroslavgorbach.counter.Database;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -52,6 +53,7 @@ public abstract class CounterDatabase extends RoomDatabase {
             mDao = sInstance.counterDao();
             Date currentDate = new Date();
             currentDate.getTime();
+
             new Thread(() -> {
                 mDao.insert(new Counter("New counter",0, Counter.MAX_VALUE,
                         Counter.MIN_VALUE,

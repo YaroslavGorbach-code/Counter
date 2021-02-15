@@ -27,6 +27,14 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
     private CreateCounterDialogViewModel mViewModel;
     private TextInputEditText mCounterName_et;
 
+    public static CreateCounterDialog newInstance(String group) {
+        CreateCounterDialog f = new CreateCounterDialog();
+        // Supply index input as an argument.
+        Bundle args = new Bundle();
+        args.putString("group", group);
+        f.setArguments(args);
+        return f;
+    }
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -35,6 +43,8 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
        mViewModel = new ViewModelProvider(this).get(CreateCounterDialogViewModel.class);
        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
        mCounterName_et = view.findViewById(R.id.counterTitle_addCounter);
+       if (getArguments()!=null)
+       mGroups_et.setText(getArguments().getString("group"));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setView(view)
@@ -42,11 +52,13 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
                 .setPositiveButton(R.string.addCounterDialogCounterPositiveButton, (dialog, which) -> {
                     /*creating new counter and check title is not empty*/
                     String title  = mCounterName_et.getText().toString();
-                    String group = null;
+                    String group;
 
                     /*if group is not empty set it*/
                     if(!mGroups_et.getText().toString().trim().isEmpty()){
                         group = mGroups_et.getText().toString();
+                    }else {
+                        group = null;
                     }
 
                     /*passing variables to create a counter*/

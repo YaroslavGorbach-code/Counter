@@ -17,6 +17,10 @@
     <string name="selectAllSelectionMenu">Выбрать все</string>
     <string name="editSelectionMenu">Редактировать</string>
     <string name="drawerSettings">Настройки</string>
+    <string name="click_on_the_button_below_to_create">Нажмите кнопку ниже, чтобы создать</string>
+    <string name="there_are_no_active_counters">Счетчиков нету!</string>
+    <string name="there_are_no_groups_yet">Груп нету</string>
+    <string name="there_no_history_yet">Истории нету</string>
 
     <!-- Counter fragment -->
     <string name="allCountersItem">Все cчетчики</string>
@@ -67,7 +71,7 @@
     <!-- Preference Display -->
     <string name="display_header">Дисплей</string>
     <string name="nightMod">Ночной режим</string>
-    <string name="left_hand_mod">Режим для левой руки</string>
+    <string name="left_hand_mod">Левосторонний режим</string>
     <string name="keep_screen_on">Не выключать экран</string>
     <string name="SettingToolbar">Настройки</string>
 
