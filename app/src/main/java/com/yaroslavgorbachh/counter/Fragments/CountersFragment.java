@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
@@ -50,6 +52,10 @@ import com.yaroslavgorbachh.counter.RecyclerViews.Adapters.GroupsAdapter;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.ViewModels.CountersViewModel;
 import com.yaroslavgorbachh.counter.Activityes.MainActivity;
+
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
 
@@ -231,38 +237,62 @@ public class CountersFragment extends Fragment  {
             mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
         }
 
+        /*filter the list depending on the selected group */
         mGroupsAdapter.getSelectedItem().observe(getViewLifecycleOwner(), selectedItem -> {
-            if(selectedItem.equals(getResources().getString(R.string.allCountersItem))){
-                currentItem = getResources().getString(R.string.allCountersItem);
-                mToolbar.setTitle(currentItem);
-                mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
-                mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
-                    Log.v("teg", selectedItem);
-                    if (currentItem.equals(selectedItem)){
-                        mCountersAdapter.setData(counters);
+            mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
+            mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
+                        if (!selectedItem.equals(getResources().getString(R.string.allCountersItem))){
+                            mCountersAdapter.setData(counters.stream()
+                                    .filter(counter -> counter.grope!=null && counter.grope.equals(selectedItem)).collect(Collectors.toList()));
+
+                            /*when all counters of particular group was deleted */
+                            if (mCountersAdapter.getItemCount()==0)
+                                mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
+
+                        }else {
+                            mCountersAdapter.setData(counters);
+                        }
+
                         if (counters.size()<=0){
                             mIconAndTextThereAreNoCounters.setVisibility(View.VISIBLE);
                         }else {
                             mIconAndTextThereAreNoCounters.setVisibility(View.GONE);
                         }
-                    }
                 });
-
-            }else {
-                mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
-                mToolbar.setTitle(selectedItem);
-                mViewModel.getCountersByGroup(selectedItem).observe(getViewLifecycleOwner(), counters -> {
-                    Log.v("teg", selectedItem);
-                    if (currentItem.equals(selectedItem) ){
-                        mCountersAdapter.setData(counters);
-                        if (counters.size()<=0)
-                            mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
-                    }
-                });
-            }
             currentItem = selectedItem;
+            mToolbar.setTitle(currentItem);
             mCountersAdapter.clearSelectedCounters();
             new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 200);
+
+//            if(selectedItem.equals(getResources().getString(R.string.allCountersItem))){
+//                currentItem = getResources().getString(R.string.allCountersItem);
+//                mToolbar.setTitle(currentItem);
+//                mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
+//                mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
+//                    Log.v("teg", selectedItem);
+//                    if (currentItem.equals(selectedItem)){
+//                        mCountersAdapter.setData(counters);
+//                        if (counters.size()<=0){
+//                            mIconAndTextThereAreNoCounters.setVisibility(View.VISIBLE);
+//                        }else {
+//                            mIconAndTextThereAreNoCounters.setVisibility(View.GONE);
+//                        }
+//                    }
+//                });
+//
+//            }else {
+//                mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
+//                mToolbar.setTitle(selectedItem);
+//                mViewModel.getCountersByGroup(selectedItem).observe(getViewLifecycleOwner(), counters -> {
+//                    Log.v("teg", selectedItem);
+//                    if (currentItem.equals(selectedItem) ){
+//                        mCountersAdapter.setData(counters);
+//                        if (counters.size()<=0)
+//                            mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
+//                    }
+//                });
+//            }
+
         });
         return view;
     }
