@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.yaroslavgorbach.counter">
+    package="com.yaroslavgorbachh.counter">
 
     <application
         android:allowBackup="true"
@@ -11,8 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activityes.SettingsActivity"/>
-        <activity android:name=".Activityes.MainActivity">
+        <activity android:name="com.yaroslavgorbachh.counter.Activityes.SettingsActivity"/>
+        <activity android:name="com.yaroslavgorbachh.counter.Activityes.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

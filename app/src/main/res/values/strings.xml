@@ -22,6 +22,8 @@
     <string name="click_on_the_button_below_to_create">click on the button below to create</string>
     <string name="there_are_no_groups_yet">There are no groups</string>
     <string name="there_no_history_yet">There no history</string>
+    <string name="selectionModTitle">Selected: %1$s</string>
+
 
     <!-- Counter fragment -->
     <string name="allCountersItem">All counters</string>
@@ -31,6 +33,7 @@
     <string name="min">Min</string>
     <string name="counterFragmentEditMenu">Edit</string>
     <string name="counterFragmentDeleteMenu">Delete</string>
+    <string name="createEditCounterEditToolbarTitle">Edit</string>
 
     <!-- History fragment -->
     <string name="historyFragmentToolbarTitle">History</string>

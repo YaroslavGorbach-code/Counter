@@ -51,6 +51,8 @@
     <string name="createEditCounterCounterStepText">1</string>
     <string name="createEditCounterCounterMaxValueHint">Максимальное значение</string>
     <string name="createEditCounterCounterMinValueHint">Минимальное значение</string>
+    <string name="createEditCounterEditToolbarTitle">Редактировать</string>
+
 
     <!-- Delete counter dialog -->
     <string name="deleteCounterDialogTitle">Удалить счетчик?</string>
@@ -65,12 +67,14 @@
     <string name="counterReset">Счетчик сброшен</string>
     <string name="counterResetUndo">ОТМЕНИТЬ</string>
     <string name="thisIsMaximum">Это максимум</string>
-    <string name="thisIsMinimum">Это миниимум</string>
+    <string name="thisIsMinimum">Это минимум</string>
+    <string name="selectionModTitle">Выбрано: %1$s</string>
+
 
 
     <!-- Preference Display -->
     <string name="display_header">Дисплей</string>
-    <string name="nightMod">Ночной режим</string>
+    <string name="nightMod">Темная тема</string>
     <string name="left_hand_mod">Левосторонний режим</string>
     <string name="keep_screen_on">Не выключать экран</string>
     <string name="SettingToolbar">Настройки</string>

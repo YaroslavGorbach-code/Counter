@@ -6,8 +6,7 @@
     app:startDestination="@id/countersFragment">
     <fragment
         android:id="@+id/countersFragment"
-        tools:layout="@layout/counters_fragment"
-        android:name="com.yaroslavgorbach.counter.Fragments.CountersFragment"
+        android:name="com.yaroslavgorbachh.counter.Fragments.CountersFragment"
         android:label="@string/allCountersItem" >
         <action
             android:id="@+id/action_countersFragment_to_counterFragment"
@@ -21,8 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/counterFragment"
-        android:name="com.yaroslavgorbach.counter.Fragments.CounterFragment"
-        android:label="fragment_counter"
+        android:name="com.yaroslavgorbachh.counter.Fragments.CounterFragment"
         tools:layout="@layout/fragment_counter" >
         <argument
             android:name="counterId"
@@ -40,8 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/counterHistoryFragment"
-        android:name="com.yaroslavgorbach.counter.Fragments.CounterHistoryFragment"
-        android:label="fragment_counter_history"
+        android:name="com.yaroslavgorbachh.counter.Fragments.CounterHistoryFragment"
         tools:layout="@layout/fragment_counter_history" >
         <argument
             android:name="counterId"
@@ -50,8 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/createEditCounterFragment"
-        android:name="com.yaroslavgorbach.counter.Fragments.CreateEditCounterFragment"
-        android:label="fragment_create_edit_counter"
+        android:name="com.yaroslavgorbachh.counter.Fragments.CreateEditCounterFragment"
         tools:layout="@layout/fragment_create_edit_counter" >
         <argument
             android:name="counterId"
@@ -60,8 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutCounterFragment"
-        android:name="com.yaroslavgorbach.counter.Fragments.AboutCounterFragment"
-        android:label="fragment_about_counter"
+        android:name="com.yaroslavgorbachh.counter.Fragments.AboutCounterFragment"
         tools:layout="@layout/fragment_about_counter" >
         <argument
             android:name="counterId"
