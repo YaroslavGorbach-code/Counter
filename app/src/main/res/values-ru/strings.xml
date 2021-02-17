@@ -30,6 +30,7 @@
     <string name="min">Min</string>
     <string name="counterFragmentEditMenu">Редактировать</string>
     <string name="counterFragmentDeleteMenu">Удалить</string>
+    <string name="foolScreen">Полноэкранный режим</string>
 
     <!-- History fragment -->
     <string name="historyFragmentToolbarTitle">История</string>

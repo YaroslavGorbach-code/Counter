@@ -2,7 +2,6 @@ package com.yaroslavgorbachh.counter.ViewModels;
 
 import android.app.Application;
 import android.content.res.Resources;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,26 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import java.util.Date;
-import java.util.Objects;
-
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
-import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.Utility;
 
-public class CounterViewModel extends AndroidViewModel {
+import java.util.Objects;
+
+public class FullscreenCounterViewModel extends AndroidViewModel {
     private final Repo mRepo;
-    private long mOldValue;
     public LiveData<Counter> counter;
     private final Accessibility mAccessibility;
     private final Resources mRes;
 
-
-
-    public CounterViewModel(@NonNull Application application, long counterId) {
+    public FullscreenCounterViewModel(@NonNull Application application, long counterId) {
         super(application);
         mRepo = new Repo(application);
         counter = mRepo.getCounter(counterId);
@@ -93,33 +86,4 @@ public class CounterViewModel extends AndroidViewModel {
         mRepo.updateCounter(counter.getValue());
     }
 
-    public void resetCounter(){
-        mOldValue = Objects.requireNonNull(counter.getValue()).value;
-        counter.getValue().lastResetValue = mOldValue;
-        counter.getValue().lastResetDate = new Date();
-        if (counter.getValue().minValue > 0){
-            counter.getValue().value = counter.getValue().minValue;
-        }else {
-            counter.getValue().value = 0;
-        }
-        mAccessibility.speechOutput(String.valueOf(counter.getValue().value));
-        mRepo.updateCounter(counter.getValue());
-    }
-
-    public void restoreValue(){
-        Objects.requireNonNull(counter.getValue()).value = mOldValue;
-        mAccessibility.speechOutput(String.valueOf(counter.getValue().value));
-        mRepo.updateCounter(counter.getValue());
-    }
-
-    public void saveValueToHistory(){
-        mRepo.insertCounterHistory(new CounterHistory(Objects.requireNonNull(
-                counter.getValue()).value, Utility.formatDateToString(new Date()), counter.getValue().id));
-        Toast.makeText(getApplication(), getApplication().getString(R.string.createEditCounterCounterValueHint) + " " +
-                counter.getValue().value + " " + getApplication().getString(R.string.saveToHistoryToast), Toast.LENGTH_SHORT).show();
-    }
-    public void deleteCounter(){
-        mRepo.deleteCounterHistory(Objects.requireNonNull(counter.getValue()).id);
-        new Handler().postDelayed(() -> mRepo.deleteCounter(counter.getValue()),500);
-    }
 }

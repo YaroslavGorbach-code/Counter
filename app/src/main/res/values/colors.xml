@@ -6,7 +6,7 @@
     <color name="itemDraggingColor">#FFD1D1</color>
     <color name="counterItemButtonsColor">#E7E7E7</color>
     <color name="dividerLineColor">#1F000000</color>
-    <color name="statusBarColor">#090909</color>
+    <color name="statusBarColor">#090909</color>q
     <color name="groupItemSelectedColor">#33C51162</color>
     <color name="groupItemBackgroundColor">?android:colorBackground</color>
     <color name="counterValueColor">#000000</color>
@@ -19,16 +19,5 @@
 
 
 
-
-
-
-
-    <color name="orange">#FF1744</color>
-    <color name="red">#F50057</color>
-    <color name="violet">#651FFF</color>
-    <color type="color" name="blue">#00B0FF</color>
-    <color name="turquoise">#00E5FF</color>
-    <color name="green">#00E676</color>
-    <color name="yellow">#FFEA00</color>
 
 </resources>

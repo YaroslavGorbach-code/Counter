@@ -62,7 +62,7 @@ public class CreateEditCounterFragment extends Fragment {
         mToolbar.setNavigationOnClickListener(i -> {
             Navigation.findNavController(view).popBackStack();
         });
-        mToolbar.inflateMenu(R.menu.menu_counter_create_activity);
+        mToolbar.inflateMenu(R.menu.menu_counter_create_fragment);
 
         mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
             /*if counter == null that means that counter will be created*/

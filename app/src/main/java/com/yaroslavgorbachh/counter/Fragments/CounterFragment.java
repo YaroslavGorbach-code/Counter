@@ -28,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.DeleteCounterDialog;
+import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbachh.counter.ViewModels.Factories.CounterViewModelFactory;
 import com.yaroslavgorbachh.counter.R;
@@ -84,7 +85,7 @@ public class CounterFragment extends Fragment {
                 mCounterId)).get(CounterViewModel.class);
 
         /*inflating menu, navigationIcon and set listeners*/
-        mToolbar.inflateMenu(R.menu.menu_counter_activiry);
+        mToolbar.inflateMenu(R.menu.menu_counter_fragment);
         mToolbar.setOnMenuItemClickListener(i -> {
             switch (i.getItemId()) {
                 case R.id.counterDelete:
@@ -105,6 +106,10 @@ public class CounterFragment extends Fragment {
                     Navigation.findNavController(view).navigate(CounterFragmentDirections.
                             actionCounterFragmentToAboutCounterFragment().setCounterId(mCounterId));
                     break;
+                case R.id.fullScreen:
+                    Navigation.findNavController(view).navigate(CounterFragmentDirections.
+                            actionCounterFragmentToFullscreenCounterFragment().setCounterId(mCounterId));
+                    break;
             }
             return true;
         });
@@ -113,11 +118,11 @@ public class CounterFragment extends Fragment {
         mToolbar.setNavigationOnClickListener(i -> Navigation.findNavController(view).popBackStack());
 
         /*listener for current counter*/
-        mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
+        mViewModel.counter.observe(getViewLifecycleOwner(), counter -> {
 
             /*if counter == null that means it was deleted*/
             if (counter != null) {
-                mValue_tv.setTextSize(mViewModel.getValueTvSize());
+                mValue_tv.setTextSize(Utility.getValueTvSize(mViewModel.counter.getValue()));
                 mValue_tv.setText(String.valueOf(counter.value));
                 mCounterTitle.setText(counter.title);
                 mGroupTitle.setText(counter.grope);

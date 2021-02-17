@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_counterFragment_to_aboutCounterFragment"
             app:destination="@id/aboutCounterFragment" />
+        <action
+            android:id="@+id/action_counterFragment_to_fullscreenCounterFragment"
+            app:destination="@id/fullscreenCounterFragment" />
     </fragment>
     <fragment
         android:id="@+id/counterHistoryFragment"
@@ -58,6 +61,16 @@
         android:id="@+id/aboutCounterFragment"
         android:name="com.yaroslavgorbachh.counter.Fragments.AboutCounterFragment"
         tools:layout="@layout/fragment_about_counter" >
+        <argument
+            android:name="counterId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullscreenCounterFragment"
+        android:name="com.yaroslavgorbachh.counter.Fragments.FullscreenCounterFragment"
+        android:label="fragment_fullscreen_counter"
+        tools:layout="@layout/fragment_fullscreen_counter" >
         <argument
             android:name="counterId"
             app:argType="long"

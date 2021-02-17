@@ -34,6 +34,8 @@
     <string name="counterFragmentEditMenu">Edit</string>
     <string name="counterFragmentDeleteMenu">Delete</string>
     <string name="createEditCounterEditToolbarTitle">Edit</string>
+    <string name="foolScreen">Full screen</string>
+
 
     <!-- History fragment -->
     <string name="historyFragmentToolbarTitle">History</string>
@@ -104,6 +106,11 @@
     <string name="lastReset">Last reset</string>
     <string name="no">No</string>
     <string name="created">Created: %1$s</string>
+
+
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
 </resources>
