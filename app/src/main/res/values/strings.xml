@@ -81,6 +81,7 @@
     <string name="left_hand_mod">Left hand mod</string>
     <string name="keep_screen_on">Keep screen on</string>
     <string name="SettingToolbar">Settings</string>
+    <string name="lockOrientation">Luck orientation</string>
 
     <!-- Preference Feedback -->
     <string name="feedBack_header">Feedback</string>
@@ -94,6 +95,12 @@
     <string name="fast_count_speed">Speed of fast counting</string>
     <string name="summary_fast_count_speed">Activates by long press on +/- buttons</string>
 
+    <!-- Preference Other -->
+    <string name="other_header">Other</string>
+    <string name="removeAllCounters">Remove all counters</string>
+    <string name="removeAllCountersSummary">This action cannot be undone</string>
+
+
     <!-- About counter fragment -->
     <string name="aboutCounter">About counter</string>
     <string name="counterName">Counter name</string>
@@ -106,11 +113,6 @@
     <string name="lastReset">Last reset</string>
     <string name="no">No</string>
     <string name="created">Created: %1$s</string>
-
-
-
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
 </resources>

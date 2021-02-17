@@ -102,10 +102,6 @@ public class CountersViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<List<Counter>> getCountersByGroup(String group_title) {
-        return mRepo.getCountersByGroup(group_title);
-    }
-
     public LiveData<List<String>> getGroups() {
         return mRepo.getGroups();
     }

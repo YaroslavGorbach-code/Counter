@@ -34,6 +34,10 @@ public class Repo {
         new Thread(() -> mCounterDao.update(counter)).start();
     }
 
+    public void deleteCounters(){
+        new Thread(mCounterDao::deleteAllCounters).start();
+    }
+
     public void insertCounterHistory(CounterHistory counterHistory){
         new Thread(() -> mCounterHistoryDao.insert(counterHistory)).start();
     }
@@ -52,10 +56,6 @@ public class Repo {
 
     public LiveData<List<Counter>> getAllCounters(){
        return mCounterDao.getAllCounters();
-    }
-
-    public LiveData<List<Counter>> getCountersByGroup(String group){
-        return mCounterDao.getCountersByGroup(group);
     }
 
     public LiveData<Counter> getCounter(long id) {

@@ -2,7 +2,10 @@ package com.yaroslavgorbachh.counter.Activityes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import com.yaroslavgorbachh.counter.Fragments.SettingsFragment;
@@ -21,6 +24,14 @@ public class SettingsActivity extends AppCompatActivity  {
         Toolbar mToolbar = findViewById(R.id.toolbar_settings);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setNavigationOnClickListener(v -> finish());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("lockOrientation", true ) ){
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }else {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
+
     }
+
 
 }

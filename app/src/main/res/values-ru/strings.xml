@@ -9,7 +9,7 @@
         </string-array>
 
     <!-- Counters fragment -->
-    <string name="navigationViewToolbar">Групы</string>
+    <string name="navigationViewToolbar">Группы</string>
     <string name="countersFragmentToolbarTitle">Все счетчики</string>
     <string name="rate">Оценить</string>
     <string name="resetSelectionMenu">Сбросить выбранные</string>
@@ -19,8 +19,8 @@
     <string name="drawerSettings">Настройки</string>
     <string name="click_on_the_button_below_to_create">Нажмите кнопку ниже, чтобы создать</string>
     <string name="there_are_no_active_counters">Счетчиков нету!</string>
-    <string name="there_are_no_groups_yet">Груп нету</string>
-    <string name="there_no_history_yet">Истории нету</string>
+    <string name="there_are_no_groups_yet">Групп нету</string>
+    <string name="there_no_history_yet">Историй нету</string>
 
     <!-- Counter fragment -->
     <string name="allCountersItem">Все cчетчики</string>
@@ -39,7 +39,7 @@
     <!-- Add counter dialog -->
     <string name="addCounterDialogTitle">Добавить счетчик</string>
     <string name="addCounterDialogCounterTitle">Имя счетчика</string>
-    <string name="addCounterDialogCounterGroup">Група</string>
+    <string name="addCounterDialogCounterGroup">Группа</string>
     <string name="addCounterDialogCounterPositiveButton">Создать</string>
     <string name="addCounterDialogCounterNegativeButton">Отмена</string>
 
@@ -79,6 +79,7 @@
     <string name="left_hand_mod">Левосторонний режим</string>
     <string name="keep_screen_on">Не выключать экран</string>
     <string name="SettingToolbar">Настройки</string>
+    <string name="lockOrientation">Не поворачивать экран</string>
 
     <!-- Preference Feedback -->
     <string name="feedBack_header">Обратная связь</string>
@@ -90,7 +91,13 @@
     <string name="control_header">Управление</string>
     <string name="use_volume_buttons">Использовать клавиши громкости</string>
     <string name="fast_count_speed">Скорость быстрого счета</string>
-    <string name="summary_fast_count_speed">Активируеться долгим нажатием на кнопки +/-</string>
+    <string name="summary_fast_count_speed">Активируется долгим нажатием на кнопки +/-</string>
+
+    <!-- Preference Other -->
+    <string name="other_header">Другое</string>
+    <string name="removeAllCounters">Удалить все счетчики</string>
+    <string name="removeAllCountersSummary">Это действие нельзя будет отменить</string>
+
 
     <!-- About counter fragment -->
     <string name="aboutCounter">О счетчике</string>
@@ -98,7 +105,7 @@
     <string name="valueBeforeReset">Значение до сброса</string>
     <string name="value">Значение</string>
     <string name="step">Шаг</string>
-    <string name="group">Група</string>
+    <string name="group">Группа</string>
     <string name="minValue">Минимум</string>
     <string name="maxValue">Максимум</string>
     <string name="lastReset">Последний сброс</string>

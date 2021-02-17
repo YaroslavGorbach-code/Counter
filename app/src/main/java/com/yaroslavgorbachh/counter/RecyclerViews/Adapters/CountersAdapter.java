@@ -44,14 +44,14 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         private final CounterItemListeners mCounterItemListeners;
         private final ItemTouchHelper.Callback callback = new MyItemTouchHelper(this);
         public ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        public final boolean mLeftHandMod;
+        public final boolean leftHandMod;
 
         public CountersAdapter(CounterItemListeners counterItemListeners, Application application) {
             setHasStableIds(true);
             mCounterSelectionMod = new CounterSelectionMod(application);
             mCounterItemListeners = counterItemListeners;
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application);
-            mLeftHandMod = sharedPreferences.getBoolean("leftHandMod", false);
+            leftHandMod = sharedPreferences.getBoolean("leftHandMod", false);
         }
 
         public void setData(List<Counter> data) {
@@ -102,7 +102,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         @NonNull
         @Override
         public CountersAdapter.Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            if (mLeftHandMod){
+            if (leftHandMod){
                 return new CountersAdapter.Vh(parent, R.layout.counter_left_hend_i);
             }else {
                 return new CountersAdapter.Vh(parent, R.layout.counter_i);

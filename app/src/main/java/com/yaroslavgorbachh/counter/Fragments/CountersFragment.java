@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -284,11 +285,17 @@ public class CountersFragment extends Fragment  {
         super.onStart();
         /*we initialise all this methods in on start because their behavior can change depends on pref*/
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        if (sharedPreferences.getBoolean("leftHandMod", false ) && !mCountersAdapter.mLeftHandMod){
+        if (sharedPreferences.getBoolean("leftHandMod", false ) && !mCountersAdapter.leftHandMod){
             getActivity().recreate();
         }
-        if (!sharedPreferences.getBoolean("leftHandMod", false ) && mCountersAdapter.mLeftHandMod){
+        if (!sharedPreferences.getBoolean("leftHandMod", false ) && mCountersAdapter.leftHandMod){
             getActivity().recreate();
+        }
+
+        if (sharedPreferences.getBoolean("lockOrientation", true ) ){
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
 
         if (sharedPreferences.getBoolean("leftHandMod", false )){

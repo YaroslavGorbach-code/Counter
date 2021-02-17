@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 
@@ -17,8 +18,8 @@ import java.util.Locale;
 public class Accessibility {
 
     private final SoundPool mSoundPool;
-    private final int mSoundIncId;
-    private final int mSoundDecId;
+    private  int mSoundIncId;
+    private  int mSoundDecId;
     private final boolean mVibrationIsAllowed;
     private final boolean mClickSoundIsAllowed;
     private final boolean mSpeechOutputIsAllowed;
@@ -34,8 +35,13 @@ public class Accessibility {
                 .setMaxStreams(4)
                 .setAudioAttributes(audioAttributes)
                 .build();
-       mSoundDecId = mSoundPool.load(context, R.raw.dec_click_sound, 1);
-       mSoundIncId = mSoundPool.load(context, R.raw.inc_click_sound, 1);
+            try {
+                mSoundDecId = mSoundPool.load(context, R.raw.dec_click_sound, 1);
+                mSoundIncId = mSoundPool.load(context, R.raw.inc_click_sound, 1);
+            }catch (Exception e){
+                Log.e(null, "Resources not found");
+            }
+
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         mVibrationIsAllowed = sharedPreferences.getBoolean("clickVibration", false);

@@ -10,6 +10,10 @@
             app:title="@string/keep_screen_on"
             app:defaultValue="true"/>
         <SwitchPreferenceCompat
+            app:key="lockOrientation"
+            app:title="@string/lockOrientation"
+            app:defaultValue="true"/>
+        <SwitchPreferenceCompat
             app:key="leftHandMod"
             app:title="@string/left_hand_mod" />
     </PreferenceCategory>
@@ -49,6 +53,15 @@
             app:title="@string/fast_count_speed"
 
             />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/other_header">
+    <Preference
+        app:key="removeAllCounters"
+        app:title="@string/removeAllCounters"
+        app:summary="@string/removeAllCountersSummary"
+        />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
