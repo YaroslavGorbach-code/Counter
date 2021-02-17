@@ -23,6 +23,8 @@
     <string name="there_are_no_groups_yet">There are no groups</string>
     <string name="there_no_history_yet">There no history</string>
     <string name="selectionModTitle">Selected: %1$s</string>
+    <string name="exportSelected">Export in CSV</string>
+
 
 
     <!-- Counter fragment -->
@@ -99,6 +101,8 @@
     <string name="other_header">Other</string>
     <string name="removeAllCounters">Remove all counters</string>
     <string name="removeAllCountersSummary">This action cannot be undone</string>
+    <string name="exportAllCountersInCSV">Export counters</string>
+    <string name="exportAllCountersInCSVSummary">Export all counters in CSV format</string>
 
 
     <!-- About counter fragment -->

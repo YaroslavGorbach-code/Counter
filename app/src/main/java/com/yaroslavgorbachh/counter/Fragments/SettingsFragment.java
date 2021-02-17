@@ -8,32 +8,47 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.Observer;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.DeleteCounterDialog;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.Utility;
+
+import java.util.List;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
     public Preference mRemoveAllCountersPref;
+    public Preference mExportAllCountersPref;
+    private Repo mRepo;
 
     @Override
     public void onStart() {
         super.onStart();
         getPreferenceManager().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
+       mRepo = new Repo(getActivity().getApplication());
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
         mRemoveAllCountersPref = findPreference("removeAllCounters");
+        mExportAllCountersPref = findPreference("exportAllCounters");
         mRemoveAllCountersPref.setOnPreferenceClickListener(preference -> {
             new DeleteCounterDialog(() -> {
-                new Repo(getActivity().getApplication()).deleteCounters();
+                mRepo.deleteCounters();
             },2).show(getChildFragmentManager(),"tag");
+            return true;
+        });
+        mExportAllCountersPref.setOnPreferenceClickListener(preference -> {
+            mRepo.getAllCounters().observe(getViewLifecycleOwner(), list -> {
+                startActivity(Utility.getShareCountersInCSVIntent(list));
+            });
             return true;
         });
     }

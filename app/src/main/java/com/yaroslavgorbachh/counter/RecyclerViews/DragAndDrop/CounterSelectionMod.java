@@ -173,6 +173,10 @@ public class CounterSelectionMod {
         return mCountSelected;
     }
 
+    public List<Counter> getSelectedCounters() {
+        return mSelectedCounters;
+    }
+
     public Counter getSelectedCounter() {
         return mSelectedCounters.get(0);
     }
@@ -209,5 +213,6 @@ public class CounterSelectionMod {
         mSelectedCounters.remove(counter);
         mSelectedVhs.remove(viewHolder);
     }
+
 
 }

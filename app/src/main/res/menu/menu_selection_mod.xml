@@ -18,6 +18,11 @@
         app:showAsAction="ifRoom"
         />
 
+
+    <item android:title="@string/exportSelected"
+        android:id="@+id/exportSelected"
+        />
+
     <item android:title="@string/deleteSelectionMenu"
         android:id="@+id/deleteSelected"
         />

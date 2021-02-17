@@ -1,6 +1,7 @@
 package com.yaroslavgorbachh.counter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -78,5 +79,17 @@ public class Utility {
                 return 40;
         }
         return 0;
+    }
+
+    public static Intent getShareCountersInCSVIntent(List<Counter> list){
+        String textToSend = "";
+        for (Counter counter : list) {
+            textToSend += counter.title +": " + counter.value + "\n";
+        }
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, textToSend);
+        sendIntent.setType("text/plain");
+        return Intent.createChooser(sendIntent, null);
     }
 }

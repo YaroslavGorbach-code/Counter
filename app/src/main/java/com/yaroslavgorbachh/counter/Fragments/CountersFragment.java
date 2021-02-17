@@ -353,6 +353,10 @@ public class CountersFragment extends Fragment  {
                                     mCountersAdapter.undoReset();
                                 }).show();
                         break;
+                    case R.id.exportSelected:{
+                        startActivity(Utility.getShareCountersInCSVIntent(mCountersAdapter.getSelectedCounters()));
+                        break;
+                    }
                     case R.id.deleteSelected:
                         new DeleteCounterDialog(()->{
                             mCountersAdapter.deleteSelectedCounters();
