@@ -101,6 +101,7 @@
     <string name="removeAllCountersSummary">Это действие нельзя будет отменить</string>
     <string name="exportAllCountersInCSV">Экспортировать счетчики</string>
     <string name="exportAllCountersInCSVSummary">Экспортировать все счетчики в CSV формате</string>
+    <string name="resetAllCounters">Сбросить все счетчики</string>
 
 
     <!-- About counter fragment -->

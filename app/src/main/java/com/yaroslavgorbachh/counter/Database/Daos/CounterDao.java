@@ -25,6 +25,10 @@ public interface CounterDao {
 
     @Query("SELECT * FROM counter_table ORDER BY createDataSort DESC")
     LiveData<List<Counter>> getAllCounters();
+
+    @Query("SELECT * FROM counter_table ORDER BY createDataSort DESC")
+    List<Counter> getAllCountersNoLiveData();
+
     @Query("DELETE FROM counter_table")
     void deleteAllCounters();
 

@@ -103,6 +103,7 @@
     <string name="removeAllCountersSummary">This action cannot be undone</string>
     <string name="exportAllCountersInCSV">Export counters</string>
     <string name="exportAllCountersInCSVSummary">Export all counters in CSV format</string>
+    <string name="resetAllCounters">Reset all counters</string>
 
 
     <!-- About counter fragment -->

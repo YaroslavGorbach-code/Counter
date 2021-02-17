@@ -9,6 +9,7 @@ import com.yaroslavgorbachh.counter.Database.Daos.CounterHistoryDao;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Repo {
@@ -46,6 +47,10 @@ public class Repo {
         new Thread(() -> mCounterHistoryDao.delete(counterId)).start();
     }
 
+    public List<Counter> getAllCountersNoLiveData(){
+       return mCounterDao.getAllCountersNoLiveData();
+    }
+
     public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId){
         return mCounterHistoryDao.getCounterHistoryList(counterId);
     }
@@ -65,7 +70,6 @@ public class Repo {
     public LiveData<List<String>> getGroups(){
         return mCounterDao.getGroups();
     }
-
 
 }
 
