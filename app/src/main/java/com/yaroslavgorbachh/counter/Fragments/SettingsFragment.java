@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Database.Repo;
+import com.yaroslavgorbachh.counter.Fragments.Dialogs.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.DeleteCounterDialog;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
@@ -29,6 +30,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public Preference mRemoveAllCountersPref;
     public Preference mResetAllCountersPref;
     public Preference mExportAllCountersPref;
+    private Preference mChangeAccentColorPref;
     private Repo mRepo;
     private final List<Counter> mCopyBeforeReset = new ArrayList<>();
 
@@ -46,7 +48,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         mRemoveAllCountersPref = findPreference("removeAllCounters");
         mResetAllCountersPref = findPreference("resetAllCounters");
         mExportAllCountersPref = findPreference("exportAllCounters");
-
+        mChangeAccentColorPref = findPreference("changeAccentColor");
         mRemoveAllCountersPref.setOnPreferenceClickListener(preference -> {
             new DeleteCounterDialog(() -> {
                 mRepo.deleteCounters();
@@ -57,7 +59,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         mResetAllCountersPref.setOnPreferenceClickListener(preference -> {
             resetSelectedCounters();
             Snackbar.make(requireView(), getResources().getString(R.string
-                    .counterReset), BaseTransientBottomBar.LENGTH_LONG)
+                    .countersReset), BaseTransientBottomBar.LENGTH_LONG)
                     .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
                         for (Counter counterBeforeReset : mCopyBeforeReset) {
                             mRepo.updateCounter(counterBeforeReset);
@@ -70,6 +72,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             mRepo.getAllCounters().observe(getViewLifecycleOwner(), list -> {
                 startActivity(Utility.getShareCountersInCSVIntent(list));
             });
+            return true;
+        });
+
+        mChangeAccentColorPref.setOnPreferenceClickListener(preference -> {
+            ColorPickerDialog.newInstance().show(getParentFragmentManager(), "colorPicker");
             return true;
         });
     }

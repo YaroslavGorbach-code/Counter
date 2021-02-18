@@ -82,13 +82,13 @@ public class Utility {
     }
 
     public static Intent getShareCountersInCSVIntent(List<Counter> list){
-        String textToSend = "";
+        StringBuilder textToSend = new StringBuilder();
         for (Counter counter : list) {
-            textToSend += counter.title +": " + counter.value + "\n";
+            textToSend.append(counter.title).append(": ").append(counter.value).append("\n");
         }
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, textToSend);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, textToSend.toString());
         sendIntent.setType("text/plain");
         return Intent.createChooser(sendIntent, null);
     }

@@ -15,11 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.yaroslavgorbachh.counter.InputFilters;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.ViewModels.CreateEditCounterViewModel;
 import com.yaroslavgorbachh.counter.ViewModels.Factories.CreateEditCounterViewModelFactory;
+
+import java.util.Objects;
 
 
 public class CreateEditCounterFragment extends Fragment {
@@ -115,63 +118,24 @@ public class CreateEditCounterFragment extends Fragment {
 
 
     private void updateCreateCounter() {
-        /*if title is empty show error*/
-        if (String.valueOf(mTitle_et.getText()).trim().isEmpty()) {
-            mTitle_et.setError("This field can not be empty");
-        } else {
-            mTitle = mTitle_et.getText().toString();
-        }
-
-        /*if value is empty show error*/
-        if (String.valueOf(mValue_et.getText()).trim().isEmpty() ||
-                String.valueOf(mValue_et.getText()).matches("-") ) {
-            mValue_et.setError("This field can not be empty");
-            mValue_et.setText(null);
-        } else {
+        if (InputFilters.titleFilter(mTitle_et)
+                && InputFilters.valueFilter(mValue_et)
+                && InputFilters.stepFilter(mStep_et)){
+            mTitle = Objects.requireNonNull(mTitle_et.getText()).toString();
             mValue = Long.parseLong(String.valueOf(mValue_et.getText()));
-        }
-
-        /*if step is empty or 0 show error*/
-        if (String.valueOf(mStep_et.getText()).trim().isEmpty()
-                || String.valueOf(mStep_et.getText()).matches("0+")
-                || String.valueOf(mStep_et.getText()).matches("-")) {
-            mStep_et.setError("This field can not be empty or 0");
-            mStep_et.setText(null);
-        } else {
             mStep = Long.parseLong(String.valueOf(mStep_et.getText()));
-        }
-
-
-        /*if maxValue is empty set default value if is not set value from editText*/
-        if (String.valueOf(mMaxValue_et.getText()).trim().isEmpty()
-                || String.valueOf(mMaxValue_et.getText()).matches("-")) {
-            mMaxValue = Counter.MAX_VALUE;
         }else {
-            mMaxValue = Long.parseLong(String.valueOf(mMaxValue_et.getText()));
+            return;
         }
 
-        /*if minValue is empty set default value if is not set value from editText*/
-        if (String.valueOf(mMinValue_et.getText()).trim().isEmpty()
-                || String.valueOf(mMinValue_et.getText()).matches("-")) {
-            mMinValue = Counter.MIN_VALUE;
-        } else {
-            mMinValue = Long.parseLong(String.valueOf(mMinValue_et.getText()));
-        }
-
-        /*if group is empty set no group*/
-        if (mGroups_et.getText().toString().trim().isEmpty()) {
-            mGroup = null;
-        } else {
-            mGroup = mGroups_et.getText().toString();
-        }
+        mMaxValue = InputFilters.maxValueFilter(mMaxValue_et);
+        mMinValue = InputFilters.minValue(mMinValue_et);
+        mGroup = InputFilters.groupsFilter(mGroups_et);
 
         /*if all fields are filled create counter*/
-        if (!(String.valueOf(mValue_et.getText()).trim().isEmpty())
-                && !(String.valueOf(mTitle_et.getText()).trim().isEmpty())
-                && !(String.valueOf(mStep_et.getText()).trim().isEmpty())) {
-            mViewModel.updateCreateCounter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup);
-            Navigation.findNavController(getView()).popBackStack();
-            Utility.hideKeyboard(requireActivity());
-        }
+        mViewModel.updateCreateCounter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup);
+        Navigation.findNavController(getView()).popBackStack();
+        Utility.hideKeyboard(requireActivity());
+
     }
 }

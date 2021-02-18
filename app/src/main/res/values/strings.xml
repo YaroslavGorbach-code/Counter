@@ -24,7 +24,10 @@
     <string name="there_no_history_yet">There no history</string>
     <string name="selectionModTitle">Selected: %1$s</string>
     <string name="exportSelected">Export in CSV</string>
-
+    <string name="counterReset">Counter was reset</string>
+    <string name="counterResetUndo">UNDO</string>
+    <string name="thisIsMaximum">This is maximum</string>
+    <string name="thisIsMinimum">This is minimum</string>
 
 
     <!-- Counter fragment -->
@@ -59,6 +62,10 @@
     <string name="createEditCounterCounterStepText">1</string>
     <string name="createEditCounterCounterMaxValueHint">Max value</string>
     <string name="createEditCounterCounterMinValueHint">Min value</string>
+    <string name="titleError">This field can not be empty</string>
+    <string name="stepError">This field can not be empty or 0</string>
+    <string name="valueError">This field can not be empty</string>
+
 
     <!-- Delete counter dialog -->
     <string name="deleteCounterDialogTitle">Delete counter?</string>
@@ -68,15 +75,6 @@
     <string name="deleteCountersDeleteDialog">Delete counters?</string>
     <string name="deleteCounterDeleteDialog">Delete counter?</string>
 
-
-    <string name="helloBlankFragment">Hello blank fragment</string>
-
-    <string name="counterReset">Counter was reset</string>
-    <string name="counterResetUndo">UNDO</string>
-    <string name="thisIsMaximum">This is maximum</string>
-    <string name="thisIsMinimum">This is minimum</string>
-
-
     <!-- Preference Display -->
     <string name="display_header">Display</string>
     <string name="nightMod">Night mode</string>
@@ -84,6 +82,7 @@
     <string name="keep_screen_on">Keep screen on</string>
     <string name="SettingToolbar">Settings</string>
     <string name="lockOrientation">Luck orientation</string>
+    <string name="changeAccentColor">Change accent color</string>
 
     <!-- Preference Feedback -->
     <string name="feedBack_header">Feedback</string>
@@ -104,6 +103,8 @@
     <string name="exportAllCountersInCSV">Export counters</string>
     <string name="exportAllCountersInCSVSummary">Export all counters in CSV format</string>
     <string name="resetAllCounters">Reset all counters</string>
+    <string name="countersReset">Counters have been reset</string>
+
 
 
     <!-- About counter fragment -->
@@ -119,5 +120,6 @@
     <string name="no">No</string>
     <string name="created">Created: %1$s</string>
 
+    <string name="helloBlankFragment">Hello blank fragment</string>
 
 </resources>

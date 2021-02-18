@@ -6,6 +6,11 @@
             app:title="@string/nightMod"
             app:singleLineTitle="false"
             app:defaultValue="false"/>
+
+        <Preference
+            android:key="changeAccentColor"
+            app:title="@string/changeAccentColor"/>
+
         <SwitchPreferenceCompat
             app:key="keepScreenOn"
             app:title="@string/keep_screen_on"

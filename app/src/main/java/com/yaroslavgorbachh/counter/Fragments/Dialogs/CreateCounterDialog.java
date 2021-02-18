@@ -18,6 +18,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.yaroslavgorbachh.counter.Fragments.CountersFragmentDirections;
+import com.yaroslavgorbachh.counter.InputFilters;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.ViewModels.CreateCounterDialogViewModel;
@@ -50,21 +51,16 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
                 .setView(view)
                 .setNegativeButton(R.string.addCounterDialogCounterNegativeButton, null)
                 .setPositiveButton(R.string.addCounterDialogCounterPositiveButton, (dialog, which) -> {
-                    /*creating new counter and check title is not empty*/
-                    String title  = mCounterName_et.getText().toString();
-                    String group;
+                    String group = InputFilters.groupsFilter(mGroups_et);
+                    String title = "";
 
-                    /*if group is not empty set it*/
-                    if(!mGroups_et.getText().toString().trim().isEmpty()){
-                        group = mGroups_et.getText().toString();
-                    }else {
-                        group = null;
-                    }
+                   if (InputFilters.titleFilter(mCounterName_et)){
+                        title = mCounterName_et.getText().toString();
+                   }else {
+                       return;
+                   }
 
-                    /*passing variables to create a counter*/
-                    if (!(title.trim().isEmpty())){
                         mViewModel.createCounter(title, group);
-                    }
                 });
 
         /*each new group sets into dropdown_menu*/
