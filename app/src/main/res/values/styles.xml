@@ -1,20 +1,66 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">false</item>
+        <item name="color">@color/colorIconDrawer</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="itemDraggingColor">@color/itemDraggingColor</item>
+        <item name="counterItemButtonsColor">@color/counterItemButtonsColor</item>
+        <item name="dividerLineColor">@color/dividerLineColor</item>
+        <item name="statusBarColor">@color/statusBarColor</item>
+        <item name="groupItemSelectedColor">@color/groupItemSelectedColor</item>
+        <item name="groupItemBackgroundColor">@color/groupItemBackgroundColor</item>
+        <item name="counterValueColor">@color/counterValueColor</item>
+        <item name="colorIconNoGroupBackground">@color/colorIconNoGroupBackground</item>
+        <item name="colorIconNoGroupForeground">@color/colorIconNoGroupForeground</item>
+        <item name="colorIconNoCountersForeground">@color/colorIconNoCountersForeground</item>
+        <item name="colorIconNoCountersBackground">@color/colorIconNoCountersBackground</item>
+        <item name="colorIconNoCountersPlus">@color/colorIconNoCountersPlus</item>
+        <item name="colorIconNoHistory">@color/colorIconNoHistory</item>
+        <item name="colorIconDrawer">@color/colorIconDrawer</item>
+
+
         <item name="android:textColorSecondary">@color/colorPrimary</item>
         <item name="android:statusBarColor" tools:ignore="NewApi">?colorSurface</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">@bool/lightStatusBar</item>
     </style>
 
-    <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">false</item>
-        <item name="color">#FFC51162</item>
+    <!-- Orange theme. -->
+    <style name="AppTheme_orange" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary_orange</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_orange</item>
+        <item name="colorAccent">@color/colorAccent_orange</item>
+
+        <item name="itemDraggingColor">@color/itemDraggingColor_orange</item>
+        <item name="counterItemButtonsColor">@color/counterItemButtonsColor_orange</item>
+        <item name="dividerLineColor">@color/dividerLineColor_orange</item>
+        <item name="statusBarColor">@color/statusBarColor_orange</item>
+        <item name="groupItemSelectedColor">@color/groupItemSelectedColor_orange</item>
+        <item name="groupItemBackgroundColor">@color/groupItemBackgroundColor_orange</item>
+        <item name="counterValueColor">@color/counterValueColor_orange</item>
+        <item name="colorIconNoGroupBackground">@color/colorIconNoGroupBackground_orange</item>
+        <item name="colorIconNoGroupForeground">@color/colorIconNoGroupForeground_orange</item>
+        <item name="colorIconNoCountersForeground">@color/colorIconNoCountersForeground_orange</item>
+        <item name="colorIconNoCountersBackground">@color/colorIconNoCountersBackground_orange</item>
+        <item name="colorIconNoCountersPlus">@color/colorIconNoCountersPlus_orange</item>
+        <item name="colorIconNoHistory">@color/colorIconNoHistory_orange</item>
+        <item name="colorIconDrawer">@color/colorIconDrawer_orange</item>
+
+
+        <item name="android:textColorSecondary">@color/colorPrimary_orange</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">?colorSurface</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">@bool/lightStatusBar</item>
     </style>
+
 
 
 </resources>

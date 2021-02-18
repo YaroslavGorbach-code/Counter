@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/groupItemSelectedColor">
+    android:color="?groupItemSelectedColor">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/groupItemBackgroundColor"/>
+            <solid android:color="?groupItemBackgroundColor"/>
             <corners android:radius="7dp"/>
         </shape>
     </item>

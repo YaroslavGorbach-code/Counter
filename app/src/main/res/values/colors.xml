@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+<!--      Standard theme colors-->
     <color name="colorPrimary">#FFC51162</color>
     <color name="colorPrimaryDark">#66FF7AB6</color>
     <color name="colorAccent">#FFC51162</color>
@@ -16,7 +18,25 @@
     <color name="colorIconNoCountersBackground">#f0eaeb</color>
     <color name="colorIconNoCountersPlus">#C86799</color>
     <color name="colorIconNoHistory">#CA3F7D</color>
+    <color name="colorIconDrawer">#FFC51162</color>
 
-
+<!--      Orange theme colors-->
+    <color name="colorPrimary_orange">#FF5252</color>
+    <color name="colorPrimaryDark_orange">#66FF7AB6</color>
+    <color name="colorAccent_orange">#FF5252</color>
+    <color name="itemDraggingColor_orange">#FFD1D1</color>
+    <color name="counterItemButtonsColor_orange">#E7E7E7</color>
+    <color name="dividerLineColor_orange">#1F000000</color>
+    <color name="statusBarColor_orange">#090909</color>q
+    <color name="groupItemSelectedColor_orange">#33C51162</color>
+    <color name="groupItemBackgroundColor_orange">?android:colorBackground</color>
+    <color name="counterValueColor_orange">#000000</color>
+    <color name="colorIconNoGroupBackground_orange">#CA3F7D</color>
+    <color name="colorIconNoGroupForeground_orange">#C86799</color>
+    <color name="colorIconNoCountersForeground_orange">#e9e0e0</color>
+    <color name="colorIconNoCountersBackground_orange">#f0eaeb</color>
+    <color name="colorIconNoCountersPlus_orange">#C86799</color>
+    <color name="colorIconNoHistory_orange">#CA3F7D</color>
+    <color name="colorIconDrawer_orange">#FFC51162</color>
 
 </resources>
