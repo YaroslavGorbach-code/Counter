@@ -1,19 +1,16 @@
 package com.yaroslavgorbachh.counter.Activityes;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
-
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-
+import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.Fragments.SettingsFragment;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.Utility;
 
-import static com.yaroslavgorbachh.counter.ScrollColorPicker.THEME_VALUE_KEY;
 
 public class SettingsActivity extends AppCompatActivity  {
 
@@ -38,17 +35,22 @@ public class SettingsActivity extends AppCompatActivity  {
 
     }
 
-    public void setTheme(){
-       SharedPreferences mPref = getSharedPreferences(THEME_VALUE_KEY, Context.MODE_PRIVATE);
-        int color = mPref.getInt(THEME_VALUE_KEY, getResources().getColor(R.color.colorAccent));
-        if (color == getResources().getColor(R.color.colorAccent_orange)){
-            setTheme(R.style.AppTheme_orange);
+    /* depending on pref sets theme*/
+    private void setTheme() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("nightMod", false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        if (color == getResources().getColor(R.color.colorAccent)){
-            setTheme(R.style.AppTheme);
-        }
+        Repo repo = new Repo(getApplication());
+        new Thread(() -> setTheme(repo.getCurrentStyle().style)).start();
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

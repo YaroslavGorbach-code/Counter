@@ -4,23 +4,32 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.yaroslavgorbachh.counter.Database.Daos.AppStyleDao;
 import com.yaroslavgorbachh.counter.Database.Daos.CounterDao;
 import com.yaroslavgorbachh.counter.Database.Daos.CounterHistoryDao;
+import com.yaroslavgorbachh.counter.Database.Models.AppStyle;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Repo {
 
    private final CounterDao mCounterDao;
    private final CounterHistoryDao mCounterHistoryDao;
+   private final AppStyleDao mAppStyleDao;
+
 
     public Repo(Application application){
        CounterDatabase database = CounterDatabase.getInstance(application);
-       mCounterHistoryDao = database.CounterHistoryDao();
+       mCounterHistoryDao = database.counterHistoryDao();
        mCounterDao = database.counterDao();
+       mAppStyleDao = database.appStyleDao();
+   }
+
+   public AppStyle getCurrentStyle(){
+        //TODO: 2/19/2021 make in background
+        return mAppStyleDao.getCurrentColor();
    }
 
     public void insertCounter(Counter counter){
@@ -47,6 +56,7 @@ public class Repo {
         new Thread(() -> mCounterHistoryDao.delete(counterId)).start();
     }
 
+    // TODO: 2/19/2021 make in background
     public List<Counter> getAllCountersNoLiveData(){
        return mCounterDao.getAllCountersNoLiveData();
     }
@@ -71,6 +81,9 @@ public class Repo {
         return mCounterDao.getGroups();
     }
 
+    public void changeTheme(AppStyle style) {
+        new Thread(() -> mAppStyleDao.update(style)).start();
+    }
 }
 
 

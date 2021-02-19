@@ -19,23 +19,61 @@
     <color name="colorIconNoHistory">#BA3D67</color>
     <color name="colorIconDrawer">#FFC51162</color>
 
-    <!--Orange theme colors-->
-    <color name="colorPrimary_orange">#FF5252</color>
-    <color name="colorPrimaryDark_orange">#66FF7AB6</color>
-    <color name="colorAccent_orange">#FF5252</color>
+    <!--      Orange theme colors-->
+    <color name="colorPrimary_orange">#FF8A80</color>
+    <color name="colorPrimaryDark_orange">#66FF8A80</color>
+    <color name="colorAccent_orange">#FF8A80</color>
     <color name="itemDraggingColor_orange">#FFD1D1</color>
-    <color name="counterItemButtonsColor_orange">#E7E7E7</color>
+    <color name="counterItemButtonsColor_orange">#121212</color>
     <color name="dividerLineColor_orange">#1F000000</color>
     <color name="statusBarColor_orange">#090909</color>q
-    <color name="groupItemSelectedColor_orange">#33C51162</color>
+    <color name="groupItemSelectedColor_orange">#33FF8A80</color>
     <color name="groupItemBackgroundColor_orange">?android:colorBackground</color>
     <color name="counterValueColor_orange">#000000</color>
-    <color name="colorIconNoGroupBackground_orange">#CA3F7D</color>
-    <color name="colorIconNoGroupForeground_orange">#C86799</color>
+    <color name="colorIconNoGroupBackground_orange">#FD9087</color>
+    <color name="colorIconNoGroupForeground_orange">#FF8075</color>
     <color name="colorIconNoCountersForeground_orange">#e9e0e0</color>
     <color name="colorIconNoCountersBackground_orange">#f0eaeb</color>
-    <color name="colorIconNoCountersPlus_orange">#C86799</color>
-    <color name="colorIconNoHistory_orange">#CA3F7D</color>
+    <color name="colorIconNoCountersPlus_orange">#FF958B</color>
+    <color name="colorIconNoHistory_orange">#FF8A80</color>
+    <color name="colorIconDrawer_orange">#FF8A80</color>
 
+    <!--      Blue theme colors-->
+    <color name="colorPrimary_blue">#8C9EFF</color>
+    <color name="colorPrimaryDark_blue">#668C9EFF</color>
+    <color name="colorAccent_blue">#8C9EFF</color>
+    <color name="itemDraggingColor_blue">#E9EBF8</color>
+    <color name="counterItemButtonsColor_blue">#121212</color>
+    <color name="dividerLineColor_blue">#1F000000</color>
+    <color name="statusBarColor_blue">#090909</color>q
+    <color name="groupItemSelectedColor_blue">#338C9EFF</color>
+    <color name="groupItemBackgroundColor_blue">?android:colorBackground</color>
+    <color name="counterValueColor_blue">#000000</color>
+    <color name="colorIconNoGroupBackground_blue">#8C9EFF</color>
+    <color name="colorIconNoGroupForeground_blue">#7583D6</color>
+    <color name="colorIconNoCountersForeground_blue">#e9e0e0</color>
+    <color name="colorIconNoCountersBackground_blue">#f0eaeb</color>
+    <color name="colorIconNoCountersPlus_blue">#8C9EFF</color>
+    <color name="colorIconNoHistory_blue">#8C9EFF</color>
+    <color name="colorIconDrawer_blue">#8C9EFF</color>
+
+    <!--      Yellow theme colors-->
+    <color name="colorPrimary_yellow">#FFFF8D</color>
+    <color name="colorPrimaryDark_yellow">#66FFFF8D</color>
+    <color name="colorAccent_yellow">#FFFF8D</color>
+    <color name="itemDraggingColor_yellow">#FFD1D1</color>
+    <color name="counterItemButtonsColor_yellow">#121212</color>
+    <color name="dividerLineColor_yellow">#1F000000</color>
+    <color name="statusBarColor_yellow">#090909</color>q
+    <color name="groupItemSelectedColor_yellow">#33FFFF8D</color>
+    <color name="groupItemBackgroundColor_yellow">?android:colorBackground</color>
+    <color name="counterValueColor_yellow">#000000</color>
+    <color name="colorIconNoGroupBackground_yellow">#FFFF8D</color>
+    <color name="colorIconNoGroupForeground_yellow">#FFFF5B</color>
+    <color name="colorIconNoCountersForeground_yellow">#e9e0e0</color>
+    <color name="colorIconNoCountersBackground_yellow">#f0eaeb</color>
+    <color name="colorIconNoCountersPlus_yellow">#FFFF8D</color>
+    <color name="colorIconNoHistory_yellow">#FFFF8D</color>
+    <color name="colorIconDrawer_yellow">#FFFF8D</color>
 
 </resources>

@@ -1,6 +1,8 @@
 package com.yaroslavgorbachh.counter;
 
+import android.content.Context;
+
 public interface ColorPicker {
     void setColor(int color);
-    int getColor();
+    int getColor(Context context);
 }

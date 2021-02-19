@@ -1,19 +1,17 @@
 package com.yaroslavgorbachh.counter;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -94,4 +92,11 @@ public class Utility {
         return Intent.createChooser(sendIntent, null);
     }
 
+    public static int fetchAccentColor(Context context) {
+        TypedValue typedValue = new TypedValue();
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
+        int color = a.getColor(0, 0);
+        a.recycle();
+        return color;
+    }
 }

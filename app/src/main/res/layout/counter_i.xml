@@ -92,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
                 android:gravity="center"
-
                 android:layout_gravity="center"
                 android:text="+"
                 android:textColor="?colorAccent"

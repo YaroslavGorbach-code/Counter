@@ -2,23 +2,24 @@ package com.yaroslavgorbachh.counter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class ScrollColorPicker implements ColorPicker{
-    public static final String THEME_VALUE_KEY = "THEME_VALUE_KEY";
+import com.yaroslavgorbachh.counter.Database.Repo;
 
+public class ScrollColorPicker implements ColorPicker{
     private final int[] colors;
     private final View[] marks;
     private int mSelectedColor;
 
     public ScrollColorPicker(View root){
-        SharedPreferences preferences = root.getContext().getSharedPreferences(THEME_VALUE_KEY, Context.MODE_PRIVATE);
+
         colors = new int[] {root.getContext().getResources().getColor(R.color.colorAccent),
-                 root.getContext().getResources().getColor(R.color.colorAccent_orange)};
+                 root.getContext().getResources().getColor(R.color.colorAccent_orange),
+                root.getContext().getResources().getColor(R.color.colorAccent_blue),
+                root.getContext().getResources().getColor(R.color.colorAccent_yellow)};
          marks = new View[colors.length];
 
         ViewGroup content = root.findViewById(R.id.colors);
@@ -33,7 +34,7 @@ public class ScrollColorPicker implements ColorPicker{
             item.setOnClickListener(v -> setColor(color));
             content.addView(item, i);
         }
-        setColor(preferences.getInt(THEME_VALUE_KEY, root.getContext().getResources().getColor(R.color.colorAccent)));
+        setColor(Utility.fetchAccentColor(root.getContext()));
     }
     @Override
     public void setColor(int color) {
@@ -48,7 +49,7 @@ public class ScrollColorPicker implements ColorPicker{
     }
 
     @Override
-    public int getColor() {
+    public int getColor(Context context) {
         return mSelectedColor;
     }
 }

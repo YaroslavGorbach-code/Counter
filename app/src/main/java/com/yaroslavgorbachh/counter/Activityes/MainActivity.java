@@ -4,20 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.WindowManager;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
-
+import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.R;
 
-import static com.yaroslavgorbachh.counter.ScrollColorPicker.THEME_VALUE_KEY;
 
 public class MainActivity extends AppCompatActivity {
     public static final String ON_KEY_DOWN_BROADCAST = "ON_KEY_DOWN_BROADCAST";
@@ -44,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter(ColorPickerDialog.THEME_CHANGED_BROADCAST));
-
     }
 
 
@@ -84,30 +80,22 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    /* depending on pref sets theme*/
     private void setTheme(SharedPreferences sharedPreferences) {
-        SharedPreferences mPref = getSharedPreferences(THEME_VALUE_KEY, Context.MODE_PRIVATE);
-        int color = mPref.getInt(THEME_VALUE_KEY, getResources().getColor(R.color.colorAccent));
+        Repo repo = new Repo(getApplication());
+        if (repo.getCurrentStyle() != null){
+            setTheme(repo.getCurrentStyle().style);
+        }
 
         if (sharedPreferences.getBoolean("nightMod", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-
-        if (color == getResources().getColor(R.color.colorAccent_orange)) {
-            setTheme(R.style.AppTheme_orange);
-        }
-
-        if (color == getResources().getColor(R.color.colorAccent)) {
-            setTheme(R.style.AppTheme);
-        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        /*Register to receive messages.*/
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 }
