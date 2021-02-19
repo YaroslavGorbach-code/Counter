@@ -1,17 +1,11 @@
 package com.yaroslavgorbachh.counter.Fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.Observer;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -62,13 +56,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         mResetAllCountersPref.setOnPreferenceClickListener(preference -> {
             resetSelectedCounters();
-            Snackbar.make(requireView(), getResources().getString(R.string
-                    .countersReset), BaseTransientBottomBar.LENGTH_LONG)
-                    .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
-                        for (Counter counterBeforeReset : mCopyBeforeReset) {
-                            mRepo.updateCounter(counterBeforeReset);
-                        }
-                    }).show();
             return true;
         });
 
@@ -128,6 +115,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                         }
                         mRepo.updateCounter(counter);
                     }
+                    Snackbar.make(requireView(), getResources().getString(R.string
+                            .countersReset), BaseTransientBottomBar.LENGTH_LONG)
+                            .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
+                                for (Counter counterBeforeReset : mCopyBeforeReset) {
+                                    mRepo.updateCounter(counterBeforeReset);
+                                }
+                            }).show();
                 }).start();
     }
 

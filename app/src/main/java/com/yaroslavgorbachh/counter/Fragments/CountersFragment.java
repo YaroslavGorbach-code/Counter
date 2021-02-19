@@ -327,7 +327,7 @@ public class CountersFragment extends Fragment  {
         if (isSelectionMod){
             mDecAllSelectedCounters_bt.setVisibility(View.VISIBLE);
             mIncAllSelectedCounters_bt.setVisibility(View.VISIBLE);
-            mToolbar.setNavigationIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close, null));
+            mToolbar.setNavigationIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close, getActivity().getTheme()));
             mToolbar.getMenu().clear();
             mToolbar.inflateMenu(R.menu.menu_selection_mod);
 

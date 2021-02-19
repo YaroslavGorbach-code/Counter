@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--   color material A100-->
+
     <!--Standard theme colors-->
     <color name="colorPrimary">#BA3D67</color>
     <color name="colorPrimaryDark">#BA3D67</color>
@@ -30,11 +32,11 @@
     <color name="groupItemSelectedColor_orange">#33FF8A80</color>
     <color name="groupItemBackgroundColor_orange">?android:colorBackground</color>
     <color name="counterValueColor_orange">#000000</color>
-    <color name="colorIconNoGroupBackground_orange">#FD9087</color>
-    <color name="colorIconNoGroupForeground_orange">#FF8075</color>
+    <color name="colorIconNoGroupBackground_orange">#FF8A80</color>
+    <color name="colorIconNoGroupForeground_orange">#FFA9A2</color>
     <color name="colorIconNoCountersForeground_orange">#e9e0e0</color>
     <color name="colorIconNoCountersBackground_orange">#f0eaeb</color>
-    <color name="colorIconNoCountersPlus_orange">#FF958B</color>
+    <color name="colorIconNoCountersPlus_orange">#FF8A80</color>
     <color name="colorIconNoHistory_orange">#FF8A80</color>
     <color name="colorIconDrawer_orange">#FF8A80</color>
 
@@ -50,7 +52,7 @@
     <color name="groupItemBackgroundColor_blue">?android:colorBackground</color>
     <color name="counterValueColor_blue">#000000</color>
     <color name="colorIconNoGroupBackground_blue">#8C9EFF</color>
-    <color name="colorIconNoGroupForeground_blue">#7583D6</color>
+    <color name="colorIconNoGroupForeground_blue">#ABB8FD</color>
     <color name="colorIconNoCountersForeground_blue">#e9e0e0</color>
     <color name="colorIconNoCountersBackground_blue">#f0eaeb</color>
     <color name="colorIconNoCountersPlus_blue">#8C9EFF</color>
@@ -68,12 +70,107 @@
     <color name="groupItemSelectedColor_yellow">#33FFFF8D</color>
     <color name="groupItemBackgroundColor_yellow">?android:colorBackground</color>
     <color name="counterValueColor_yellow">#000000</color>
-    <color name="colorIconNoGroupBackground_yellow">#FFFF8D</color>
-    <color name="colorIconNoGroupForeground_yellow">#FFFF5B</color>
+    <color name="colorIconNoGroupBackground_yellow">#FFFF6A</color>
+    <color name="colorIconNoGroupForeground_yellow">#ECECAE</color>
     <color name="colorIconNoCountersForeground_yellow">#e9e0e0</color>
     <color name="colorIconNoCountersBackground_yellow">#f0eaeb</color>
     <color name="colorIconNoCountersPlus_yellow">#FFFF8D</color>
     <color name="colorIconNoHistory_yellow">#FFFF8D</color>
     <color name="colorIconDrawer_yellow">#FFFF8D</color>
 
+
+    <!--      Purple theme colors-->
+    <color name="colorPrimary_purple">#EA80FC</color>
+    <color name="colorPrimaryDark_purple">#66EA80FC</color>
+    <color name="colorAccent_purple">#EA80FC</color>
+    <color name="itemDraggingColor_purple">#FFD1D1</color>
+    <color name="counterItemButtonsColor_purple">#121212</color>
+    <color name="dividerLineColor_purple">#1F000000</color>
+    <color name="statusBarColor_purple">#090909</color>q
+    <color name="groupItemSelectedColor_purple">#33EA80FC</color>
+    <color name="groupItemBackgroundColor_purple">?android:colorBackground</color>
+    <color name="counterValueColor_purple">#000000</color>
+    <color name="colorIconNoGroupBackground_purple">#EA80FC</color>
+    <color name="colorIconNoGroupForeground_purple">#F3AFFF</color>
+    <color name="colorIconNoCountersForeground_purple">#e9e0e0</color>
+    <color name="colorIconNoCountersBackground_purple">#f0eaeb</color>
+    <color name="colorIconNoCountersPlus_purple">#EA80FC</color>
+    <color name="colorIconNoHistory_purple">#EA80FC</color>
+    <color name="colorIconDrawer_purple">#EA80FC</color>
+
+    <!--      Blue_light theme colors-->
+    <color name="colorPrimary_blue_l">#82B1FF</color>
+    <color name="colorPrimaryDark_blue_l">#3382B1FF</color>
+    <color name="colorAccent_blue_l">#82B1FF</color>
+    <color name="itemDraggingColor_blue_l">#FFD1D1</color>
+    <color name="counterItemButtonsColor_blue_l">#121212</color>
+    <color name="dividerLineColor_blue_l">#1F000000</color>
+    <color name="statusBarColor_blue_l">#090909</color>q
+    <color name="groupItemSelectedColor_blue_l">#3382B1FF</color>
+    <color name="groupItemBackgroundColor_blue_l">?android:colorBackground</color>
+    <color name="counterValueColor_blue_l">#000000</color>
+    <color name="colorIconNoGroupBackground_blue_l">#82B1FF</color>
+    <color name="colorIconNoGroupForeground_blue_l">#B3D0FF</color>
+    <color name="colorIconNoCountersForeground_blue_l">#e9e0e0</color>
+    <color name="colorIconNoCountersBackground_blue_l">#f0eaeb</color>
+    <color name="colorIconNoCountersPlus_blue_l">#82B1FF</color>
+    <color name="colorIconNoHistory_blue_l">#82B1FF</color>
+    <color name="colorIconDrawer_blue_l">#82B1FF</color>
+
+    <!--      Green_dark theme colors-->
+    <color name="colorPrimary_green_d">#A7FFEB</color>
+    <color name="colorPrimaryDark_green_d">#66A7FFEB</color>
+    <color name="colorAccent_green_d">#A7FFEB</color>
+    <color name="itemDraggingColor_green_d">#FFD1D1</color>
+    <color name="counterItemButtonsColor_green_d">#121212</color>
+    <color name="dividerLineColor_green_d">#1F000000</color>
+    <color name="statusBarColor_green_d">#090909</color>q
+    <color name="groupItemSelectedColor_green_d">#33A7FFEB</color>
+    <color name="groupItemBackgroundColor_green_d">?android:colorBackground</color>
+    <color name="counterValueColor_green_d">#000000</color>
+    <color name="colorIconNoGroupBackground_green_d">#94FFE7</color>
+    <color name="colorIconNoGroupForeground_green_d">#BEE6DD</color>
+    <color name="colorIconNoCountersForeground_green_d">#e9e0e0</color>
+    <color name="colorIconNoCountersBackground_green_d">#f0eaeb</color>
+    <color name="colorIconNoCountersPlus_green_d">#A7FFEB</color>
+    <color name="colorIconNoHistory_green_d">#A7FFEB</color>
+    <color name="colorIconDrawer_green_d">#A7FFEB</color>
+
+    <!--      Green theme colors-->
+    <color name="colorPrimary_green">#CCFF90</color>
+    <color name="colorPrimaryDark_green">#66CCFF90</color>
+    <color name="colorAccent_green">#CCFF90</color>
+    <color name="itemDraggingColor_green">#FFD1D1</color>
+    <color name="counterItemButtonsColor_green">#121212</color>
+    <color name="dividerLineColor_green">#1F000000</color>
+    <color name="statusBarColor_green">#090909</color>q
+    <color name="groupItemSelectedColor_green">#33CCFF90</color>
+    <color name="groupItemBackgroundColor_green">?android:colorBackground</color>
+    <color name="counterValueColor_green">#000000</color>
+    <color name="colorIconNoGroupBackground_green">#CCFF90</color>
+    <color name="colorIconNoGroupForeground_green">#C1D6A7</color>
+    <color name="colorIconNoCountersForeground_green">#e9e0e0</color>
+    <color name="colorIconNoCountersBackground_green">#f0eaeb</color>
+    <color name="colorIconNoCountersPlus_green">#CCFF90</color>
+    <color name="colorIconNoHistory_green">#CCFF90</color>
+    <color name="colorIconDrawer_green">#CCFF90</color>
+
+    <!--      Grey theme colors-->
+    <color name="colorPrimary_gray">#7D838C</color>
+    <color name="colorPrimaryDark_gray">#667D838C</color>
+    <color name="colorAccent_gray">#7D838C</color>
+    <color name="itemDraggingColor_gray">#FFD1D1</color>
+    <color name="counterItemButtonsColor_gray">#121212</color>
+    <color name="dividerLineColor_gray">#1F000000</color>
+    <color name="statusBarColor_gray">#090909</color>q
+    <color name="groupItemSelectedColor_gray">#337D838C</color>
+    <color name="groupItemBackgroundColor_gray">?android:colorBackground</color>
+    <color name="counterValueColor_gray">#000000</color>
+    <color name="colorIconNoGroupBackground_gray">#7D838C</color>
+    <color name="colorIconNoGroupForeground_gray">#96989C</color>
+    <color name="colorIconNoCountersForeground_gray">#e9e0e0</color>
+    <color name="colorIconNoCountersBackground_gray">#f0eaeb</color>
+    <color name="colorIconNoCountersPlus_gray">#7D838C</color>
+    <color name="colorIconNoHistory_gray">#7D838C</color>
+    <color name="colorIconDrawer_gray">#7D838C</color>
 </resources>

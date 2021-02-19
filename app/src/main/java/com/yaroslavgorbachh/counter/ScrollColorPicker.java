@@ -17,9 +17,14 @@ public class ScrollColorPicker implements ColorPicker{
     public ScrollColorPicker(View root){
 
         colors = new int[] {root.getContext().getResources().getColor(R.color.colorAccent),
-                 root.getContext().getResources().getColor(R.color.colorAccent_orange),
+                root.getContext().getResources().getColor(R.color.colorAccent_orange),
                 root.getContext().getResources().getColor(R.color.colorAccent_blue),
-                root.getContext().getResources().getColor(R.color.colorAccent_yellow)};
+                root.getContext().getResources().getColor(R.color.colorAccent_yellow),
+                root.getContext().getResources().getColor(R.color.colorAccent_purple),
+                root.getContext().getResources().getColor(R.color.colorAccent_blue_l),
+                root.getContext().getResources().getColor(R.color.colorAccent_green_d),
+                root.getContext().getResources().getColor(R.color.colorAccent_green),
+                root.getContext().getResources().getColor(R.color.colorAccent_gray)};
          marks = new View[colors.length];
 
         ViewGroup content = root.findViewById(R.id.colors);

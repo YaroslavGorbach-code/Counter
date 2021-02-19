@@ -48,6 +48,21 @@ public class ColorPickerDialog extends AppCompatDialogFragment {
                     if (colorPicker.getColor(getContext())==getContext().getResources().getColor(R.color.colorAccent_yellow)){
                         mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_yellow));
                     }
+                    if (colorPicker.getColor(getContext())==getContext().getResources().getColor(R.color.colorAccent_purple)){
+                        mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_purple));
+                    }
+                    if (colorPicker.getColor(getContext())==getContext().getResources().getColor(R.color.colorAccent_blue_l)){
+                        mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_blue_light));
+                    }
+                    if (colorPicker.getColor(getContext())==getContext().getResources().getColor(R.color.colorAccent_green_d)){
+                        mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_green_dark));
+                    }
+                    if (colorPicker.getColor(getContext())==getContext().getResources().getColor(R.color.colorAccent_green)){
+                        mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_green));
+                    }
+                    if (colorPicker.getColor(getContext())==getContext().getResources().getColor(R.color.colorAccent_gray)){
+                        mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_gray));
+                    }
 
                     Intent intent = new Intent(THEME_CHANGED_BROADCAST);
                     LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
