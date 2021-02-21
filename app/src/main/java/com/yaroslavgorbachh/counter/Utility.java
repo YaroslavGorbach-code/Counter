@@ -2,11 +2,14 @@ package com.yaroslavgorbachh.counter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import androidx.appcompat.app.AppCompatDelegate;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
+import com.yaroslavgorbachh.counter.Database.Repo;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,6 +28,21 @@ public class Utility {
         List<String> mList = Arrays.asList(set.toArray(new String[0]));
         Collections.sort(mList);
         return mList;
+    }
+
+    public void setTheme(SharedPreferences sharedPreferences, Activity activity) {
+        new Thread(() -> {
+            Repo repo = new Repo(activity.getApplication());
+            if (repo.getCurrentStyle() != null){
+                activity.setTheme(repo.getCurrentStyle().style);
+            }
+        }).start();
+
+        if (sharedPreferences.getBoolean("nightMod", false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     public static void hideKeyboard(Activity activity) {
@@ -99,4 +117,5 @@ public class Utility {
         a.recycle();
         return color;
     }
+
 }

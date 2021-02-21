@@ -259,7 +259,6 @@ public class CountersFragment extends Fragment  {
             new Handler().postDelayed(()-> mDrawer.closeDrawer(GravityCompat.START), 200);
 
         });
-        mCounters_rv.setAdapter(mCountersAdapter);
         return view;
     }
 
@@ -310,6 +309,8 @@ public class CountersFragment extends Fragment  {
             new FastCountButton(mIncAllSelectedCounters_bt, this::incSelectedCounters);
         }
         mAccessibility = new Accessibility(requireContext());
+        mCounters_rv.setAdapter(mCountersAdapter);
+
     }
 
     private void incSelectedCounters() {

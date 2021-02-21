@@ -10,11 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import com.yaroslavgorbachh.counter.ColorPicker;
+import com.yaroslavgorbachh.counter.ColorPicker.ColorPicker;
 import com.yaroslavgorbachh.counter.Database.Models.AppStyle;
 import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.ScrollColorPicker;
+import com.yaroslavgorbachh.counter.ColorPicker.ScrollColorPicker;
 
 
 public class ColorPickerDialog extends AppCompatDialogFragment {

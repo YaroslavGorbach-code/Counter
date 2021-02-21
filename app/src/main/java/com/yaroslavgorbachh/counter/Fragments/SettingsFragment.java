@@ -81,7 +81,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         if (key.equals("nightMod") && !sharedPreferences.getBoolean("nightMod", false)){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-        if (key.equals("keepScreenOn") && sharedPreferences.getBoolean("keepScreenOn", false)){
+        if (key.equals("keepScreenOn") && sharedPreferences.getBoolean("keepScreenOn", true)){
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
         if (key.equals("keepScreenOn") && !sharedPreferences.getBoolean("keepScreenOn", false)){

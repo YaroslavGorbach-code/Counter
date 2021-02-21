@@ -69,6 +69,7 @@ public class CounterHistoryFragment extends Fragment {
         return view;
     }
 
+    // TODO: 2/21/2021 переделать тут сортирлвку
     private void sortList(int position) {
         String[] choose = getResources().getStringArray(R.array.history_sort_items);
         if(choose[position].equals("Sort by date") || choose[position].equals("Сортировка по дате")){

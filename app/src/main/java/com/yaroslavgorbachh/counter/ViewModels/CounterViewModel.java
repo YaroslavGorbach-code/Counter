@@ -1,6 +1,7 @@
 package com.yaroslavgorbachh.counter.ViewModels;
 
 import android.app.Application;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.Objects;
 
@@ -26,8 +28,6 @@ public class CounterViewModel extends AndroidViewModel {
     public LiveData<Counter> counter;
     private final Accessibility mAccessibility;
     private final Resources mRes;
-
-
 
     public CounterViewModel(@NonNull Application application, long counterId) {
         super(application);
@@ -122,4 +122,7 @@ public class CounterViewModel extends AndroidViewModel {
         mRepo.deleteCounterHistory(Objects.requireNonNull(counter.getValue()).id);
         new Handler().postDelayed(() -> mRepo.deleteCounter(counter.getValue()),500);
     }
+
+
+
 }

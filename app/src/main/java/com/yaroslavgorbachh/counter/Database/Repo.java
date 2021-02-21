@@ -3,6 +3,7 @@ package com.yaroslavgorbachh.counter.Database;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.yaroslavgorbachh.counter.Database.Daos.AppStyleDao;
 import com.yaroslavgorbachh.counter.Database.Daos.CounterDao;

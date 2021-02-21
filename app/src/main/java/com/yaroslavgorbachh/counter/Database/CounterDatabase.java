@@ -26,20 +26,25 @@ public abstract class CounterDatabase extends RoomDatabase {
     public abstract CounterDao counterDao();
     public abstract CounterHistoryDao counterHistoryDao();
     public abstract AppStyleDao appStyleDao();
+
     public static synchronized CounterDatabase getInstance(Context context){
+
         if (sInstance == null){
             sInstance = Room.databaseBuilder(context.getApplicationContext(),CounterDatabase.class, "counter.db")
                     .addCallback(rdc)
+                    .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
                     .allowMainThreadQueries()
                     .addMigrations(MIGRATION_24_25)
                     .addMigrations(MIGRATION_25_26)
                     .build();
         }
         return sInstance;
+
     }
 
 
     static final Migration MIGRATION_24_25 = new Migration(24, 25) {
+
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE counter_table ADD COLUMN createDataSort INTEGER DEFAULT null ");

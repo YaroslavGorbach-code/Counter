@@ -1,15 +1,16 @@
-package com.yaroslavgorbachh.counter;
+package com.yaroslavgorbachh.counter.ColorPicker;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.yaroslavgorbachh.counter.Database.Repo;
+import com.yaroslavgorbachh.counter.ColorPicker.ColorPicker;
+import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.Utility;
 
-public class ScrollColorPicker implements ColorPicker{
+public class ScrollColorPicker implements ColorPicker {
     private final int[] colors;
     private final View[] marks;
     private int mSelectedColor;

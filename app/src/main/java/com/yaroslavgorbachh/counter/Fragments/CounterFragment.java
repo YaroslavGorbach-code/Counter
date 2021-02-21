@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbachh.counter.Database.CounterDatabase;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.DeleteCounterDialog;
@@ -34,7 +35,10 @@ import com.yaroslavgorbachh.counter.ViewModels.Factories.CounterViewModelFactory
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Activityes.MainActivity;
 
+import java.lang.reflect.Array;
+
 public class CounterFragment extends Fragment {
+    private static final int OPEN_FILE_CODE = 0;
     private TextView mValue_tv;
     private TextView mIncButton;
     private TextView mDecButton;

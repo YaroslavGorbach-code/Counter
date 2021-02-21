@@ -19,6 +19,7 @@
             android:id="@+id/toolbar_settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:menu="@menu/settings_menu"
             android:background="?android:colorBackground"
             app:title="@string/SettingToolbar"
             app:titleTextColor="?colorAccent" />

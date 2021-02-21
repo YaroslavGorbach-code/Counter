@@ -1,4 +1,5 @@
 package com.yaroslavgorbachh.counter.Activityes;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import androidx.preference.PreferenceManager;
 import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.Utility;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(mSharedPreferences);
+        new Utility().setTheme(mSharedPreferences, this);
         setContentView(R.layout.activity_main);
 
         mMessageReceiver = new BroadcastReceiver() {
@@ -80,22 +82,11 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    private void setTheme(SharedPreferences sharedPreferences) {
-        Repo repo = new Repo(getApplication());
-        if (repo.getCurrentStyle() != null){
-            setTheme(repo.getCurrentStyle().style);
-        }
-
-        if (sharedPreferences.getBoolean("nightMod", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
+
 }

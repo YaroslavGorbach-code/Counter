@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter;
+package com.yaroslavgorbachh.counter.ColorPicker;
 
 import android.content.Context;
 
