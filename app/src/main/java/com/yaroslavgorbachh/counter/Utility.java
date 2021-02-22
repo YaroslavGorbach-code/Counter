@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Utility {
     /*delete the same groups*/
@@ -57,7 +58,7 @@ public class Utility {
     }
 
     public static String formatDateToString(Date date){
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YY HH:mm:ss", Locale.getDefault());
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm:ss", Locale.getDefault());
         return  dateFormat.format(date);
     }
 
@@ -100,9 +101,11 @@ public class Utility {
 
     public static Intent getShareCountersInCSVIntent(List<Counter> list){
         StringBuilder textToSend = new StringBuilder();
+        Collections.reverse(list);
         for (Counter counter : list) {
             textToSend.append(counter.title).append(": ").append(counter.value).append("\n");
         }
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, textToSend.toString());
