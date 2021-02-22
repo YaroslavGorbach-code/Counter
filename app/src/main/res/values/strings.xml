@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Сounter</string>
 
-    <string name="navigation_drawer_close">Navigation drawer close</string>
-    <string name="navigation_drawer_open">Navigation drawer open</string>
+    <string name="navigation_drawer_close" translatable="false">Navigation drawer close</string>
+    <string name="navigation_drawer_open" translatable="false">Navigation drawer open</string>
 
     <string-array name="history_sort_items">
         <item>Sort by date</item>
@@ -44,7 +44,7 @@
 
     <!-- History fragment -->
     <string name="historyFragmentToolbarTitle">History</string>
-    <string name="counterHistoryMenuClean">Clean</string>
+    <string name="counterHistoryMenuClean">Clear</string>
 
     <!-- Add counter dialog -->
     <string name="addCounterDialogTitle">Add counter</string>

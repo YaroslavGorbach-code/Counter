@@ -15,7 +15,7 @@
         android:background="?android:colorBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/counterTitle"
@@ -206,8 +206,8 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/counterValueColor"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
+        android:textColor="@color/counterValueColor"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

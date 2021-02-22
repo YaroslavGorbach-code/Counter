@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">Лічильник</string>
+    <string-array name="history_sort_items">
+        <item>Сортировка по дате</item>
+        <item>Сортировка по значению</item>
+    </string-array>
+
+    <!-- Counters fragment -->
+    <string name="navigationViewToolbar">Групи</string>
+    <string name="countersFragmentToolbarTitle">Всі лічильники</string>
+    <string name="rate">Оцінити</string>
+    <string name="resetSelectionMenu">Обнулити вибрані</string>
+    <string name="deleteSelectionMenu">Видалити вибрані</string>
+    <string name="selectAllSelectionMenu">Вибрати всі</string>
+    <string name="editSelectionMenu">Редагувати</string>
+    <string name="drawerSettings">Налаштування</string>
+    <string name="click_on_the_button_below_to_create">Натисніть кнопку нижче, щоб створити</string>
+    <string name="there_are_no_active_counters">Лічильників немає</string>
+    <string name="there_are_no_groups_yet">Груп немає</string>
+    <string name="there_no_history_yet">Історій немає</string>
+    <string name="exportSelected">Експорт в CSV</string>
+    <string name="counterReset">Ви обнулили лічильники</string>
+    <string name="counterResetUndo">СКАСУВАТИ</string>
+    <string name="thisIsMaximum">Це максимум</string>
+    <string name="thisIsMinimum">Це мінімум</string>
+    <string name="selectionModTitle">Обрано: %1$s</string>
+
+    <!-- Counter fragment -->
+    <string name="allCountersItem">Всі лічильники</string>
+    <string name="saveToHistory">зберегти в історію</string>
+    <string name="saveToHistoryToast">збережено в історію</string>
+    <string name="max">Max</string>
+    <string name="min">Min</string>
+    <string name="counterFragmentEditMenu">Редагувати</string>
+    <string name="counterFragmentDeleteMenu">Видалити</string>
+    <string name="foolScreen">Повноекранний режим</string>
+
+    <!-- History fragment -->
+    <string name="historyFragmentToolbarTitle">Історія</string>
+    <string name="counterHistoryMenuClean">Очистити</string>
+
+    <!-- Add counter dialog -->
+    <string name="addCounterDialogTitle">Додати лічильник</string>
+    <string name="addCounterDialogCounterTitle">Ім\'я лічильника</string>
+    <string name="addCounterDialogCounterGroup">Група</string>
+    <string name="addCounterDialogCounterPositiveButton">Створити</string>
+    <string name="addCounterDialogCounterNegativeButton">Скасувати</string>
+
+    <!-- Create edit counter fragment -->
+    <string name="createEditCounterCounterTitleHint">Ім\'я лічильника</string>
+    <string name="createEditCounterCounterTitleText">Новий лічильник</string>
+    <string name="createEditCounterCounterValueHint">Значення</string>
+    <string name="createEditCounterCounterValueText">0</string>
+    <string name="createEditCounterCounterStepHint">Крок</string>
+    <string name="createEditCounterCounterStepText">1</string>
+    <string name="createEditCounterCounterMaxValueHint">Максимальне значення</string>
+    <string name="createEditCounterCounterMinValueHint">Мінімальне значення</string>
+    <string name="createEditCounterEditToolbarTitle">Редагувати</string>
+    <string name="titleError">Це поле не може бути порожнім</string>
+    <string name="stepError">Це поле не може бути порожнім або 0</string>
+    <string name="valueError">Це поле не може бути порожнім</string>
+
+    <!-- Delete counter dialog -->
+    <string name="deleteCounterDialogTitle">Видалити лічильник? </string>
+    <string name="deleteCounterDialogText">Ви впевнені? Це не можна буде скасувати</string>
+    <string name="deleteCounterDialogPositiveButton">Так</string>
+    <string name="deleteCounterDialogNegativeButton">Скасувати</string>
+    <string name="deleteCountersDeleteDialog">Видалити лічильники?</string>
+    <string name="deleteCounterDeleteDialog">Видалити лічильник?</string>
+
+    <!-- Preference Display -->
+    <string name="display_header">Дисплей</string>
+    <string name="nightMod">Темна тема</string>
+    <string name="left_hand_mod">Режим лівої руки</string>
+    <string name="keep_screen_on">Тримати екран увімкненим</string>
+    <string name="SettingToolbar">Налаштування</string>
+    <string name="lockOrientation">Не повертати екран</string>
+    <string name="changeAccentColor">Змінити акцентний колір</string>
+
+    <!-- Preference Feedback -->
+    <string name="feedBack_header">Зворотній зв\'язок</string>
+    <string name="clickSound">Звук при натисканні</string>
+    <string name="clickVibration">Вібрація при натисканні</string>
+    <string name="clickSpeak">Озвучувати число</string>
+
+    <!-- Preference Control -->
+    <string name="control_header">Управління</string>
+    <string name="use_volume_buttons">Використовувати клавіши гучності</string>
+    <string name="fast_count_speed">Швидкий рахунок</string>
+    <string name="summary_fast_count_speed"> Активується довгим натисканням на кнопки +/- </string>
+
+    <!-- Preference Data -->
+    <string name="other_header">Дані</string>
+    <string name="removeAllCounters">Видалити всі лічильники</string>
+    <string name="removeAllCountersSummary">Ви впевнені? Це не можна буде скасувати</string>
+    <string name="exportAllCountersInCSV">Експортувати лічильники</string>
+    <string name="exportAllCountersInCSVSummary">Експортувати всі лічильники в CSV форматі</string>
+    <string name="resetAllCounters">Обнулити всі лічильники</string>
+    <string name="countersReset">Ви обнулили лічильники</string>
+    <string name="backup">Резервне копіювання</string>
+    <string name="backup_instructions">1. Створіть копію лічильників. \n2. Надішліть файл поштою або іншим зручним способом. \n3. Відновіть копію.</string>
+    <string name="backup_instructions_2">* Після відновлення копії існуючі лічильники будуть перезаписані. \n * Якщо діалогове вікно збереження не з\'являеться або ви бачите помилку «Не вдалося знайти додаток для виконання даної дії», то скачайте файловий менеджер з Google Play.</string>
+    <string name="create_backup">Створити копію</string>
+    <string name="restore_backup">Відновити копію</string>
+
+
+
+    <!-- About counter fragment -->
+    <string name="aboutCounter">Про лічильник</string>
+    <string name="counterName">Ім\'я лічильника</string>
+    <string name="valueBeforeReset">Значення до обнулення</string>
+    <string name="value">Значение</string>
+    <string name="step">Крок</string>
+    <string name="group">Група</string>
+    <string name="minValue">Мінімум</string>
+    <string name="maxValue">Максимум</string>
+    <string name="lastReset">Останнє обнулення</string>
+    <string name="no">Нет</string>
+    <string name="created">Створено: %1$s</string>
+
+    <!-- Settings fragment -->
+    <string name="successCreatedToast">Копія успішно збережена в %1$s</string>
+    <string name="failCreatedToast">Помилка. %1$s Спробуйте зберегти в другу папку.</string>
+    <string name="successRestore">Копія успішно відновлена. Додаток перезапуститься.</string>
+    <string name="failRestore">Некоректний файл.</string>
+
+
+    <string name="apply">застосувати</string>
+
+    </resources>
