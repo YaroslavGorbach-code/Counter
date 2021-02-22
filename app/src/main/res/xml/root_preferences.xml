@@ -77,6 +77,12 @@
 
         <Preference
             app:singleLineTitle="false"
+            app:key="backup"
+            app:title="@string/backup"
+            />
+
+        <Preference
+            app:singleLineTitle="false"
             app:key="resetAllCounters"
             app:title="@string/resetAllCounters" />
 

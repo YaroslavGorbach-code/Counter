@@ -12,7 +12,7 @@ import com.yaroslavgorbachh.counter.R;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
-    private Drawable mDivider;
+    private final Drawable mDivider;
 
     public DividerItemDecoration(Context context) {
         mDivider = context.getResources().getDrawable(R.drawable.line_divider);

@@ -94,11 +94,13 @@ public class CounterHistoryFragment extends Fragment {
                             mIconAndTextThereNoHistory.setVisibility(View.GONE);
                         }
                     });
+
         }
     }
 
     private void setAdapterForSpinner() {
         /*set toolTipText*/
+        // TODO: 2/22/2021 текст в ресурсы
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mSpinner.setTooltipText("Choose sort");
         }

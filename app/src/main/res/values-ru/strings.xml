@@ -95,14 +95,23 @@
     <string name="fast_count_speed">Скорость быстрого счета</string>
     <string name="summary_fast_count_speed">Активируется долгим нажатием на кнопки +/-</string>
 
-    <!-- Preference Other -->
-    <string name="other_header">Другое</string>
+    <!-- Preference Data -->
+    <string name="other_header">Данные</string>
     <string name="removeAllCounters">Удалить все счетчики</string>
     <string name="removeAllCountersSummary">Это действие нельзя будет отменить</string>
     <string name="exportAllCountersInCSV">Экспортировать счетчики</string>
     <string name="exportAllCountersInCSVSummary">Экспортировать все счетчики в CSV формате</string>
     <string name="resetAllCounters">Сбросить все счетчики</string>
     <string name="countersReset">Счетчики были сброшены</string>
+    <string name="backup">Резервное копирование</string>
+    <string name="backup_instructions">1. Создайте копию счетчиков.
+        Отправьте файл по почте или другим удобным способом.
+        Восстановите копию.</string>
+    <string name="backup_instructions_2">* После восстановления копии существующие счетчики будут перезаписаны.
+        * Если диалоговое окно сохранения не появляется или вы видите ошибку «‎Не удалось найти приложение для выполнения данного действия», то скачайте файловый менеджер из Google Play‎.</string>
+    <string name="create_backup">Создать копию</string>
+    <string name="restore_backup">Восстановить копию</string>
+
 
 
     <!-- About counter fragment -->
@@ -118,8 +127,13 @@
     <string name="no">Нет</string>
     <string name="created">Создан: %1$s</string>
 
+    <!-- Settings fragment -->
+    <string name="successCreatedToast">Копия успешно сохранена в %1$s</string>
+    <string name="failCreatedToast">Ошибка. %1$s Попробуйте сохранить в другую папку.</string>
+    <string name="successRestore">Копия успешно восстановлена. Приложение перезапуститься.</string>
+    <string name="failRestore">Некорректный файл.</string>
 
 
-    <string name="helloBlankFragment">Hello blank fragment</string>
+    <string name="apply">применить</string>
 
 </resources>

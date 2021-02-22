@@ -91,7 +91,7 @@ public class Accessibility {
 
     public void speechOutput(String text){
         if (mSpeechOutputIsAllowed)
-        mTextToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        mTextToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "ID");
     }
 
 }

@@ -34,8 +34,7 @@ public class ColorPickerDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
 
                 .setView(view)
-                // TODO: 2/18/2021 translate
-                .setPositiveButton("Apply", (dialog, which) -> {
+                .setPositiveButton(getString(R.string.apply), (dialog, which) -> {
                     if (colorPicker.getColor(getContext())==getContext().getResources().getColor(R.color.colorAccent)){
                         mRepo.changeTheme(new AppStyle(1, R.style.AppTheme));
                     }

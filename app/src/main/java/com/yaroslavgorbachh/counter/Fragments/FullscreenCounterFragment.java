@@ -4,15 +4,11 @@ import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.app.Activity;
@@ -20,27 +16,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowInsetsController;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yaroslavgorbachh.counter.Activityes.MainActivity;
-import com.yaroslavgorbachh.counter.Database.Models.Counter;
-import com.yaroslavgorbachh.counter.OnSwipeTouchListener;
+import com.yaroslavgorbachh.counter.SwipeListener.SwipeListener;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
-import com.yaroslavgorbachh.counter.ViewModels.Factories.CounterViewModelFactory;
 import com.yaroslavgorbachh.counter.ViewModels.Factories.FullscreenCounterViewModelFactory;
 import com.yaroslavgorbachh.counter.ViewModels.FullscreenCounterViewModel;
 
@@ -116,7 +103,7 @@ public class FullscreenCounterFragment extends Fragment {
             mCounterValue_tv.setText(String.valueOf(counter.value));
         });
 
-        mContentView.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
+        mContentView.setOnTouchListener(new SwipeListener(getActivity()){
             @Override
             public void onSwipeTop() {
                 mViewModel.incCounter(getView());

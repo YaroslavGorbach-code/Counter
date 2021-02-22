@@ -1,21 +1,33 @@
-package com.yaroslavgorbachh.counter;
+package com.yaroslavgorbachh.counter.SwipeListener;
 
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class OnSwipeTouchListener implements View.OnTouchListener {
+public class SwipeListener implements View.OnTouchListener, onSwipeListener{
 
     private final GestureDetector gestureDetector;
 
-    public OnSwipeTouchListener (Context ctx){
+
+    public SwipeListener(Context ctx){
         gestureDetector = new GestureDetector(ctx, new GestureListener());
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        v.performClick();
         return gestureDetector.onTouchEvent(event);
+    }
+
+    @Override
+    public void onSwipeBottom() {
+
+    }
+
+    @Override
+    public void onSwipeTop() {
+
     }
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -44,9 +56,5 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
         }
     }
 
-    public void onSwipeTop() {
-    }
 
-    public void onSwipeBottom() {
-    }
 }

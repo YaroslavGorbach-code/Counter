@@ -1,16 +1,28 @@
 package com.yaroslavgorbachh.counter.Fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbachh.counter.Database.BackupAndRestore.MyBackup;
+import com.yaroslavgorbachh.counter.Database.BackupAndRestore.MyRestore;
+import com.yaroslavgorbachh.counter.Database.CounterDatabase;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.ColorPickerDialog;
@@ -22,15 +34,56 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
-    public Preference mRemoveAllCountersPref;
-    public Preference mResetAllCountersPref;
-    public Preference mExportAllCountersPref;
-    private Preference mChangeAccentColorPref;
+    private static final int RESTORE_REQUEST_CODE = 0;
+    private static final int CREATE_FILE = 1;
     private Repo mRepo;
     private final List<Counter> mCopyBeforeReset = new ArrayList<>();
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CREATE_FILE && resultCode == Activity.RESULT_OK){
+            if (data != null){
+                new MyBackup.Init()
+                        .database(CounterDatabase.getInstance(getActivity()))
+                        .setContext(requireContext())
+                        .uri(data.getData())
+                        .OnCompleteListener((success, message) -> {
+                            if (success) {
+                                Toast.makeText(getActivity(), getString(R.string.successCreatedToast,
+                                        data.getData().getPath()), Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getActivity(),
+                                        getString(R.string.failCreatedToast, message),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }).execute();
+            }
+        }
+
+
+        if (requestCode == RESTORE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                new MyRestore.Init()
+                        .database(CounterDatabase.getInstance(getActivity()))
+                        .uri(data.getData())
+                        .setContext(requireContext())
+                        .OnCompleteListener((success, message) -> {
+                            if (success) {
+                                Toast.makeText(requireContext(),
+                                        getString(R.string.successRestore),
+                                        Toast.LENGTH_LONG).show();
+                                new Handler().postDelayed((Runnable) () -> Runtime.getRuntime().exit(0), 3000);
+                            } else {
+                                Toast.makeText(getActivity(), getString(R.string.failRestore), Toast.LENGTH_LONG).show();
+                            }
+                        }).execute();
+            }
+        }
+    }
 
     @Override
     public void onStart() {
@@ -43,10 +96,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        mRemoveAllCountersPref = findPreference("removeAllCounters");
-        mResetAllCountersPref = findPreference("resetAllCounters");
-        mExportAllCountersPref = findPreference("exportAllCounters");
-        mChangeAccentColorPref = findPreference("changeAccentColor");
+        Preference mRemoveAllCountersPref = findPreference("removeAllCounters");
+        Preference mResetAllCountersPref = findPreference("resetAllCounters");
+        Preference mExportAllCountersPref = findPreference("exportAllCounters");
+        Preference mChangeAccentColorPref = findPreference("changeAccentColor");
+        Preference mBackupPref= findPreference("backup");
+
         mRemoveAllCountersPref.setOnPreferenceClickListener(preference -> {
             new DeleteCounterDialog(() -> {
                 mRepo.deleteCounters();
@@ -68,6 +123,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         mChangeAccentColorPref.setOnPreferenceClickListener(preference -> {
             ColorPickerDialog.newInstance().show(getParentFragmentManager(), "colorPicker");
+            return true;
+        });
+
+        mBackupPref.setOnPreferenceClickListener(preference -> {
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.backud_dialog,
+                    null);
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setView(view).show();
+            MaterialButton create_bt = view.findViewById(R.id.createCopy);
+            MaterialButton restore_bt = view.findViewById(R.id.restoreCopy);
+            create_bt.setOnClickListener(v -> createFile());
+            restore_bt.setOnClickListener(v -> openFile());
+
             return true;
         });
     }
@@ -96,6 +164,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     }
 
     public void resetSelectedCounters() {
+        // TODO: 2/22/2021 переделать метод по другому
                 new Thread(() -> {
                     for (Counter counter : mRepo.getAllCountersNoLiveData()){
                         Counter copy = new Counter(counter.title, counter.value,
@@ -132,5 +201,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    private void openFile() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/plain");
+        startActivityForResult(intent, RESTORE_REQUEST_CODE);
+    }
+
+    private void createFile() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/plain");
+        // TODO: 2/22/2021 добавить дату к названию
+        intent.putExtra(Intent.EXTRA_TITLE, "CounterBackup.txt");
+        startActivityForResult(intent, CREATE_FILE);
+    }
 
 }

@@ -60,12 +60,10 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
 
 
     public class Vh extends RecyclerView.ViewHolder implements View.OnTouchListener {
-        private LinearLayout mItem;
-        private TextView mTitle;
+        private final TextView mTitle;
 
         public Vh(@NonNull ViewGroup parent) {
             super(LayoutInflater.from(parent.getContext()).inflate(R.layout.group_i, parent, false));
-            mItem = itemView.findViewById(R.id.item_group_i);
             mTitle = itemView.findViewById(R.id.group_title_i);
             itemView.setOnTouchListener(this);
 

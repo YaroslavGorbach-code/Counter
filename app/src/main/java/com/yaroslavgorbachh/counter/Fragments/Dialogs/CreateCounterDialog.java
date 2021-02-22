@@ -30,7 +30,6 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
 
     public static CreateCounterDialog newInstance(String group) {
         CreateCounterDialog f = new CreateCounterDialog();
-        // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putString("group", group);
         f.setArguments(args);
@@ -59,8 +58,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
                    }else {
                        return;
                    }
-
-                        mViewModel.createCounter(title, group);
+                   mViewModel.createCounter(title, group);
                 });
 
         /*each new group sets into dropdown_menu*/

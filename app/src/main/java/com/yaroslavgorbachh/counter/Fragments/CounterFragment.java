@@ -38,7 +38,6 @@ import com.yaroslavgorbachh.counter.Activityes.MainActivity;
 import java.lang.reflect.Array;
 
 public class CounterFragment extends Fragment {
-    private static final int OPEN_FILE_CODE = 0;
     private TextView mValue_tv;
     private TextView mIncButton;
     private TextView mDecButton;
