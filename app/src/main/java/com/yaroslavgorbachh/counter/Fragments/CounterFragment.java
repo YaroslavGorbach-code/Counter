@@ -130,16 +130,23 @@ public class CounterFragment extends Fragment {
                 mCounterTitle.setText(counter.title);
                 mGroupTitle.setText(counter.grope);
 
+
                 if (counter.maxValue != Counter.MAX_VALUE) {
                     mAllInclusiveMAx_iv.setVisibility(View.GONE);
                     mMaxValue_tv.setVisibility(View.VISIBLE);
                     mMaxValue_tv.setText(String.valueOf(counter.maxValue));
+                }else {
+                    mAllInclusiveMAx_iv.setVisibility(View.VISIBLE);
+                    mMaxValue_tv.setVisibility(View.GONE);
                 }
 
                 if (counter.minValue != Counter.MIN_VALUE) {
                     mAllInclusiveMin_iv.setVisibility(View.GONE);
                     mMinValue_tv.setVisibility(View.VISIBLE);
                     mMinValue_tv.setText(String.valueOf(counter.minValue));
+                }else {
+                    mAllInclusiveMin_iv.setVisibility(View.VISIBLE);
+                    mMinValue_tv.setVisibility(View.GONE);
                 }
 
             } else {

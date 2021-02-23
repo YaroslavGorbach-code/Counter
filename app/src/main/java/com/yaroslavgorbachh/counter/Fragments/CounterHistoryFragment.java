@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.RecyclerViews.Adapters.CounterHistoryList_rv;
 import com.yaroslavgorbachh.counter.ViewModels.CounterHistoryViewModel;
 
-public class CounterHistoryFragment extends Fragment {
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
+public class CounterHistoryFragment extends Fragment {
     private CounterHistoryList_rv mHistoryList;
     private Spinner mSpinner;
     private CounterHistoryViewModel mViewModel;
@@ -69,38 +75,27 @@ public class CounterHistoryFragment extends Fragment {
         return view;
     }
 
-    // TODO: 2/21/2021 переделать тут сортирлвку
     private void sortList(int position) {
-        String[] choose = getResources().getStringArray(R.array.history_sort_items);
-        if(choose[position].equals("Sort by date") || choose[position].equals("Сортировка по дате")){
-            /*update list of history sort by time*/
-            mViewModel.getCounterHistoryList(mCounterId)
+        mViewModel.getCounterHistoryList(mCounterId)
                     .observe(CounterHistoryFragment.this, counterHistories -> {
+                        if (position == 0) {
+                            Collections.sort(counterHistories, (o1, o2) -> Long.compare(o1.id, o2.id));
+                        }else {
+                            Collections.sort(counterHistories, (o1, o2) -> Long.compare(o1.value, o2.value));
+                        }
+                        Collections.reverse(counterHistories);
                         mHistoryList.setHistory(counterHistories);
                         if (counterHistories.size() <= 0){
                             mIconAndTextThereNoHistory.setVisibility(View.VISIBLE);
                         }else {
                             mIconAndTextThereNoHistory.setVisibility(View.GONE);
                         }
-                    });
-        }else {
-            /*update list of history sort by value*/
-            mViewModel.getCounterHistoryListSortByValue(mCounterId)
-                    .observe(CounterHistoryFragment.this, counterHistories -> {
-                        mHistoryList.setHistory(counterHistories);
-                        if (counterHistories.size() <= 0){
-                            mIconAndTextThereNoHistory.setVisibility(View.VISIBLE);
-                        }else {
-                            mIconAndTextThereNoHistory.setVisibility(View.GONE);
-                        }
-                    });
 
-        }
+                    });
     }
 
     private void setAdapterForSpinner() {
         /*set toolTipText*/
-        // TODO: 2/22/2021 текст в ресурсы
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mSpinner.setTooltipText("Choose sort");
         }
