@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         new Utility().setTheme(mSharedPreferences, this);
         setContentView(R.layout.activity_main);
 
+        // recreating activity when theme is changed
         mMessageReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
