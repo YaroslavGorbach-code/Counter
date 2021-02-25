@@ -57,15 +57,16 @@ public class FastCountButton implements View.OnTouchListener, Handler.Callback {
 
     @Override
     public boolean handleMessage(Message msg) {
-        if (msg.what == FAST_COUNT_MSG) {
-            if (!mFastCounting) {
-                mFastCounting = true;
-                mView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                mView.getParent().requestDisallowInterceptTouchEvent(true);
+            if (msg.what == FAST_COUNT_MSG) {
+                if (!mFastCounting) {
+                    mFastCounting = true;
+                    mView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    mView.getParent().requestDisallowInterceptTouchEvent(true);
+                }
+                mView.performClick();
+                mHandler.sendEmptyMessageDelayed(FAST_COUNT_MSG, mFastCountInterval);
             }
-            mView.performClick();
-            mHandler.sendEmptyMessageDelayed(FAST_COUNT_MSG, mFastCountInterval);
-        }
+
         return false;
     }
 

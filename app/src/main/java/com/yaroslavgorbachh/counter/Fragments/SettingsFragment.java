@@ -20,6 +20,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbachh.counter.CopyBeforeReset;
 import com.yaroslavgorbachh.counter.Database.BackupAndRestore.MyBackup;
 import com.yaroslavgorbachh.counter.Database.BackupAndRestore.MyRestore;
 import com.yaroslavgorbachh.counter.Database.CounterDatabase;
@@ -31,22 +32,24 @@ import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
     private static final int RESTORE_REQUEST_CODE = 0;
     private static final int CREATE_FILE = 1;
     private Repo mRepo;
-    private final List<Counter> mCopyBeforeReset = new ArrayList<>();
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CREATE_FILE && resultCode == Activity.RESULT_OK){
-            if (data != null){
+        if (requestCode == CREATE_FILE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
                 new MyBackup.Init()
                         .database(CounterDatabase.getInstance(getActivity()))
                         .setContext(requireContext())
@@ -90,7 +93,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         super.onStart();
         getPreferenceManager().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
-       mRepo = new Repo(getActivity().getApplication());
+        mRepo = new Repo(getActivity().getApplication());
     }
 
     @Override
@@ -100,17 +103,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         Preference mResetAllCountersPref = findPreference("resetAllCounters");
         Preference mExportAllCountersPref = findPreference("exportAllCounters");
         Preference mChangeAccentColorPref = findPreference("changeAccentColor");
-        Preference mBackupPref= findPreference("backup");
+        Preference mBackupPref = findPreference("backup");
 
         mRemoveAllCountersPref.setOnPreferenceClickListener(preference -> {
             new DeleteCounterDialog(() -> {
                 mRepo.deleteCounters();
-            },2).show(getChildFragmentManager(),"tag");
+            }, 2).show(getChildFragmentManager(), "tag");
             return true;
         });
 
         mResetAllCountersPref.setOnPreferenceClickListener(preference -> {
-            resetSelectedCounters();
+            resetAllCounters();
             return true;
         });
 
@@ -143,55 +146,44 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("nightMod") && sharedPreferences.getBoolean("nightMod", false)){
+        if (key.equals("nightMod") && sharedPreferences.getBoolean("nightMod", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
-        if (key.equals("nightMod") && !sharedPreferences.getBoolean("nightMod", false)){
+        if (key.equals("nightMod") && !sharedPreferences.getBoolean("nightMod", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-        if (key.equals("keepScreenOn") && sharedPreferences.getBoolean("keepScreenOn", true)){
+        if (key.equals("keepScreenOn") && sharedPreferences.getBoolean("keepScreenOn", true)) {
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-        if (key.equals("keepScreenOn") && !sharedPreferences.getBoolean("keepScreenOn", false)){
+        if (key.equals("keepScreenOn") && !sharedPreferences.getBoolean("keepScreenOn", false)) {
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-        if (key.equals("lockOrientation") && sharedPreferences.getBoolean("lockOrientation", true ) ){
+        if (key.equals("lockOrientation") && sharedPreferences.getBoolean("lockOrientation", true)) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-        if (key.equals("lockOrientation") && !sharedPreferences.getBoolean("lockOrientation", true)){
+        if (key.equals("lockOrientation") && !sharedPreferences.getBoolean("lockOrientation", true)) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
     }
 
-    public void resetSelectedCounters() {
-        // TODO: 2/22/2021 переделать метод по другому
-                new Thread(() -> {
-                    for (Counter counter : mRepo.getAllCountersNoLiveData()){
-                        Counter copy = new Counter(counter.title, counter.value,
-                                counter.maxValue, counter.minValue, counter.step,
-                                counter.grope, counter.createDate, counter.createDateSort,
-                                counter.lastResetDate, counter.lastResetValue,
-                                counter.counterMaxValue, counter.counterMinValue);
-                        copy.setId(counter.id);
-                        mCopyBeforeReset.add(copy);
-                        counter.lastResetValue = counter.value;
-                        counter.lastResetDate = new Date();
-
-                        if (counter.minValue > 0){
-                            counter.value = counter.minValue;
-                        }else {
-                            counter.value = 0;
-                        }
-                        mRepo.updateCounter(counter);
+    public void resetAllCounters() {
+        Disposable disposable = mRepo.getAllCountersNoLiveData()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(counters -> {
+                    CopyBeforeReset copyBeforeReset = new CopyBeforeReset();
+                    for (Counter counter : counters) {
+                        copyBeforeReset.addCounter(counter);
+                        counter.reset(mRepo);
                     }
                     Snackbar.make(requireView(), getResources().getString(R.string
                             .countersReset), BaseTransientBottomBar.LENGTH_LONG)
                             .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
-                                for (Counter counterBeforeReset : mCopyBeforeReset) {
-                                    mRepo.updateCounter(counterBeforeReset);
+                                for (Counter counter : copyBeforeReset.getCounters()) {
+                                    mRepo.updateCounter(counter);
                                 }
                             }).show();
-                }).start();
+                });
     }
 
     @Override
@@ -212,8 +204,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("text/plain");
-        // TODO: 2/22/2021 добавить дату к названию
-        intent.putExtra(Intent.EXTRA_TITLE, "CounterBackup.txt");
+        intent.putExtra(Intent.EXTRA_TITLE, "CounterBackup " + Utility.getCurrentDate());
         startActivityForResult(intent, CREATE_FILE);
     }
 

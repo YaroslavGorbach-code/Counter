@@ -17,7 +17,6 @@ import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.ViewModels.AboutCounterViewModel;
 import com.yaroslavgorbachh.counter.ViewModels.Factories.AboutCounterViewModelFactory;
 
-
 public class AboutCounterFragment extends Fragment {
     private MaterialTextView mCounterName;
     private MaterialTextView mCreateData;
@@ -53,7 +52,7 @@ public class AboutCounterFragment extends Fragment {
 
         viewModel.counter.observe(getViewLifecycleOwner(), counter -> {
             mCounterName.setText(counter.title);
-            mCreateData.setText(getString(R.string.created, Utility.formatDateToString(counter.createDate)));
+            mCreateData.setText(getString(R.string.created, Utility.convertDateToString(counter.createDate)));
             mLastResetedValue.setText(String.valueOf(counter.lastResetValue));
             mCounterValue.setText(String.valueOf(counter.value));
             mCounterStep.setText(String.valueOf(counter.step));
@@ -62,7 +61,7 @@ public class AboutCounterFragment extends Fragment {
             mCounterMinValue.setText(String.valueOf(counter.counterMinValue));
             mCounterMaxValue.setText(String.valueOf(counter.counterMaxValue));
             if (counter.lastResetDate!=null)
-            mLastResetData.setText(Utility.formatDateToString(counter.lastResetDate));
+            mLastResetData.setText(Utility.convertDateToString(counter.lastResetDate));
         });
 
         return view;

@@ -186,8 +186,7 @@ public class CountersFragment extends Fragment  {
         }, requireActivity().getApplication());
 
 
-        // Our handler for received Intents. This will be called whenever an Intent
-        // with an action named "custom-event-name" is broadcasted.
+        // Handling receiver witch MainActivity sends when volume buttons presed
         mMessageReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -314,8 +313,8 @@ public class CountersFragment extends Fragment  {
     }
 
     private void incSelectedCounters() {
-        mCountersAdapter.incSelectedCounters();
-        mAccessibility.playIncFeedback(getView(), null);
+            mCountersAdapter.incSelectedCounters();
+            mAccessibility.playIncFeedback(getView(), null);
     }
 
     private void decSelectedCounters() {

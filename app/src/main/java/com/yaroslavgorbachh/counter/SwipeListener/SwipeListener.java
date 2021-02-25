@@ -22,12 +22,10 @@ public class SwipeListener implements View.OnTouchListener, onSwipeListener{
 
     @Override
     public void onSwipeBottom() {
-
     }
 
     @Override
     public void onSwipeTop() {
-
     }
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {

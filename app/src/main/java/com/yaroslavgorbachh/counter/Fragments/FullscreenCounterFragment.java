@@ -83,7 +83,6 @@ public class FullscreenCounterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         mMessageReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -98,7 +97,7 @@ public class FullscreenCounterFragment extends Fragment {
             }
         };
 
-        mViewModel.counter.observe(getViewLifecycleOwner(), counter -> {
+        mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
             mCounterValue_tv.setTextSize(Utility.getValueTvSize(counter));
             mCounterValue_tv.setText(String.valueOf(counter.value));
         });

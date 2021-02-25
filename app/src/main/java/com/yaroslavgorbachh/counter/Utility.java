@@ -38,7 +38,6 @@ public class Utility {
                 activity.setTheme(repo.getCurrentStyle().style);
             }
         }).start();
-
         if (sharedPreferences.getBoolean("nightMod", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
@@ -57,10 +56,16 @@ public class Utility {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static String formatDateToString(Date date){
+    public static String convertDateToString(Date date){
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm:ss", Locale.getDefault());
         return  dateFormat.format(date);
     }
+
+    public static String getCurrentDate(){
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
+        return dateFormat.format(new Date());
+    }
+
 
     /*method for changing the font size depending on the counter value*/
     public static int getValueTvSize(Counter counter) {

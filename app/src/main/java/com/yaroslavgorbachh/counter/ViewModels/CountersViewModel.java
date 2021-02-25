@@ -2,7 +2,6 @@ package com.yaroslavgorbachh.counter.ViewModels;
 
 import android.app.Application;
 import android.content.res.Resources;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -10,7 +9,6 @@ import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Database.Repo;
-import com.yaroslavgorbachh.counter.R;
 
 import java.util.Date;
 import java.util.List;
@@ -28,63 +26,17 @@ public class CountersViewModel extends AndroidViewModel {
     }
 
     public void incCounter(Counter counter) {
-        long maxValue;
-        long incOn;
-        long value = counter.value;
-        maxValue = counter.maxValue;
-        incOn = counter.step;
-        value += incOn;
-
-        if (value > maxValue) {
-            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
-            counter.value = maxValue;
-        } else {
-            counter.value = Math.max(counter.minValue, value);
-        }
-
-        if (counter.value == counter.minValue){
-            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
-        }
-
-        if (counter.value > counter.counterMaxValue)
-            counter.counterMaxValue = counter.value;
-
-        if (counter.value < counter.counterMinValue)
-            counter.counterMaxValue = counter.value;
-        mRepo.updateCounter(counter);
+        counter.inc(getApplication(), mRes, mRepo);
     }
 
     public void decCounter(Counter counter) {
-        long minValue;
-        long decOn;
-        minValue = counter.minValue;
-        long value = counter.value;
-        decOn = counter.step;
-        value -= decOn;
-
-        if (value < minValue){
-            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
-            counter.value = minValue;
-        }else {
-            counter.value = Math.min(counter.maxValue, value);
-        }
-        if (counter.value == counter.maxValue){
-            Toast.makeText(getApplication(), mRes.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
-        }
-
-        if (counter.value > counter.counterMaxValue)
-            counter.counterMaxValue = counter.value;
-
-        if (counter.value < counter.counterMinValue)
-            counter.counterMinValue = counter.value;
-
-        mRepo.updateCounter(counter);
+        counter.dec(getApplication(), mRes, mRepo);
     }
 
     public void countersMoved(Counter counterFrom, Counter counterTo) {
-
         Date dataFrom;
         Date dataTo;
+
         if (counterFrom.createDateSort!=null && counterTo.createDateSort!=null){
             dataFrom = counterFrom.createDateSort;
             dataTo = counterTo.createDateSort;

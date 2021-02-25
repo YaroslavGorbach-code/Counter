@@ -73,9 +73,8 @@ public class CounterHistoryList_rv {
                             parent, false));
                    mValue = itemView.findViewById(R.id.history_value);
                    mCreateData = itemView.findViewById(R.id.historyData);
-
-
                 }
+
                 private void bind(CounterHistory counterHistory){
                     mValue.setText(String.valueOf(counterHistory.value));
                     mCreateData.setText(counterHistory.data);

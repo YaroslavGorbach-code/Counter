@@ -33,7 +33,6 @@ public abstract class CounterDatabase extends RoomDatabase {
             sInstance = Room.databaseBuilder(context.getApplicationContext(),CounterDatabase.class, "counter.db")
                     .addCallback(rdc)
                     .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
-                    .allowMainThreadQueries()
                     .addMigrations(MIGRATION_24_25)
                     .addMigrations(MIGRATION_25_26)
                     .build();

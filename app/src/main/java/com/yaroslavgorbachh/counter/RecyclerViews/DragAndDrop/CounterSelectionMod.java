@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yaroslavgorbachh.counter.CopyBeforeReset;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.R;
@@ -24,14 +25,15 @@ public class CounterSelectionMod {
     private List<Counter> mSelectedCounters = new ArrayList<>();
     private final List<RecyclerView.ViewHolder> mSelectedVhs = new ArrayList<>();
     private RecyclerView.ViewHolder mDraggingHolder;
-    private List<Counter> mCopyBeforeReset;
     private final MutableLiveData<Integer> mCountSelected = new MutableLiveData<>(mSelectedCounters.size());
-
+    private final Application mApplication;
     public LiveData<Boolean> selectionMod = mSelectionMod;
+    public CopyBeforeReset mCopyBeforeReset;
 
 
     public CounterSelectionMod(Application application) {
         mRepo = new Repo(application);
+        mApplication = application;
     }
 
     public void selectCounter(Counter newCounter, RecyclerView.ViewHolder viewHolder) {
@@ -102,62 +104,33 @@ public class CounterSelectionMod {
 
     public void incSelectedCounters() {
         for (Counter counter : mSelectedCounters) {
-            counter.value += counter.step;
-            if (counter.value > counter.maxValue){
-                counter.value = counter.maxValue;
-            }
-            if (counter.value > counter.counterMaxValue)
-                counter.counterMaxValue = counter.value;
-            if (counter.value < counter.counterMinValue)
-                counter.counterMaxValue = counter.value;
-            mRepo.updateCounter(counter);
+            counter.inc(mApplication, mApplication.getResources(), mRepo);
         }
     }
 
     public void decSelectedCounters() {
         for (Counter counter : mSelectedCounters) {
-            counter.value -= counter.step;
-            if (counter.value < counter.minValue){
-                counter.value = counter.minValue;
-            }
-            if (counter.value > counter.counterMaxValue)
-                counter.counterMaxValue = counter.value;
-            if (counter.value < counter.counterMinValue)
-                counter.counterMinValue = counter.value;
-            mRepo.updateCounter(counter);
+            counter.dec(mApplication, mApplication.getResources(), mRepo);
         }
     }
 
     public void resetSelectedCounters() {
-        mCopyBeforeReset = new ArrayList<>();
+        mCopyBeforeReset = new CopyBeforeReset();
         for (Counter counter : mSelectedCounters) {
-            Counter copy = new Counter(counter.title, counter.value,
-                    counter.maxValue, counter.minValue, counter.step,
-                    counter.grope, counter.createDate, counter.createDateSort,
-                    counter.lastResetDate, counter.lastResetValue,
-                    counter.counterMaxValue, counter.counterMinValue);
-            copy.setId(counter.id);
-            mCopyBeforeReset.add(copy);
-            counter.lastResetValue = counter.value;
-            counter.lastResetDate = new Date();
-
-            if (counter.minValue > 0){
-                counter.value = counter.minValue;
-            }else {
-                counter.value = 0;
-            }
-            mRepo.updateCounter(counter);
+            mCopyBeforeReset.addCounter(counter);
+            counter.reset(mRepo);
         }
         mCountSelected.setValue(mSelectedCounters.size());
     }
 
     public void undoReset() {
-        for (Counter counter : mCopyBeforeReset) {
+        for (Counter counter : mCopyBeforeReset.getCounters()) {
             mRepo.updateCounter(counter);
         }
-        mSelectedCounters = mCopyBeforeReset;
+        mSelectedCounters = mCopyBeforeReset.getCounters();
         mSelectionMod.setValue(mSelectedCounters != null);
         mCountSelected.setValue(mSelectedCounters.size());
+        mCopyBeforeReset = null;
     }
 
     public void deleteSelectedCounters() {
@@ -197,8 +170,6 @@ public class CounterSelectionMod {
         vh.itemView.findViewById(R.id.counter_item).setBackgroundResource(R.drawable.item_selected);
         vh.itemView.setElevation(8f);
     }
-
-
 
     private void setItemDraggingBackground(RecyclerView.ViewHolder viewHolder) {
         mDraggingHolder = viewHolder;

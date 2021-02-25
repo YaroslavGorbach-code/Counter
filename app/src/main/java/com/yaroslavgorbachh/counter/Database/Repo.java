@@ -13,6 +13,20 @@ import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleEmitter;
+import io.reactivex.rxjava3.core.SingleOnSubscribe;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.observers.DisposableCompletableObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Repo {
 
@@ -30,7 +44,7 @@ public class Repo {
 
    public AppStyle getCurrentStyle(){
         //TODO: 2/19/2021 make in background
-        return mAppStyleDao.getCurrentColor();
+       return mAppStyleDao.getCurrentColor();
    }
 
     public void insertCounter(Counter counter){
@@ -57,17 +71,12 @@ public class Repo {
         new Thread(() -> mCounterHistoryDao.delete(counterId)).start();
     }
 
-    // TODO: 2/19/2021 make in background
-    public List<Counter> getAllCountersNoLiveData(){
-       return mCounterDao.getAllCountersNoLiveData();
+    public Single<List<Counter>> getAllCountersNoLiveData(){
+        return Single.create(emitter -> emitter.onSuccess(mCounterDao.getAllCountersNoLiveData()));
     }
 
     public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId){
         return mCounterHistoryDao.getCounterHistoryList(counterId);
-    }
-
-    public LiveData<List<CounterHistory>> getCounterHistoryListSortByValue(long counterId){
-        return mCounterHistoryDao.getCounterHistoryListSortByValue(counterId);
     }
 
     public LiveData<List<Counter>> getAllCounters(){

@@ -1,10 +1,31 @@
 package com.yaroslavgorbachh.counter.Database.Models;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.widget.Toast;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.yaroslavgorbachh.counter.Database.Repo;
+import com.yaroslavgorbachh.counter.R;
+
+import java.security.PublicKey;
 import java.util.Date;
+import java.util.Objects;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.CompletableEmitter;
+import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.core.CompletableOnSubscribe;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Entity(tableName = "counter_table")
 public class Counter {
@@ -62,4 +83,63 @@ public class Counter {
         this.id = id;
     }
 
+    public void inc(Context context, Resources resources, Repo repo){
+            long maxValue;
+            long incOn;
+            long value = this.value;
+            maxValue = this.maxValue;
+            incOn = this.step;
+            value += incOn;
+
+            if (value > maxValue) {
+                Toast.makeText(context, resources.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
+                this.value = maxValue;
+            } else {
+                this.value = Math.max(this.minValue, value);
+            }
+
+            if (this.value == this.minValue){
+                Toast.makeText(context, resources.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
+            }
+
+            if (this.value > this.counterMaxValue) this.counterMaxValue = this.value;
+
+            if (this.value < this.counterMinValue) this.counterMaxValue = this.value;
+         repo.updateCounter(this);
+    }
+
+    public void dec(Context context, Resources resources, Repo repo){
+        long minValue;
+        long decOn;
+        minValue = this.minValue;
+        long value = this.value;
+        decOn = this.step;
+        value -= decOn;
+
+        if (value < minValue){
+            Toast.makeText(context, resources.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
+            this.value = minValue;
+        }else {
+            this.value = Math.min(this.maxValue, value);
+        }
+        if (this.value == this.maxValue){
+            Toast.makeText(context, resources.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
+        }
+
+        if (this.value > this.counterMaxValue) this.counterMaxValue = this.value;
+
+        if (this.value < this.counterMinValue) this.counterMinValue = this.value;
+        repo.updateCounter(this);
+    }
+
+    public void reset(Repo repo){
+        lastResetValue = value;
+        lastResetDate = new Date();
+        if (minValue > 0){
+            value = minValue;
+        }else {
+            value = 0;
+        }
+        repo.updateCounter(this);
+    }
 }

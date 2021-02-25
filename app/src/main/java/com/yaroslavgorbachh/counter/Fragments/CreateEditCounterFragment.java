@@ -136,6 +136,5 @@ public class CreateEditCounterFragment extends Fragment {
         mViewModel.updateCreateCounter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup);
         Navigation.findNavController(getView()).popBackStack();
         Utility.hideKeyboard(requireActivity());
-
     }
 }

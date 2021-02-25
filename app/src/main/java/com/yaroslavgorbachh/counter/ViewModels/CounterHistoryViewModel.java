@@ -23,10 +23,6 @@ public class CounterHistoryViewModel extends AndroidViewModel {
         return mRepo.getCounterHistoryList(counterId);
     }
 
-    public LiveData<List<CounterHistory>> getCounterHistoryListSortByValue(long counterId) {
-        return mRepo.getCounterHistoryListSortByValue(counterId);
-    }
-
     public void clean(long id) {
             mRepo.deleteCounterHistory(id);
     }

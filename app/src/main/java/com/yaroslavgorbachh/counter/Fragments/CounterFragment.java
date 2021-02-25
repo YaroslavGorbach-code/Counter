@@ -25,7 +25,6 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbachh.counter.Database.CounterDatabase;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.DeleteCounterDialog;
@@ -34,8 +33,6 @@ import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbachh.counter.ViewModels.Factories.CounterViewModelFactory;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Activityes.MainActivity;
-
-import java.lang.reflect.Array;
 
 public class CounterFragment extends Fragment {
     private TextView mValue_tv;
@@ -121,11 +118,11 @@ public class CounterFragment extends Fragment {
         mToolbar.setNavigationOnClickListener(i -> Navigation.findNavController(view).popBackStack());
 
         /*listener for current counter*/
-        mViewModel.counter.observe(getViewLifecycleOwner(), counter -> {
+        mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
 
             /*if counter == null that means it was deleted*/
             if (counter != null) {
-                mValue_tv.setTextSize(Utility.getValueTvSize(mViewModel.counter.getValue()));
+                mValue_tv.setTextSize(Utility.getValueTvSize(mViewModel.mCounter.getValue()));
                 mValue_tv.setText(String.valueOf(counter.value));
                 mCounterTitle.setText(counter.title);
                 mGroupTitle.setText(counter.grope);
