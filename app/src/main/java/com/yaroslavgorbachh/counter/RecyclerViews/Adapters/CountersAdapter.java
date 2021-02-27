@@ -93,6 +93,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
          public Counter getSelectedCounter() {
             return mCounterSelectionMod.getSelectedCounter();
           }
+
          public List<Counter> getSelectedCounters(){
             return mCounterSelectionMod.getSelectedCounters();
          }

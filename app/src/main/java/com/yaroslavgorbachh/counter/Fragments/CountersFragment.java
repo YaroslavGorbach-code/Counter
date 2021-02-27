@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -232,9 +233,9 @@ public class CountersFragment extends Fragment  {
 
         /*filter the list depending on the selected group */
         mGroupsAdapter.getSelectedItem().observe(getViewLifecycleOwner(), selectedItem -> {
-            mViewModel.mCounters.removeObservers(getViewLifecycleOwner());
-            mViewModel.mCounters.observe(getViewLifecycleOwner(), counters -> {
-                        if (!selectedItem.equals(getResources().getString(R.string.allCountersItem))){
+            mViewModel.getCounters().removeObservers(getViewLifecycleOwner());
+            mViewModel.getCounters().observe(getViewLifecycleOwner(), counters -> {
+                if (!selectedItem.equals(getResources().getString(R.string.allCountersItem))){
                             mCountersAdapter.setData(counters.stream()
                                     .filter(counter -> counter.grope!=null && counter.grope.equals(selectedItem)).collect(Collectors.toList()));
 
@@ -264,7 +265,6 @@ public class CountersFragment extends Fragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         /*set up listeners for selection mod*/
         mCountersAdapter.getSelectionMod().observe(getViewLifecycleOwner(), isSelectionMod ->{
                 setUpToolbarConfiguration(isSelectionMod);
@@ -313,8 +313,10 @@ public class CountersFragment extends Fragment  {
     }
 
     private void incSelectedCounters() {
-            mCountersAdapter.incSelectedCounters();
-            mAccessibility.playIncFeedback(getView(), null);
+        mCountersAdapter.incSelectedCounters();
+        mAccessibility.playIncFeedback(getView(), null);
+        Log.v("tag", "click");
+
     }
 
     private void decSelectedCounters() {

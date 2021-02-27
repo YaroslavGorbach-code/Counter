@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,7 +32,6 @@ public class FastCountButton implements View.OnTouchListener, Handler.Callback {
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         mFastCountInterval = MAX - mSharedPreferences.getInt("fastCountSpeed", 200) + MIN;
     }
-
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {

@@ -15,9 +15,11 @@ import java.util.List;
 public class CreateCounterDialogViewModel extends AndroidViewModel {
 
     private final Repo mRepo;
+    private final LiveData<List<String>> mGroups;
     public CreateCounterDialogViewModel(@NonNull Application application) {
         super(application);
         mRepo = new Repo(application);
+        mGroups = mRepo.getGroups();
     }
 
     public void createCounter(String title, String group) {
@@ -29,6 +31,6 @@ public class CreateCounterDialogViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<String>> getGroups() {
-        return mRepo.getGroups();
+        return mGroups;
     }
 }

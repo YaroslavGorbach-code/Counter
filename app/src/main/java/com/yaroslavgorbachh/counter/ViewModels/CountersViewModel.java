@@ -16,13 +16,15 @@ import java.util.List;
 public class CountersViewModel extends AndroidViewModel {
     private final Repo mRepo;
     private final Resources mRes;
-    public LiveData<List<Counter>> mCounters;
+    private final LiveData<List<Counter>> mCounters;
+    private final LiveData<List<String>> mGroups;
 
     public CountersViewModel(@NonNull Application application) {
         super(application);
         mRepo = new Repo(application);
-        mCounters = mRepo.getAllCounters();
         mRes = application.getResources();
+        mCounters = mRepo.getAllCounters();
+        mGroups = mRepo.getGroups();
     }
 
     public void incCounter(Counter counter) {
@@ -55,6 +57,10 @@ public class CountersViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<String>> getGroups() {
-        return mRepo.getGroups();
+        return mGroups;
+    }
+
+    public LiveData<List<Counter>> getCounters(){
+         return mCounters;
     }
 }

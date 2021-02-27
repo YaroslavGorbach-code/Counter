@@ -2,6 +2,7 @@ package com.yaroslavgorbachh.counter.Database.Models;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.room.ColumnInfo;

@@ -16,15 +16,21 @@ import java.util.Objects;
 
 public class CreateEditCounterViewModel extends AndroidViewModel {
     private final Repo mRepo;
-    public final LiveData<Counter> mCounter;
+    private final LiveData<List<String>> mGroups;
+    private final LiveData<Counter> mCounter;
     public CreateEditCounterViewModel(@NonNull Application application, long counterId) {
         super(application);
         mRepo = new Repo(application);
         mCounter = mRepo.getCounter(counterId);
+        mGroups = mRepo.getGroups();
     }
 
     public LiveData<List<String>> getGroups() {
-       return mRepo.getGroups();
+       return mGroups;
+    }
+
+    public LiveData<Counter> getCounter(){
+        return mCounter;
     }
 
     public void updateCreateCounter(String title, long value, long maxValue, long minValue, long step, String grope) {

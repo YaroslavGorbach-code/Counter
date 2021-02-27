@@ -156,7 +156,7 @@
         android:layout_marginEnd="6dp"
         app:icon="@drawable/ic_refresh"
         app:iconGravity="textStart"
-        app:layout_constraintBottom_toTopOf="@+id/inc_value"
+        app:layout_constraintBottom_toBottomOf="@+id/dec_value"
         app:layout_constraintEnd_toStartOf="@+id/dec_value"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

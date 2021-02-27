@@ -67,7 +67,7 @@ public class CreateEditCounterFragment extends Fragment {
         });
         mToolbar.inflateMenu(R.menu.menu_counter_create_fragment);
 
-        mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
+        mViewModel.getCounter().observe(getViewLifecycleOwner(), counter -> {
             /*if counter == null that means that counter will be created*/
             if (counter == null) {
                 mTitle = "";
