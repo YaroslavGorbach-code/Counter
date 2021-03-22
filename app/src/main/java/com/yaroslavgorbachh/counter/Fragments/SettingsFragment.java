@@ -31,9 +31,6 @@ import com.yaroslavgorbachh.counter.Fragments.Dialogs.DeleteCounterDialog;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -130,7 +127,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         });
 
         mBackupPref.setOnPreferenceClickListener(preference -> {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.backud_dialog,
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.backup_dialog,
                     null);
             new MaterialAlertDialogBuilder(requireContext())
                     .setView(view).show();

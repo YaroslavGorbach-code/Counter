@@ -28,6 +28,17 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
     private CreateCounterDialogViewModel mViewModel;
     private TextInputEditText mCounterName_et;
 
+    private void setGroups(Context context) {
+        mViewModel.getGroups().observe(this, groups -> {
+            ArrayAdapter<String> adapter =
+                    new ArrayAdapter<>(
+                            context,
+                            R.layout.dropdown_menu_popup_item,
+                            Utility.deleteTheSameGroups(groups));
+            mGroups_et.setAdapter(adapter);
+        });
+    }
+
     public static CreateCounterDialog newInstance(String group) {
         CreateCounterDialog f = new CreateCounterDialog();
         Bundle args = new Bundle();
@@ -38,12 +49,12 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-
        View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_create_counter, null);
-       mViewModel = new ViewModelProvider(this).get(CreateCounterDialogViewModel.class);
        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
        mCounterName_et = view.findViewById(R.id.counterTitle_addCounter);
-       if (getArguments()!=null)
+        mViewModel = new ViewModelProvider(this).get(CreateCounterDialogViewModel.class);
+
+        if (getArguments()!=null)
        mGroups_et.setText(getArguments().getString("group"));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
@@ -74,14 +85,4 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
          return builder.create();
     }
 
-    private void setGroups(Context context) {
-        mViewModel.getGroups().observe(this, groups -> {
-            ArrayAdapter<String> adapter =
-                    new ArrayAdapter<>(
-                            context,
-                            R.layout.dropdown_menu_popup_item,
-                            Utility.deleteTheSameGroups(groups));
-            mGroups_et.setAdapter(adapter);
-        });
-    }
 }

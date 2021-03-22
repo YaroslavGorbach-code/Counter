@@ -12,7 +12,7 @@ import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.R;
 
 public class ColorPickerDialogViewModel extends AndroidViewModel {
-    private Repo mRepo;
+    private final Repo mRepo;
     public ColorPickerDialogViewModel(@NonNull Application application) {
         super(application);
         mRepo = new Repo(application);

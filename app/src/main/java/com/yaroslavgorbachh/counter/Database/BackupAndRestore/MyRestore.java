@@ -49,7 +49,7 @@ public class MyRestore {
                     return;
                 }
                 if (uri == null) {
-                    onCompleteListener.onComplete(false, "Urinot specified");
+                    onCompleteListener.onComplete(false, "Uri not specified");
                     return;
                 }
 

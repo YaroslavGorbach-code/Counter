@@ -1,6 +1,8 @@
 package com.yaroslavgorbachh.counter.RecyclerViews.DragAndDrop;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import androidx.lifecycle.LiveData;
@@ -13,58 +15,73 @@ import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.RecyclerViews.Adapters.CountersAdapter;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableEmitter;
-import io.reactivex.rxjava3.core.ObservableOnSubscribe;
-import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.Disposable;
-
-public class CounterSelectionMod {
+public class CounterMultiSelection implements MultiSelection {
 
     private final Repo mRepo;
     private  Drawable mDefaultBackground = null;
-    private final MutableLiveData<Boolean> mSelectionMod = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> mIsMultiSelection = new MutableLiveData<>(false);
     private List<Counter> mSelectedCounters = new ArrayList<>();
     private final List<RecyclerView.ViewHolder> mSelectedVhs = new ArrayList<>();
     private RecyclerView.ViewHolder mDraggingHolder;
     private final MutableLiveData<Integer> mCountSelected = new MutableLiveData<>(mSelectedCounters.size());
-    private final Application mApplication;
-    public LiveData<Boolean> selectionMod = mSelectionMod;
+    private final Context mContext;
+    private final Resources mResources;
+    public LiveData<Boolean> isMultiSelection = mIsMultiSelection;
     public CopyBeforeReset mCopyBeforeReset;
 
 
-    public CounterSelectionMod(Application application) {
-        mRepo = new Repo(application);
-        mApplication = application;
+    public CounterMultiSelection(Repo repo, Context context, Resources resources) {
+        mRepo = repo;
+        mContext = context;
+        mResources = resources;
     }
 
-    public void selectCounter(Counter newCounter, RecyclerView.ViewHolder viewHolder) {
+
+    @Override
+    public void select(Counter counter, RecyclerView.ViewHolder viewHolder) {
         boolean isAlreadySelected = false;
         for (Counter oldCounter : mSelectedCounters) {
-            if (newCounter.id == oldCounter.id) {
-                unSelectCounter(oldCounter, viewHolder);
+            if (counter.id == oldCounter.id) {
+                unSelect(oldCounter, viewHolder);
                 isAlreadySelected = true;
                 break;
             }
         }
         if (!isAlreadySelected) {
-            if (!mSelectionMod.getValue())
-                mSelectionMod.setValue(true);
+            if (!mIsMultiSelection.getValue())
+                mIsMultiSelection.setValue(true);
 
-            mSelectedCounters.add(newCounter);
+            mSelectedCounters.add(counter);
             mSelectedVhs.add(viewHolder);
             setItemSelectedBackground(viewHolder);
         }
         mCountSelected.setValue(mSelectedCounters.size());
     }
 
-    public void clearAllSelectedCounters() {
-        mSelectionMod.setValue(false);
+    @Override
+    public void unSelect(Counter counter, RecyclerView.ViewHolder viewHolder) {
+        setDefaultBackground(viewHolder);
+        if (mSelectedCounters.size() == 1)
+            mIsMultiSelection.setValue(false);
+        mSelectedCounters.remove(counter);
+        mSelectedVhs.remove(viewHolder);
+    }
+
+    @Override
+    public void selectAll(List<Counter> counters) {
+        mSelectedCounters.clear();
+        mSelectedCounters.addAll(counters);
+        mIsMultiSelection.setValue(true);
+        mCountSelected.setValue(counters.size());
+    }
+
+    @Override
+    public void clearAllSelections() {
+        mIsMultiSelection.setValue(false);
         for (RecyclerView.ViewHolder vh : mSelectedVhs) {
             setDefaultBackground(vh);
         }
@@ -73,15 +90,9 @@ public class CounterSelectionMod {
         mCountSelected.setValue(0);
     }
 
-    public void selectAllCounters(List<Counter> counters) {
-        mSelectedCounters.clear();
-        mSelectedCounters.addAll(counters);
-        mSelectionMod.setValue(true);
-        mCountSelected.setValue(counters.size());
-    }
 
     public void dragHolder(RecyclerView.ViewHolder viewHolder) {
-        clearAllSelectedCounters();
+        clearAllSelections();
         setItemDraggingBackground(viewHolder);
     }
 
@@ -111,13 +122,13 @@ public class CounterSelectionMod {
 
     public void incSelectedCounters() {
         for (Counter counter : mSelectedCounters) {
-            counter.inc(mApplication, mApplication.getResources(), mRepo);
+            counter.inc(mContext, mResources, mRepo);
         }
     }
 
     public void decSelectedCounters() {
         for (Counter counter : mSelectedCounters) {
-            counter.dec(mApplication, mApplication.getResources(), mRepo);
+            counter.dec(mContext, mResources, mRepo);
         }
     }
 
@@ -135,7 +146,7 @@ public class CounterSelectionMod {
             mRepo.updateCounter(counter);
         }
         mSelectedCounters = mCopyBeforeReset.getCounters();
-        mSelectionMod.setValue(mSelectedCounters != null);
+        mIsMultiSelection.setValue(mSelectedCounters != null);
         mCountSelected.setValue(mSelectedCounters.size());
         mCopyBeforeReset = null;
     }
@@ -144,7 +155,7 @@ public class CounterSelectionMod {
         for (Counter counter : mSelectedCounters) {
             mRepo.deleteCounter(counter);
         }
-        mSelectionMod.setValue(false);
+        mIsMultiSelection.setValue(false);
         mCountSelected.setValue(0);
         mSelectedCounters.clear();
     }
@@ -183,14 +194,5 @@ public class CounterSelectionMod {
         mDraggingHolder.itemView.setBackground(mDefaultBackground);
         mDraggingHolder.itemView.setElevation(25F);
     }
-
-    private void unSelectCounter(Counter counter, RecyclerView.ViewHolder viewHolder) {
-        setDefaultBackground(viewHolder);
-        if (mSelectedCounters.size() == 1)
-            mSelectionMod.setValue(false);
-        mSelectedCounters.remove(counter);
-        mSelectedVhs.remove(viewHolder);
-    }
-
 
 }

@@ -46,9 +46,9 @@ public class AboutCounterFragment extends Fragment {
         mCounterMaxValue = view.findViewById(R.id.maxValue);
         mLastResetData = view.findViewById(R.id.lastReset);
 
-        Toolbar mToolbar = view.findViewById(R.id.toolbar_aboutCounter);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        mToolbar.setNavigationOnClickListener(v -> Navigation.findNavController(view).popBackStack());
+        Toolbar toolbar = view.findViewById(R.id.toolbar_aboutCounter);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(view).popBackStack());
 
         viewModel.counter.observe(getViewLifecycleOwner(), counter -> {
             mCounterName.setText(counter.title);

@@ -42,6 +42,28 @@ public class CreateEditCounterFragment extends Fragment {
     private CreateEditCounterViewModel mViewModel;
     private Toolbar mToolbar;
 
+
+    private void updateCreateCounter() {
+        if (InputFilters.titleFilter(mTitle_et)
+                && InputFilters.valueFilter(mValue_et)
+                && InputFilters.stepFilter(mStep_et)){
+            mTitle = Objects.requireNonNull(mTitle_et.getText()).toString();
+            mValue = Long.parseLong(String.valueOf(mValue_et.getText()));
+            mStep = Long.parseLong(String.valueOf(mStep_et.getText()));
+        }else {
+            return;
+        }
+
+        mMaxValue = InputFilters.maxValueFilter(mMaxValue_et);
+        mMinValue = InputFilters.minValue(mMinValue_et);
+        mGroup = InputFilters.groupsFilter(mGroups_et);
+
+        /*if all fields are filled create counter*/
+        mViewModel.updateCreateCounter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup);
+        Navigation.findNavController(getView()).popBackStack();
+        Utility.hideKeyboard(requireActivity());
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -114,27 +136,5 @@ public class CreateEditCounterFragment extends Fragment {
             mGroups_et.setAdapter(adapter);
         });
         return view;
-    }
-
-
-    private void updateCreateCounter() {
-        if (InputFilters.titleFilter(mTitle_et)
-                && InputFilters.valueFilter(mValue_et)
-                && InputFilters.stepFilter(mStep_et)){
-            mTitle = Objects.requireNonNull(mTitle_et.getText()).toString();
-            mValue = Long.parseLong(String.valueOf(mValue_et.getText()));
-            mStep = Long.parseLong(String.valueOf(mStep_et.getText()));
-        }else {
-            return;
-        }
-
-        mMaxValue = InputFilters.maxValueFilter(mMaxValue_et);
-        mMinValue = InputFilters.minValue(mMinValue_et);
-        mGroup = InputFilters.groupsFilter(mGroups_et);
-
-        /*if all fields are filled create counter*/
-        mViewModel.updateCreateCounter(mTitle, mValue, mMaxValue, mMinValue, mStep, mGroup);
-        Navigation.findNavController(getView()).popBackStack();
-        Utility.hideKeyboard(requireActivity());
     }
 }

@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 
 public class Json {
-    private JsonObject jsonObject;
+    private final JsonObject jsonObject;
 
     private Json(JsonObject jsonObject) {
         this.jsonObject = jsonObject;
@@ -19,7 +19,7 @@ public class Json {
     }
 
     public static class Builder{
-        private JsonObject object;
+        private final JsonObject object;
 
         public Builder(){
             this.object = new JsonObject();

@@ -32,7 +32,7 @@ public class ColorPickerDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
        View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_color_picker, null);
        mViewModel = new ViewModelProvider(this).get(ColorPickerDialogViewModel.class);
-       ColorPicker colorPicker = new ScrollColorPicker(view);
+       ColorPicker colorPicker = new ScrollColorPicker(view, getResources());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setView(view)

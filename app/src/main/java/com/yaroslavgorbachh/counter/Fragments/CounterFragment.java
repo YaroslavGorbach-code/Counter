@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbachh.counter.Broadcasts.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.Database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.DeleteCounterDialog;
@@ -32,7 +33,8 @@ import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
 import com.yaroslavgorbachh.counter.ViewModels.Factories.CounterViewModelFactory;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.Activityes.MainActivity;
+
+import static com.yaroslavgorbachh.counter.Broadcasts.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
 public class CounterFragment extends Fragment {
     private TextView mValue_tv;
@@ -40,7 +42,6 @@ public class CounterFragment extends Fragment {
     private TextView mDecButton;
     private MaterialButton mResetButton;
     private CounterViewModel mViewModel;
-    private Toolbar mToolbar;
     private TextView mCounterTitle;
     private View mLayout;
     private long mCounterId;
@@ -50,7 +51,7 @@ public class CounterFragment extends Fragment {
     private TextView mMaxValue_tv;
     private TextView mMinValue_tv;
     private TextView mGroupTitle;
-    private BroadcastReceiver mMessageReceiver;
+    private VolumeButtonBroadcastReceiver mMessageReceiver;
 
     @Nullable
     @Override
@@ -60,9 +61,9 @@ public class CounterFragment extends Fragment {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         /*depending on pref set layout*/
-        if (sharedPreferences.getBoolean("leftHandMod", false )){
-          view = inflater.inflate(R.layout.fragment_counter_left_hand, container, false);
-        }else {
+        if (sharedPreferences.getBoolean("leftHandMod", false)) {
+            view = inflater.inflate(R.layout.fragment_counter_left_hand, container, false);
+        } else {
             view = inflater.inflate(R.layout.fragment_counter, container, false);
         }
 
@@ -71,7 +72,6 @@ public class CounterFragment extends Fragment {
         mIncButton = view.findViewById(R.id.inc_value);
         mDecButton = view.findViewById(R.id.dec_value);
         mResetButton = view.findViewById(R.id.reset_value);
-        mToolbar = view.findViewById(R.id.counterActivity_toolbar);
         mCounterTitle = view.findViewById(R.id.counterTitle);
         mLayout = view.findViewById(R.id.counterLayout);
         mSaveToHistoryButton = view.findViewById(R.id.saveToHistoryButton);
@@ -85,8 +85,9 @@ public class CounterFragment extends Fragment {
                 mCounterId)).get(CounterViewModel.class);
 
         /*inflating menu, navigationIcon and set listeners*/
-        mToolbar.inflateMenu(R.menu.menu_counter_fragment);
-        mToolbar.setOnMenuItemClickListener(i -> {
+        Toolbar toolbar = view.findViewById(R.id.counterActivity_toolbar);
+        toolbar.inflateMenu(R.menu.menu_counter_fragment);
+        toolbar.setOnMenuItemClickListener(i -> {
             switch (i.getItemId()) {
                 case R.id.counterDelete:
                     new DeleteCounterDialog(() -> {
@@ -114,15 +115,15 @@ public class CounterFragment extends Fragment {
             return true;
         });
 
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        mToolbar.setNavigationOnClickListener(i -> Navigation.findNavController(view).popBackStack());
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setNavigationOnClickListener(i -> Navigation.findNavController(view).popBackStack());
 
         /*listener for current counter*/
-        mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
+        mViewModel.counter.observe(getViewLifecycleOwner(), counter -> {
 
             /*if counter == null that means it was deleted*/
             if (counter != null) {
-                mValue_tv.setTextSize(Utility.getValueTvSize(mViewModel.mCounter.getValue()));
+                mValue_tv.setTextSize(Utility.getValueTvSize(mViewModel.counter.getValue()));
                 mValue_tv.setText(String.valueOf(counter.value));
                 mCounterTitle.setText(counter.title);
                 mGroupTitle.setText(counter.grope);
@@ -132,7 +133,7 @@ public class CounterFragment extends Fragment {
                     mAllInclusiveMAx_iv.setVisibility(View.GONE);
                     mMaxValue_tv.setVisibility(View.VISIBLE);
                     mMaxValue_tv.setText(String.valueOf(counter.maxValue));
-                }else {
+                } else {
                     mAllInclusiveMAx_iv.setVisibility(View.VISIBLE);
                     mMaxValue_tv.setVisibility(View.GONE);
                 }
@@ -141,7 +142,7 @@ public class CounterFragment extends Fragment {
                     mAllInclusiveMin_iv.setVisibility(View.GONE);
                     mMinValue_tv.setVisibility(View.VISIBLE);
                     mMinValue_tv.setText(String.valueOf(counter.minValue));
-                }else {
+                } else {
                     mAllInclusiveMin_iv.setVisibility(View.VISIBLE);
                     mMinValue_tv.setVisibility(View.GONE);
                 }
@@ -175,21 +176,25 @@ public class CounterFragment extends Fragment {
                     }).show();
         });
 
-           mMessageReceiver = new BroadcastReceiver() {
+        mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                switch (intent.getIntExtra(MainActivity.KEYCODE_EXTRA,-1)){
-                    case MainActivity.KEYCODE_VOLUME_DOWN:
-                        mViewModel.decCounter(getView());
-                        break;
-                    case MainActivity.KEYCODE_VOLUME_UP:
-                        mViewModel.incCounter(getView());
-                        break;
-                }
+            public void decCounters() {
+                mViewModel.decCounter(getView());
             }
-        };
+
+            @Override
+            public void incCounters() {
+                mViewModel.incCounter(getView());
+            }
+
+            @Override
+            public void lowerVolume() {}
+            @Override
+            public void raiseVolume() {}
+        });
+
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver,
-                new IntentFilter(MainActivity.ON_KEY_DOWN_BROADCAST));
+                new IntentFilter(ON_KEY_DOWN_BROADCAST));
 
         return view;
     }

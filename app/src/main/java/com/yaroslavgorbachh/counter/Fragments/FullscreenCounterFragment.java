@@ -13,8 +13,6 @@ import androidx.navigation.Navigation;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,12 +22,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.yaroslavgorbachh.counter.Activityes.MainActivity;
+import com.yaroslavgorbachh.counter.Broadcasts.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.SwipeListener.SwipeListener;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.ViewModels.Factories.FullscreenCounterViewModelFactory;
 import com.yaroslavgorbachh.counter.ViewModels.FullscreenCounterViewModel;
+
+import static com.yaroslavgorbachh.counter.Broadcasts.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
 public class FullscreenCounterFragment extends Fragment {
 
@@ -37,7 +37,7 @@ public class FullscreenCounterFragment extends Fragment {
     private final Handler mHideHandler = new Handler();
     private FullscreenCounterViewModel mViewModel;
     private int mSavedFlags;
-    private BroadcastReceiver mMessageReceiver;
+    private VolumeButtonBroadcastReceiver mMessageReceiver;
     private ConstraintLayout mContentView;
     private TextView mCounterValue_tv;
     private final Runnable mHidePart2Runnable = () -> {
@@ -83,19 +83,23 @@ public class FullscreenCounterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mMessageReceiver = new BroadcastReceiver() {
+        mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                switch (intent.getIntExtra(MainActivity.KEYCODE_EXTRA,-1)){
-                    case MainActivity.KEYCODE_VOLUME_DOWN:
-                        mViewModel.decCounter(getView());
-                        break;
-                    case MainActivity.KEYCODE_VOLUME_UP:
-                        mViewModel.incCounter(getView());
-                        break;
-                }
+            public void decCounters() {
+                mViewModel.decCounter(getView());
             }
-        };
+
+            @Override
+            public void incCounters() {
+                mViewModel.incCounter(getView());
+            }
+
+            @Override
+            public void lowerVolume() { }
+
+            @Override
+            public void raiseVolume() { }
+        });
 
         mViewModel.mCounter.observe(getViewLifecycleOwner(), counter -> {
             mCounterValue_tv.setTextSize(Utility.getValueTvSize(counter));
@@ -121,9 +125,9 @@ public class FullscreenCounterFragment extends Fragment {
         if (getActivity() != null && getActivity().getWindow() != null) {
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        delayedHide(100);
+        delayedHide();
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver,
-                new IntentFilter(MainActivity.ON_KEY_DOWN_BROADCAST));
+                new IntentFilter(ON_KEY_DOWN_BROADCAST));
     }
 
     @Override
@@ -137,9 +141,9 @@ public class FullscreenCounterFragment extends Fragment {
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver);
     }
 
-    private void delayedHide(int delayMillis) {
+    private void delayedHide() {
         mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+        mHideHandler.postDelayed(mHideRunnable, 100);
     }
 
 }

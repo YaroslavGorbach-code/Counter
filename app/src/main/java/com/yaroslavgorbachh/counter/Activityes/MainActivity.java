@@ -1,5 +1,4 @@
 package com.yaroslavgorbachh.counter.Activityes;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,20 +8,17 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
-import com.yaroslavgorbachh.counter.Database.Repo;
 import com.yaroslavgorbachh.counter.Fragments.Dialogs.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 
+import static com.yaroslavgorbachh.counter.Broadcasts.VolumeButtonBroadcastReceiver.INTENT_VOLUME_DOWN;
+import static com.yaroslavgorbachh.counter.Broadcasts.VolumeButtonBroadcastReceiver.INTENT_VOLUME_UP;
+
 
 public class MainActivity extends AppCompatActivity {
-    public static final String ON_KEY_DOWN_BROADCAST = "ON_KEY_DOWN_BROADCAST";
-    public static final String KEYCODE_EXTRA = "KEYCODE_EXTRA";
-    public static final int KEYCODE_VOLUME_UP = 24;
-    public static final int KEYCODE_VOLUME_DOWN = 25;
     private boolean mAllowedVolumeButtons;
     private SharedPreferences mSharedPreferences;
     private BroadcastReceiver mMessageReceiver;
@@ -64,15 +60,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         /* sends local broadcast to catch the key volume up event*/
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mAllowedVolumeButtons) {
-            Intent intent = new Intent(ON_KEY_DOWN_BROADCAST).putExtra(KEYCODE_EXTRA, KEYCODE_VOLUME_UP);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(INTENT_VOLUME_UP);
             return true;
         }
 
         /* sends local broadcast to catch the key volume down event*/
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && mAllowedVolumeButtons) {
-            Intent intent = new Intent(ON_KEY_DOWN_BROADCAST).putExtra(KEYCODE_EXTRA, KEYCODE_VOLUME_DOWN);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(INTENT_VOLUME_DOWN);
             return true;
         }
         return super.onKeyDown(keyCode, event);
