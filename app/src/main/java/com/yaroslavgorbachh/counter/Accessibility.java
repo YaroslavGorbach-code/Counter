@@ -15,18 +15,21 @@ import com.yaroslavgorbachh.counter.R;
 
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 public class Accessibility {
 
     private final SoundPool mSoundPool;
-    private  int mSoundIncId;
-    private  int mSoundDecId;
-    private final boolean mVibrationIsAllowed;
-    private final boolean mClickSoundIsAllowed;
-    private final boolean mSpeechOutputIsAllowed;
+    private int mSoundIncId;
+    private int mSoundDecId;
+    private boolean mVibrationIsAllowed;
+    private boolean mClickSoundIsAllowed;
+    private boolean mSpeechOutputIsAllowed;
     private TextToSpeech mTextToSpeech;
+    private SharedPreferences mSharedPreferences;
 
-
-    public Accessibility(Context context){
+    @Inject
+    public Accessibility(Context context, SharedPreferences sharedPreferences){
        AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -42,31 +45,33 @@ public class Accessibility {
                 Log.e(null, "Resources not found");
             }
 
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        mVibrationIsAllowed = sharedPreferences.getBoolean("clickVibration", false);
-        mClickSoundIsAllowed = sharedPreferences.getBoolean("clickSound", true);
-        mSpeechOutputIsAllowed = sharedPreferences.getBoolean("clickSpeak", false);
-
-
         mTextToSpeech = new TextToSpeech(context, status -> {
             if(status != TextToSpeech.ERROR) {
                 mTextToSpeech.setLanguage(Locale.getDefault());
             }
         });
+            mSharedPreferences = sharedPreferences;
    }
 
     public void playIncFeedback(View view, String text){
+        checkPref();
         playIncSoundEffect();
         playIncVibrationEffect(view);
         speechOutput(text);
     }
 
     public void playDecFeedback(View view, String text){
+        checkPref();
         playDecSoundEffect();
         playDecVibrationEffect(view);
         speechOutput(text);
     }
+
+    public void speechOutput(String text){
+        if (mSpeechOutputIsAllowed)
+            mTextToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "ID");
+    }
+
 
     private void playIncSoundEffect(){
         if (mClickSoundIsAllowed)
@@ -89,9 +94,12 @@ public class Accessibility {
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
     }
 
-    public void speechOutput(String text){
-        if (mSpeechOutputIsAllowed)
-        mTextToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "ID");
+    private void checkPref(){
+        mVibrationIsAllowed = mSharedPreferences.getBoolean("clickVibration", false);
+        mClickSoundIsAllowed = mSharedPreferences.getBoolean("clickSound", true);
+        mSpeechOutputIsAllowed = mSharedPreferences.getBoolean("clickSpeak", false);
+
     }
+
 
 }

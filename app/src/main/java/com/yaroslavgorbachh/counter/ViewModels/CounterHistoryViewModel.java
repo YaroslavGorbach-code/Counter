@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
-import com.yaroslavgorbachh.counter.Database.Repo;
+import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.database.Repo;
 
 import java.util.List;
 

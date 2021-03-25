@@ -9,15 +9,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.preference.PreferenceManager;
 
 import java.util.Date;
 import java.util.Objects;
 
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.CopyBeforeReset;
-import com.yaroslavgorbachh.counter.Database.Models.Counter;
-import com.yaroslavgorbachh.counter.Database.Models.CounterHistory;
-import com.yaroslavgorbachh.counter.Database.Repo;
+import com.yaroslavgorbachh.counter.database.Models.Counter;
+import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 
@@ -32,18 +33,18 @@ public class CounterViewModel extends AndroidViewModel {
         super(application);
         mRepo = new Repo(application);
         counter = mRepo.getCounter(counterId);
-        mAccessibility = new Accessibility(application);
+
+        // TODO: 3/24/2021 inject
+        mAccessibility = new Accessibility(application, PreferenceManager.getDefaultSharedPreferences(application));
         mRes = application.getResources();
     }
 
     public void incCounter(View view) {
-        counter.getValue().inc(getApplication(), mRes, mRepo);
-        mAccessibility.playIncFeedback(view, String.valueOf(counter.getValue().value));
+        counter.getValue().inc(view.getContext(), mRes, mRepo, mAccessibility, view);
     }
 
     public void decCounter(View view){
-        counter.getValue().dec(getApplication(), mRes, mRepo);
-        mAccessibility.playDecFeedback(view, String.valueOf(counter.getValue().value));
+        counter.getValue().dec(view.getContext(), mRes, mRepo, mAccessibility, view);
     }
 
     public void resetCounter(){

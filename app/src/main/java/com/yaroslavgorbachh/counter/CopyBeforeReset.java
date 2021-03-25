@@ -1,6 +1,6 @@
 package com.yaroslavgorbachh.counter;
 
-import com.yaroslavgorbachh.counter.Database.Models.Counter;
+import com.yaroslavgorbachh.counter.database.Models.Counter;
 
 import java.util.ArrayList;
 import java.util.List;

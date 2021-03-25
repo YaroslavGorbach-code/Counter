@@ -25,11 +25,10 @@ public class FastCountButton implements View.OnTouchListener, Handler.Callback {
     public boolean mFastCounting;
 
 
-    public FastCountButton(View view, Runnable action) {
+    public FastCountButton(View view, Runnable action, SharedPreferences mSharedPreferences) {
         mView = view;
         view.setOnClickListener(v -> action.run());
         view.setOnTouchListener(this);
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         mFastCountInterval = MAX - mSharedPreferences.getInt("fastCountSpeed", 200) + MIN;
     }
 

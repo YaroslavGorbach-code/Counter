@@ -2,13 +2,15 @@ package com.yaroslavgorbachh.counter.ViewModels;
 
 import android.app.Application;
 import android.content.res.Resources;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.Database.Models.Counter;
-import com.yaroslavgorbachh.counter.Database.Repo;
+import com.yaroslavgorbachh.counter.Accessibility;
+import com.yaroslavgorbachh.counter.database.Models.Counter;
+import com.yaroslavgorbachh.counter.database.Repo;
 
 import java.util.Date;
 import java.util.List;
@@ -27,12 +29,12 @@ public class CountersViewModel extends AndroidViewModel {
         mGroups = mRepo.getGroups();
     }
 
-    public void incCounter(Counter counter) {
-        counter.inc(getApplication(), mRes, mRepo);
+    public void incCounter(Counter counter, Accessibility accessibility, View view) {
+        counter.inc(view.getContext(), mRes, mRepo, accessibility, view);
     }
 
-    public void decCounter(Counter counter) {
-        counter.dec(getApplication(), mRes, mRepo);
+    public void decCounter(Counter counter, Accessibility accessibility, View view) {
+        counter.dec(view.getContext(), mRes, mRepo, accessibility, view);
     }
 
     public void countersMoved(Counter counterFrom, Counter counterTo) {

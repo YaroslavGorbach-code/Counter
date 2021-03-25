@@ -1,12 +1,9 @@
 package com.yaroslavgorbachh.counter;
 
-import android.content.res.Resources;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.yaroslavgorbachh.counter.Database.Models.Counter;
-
-import java.util.Objects;
+import com.yaroslavgorbachh.counter.database.Models.Counter;
 
 public class InputFilters {
 

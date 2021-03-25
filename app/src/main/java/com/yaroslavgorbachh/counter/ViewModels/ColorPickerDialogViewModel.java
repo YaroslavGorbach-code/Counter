@@ -1,14 +1,13 @@
 package com.yaroslavgorbachh.counter.ViewModels;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.yaroslavgorbachh.counter.Database.Models.AppStyle;
-import com.yaroslavgorbachh.counter.Database.Repo;
+import com.yaroslavgorbachh.counter.database.Models.AppStyle;
+import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.R;
 
 public class ColorPickerDialogViewModel extends AndroidViewModel {
