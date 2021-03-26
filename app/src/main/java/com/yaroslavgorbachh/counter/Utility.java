@@ -30,9 +30,8 @@ public class Utility {
         return mList;
     }
 
-    public void setTheme(SharedPreferences sharedPreferences, Activity activity) {
+    public void setTheme(SharedPreferences sharedPreferences, Activity activity, Repo repo) {
         new Thread(() -> {
-            Repo repo = new Repo(activity.getApplication());
             if (repo.getCurrentStyle() != null){
                 activity.setTheme(repo.getCurrentStyle().style);
             }

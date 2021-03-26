@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.ViewModels.Factories;
+package com.yaroslavgorbachh.counter.createEditCounter;
 
 import android.app.Application;
 
@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.yaroslavgorbachh.counter.ViewModels.CreateEditCounterViewModel;
+import com.yaroslavgorbachh.counter.createEditCounter.CreateEditCounterViewModel;
 
 public class CreateEditCounterViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.yaroslavgorbachh.counter.counterSettings.ColorPickerDialog;
+import com.yaroslavgorbachh.counter.database.Repo;
 
 import javax.inject.Inject;
 
@@ -21,7 +22,9 @@ import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_
 public class MainActivity extends AppCompatActivity {
     private boolean mAllowedVolumeButtons;
     private BroadcastReceiver mMessageReceiver;
+
     @Inject SharedPreferences sharedPreferences;
+    @Inject Repo repo;
 
 
     @Override
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         MyApplication application = (MyApplication) getApplication();
         application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
-        new Utility().setTheme(sharedPreferences, this);
+        new Utility().setTheme(sharedPreferences, this, repo);
         setContentView(R.layout.activity_main);
 
         // recreating activity when theme is changed

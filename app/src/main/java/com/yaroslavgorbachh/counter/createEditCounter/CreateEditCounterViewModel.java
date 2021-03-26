@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.ViewModels;
+package com.yaroslavgorbachh.counter.createEditCounter;
 
 import android.app.Application;
 import android.os.Handler;
@@ -6,6 +6,7 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
@@ -14,13 +15,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class CreateEditCounterViewModel extends AndroidViewModel {
-    private final Repo mRepo;
+public class CreateEditCounterViewModel extends ViewModel {
+    private final Repo mRepo = null;
     private final LiveData<List<String>> mGroups;
     private final LiveData<Counter> mCounter;
     public CreateEditCounterViewModel(@NonNull Application application, long counterId) {
-        super(application);
-        mRepo = new Repo(application);
+//        mRepo = new Repo(application);
         mCounter = mRepo.getCounter(counterId);
         mGroups = mRepo.getGroups();
     }

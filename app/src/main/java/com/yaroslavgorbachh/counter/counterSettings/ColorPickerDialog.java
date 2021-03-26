@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.ViewModels.ColorPickerDialogViewModel;
 
 
 public class ColorPickerDialog extends AppCompatDialogFragment {

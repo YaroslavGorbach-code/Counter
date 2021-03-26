@@ -13,6 +13,8 @@ import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Single;
 
 public class Repo {
@@ -21,9 +23,8 @@ public class Repo {
    private final CounterHistoryDao mCounterHistoryDao;
    private final AppStyleDao mAppStyleDao;
 
-
-    public Repo(Application application){
-       CounterDatabase database = CounterDatabase.getInstance(application);
+    @Inject
+    public Repo(CounterDatabase database){
        mCounterHistoryDao = database.counterHistoryDao();
        mCounterDao = database.counterDao();
        mAppStyleDao = database.appStyleDao();

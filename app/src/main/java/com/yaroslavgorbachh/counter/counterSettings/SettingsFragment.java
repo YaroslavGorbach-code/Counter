@@ -47,7 +47,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         if (requestCode == CREATE_FILE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 new MyBackup.Init()
-                        .database(CounterDatabase.getInstance(getActivity()))
+//                        .database()
                         .setContext(requireContext())
                         .uri(data.getData())
                         .OnCompleteListener((success, message) -> {
@@ -67,7 +67,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         if (requestCode == RESTORE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 new MyRestore.Init()
-                        .database(CounterDatabase.getInstance(getActivity()))
+//                        .database(CounterDatabase.getInstance(getActivity()))
                         .uri(data.getData())
                         .setContext(requireContext())
                         .OnCompleteListener((success, message) -> {
@@ -89,7 +89,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         super.onStart();
         getPreferenceManager().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
-        mRepo = new Repo(getActivity().getApplication());
+//        mRepo = new Repo(getActivity().getApplication());
     }
 
     @Override

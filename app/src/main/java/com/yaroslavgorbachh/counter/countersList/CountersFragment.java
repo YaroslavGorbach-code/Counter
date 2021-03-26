@@ -47,7 +47,8 @@ import com.yaroslavgorbachh.counter.DeleteCounterDialog;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.ViewModels.CountersViewModel;
+import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import java.util.stream.Collectors;
 
@@ -74,15 +75,18 @@ public class CountersFragment extends Fragment {
     private VolumeButtonBroadcastReceiver mMessageReceiver;
 
     private CountersViewModel mViewModel;
+
+    @Inject ViewModelProviderFactory viewModelProviderFactory;
     @Inject AudioManager mAudioManager;
     @Inject Accessibility accessibility;
     @Inject SharedPreferences sharedPreferences;
+    @Inject Repo repo;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication application = (MyApplication) requireActivity().getApplication();
-        application.appComponent.inject(this);
+        application.appComponent.countersComponentFactory().create().inject(this);
     }
 
     @Override
@@ -117,7 +121,7 @@ public class CountersFragment extends Fragment {
         mCounters_rv = view.findViewById(R.id.counters_list);
         mIconAndTextThereAreNoCounters = view.findViewById(R.id.iconAndTextThereAreNoCounters);
         mThereAreNoGroupsTextAndIcon = view.findViewById(R.id.thereAreNoGroupsTextAndIcon);
-        mViewModel = new ViewModelProvider(this).get(CountersViewModel.class);
+        mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CountersViewModel.class);
 
         /*navController set up*/
         NavigationView navigationDrawerView = view.findViewById(R.id.navigationDrawerView);
@@ -189,7 +193,7 @@ public class CountersFragment extends Fragment {
             public void onMoved(Counter counterFrom, Counter counterTo) {
                 mViewModel.countersMoved(counterFrom, counterTo);
             }
-        }, requireActivity().getApplication(), sharedPreferences, accessibility, getView());
+        }, requireActivity().getApplication(), sharedPreferences, accessibility, getView(), repo);
 
         // Handling receiver witch MainActivity sends when volume buttons presed
         mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {

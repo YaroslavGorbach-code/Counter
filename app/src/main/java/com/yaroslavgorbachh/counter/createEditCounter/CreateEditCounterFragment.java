@@ -19,8 +19,6 @@ import com.yaroslavgorbachh.counter.InputFilters;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.ViewModels.CreateEditCounterViewModel;
-import com.yaroslavgorbachh.counter.ViewModels.Factories.CreateEditCounterViewModelFactory;
 
 import java.util.Objects;
 

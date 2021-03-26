@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.ViewModels.CounterHistoryViewModel;
 
 import java.util.Collections;
 

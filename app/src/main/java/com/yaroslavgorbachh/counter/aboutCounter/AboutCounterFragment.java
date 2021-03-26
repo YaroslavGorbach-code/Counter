@@ -1,7 +1,9 @@
 package com.yaroslavgorbachh.counter.aboutCounter;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,10 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.textview.MaterialTextView;
+import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.ViewModels.AboutCounterViewModel;
-import com.yaroslavgorbachh.counter.ViewModels.Factories.AboutCounterViewModelFactory;
+import com.yaroslavgorbachh.counter.di.ViewModelBuilderModule;
+import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
+
+import javax.inject.Inject;
 
 public class AboutCounterFragment extends Fragment {
     private MaterialTextView mCounterName;
@@ -28,13 +33,24 @@ public class AboutCounterFragment extends Fragment {
     private MaterialTextView mCounterMaxValue;
     private MaterialTextView mLastResetData;
     private AboutCounterViewModel viewModel;
+
+    @Inject ViewModelProviderFactory viewModelProviderFactory;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        MyApplication app = (MyApplication) (getActivity().getApplication());
+        app.appComponent.aboutCounterComponentFactory().create().inject(this);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about_counter, container, false);
         long counterId = AboutCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
-        viewModel = new ViewModelProvider(this, new AboutCounterViewModelFactory(requireActivity().getApplication(),
-                counterId)).get(AboutCounterViewModel.class);
+        viewModel = new ViewModelProvider(this, viewModelProviderFactory).get(AboutCounterViewModel.class);
+        viewModel.setCounterId(counterId);
+
         mCounterName = view.findViewById(R.id.counterName);
         mCreateData = view.findViewById(R.id.createData);
         mLastResetedValue = view.findViewById(R.id.lastResetedValue);

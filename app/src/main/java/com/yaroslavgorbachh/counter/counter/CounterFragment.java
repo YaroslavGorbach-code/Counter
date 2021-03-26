@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.Navigation;
+import androidx.preference.PreferenceManager;
 
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -28,9 +31,10 @@ import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.DeleteCounterDialog;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.ViewModels.CounterViewModel;
-import com.yaroslavgorbachh.counter.ViewModels.Factories.CounterViewModelFactory;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -41,7 +45,6 @@ public class CounterFragment extends Fragment {
     private TextView mIncButton;
     private TextView mDecButton;
     private MaterialButton mResetButton;
-    private CounterViewModel mViewModel;
     private TextView mCounterTitle;
     private View mLayout;
     private long mCounterId;
@@ -53,14 +56,22 @@ public class CounterFragment extends Fragment {
     private TextView mGroupTitle;
     private VolumeButtonBroadcastReceiver mMessageReceiver;
 
+    private CounterViewModel mViewModel;
+
+
+    @Inject
+    ViewModelProviderFactory viewModelProviderFactory;
+
     @Inject
     SharedPreferences sharedPreferences;
+
+    @Inject Resources resources;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication application = (MyApplication) requireActivity().getApplication();
-        application.appComponent.inject(this);
+        application.appComponent.counterComponentFactory().create().inject(this);
     }
 
     @Nullable
@@ -89,10 +100,11 @@ public class CounterFragment extends Fragment {
         mMaxValue_tv = view.findViewById(R.id.maxValue);
         mMinValue_tv = view.findViewById(R.id.minValue);
         mGroupTitle = view.findViewById(R.id.groupTitle);
-        mCounterId = CounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
-        mViewModel = new ViewModelProvider(this, new CounterViewModelFactory(requireActivity().getApplication(),
-                mCounterId)).get(CounterViewModel.class);
 
+        mCounterId = CounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
+
+        mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CounterViewModel.class);
+        mViewModel.setCounterId(mCounterId);
         /*inflating menu, navigationIcon and set listeners*/
         Toolbar toolbar = view.findViewById(R.id.counterActivity_toolbar);
         toolbar.inflateMenu(R.menu.menu_counter_fragment);
@@ -164,6 +176,8 @@ public class CounterFragment extends Fragment {
         /*saving counter value to history*/
         mSaveToHistoryButton.setOnClickListener(v -> {
             mViewModel.saveValueToHistory();
+            Toast.makeText(requireContext(), resources.getString(R.string.createEditCounterCounterValueHint) + " " +
+                    Objects.requireNonNull(mViewModel.counter.getValue()).value + " " +resources.getString(R.string.saveToHistoryToast), Toast.LENGTH_SHORT).show();
         });
 
         /*counter +*/

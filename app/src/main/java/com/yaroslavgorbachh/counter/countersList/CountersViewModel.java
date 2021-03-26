@@ -1,12 +1,14 @@
-package com.yaroslavgorbachh.counter.ViewModels;
+package com.yaroslavgorbachh.counter.countersList;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Resources;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
@@ -15,16 +17,18 @@ import com.yaroslavgorbachh.counter.database.Repo;
 import java.util.Date;
 import java.util.List;
 
-public class CountersViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+public class CountersViewModel extends ViewModel {
     private final Repo mRepo;
     private final Resources mRes;
     private final LiveData<List<Counter>> mCounters;
     private final LiveData<List<String>> mGroups;
 
-    public CountersViewModel(@NonNull Application application) {
-        super(application);
-        mRepo = new Repo(application);
-        mRes = application.getResources();
+    @Inject
+    public CountersViewModel(Repo repo, Resources resources) {
+        mRepo = repo;
+        mRes = resources;
         mCounters = mRepo.getAllCounters();
         mGroups = mRepo.getGroups();
     }
