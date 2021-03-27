@@ -7,6 +7,7 @@ import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.aboutCounter.di.AboutCounterComponent;
 import com.yaroslavgorbachh.counter.counter.di.CounterComponent;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
+import com.yaroslavgorbachh.counter.counterSettings.di.SettingsComponent;
 import com.yaroslavgorbachh.counter.countersList.di.CountersComponent;
 import com.yaroslavgorbachh.counter.createEditCounter.di.CreateEditCounterComponent;
 import com.yaroslavgorbachh.counter.fullscreenCounter.di.FullscreenCounterComponent;
@@ -31,7 +32,6 @@ public interface AppComponent {
         AppComponent create(@BindsInstance Application application, @BindsInstance Context context);
     }
 
-    void inject(SettingsActivity activity);
     void inject(MainActivity activity);
 
     AboutCounterComponent.Builder aboutCounterComponentFactory();
@@ -39,5 +39,6 @@ public interface AppComponent {
     CountersComponent.Builder countersComponentFactory();
     FullscreenCounterComponent.Builder fullscreenCounterComponent();
     CreateEditCounterComponent.Builder createEditCounterComponent();
+    SettingsComponent.Builder settingsComponentFactory();
 
 }

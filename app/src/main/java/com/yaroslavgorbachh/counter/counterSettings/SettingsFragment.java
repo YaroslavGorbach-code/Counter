@@ -1,6 +1,7 @@
 package com.yaroslavgorbachh.counter.counterSettings;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -8,11 +9,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -21,6 +25,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.CopyBeforeReset;
+import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyBackup;
 import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyRestore;
 import com.yaroslavgorbachh.counter.database.CounterDatabase;
@@ -29,6 +34,11 @@ import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.DeleteCounterDialog;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
+import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
+
+import java.util.Objects;
+
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -38,7 +48,23 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
     private static final int RESTORE_REQUEST_CODE = 0;
     private static final int CREATE_FILE = 1;
-    private Repo mRepo;
+
+    private SettingsViewModel mViewModel;
+    @Inject ViewModelProviderFactory viewModelProviderFactory;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        MyApplication application = (MyApplication) requireActivity().getApplication();
+        application.appComponent.settingsComponentFactory().create().inject(this);
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(SettingsViewModel.class);
+        return super.onCreateView(inflater, container, savedInstanceState);
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -46,40 +72,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         if (requestCode == CREATE_FILE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                new MyBackup.Init()
-//                        .database()
-                        .setContext(requireContext())
-                        .uri(data.getData())
-                        .OnCompleteListener((success, message) -> {
-                            if (success) {
-                                Toast.makeText(getActivity(), getString(R.string.successCreatedToast,
-                                        data.getData().getPath()), Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getActivity(),
-                                        getString(R.string.failCreatedToast, message),
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }).execute();
+               mViewModel.backup(data, requireContext());
             }
         }
 
 
         if (requestCode == RESTORE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                new MyRestore.Init()
-//                        .database(CounterDatabase.getInstance(getActivity()))
-                        .uri(data.getData())
-                        .setContext(requireContext())
-                        .OnCompleteListener((success, message) -> {
-                            if (success) {
-                                Toast.makeText(requireContext(),
-                                        getString(R.string.successRestore),
-                                        Toast.LENGTH_LONG).show();
-                                new Handler().postDelayed((Runnable) () -> Runtime.getRuntime().exit(0), 3000);
-                            } else {
-                                Toast.makeText(getActivity(), getString(R.string.failRestore), Toast.LENGTH_LONG).show();
-                            }
-                        }).execute();
+                mViewModel.restoreDb(data, requireContext());
             }
         }
     }
@@ -89,7 +89,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         super.onStart();
         getPreferenceManager().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
-//        mRepo = new Repo(getActivity().getApplication());
     }
 
     @Override
@@ -101,30 +100,35 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         Preference mChangeAccentColorPref = findPreference("changeAccentColor");
         Preference mBackupPref = findPreference("backup");
 
+        assert mRemoveAllCountersPref != null;
         mRemoveAllCountersPref.setOnPreferenceClickListener(preference -> {
             new DeleteCounterDialog(() -> {
-                mRepo.deleteCounters();
+                mViewModel.deleteCounters();
             }, 2).show(getChildFragmentManager(), "tag");
             return true;
         });
 
+        assert mResetAllCountersPref != null;
         mResetAllCountersPref.setOnPreferenceClickListener(preference -> {
-            resetAllCounters();
+            mViewModel.resetAllCounters(requireView());
             return true;
         });
 
+        assert mExportAllCountersPref != null;
         mExportAllCountersPref.setOnPreferenceClickListener(preference -> {
-            mRepo.getAllCounters().observe(getViewLifecycleOwner(), list -> {
+            mViewModel.getAllCounters().observe(getViewLifecycleOwner(), list -> {
                 startActivity(Utility.getShareCountersInCSVIntent(list));
             });
             return true;
         });
 
+        assert mChangeAccentColorPref != null;
         mChangeAccentColorPref.setOnPreferenceClickListener(preference -> {
             ColorPickerDialog.newInstance().show(getParentFragmentManager(), "colorPicker");
             return true;
         });
 
+        assert mBackupPref != null;
         mBackupPref.setOnPreferenceClickListener(preference -> {
             View view = LayoutInflater.from(getContext()).inflate(R.layout.backup_dialog,
                     null);
@@ -149,38 +153,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         if (key.equals("keepScreenOn") && sharedPreferences.getBoolean("keepScreenOn", true)) {
-            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
         if (key.equals("keepScreenOn") && !sharedPreferences.getBoolean("keepScreenOn", false)) {
-            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
         if (key.equals("lockOrientation") && sharedPreferences.getBoolean("lockOrientation", true)) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         if (key.equals("lockOrientation") && !sharedPreferences.getBoolean("lockOrientation", true)) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+            requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
     }
 
-    public void resetAllCounters() {
-        Disposable disposable = mRepo.getAllCountersNoLiveData()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(counters -> {
-                    CopyBeforeReset copyBeforeReset = new CopyBeforeReset();
-                    for (Counter counter : counters) {
-                        copyBeforeReset.addCounter(counter);
-                        counter.reset(mRepo);
-                    }
-                    Snackbar.make(requireView(), getResources().getString(R.string
-                            .countersReset), BaseTransientBottomBar.LENGTH_LONG)
-                            .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
-                                for (Counter counter : copyBeforeReset.getCounters()) {
-                                    mRepo.updateCounter(counter);
-                                }
-                            }).show();
-                });
-    }
 
     @Override
     public void onStop() {
