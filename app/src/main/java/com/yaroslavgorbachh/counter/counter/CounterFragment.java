@@ -65,7 +65,6 @@ public class CounterFragment extends Fragment {
     @Inject
     SharedPreferences sharedPreferences;
 
-    @Inject Resources resources;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -176,8 +175,8 @@ public class CounterFragment extends Fragment {
         /*saving counter value to history*/
         mSaveToHistoryButton.setOnClickListener(v -> {
             mViewModel.saveValueToHistory();
-            Toast.makeText(requireContext(), resources.getString(R.string.createEditCounterCounterValueHint) + " " +
-                    Objects.requireNonNull(mViewModel.counter.getValue()).value + " " +resources.getString(R.string.saveToHistoryToast), Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), getResources().getString(R.string.createEditCounterCounterValueHint) + " " +
+                    Objects.requireNonNull(mViewModel.counter.getValue()).value + " " +getResources().getString(R.string.saveToHistoryToast), Toast.LENGTH_SHORT).show();
         });
 
         /*counter +*/

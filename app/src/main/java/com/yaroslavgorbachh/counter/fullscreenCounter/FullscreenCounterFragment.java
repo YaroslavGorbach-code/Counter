@@ -38,10 +38,10 @@ public class FullscreenCounterFragment extends Fragment {
     private int mSavedFlags;
     private ConstraintLayout mContentView;
     private TextView mCounterValue_tv;
-    private VolumeButtonBroadcastReceiver mMessageReceiver;
     private final Handler mHideHandler = new Handler();
-    private FullscreenCounterViewModel mViewModel;
 
+    private FullscreenCounterViewModel mViewModel;
+    private VolumeButtonBroadcastReceiver mMessageReceiver;
     @Inject ViewModelProviderFactory viewModelProviderFactory;
 
     private final Runnable mHidePart2Runnable = () -> {

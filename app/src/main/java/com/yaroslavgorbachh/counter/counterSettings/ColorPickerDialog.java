@@ -22,7 +22,7 @@ import javax.inject.Inject;
 
 public class ColorPickerDialog extends AppCompatDialogFragment {
     public static final String THEME_CHANGED_BROADCAST = "THEME_CHANGED_BROADCAST";
-    private ColorPickerDialogViewModel mViewModel;
+    private SettingsViewModel mViewModel;
 
     @Inject ViewModelProviderFactory viewModelProviderFactory;
 
@@ -40,7 +40,7 @@ public class ColorPickerDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
        View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_color_picker, null);
-       mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(ColorPickerDialogViewModel.class);
+       mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(SettingsViewModel.class);
        ColorPicker colorPicker = new ScrollColorPicker(view, getResources());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())

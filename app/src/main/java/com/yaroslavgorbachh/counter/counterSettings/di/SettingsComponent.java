@@ -8,6 +8,7 @@ import com.yaroslavgorbachh.counter.createEditCounter.CreateEditCounterFragment;
 
 import dagger.Subcomponent;
 
+@SettingsScope
 @Subcomponent(modules = SettingsModule.class)
 public interface SettingsComponent {
 

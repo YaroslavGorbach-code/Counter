@@ -1,5 +1,6 @@
 package com.yaroslavgorbachh.counter.counterHistory;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +17,29 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import java.util.Collections;
+
+import javax.inject.Inject;
 
 public class CounterHistoryFragment extends Fragment {
     private CounterHistoryList_rv mHistoryList;
     private Spinner mSpinner;
     private long mCounterId;
     private ConstraintLayout mIconAndTextThereNoHistory;
-    private CounterHistoryViewModel mViewModel;
 
+    private CounterHistoryViewModel mViewModel;
+    @Inject ViewModelProviderFactory viewModelProviderFactory;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        MyApplication application = (MyApplication) requireActivity().getApplication();
+        application.appComponent.counterHistoryComponent().create().inject(this);
+    }
 
     @Nullable
     @Override
@@ -39,8 +52,8 @@ public class CounterHistoryFragment extends Fragment {
         mSpinner = view.findViewById(R.id.spinner);
         mIconAndTextThereNoHistory = view.findViewById(R.id.iconAndTextThereAreNoHistory);
 
-        mViewModel = new ViewModelProvider(this).get(CounterHistoryViewModel.class);
-        mCounterId = CounterHistoryFragmentArgs.fromBundle(getArguments()).getCounterId();
+        mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CounterHistoryViewModel.class);
+        mCounterId = CounterHistoryFragmentArgs.fromBundle(requireArguments()).getCounterId();
 
         /*initialize navigation listener*/
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);

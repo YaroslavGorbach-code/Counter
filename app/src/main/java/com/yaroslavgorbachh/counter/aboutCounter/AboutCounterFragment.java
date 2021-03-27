@@ -39,7 +39,7 @@ public class AboutCounterFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        MyApplication app = (MyApplication) (getActivity().getApplication());
+        MyApplication app = (MyApplication) (requireActivity().getApplication());
         app.appComponent.aboutCounterComponentFactory().create().inject(this);
     }
 

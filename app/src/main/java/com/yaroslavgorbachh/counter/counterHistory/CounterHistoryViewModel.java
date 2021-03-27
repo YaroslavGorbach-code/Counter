@@ -12,19 +12,21 @@ import com.yaroslavgorbachh.counter.database.Repo;
 
 import java.util.List;
 
-public class CounterHistoryViewModel extends ViewModel {
-   // private final Repo mRepo;
+import javax.inject.Inject;
 
-    public CounterHistoryViewModel() {
-            //mRepo = new Repo();
+public class CounterHistoryViewModel extends ViewModel {
+    private final Repo mRepo;
+
+    @Inject
+    public CounterHistoryViewModel(Repo repo) {
+        mRepo = repo;
     }
 
     public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId) {
-       // return mRepo.getCounterHistoryList(counterId);
-        return null;
+        return mRepo.getCounterHistoryList(counterId);
     }
 
     public void clean(long id) {
-            //mRepo.deleteCounterHistory(id);
+        mRepo.deleteCounterHistory(id);
     }
 }

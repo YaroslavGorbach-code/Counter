@@ -37,21 +37,27 @@ public class RoomModule {
                         .addCallback(new RoomDatabase.Callback() {
                             @Override
                             public void onCreate(@NonNull SupportSQLiteDatabase db) {
-//                                super.onCreate(db);
-//                                ContentValues cv = new ContentValues();
-//                                cv.put("title", "New counter");
-//                                cv.put("value", 0);
-//                                cv.put("maxValue", Counter.MAX_VALUE);
-//                                cv.put("minValue", Counter.MIN_VALUE);
-//                                cv.put("step", 1);
-//                                cv.put("grope", (String) null);
-//                                cv.put("createData", new Date().getTime());
-//                                cv.put("createDataSort", new Date().getTime());
-//                                cv.put("lastResetData", (String) null);
-//                                cv.put("lastResetValue", 0);
-//                                cv.put("counterMaxValue", 0);
-//                                cv.put("counterMinValue", 0);
-//                                db.insert("counter_table", SQLiteDatabase.CONFLICT_REPLACE, cv);
+                                super.onCreate(db);
+                                ContentValues cv = new ContentValues();
+                                cv.put("title", "New counter");
+                                cv.put("value", 0);
+                                cv.put("maxValue", Counter.MAX_VALUE);
+                                cv.put("minValue", Counter.MIN_VALUE);
+                                cv.put("step", 1);
+                                cv.put("grope", (String) null);
+                                cv.put("createData", new Date().getTime());
+                                cv.put("createDataSort", new Date().getTime());
+                                cv.put("lastResetData", (String) null);
+                                cv.put("lastResetValue", 0);
+                                cv.put("counterMaxValue", 0);
+                                cv.put("counterMinValue", 0);
+                                db.insert("counter_table", SQLiteDatabase.CONFLICT_REPLACE, cv);
+                                cv.clear();
+
+                                cv.put("id", 1);
+                                cv.put("style", R.style.AppTheme);
+                                db.insert("app_style", SQLiteDatabase.CONFLICT_REPLACE, cv);
+
                             }
                         })
                         .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
@@ -82,27 +88,4 @@ public class RoomModule {
             database.execSQL("INSERT INTO app_style (id, style) VALUES(1, 0)");
         }
     };
-
-
-//    public static final RoomDatabase.Callback rdc = new RoomDatabase.Callback() {
-//        public void onCreate(SupportSQLiteDatabase db) {
-//            new Thread(() -> {
-//
-//                Date currentDate = new Date();
-//                currentDate.getTime();
-//
-//                counterDao.insert(new Counter("New counter",0, Counter.MAX_VALUE,
-//                        Counter.MIN_VALUE,
-//                        1, null, currentDate, currentDate, null,
-//                        0, 0, 0 ));
-//                appStyleDao.insert(new AppStyle(1, R.style.AppTheme));
-//            }).start();
-//        }
-//
-//        public void onOpen(SupportSQLiteDatabase db) {
-//            // do something every time database is open
-//        }
-//    };
-
-
 }

@@ -2,6 +2,7 @@ package com.yaroslavgorbachh.counter.counterSettings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
@@ -13,9 +14,11 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.CopyBeforeReset;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.counterSettings.di.SettingsScope;
 import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyBackup;
 import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyRestore;
 import com.yaroslavgorbachh.counter.database.CounterDatabase;
+import com.yaroslavgorbachh.counter.database.Models.AppStyle;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
 
@@ -27,6 +30,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+@SettingsScope
 public class SettingsViewModel extends ViewModel {
     private final CounterDatabase mDatabase;
     private final Repo mRepo;
@@ -97,5 +101,36 @@ public class SettingsViewModel extends ViewModel {
                                 }
                             }).show();
                 });
+    }
+
+
+    public void changeThemeColor(int color, Resources resources){
+        if (color == resources.getColor(R.color.colorAccent)){
+            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme));
+        }
+        if (color == resources.getColor(R.color.colorAccent_orange)){
+            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_orange));
+        }
+        if (color == resources.getColor(R.color.colorAccent_blue)){
+            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_blue));
+        }
+        if (color == resources.getColor(R.color.colorAccent_yellow)){
+            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_yellow));
+        }
+        if (color == resources.getColor(R.color.colorAccent_purple)){
+            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_purple));
+        }
+        if (color == resources.getColor(R.color.colorAccent_blue_l)){
+            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_blue_light));
+        }
+        if (color == resources.getColor(R.color.colorAccent_green_d)){
+            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_green_dark));
+        }
+        if (color == resources.getColor(R.color.colorAccent_green)){
+            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_green));
+        }
+        if (color == resources.getColor(R.color.colorAccent_gray)){
+            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_gray));
+        }
     }
 }

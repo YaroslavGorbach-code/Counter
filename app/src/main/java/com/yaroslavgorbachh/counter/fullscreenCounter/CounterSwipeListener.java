@@ -9,7 +9,6 @@ public class CounterSwipeListener implements View.OnTouchListener, SwipeListener
 
     private final GestureDetector gestureDetector;
 
-
     public CounterSwipeListener(Context ctx){
         gestureDetector = new GestureDetector(ctx, new GestureListener());
     }

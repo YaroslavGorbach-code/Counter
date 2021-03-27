@@ -2,11 +2,7 @@ package com.yaroslavgorbachh.counter.createEditCounter.di;
 
 import androidx.lifecycle.ViewModel;
 
-import com.yaroslavgorbachh.counter.counter.CounterViewModel;
-import com.yaroslavgorbachh.counter.counterSettings.ColorPickerDialogViewModel;
-import com.yaroslavgorbachh.counter.counterSettings.SettingsViewModel;
 import com.yaroslavgorbachh.counter.createEditCounter.CreateCounterDialogViewModel;
-import com.yaroslavgorbachh.counter.createEditCounter.CreateEditCounterFragment;
 import com.yaroslavgorbachh.counter.createEditCounter.CreateEditCounterViewModel;
 import com.yaroslavgorbachh.counter.di.ViewModelKey;
 

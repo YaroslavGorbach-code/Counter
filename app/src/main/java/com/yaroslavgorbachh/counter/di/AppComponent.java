@@ -6,7 +6,7 @@ import android.content.Context;
 import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.aboutCounter.di.AboutCounterComponent;
 import com.yaroslavgorbachh.counter.counter.di.CounterComponent;
-import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
+import com.yaroslavgorbachh.counter.counterHistory.di.CounterHistoryComponent;
 import com.yaroslavgorbachh.counter.counterSettings.di.SettingsComponent;
 import com.yaroslavgorbachh.counter.countersList.di.CountersComponent;
 import com.yaroslavgorbachh.counter.createEditCounter.di.CreateEditCounterComponent;
@@ -19,8 +19,7 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = {
-        SharedPreferencesModule.class,
-        AudioModule.class,
+        AppModule.class,
         ViewModelBuilderModule.class,
         RoomModule.class,
         SubcomponentsModule.class})
@@ -40,5 +39,6 @@ public interface AppComponent {
     FullscreenCounterComponent.Builder fullscreenCounterComponent();
     CreateEditCounterComponent.Builder createEditCounterComponent();
     SettingsComponent.Builder settingsComponentFactory();
+    CounterHistoryComponent.Builder counterHistoryComponent();
 
 }
