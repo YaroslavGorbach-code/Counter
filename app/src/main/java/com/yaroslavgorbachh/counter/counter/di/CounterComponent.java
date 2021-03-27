@@ -1,6 +1,6 @@
-package com.yaroslavgorbachh.counter.counter;
+package com.yaroslavgorbachh.counter.counter.di;
 
-import com.yaroslavgorbachh.counter.aboutCounter.AboutCounterFragment;
+import com.yaroslavgorbachh.counter.counter.CounterFragment;
 
 import dagger.Subcomponent;
 

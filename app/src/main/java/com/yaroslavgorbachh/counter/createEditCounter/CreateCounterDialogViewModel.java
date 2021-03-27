@@ -13,17 +13,19 @@ import com.yaroslavgorbachh.counter.database.Repo;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class CreateCounterDialogViewModel extends ViewModel {
 
-    private final Repo mRepo = null;
+    private final Repo mRepo;
     private final LiveData<List<String>> mGroups;
-    public CreateCounterDialogViewModel() {
-        //mRepo = new Repo(application);
+    @Inject
+    public CreateCounterDialogViewModel(Repo repo) {
+        mRepo = repo;
         mGroups = mRepo.getGroups();
     }
 
     public void createCounter(String title, String group) {
-
             Counter counter = new Counter(title, 0, Counter.MAX_VALUE,
                     Counter.MIN_VALUE, 1, group, new Date(),
                     new Date(), null, 0, 0, 0);

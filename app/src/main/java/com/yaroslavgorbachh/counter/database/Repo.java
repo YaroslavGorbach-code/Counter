@@ -14,9 +14,11 @@ import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.rxjava3.core.Single;
 
+@Singleton
 public class Repo {
 
    private final CounterDao mCounterDao;

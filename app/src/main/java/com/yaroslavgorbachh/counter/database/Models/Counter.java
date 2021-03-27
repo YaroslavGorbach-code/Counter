@@ -71,7 +71,7 @@ public class Counter {
         this.id = id;
     }
 
-    public void inc(Context context, Resources resources, Repo repo, Accessibility accessibility, View view){
+    public void inc(Context context, Resources resources, Repo repo, Accessibility accessibility){
             long maxValue;
             long incOn;
             long value = this.value;
@@ -94,10 +94,11 @@ public class Counter {
 
             if (this.value < this.counterMinValue) this.counterMaxValue = this.value;
          repo.updateCounter(this);
-         accessibility.playIncFeedback(view, String.valueOf(this.value));
+        if (accessibility!=null)
+            accessibility.playIncFeedback(String.valueOf(this.value));
     }
 
-    public void dec(Context context, Resources resources, Repo repo, Accessibility accessibility, View view){
+    public void dec(Context context, Resources resources, Repo repo, Accessibility accessibility){
         long minValue;
         long decOn;
         minValue = this.minValue;
@@ -119,7 +120,8 @@ public class Counter {
 
         if (this.value < this.counterMinValue) this.counterMinValue = this.value;
         repo.updateCounter(this);
-        accessibility.playDecFeedback(view, String.valueOf(this.value));
+        if (accessibility!=null)
+            accessibility.playDecFeedback(String.valueOf(this.value));
     }
 
     public void reset(Repo repo){

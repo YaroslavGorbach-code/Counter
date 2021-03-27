@@ -1,8 +1,9 @@
-package com.yaroslavgorbachh.counter.counter;
+package com.yaroslavgorbachh.counter.counter.di;
 
 import androidx.lifecycle.ViewModel;
 
 import com.yaroslavgorbachh.counter.aboutCounter.AboutCounterViewModel;
+import com.yaroslavgorbachh.counter.counter.CounterViewModel;
 import com.yaroslavgorbachh.counter.di.ViewModelKey;
 
 import dagger.Binds;

@@ -182,12 +182,12 @@ public class CounterFragment extends Fragment {
 
         /*counter +*/
         new FastCountButton(mIncButton, () -> {
-            mViewModel.incCounter(getView());
+            mViewModel.incCounter(requireContext());
         }, sharedPreferences);
 
         /*counter -*/
         new FastCountButton(mDecButton, () -> {
-            mViewModel.decCounter(getView());
+            mViewModel.decCounter(requireContext());
         }, sharedPreferences);
 
         /*reset counter*/
@@ -202,12 +202,12 @@ public class CounterFragment extends Fragment {
         mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
             @Override
             public void decCounters() {
-                mViewModel.decCounter(getView());
+                mViewModel.decCounter(requireContext());
             }
 
             @Override
             public void incCounters() {
-                mViewModel.incCounter(getView());
+                mViewModel.incCounter(requireContext());
             }
 
             @Override

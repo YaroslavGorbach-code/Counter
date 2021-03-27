@@ -5,11 +5,10 @@ import android.content.Context;
 
 import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.aboutCounter.di.AboutCounterComponent;
-import com.yaroslavgorbachh.counter.counter.CounterComponent;
+import com.yaroslavgorbachh.counter.counter.di.CounterComponent;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
-import com.yaroslavgorbachh.counter.counter.CounterFragment;
-import com.yaroslavgorbachh.counter.countersList.CountersFragment;
 import com.yaroslavgorbachh.counter.countersList.di.CountersComponent;
+import com.yaroslavgorbachh.counter.createEditCounter.di.CreateEditCounterComponent;
 import com.yaroslavgorbachh.counter.fullscreenCounter.di.FullscreenCounterComponent;
 
 import javax.inject.Singleton;
@@ -39,5 +38,6 @@ public interface AppComponent {
     CounterComponent.Builder counterComponentFactory();
     CountersComponent.Builder countersComponentFactory();
     FullscreenCounterComponent.Builder fullscreenCounterComponent();
+    CreateEditCounterComponent.Builder createEditCounterComponent();
 
 }

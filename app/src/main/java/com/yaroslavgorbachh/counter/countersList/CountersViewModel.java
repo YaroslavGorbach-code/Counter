@@ -33,12 +33,12 @@ public class CountersViewModel extends ViewModel {
         mGroups = mRepo.getGroups();
     }
 
-    public void incCounter(Counter counter, Accessibility accessibility, View view) {
-        counter.inc(view.getContext(), mRes, mRepo, accessibility, view);
+    public void incCounter(Counter counter, Accessibility accessibility, Context context) {
+        counter.inc(context, mRes, mRepo, accessibility);
     }
 
-    public void decCounter(Counter counter, Accessibility accessibility, View view) {
-        counter.dec(view.getContext(), mRes, mRepo, accessibility, view);
+    public void decCounter(Counter counter, Accessibility accessibility, Context context) {
+        counter.dec(context, mRes, mRepo, accessibility);
     }
 
     public void countersMoved(Counter counterFrom, Counter counterTo) {

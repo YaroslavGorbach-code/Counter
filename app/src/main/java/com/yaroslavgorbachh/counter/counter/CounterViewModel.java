@@ -41,12 +41,12 @@ public class CounterViewModel extends ViewModel {
         mRes = context.getResources();
     }
 
-    public void incCounter(View view) {
-        counter.getValue().inc(view.getContext(), mRes, mRepo, mAccessibility, view);
+    public void incCounter(Context context) {
+        counter.getValue().inc(context, mRes, mRepo, mAccessibility);
     }
 
-    public void decCounter(View view){
-        counter.getValue().dec(view.getContext(), mRes, mRepo, mAccessibility, view);
+    public void decCounter(Context context){
+        counter.getValue().dec(context, mRes, mRepo, mAccessibility);
     }
 
     public void resetCounter(){

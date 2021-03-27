@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
+import android.os.Build;
+import android.os.VibrationAttributes;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
@@ -16,6 +20,7 @@ import com.yaroslavgorbachh.counter.R;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 public class Accessibility {
 
@@ -26,7 +31,9 @@ public class Accessibility {
     private boolean mClickSoundIsAllowed;
     private boolean mSpeechOutputIsAllowed;
     private TextToSpeech mTextToSpeech;
-    private SharedPreferences mSharedPreferences;
+    private final SharedPreferences mSharedPreferences;
+    private final Vibrator vibrator;
+
 
     @Inject
     public Accessibility(Context context, SharedPreferences sharedPreferences){
@@ -51,19 +58,21 @@ public class Accessibility {
             }
         });
             mSharedPreferences = sharedPreferences;
+
+       vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
    }
 
-    public void playIncFeedback(View view, String text){
+    public void playIncFeedback(String text){
         checkPref();
         playIncSoundEffect();
-        playIncVibrationEffect(view);
+        playIncVibrationEffect();
         speechOutput(text);
     }
 
-    public void playDecFeedback(View view, String text){
+    public void playDecFeedback(String text){
         checkPref();
         playDecSoundEffect();
-        playDecVibrationEffect(view);
+        playDecVibrationEffect();
         speechOutput(text);
     }
 
@@ -75,23 +84,31 @@ public class Accessibility {
 
     private void playIncSoundEffect(){
         if (mClickSoundIsAllowed)
-        mSoundPool.play(mSoundIncId, 1, 1, 1, 0, 1f);
+        mSoundPool.play(mSoundIncId, 1f, 1, 1, 0, 1f);
     }
 
     private void playDecSoundEffect(){
         if (mClickSoundIsAllowed)
-        mSoundPool.play(mSoundDecId, 1, 1, 1, 0, 1f);
+        mSoundPool.play(mSoundDecId, 1, 1f, 1, 0, 1f);
 
     }
 
-    private void playIncVibrationEffect(View view){
+    private void playIncVibrationEffect(){
         if (mVibrationIsAllowed)
-            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                vibrator.vibrate(100);
+            }
     }
 
-    private void playDecVibrationEffect(View view){
+    private void playDecVibrationEffect(){
         if (mVibrationIsAllowed)
-            view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                vibrator.vibrate(50);
+            }
     }
 
     private void checkPref(){

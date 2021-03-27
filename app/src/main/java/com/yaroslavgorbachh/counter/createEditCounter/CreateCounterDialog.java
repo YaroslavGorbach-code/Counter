@@ -18,25 +18,24 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.yaroslavgorbachh.counter.InputFilters;
+import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.countersList.CountersFragmentDirections;
+import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
+
+import java.util.Objects;
+
+import javax.inject.Inject;
 
 public class CreateCounterDialog extends AppCompatDialogFragment {
     private AutoCompleteTextView mGroups_et;
-    private CreateCounterDialogViewModel mViewModel;
     private TextInputEditText mCounterName_et;
 
-    private void setGroups(Context context) {
-        mViewModel.getGroups().observe(this, groups -> {
-            ArrayAdapter<String> adapter =
-                    new ArrayAdapter<>(
-                            context,
-                            R.layout.dropdown_menu_popup_item,
-                            Utility.deleteTheSameGroups(groups));
-            mGroups_et.setAdapter(adapter);
-        });
-    }
+    private CreateCounterDialogViewModel mViewModel;
+
+    @Inject ViewModelProviderFactory viewModelProviderFactory;
 
     public static CreateCounterDialog newInstance(String group) {
         CreateCounterDialog f = new CreateCounterDialog();
@@ -45,23 +44,32 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
         f.setArguments(args);
         return f;
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        MyApplication app = (MyApplication) requireActivity().getApplication();
+        app.appComponent.createEditCounterComponent().create().inject(this);
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
        View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_create_counter, null);
        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
        mCounterName_et = view.findViewById(R.id.counterTitle_addCounter);
-        mViewModel = new ViewModelProvider(this).get(CreateCounterDialogViewModel.class);
 
-        if (getArguments()!=null)
-       mGroups_et.setText(getArguments().getString("group"));
+       mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CreateCounterDialogViewModel.class);
+
+       if (getArguments()!=null)
+           mGroups_et.setText(getArguments().getString("group"));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setView(view)
                 .setNegativeButton(R.string.addCounterDialogCounterNegativeButton, null)
                 .setPositiveButton(R.string.addCounterDialogCounterPositiveButton, (dialog, which) -> {
                     String group = InputFilters.groupsFilter(mGroups_et);
-                    String title = "";
+                    String title;
 
                    if (InputFilters.titleFilter(mCounterName_et)){
                         title = mCounterName_et.getText().toString();
@@ -82,6 +90,17 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
                 Utility.hideKeyboard(requireActivity());
             });
          return builder.create();
+    }
+
+    private void setGroups(Context context) {
+        mViewModel.getGroups().observe(this, groups -> {
+            ArrayAdapter<String> adapter =
+                    new ArrayAdapter<>(
+                            context,
+                            R.layout.dropdown_menu_popup_item,
+                            Utility.deleteTheSameGroups(groups));
+            mGroups_et.setAdapter(adapter);
+        });
     }
 
 }

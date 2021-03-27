@@ -1,8 +1,10 @@
 package com.yaroslavgorbachh.counter.countersList.DragAndDrop;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
@@ -31,17 +33,14 @@ public class CounterMultiSelection implements MultiSelection {
     private final Context mContext;
     private final Resources mResources;
     private final Accessibility mAccessibility;
-    private final View mView;
     public LiveData<Boolean> isMultiSelection = mIsMultiSelection;
     public CopyBeforeReset mCopyBeforeReset;
 
-
-    public CounterMultiSelection(Repo repo, Context context, Resources resources, Accessibility accessibility, View view) {
+    public CounterMultiSelection(Repo repo, Context context, Resources resources, Accessibility accessibility) {
         mRepo = repo;
         mContext = context;
         mResources = resources;
         mAccessibility = accessibility;
-        mView = view;
     }
 
 
@@ -126,14 +125,16 @@ public class CounterMultiSelection implements MultiSelection {
 
     public void incSelectedCounters() {
         for (Counter counter : mSelectedCounters) {
-            counter.inc(mContext, mResources, mRepo, mAccessibility, mView);
+            counter.inc(mContext, mResources, mRepo, null);
         }
+        mAccessibility.playIncFeedback(null);
     }
 
     public void decSelectedCounters() {
         for (Counter counter : mSelectedCounters) {
-            counter.dec(mContext, mResources, mRepo, mAccessibility, mView);
+            counter.dec(mContext, mResources, mRepo, null);
         }
+        mAccessibility.playDecFeedback(null);
     }
 
     public void resetSelectedCounters() {

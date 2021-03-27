@@ -174,12 +174,12 @@ public class CountersFragment extends Fragment {
         mCountersAdapter = new CountersAdapter(new CountersAdapter.CounterItemListener() {
             @Override
             public void onPlusClick(Counter counter) {
-                mViewModel.incCounter(counter, accessibility, getView());
+                mViewModel.incCounter(counter, accessibility, requireContext());
             }
 
             @Override
             public void onMinusClick(Counter counter) {
-                mViewModel.decCounter(counter, accessibility, getView());
+                mViewModel.decCounter(counter, accessibility, requireContext());
             }
 
             @Override
@@ -193,7 +193,7 @@ public class CountersFragment extends Fragment {
             public void onMoved(Counter counterFrom, Counter counterTo) {
                 mViewModel.countersMoved(counterFrom, counterTo);
             }
-        }, requireActivity().getApplication(), sharedPreferences, accessibility, getView(), repo);
+        }, requireActivity().getApplication(), sharedPreferences, accessibility, repo);
 
         // Handling receiver witch MainActivity sends when volume buttons presed
         mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {

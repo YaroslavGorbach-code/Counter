@@ -77,6 +77,7 @@ public class FullscreenCounterFragment extends Fragment {
         mCounterValue_tv = view.findViewById(R.id.value);
         mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(FullscreenCounterViewModel.class);
         mViewModel.setCounterId(FullscreenCounterFragmentArgs.fromBundle(requireArguments()).getCounterId());
+
         Toolbar toolbar = view.findViewById(R.id.fullScreenToolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(view).popBackStack());
@@ -95,12 +96,12 @@ public class FullscreenCounterFragment extends Fragment {
         mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
             @Override
             public void decCounters() {
-                mViewModel.decCounter(getView());
+                mViewModel.decCounter(requireContext());
             }
 
             @Override
             public void incCounters() {
-                mViewModel.incCounter(getView());
+                mViewModel.incCounter(requireContext());
             }
 
             @Override
@@ -118,12 +119,12 @@ public class FullscreenCounterFragment extends Fragment {
         mContentView.setOnTouchListener(new CounterSwipeListener(getActivity()){
             @Override
             public void onSwipeTop() {
-                mViewModel.incCounter(getView());
+                mViewModel.incCounter(requireContext());
             }
 
             @Override
             public void onSwipeBottom() {
-                mViewModel.decCounter(getView());
+                mViewModel.decCounter(requireContext());
             }
         });
     }

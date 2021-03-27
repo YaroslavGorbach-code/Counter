@@ -15,13 +15,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 public class CreateEditCounterViewModel extends ViewModel {
-    private final Repo mRepo = null;
+    private final Repo mRepo;
     private final LiveData<List<String>> mGroups;
-    private final LiveData<Counter> mCounter;
-    public CreateEditCounterViewModel(@NonNull Application application, long counterId) {
-//        mRepo = new Repo(application);
-        mCounter = mRepo.getCounter(counterId);
+    private LiveData<Counter> mCounter;
+
+    @Inject
+    public CreateEditCounterViewModel(Repo repo) {
+        mRepo = repo;
         mGroups = mRepo.getGroups();
     }
 
@@ -32,6 +35,11 @@ public class CreateEditCounterViewModel extends ViewModel {
     public LiveData<Counter> getCounter(){
         return mCounter;
     }
+
+    public void setCounterId(Long id){
+        mCounter = mRepo.getCounter(id);
+    }
+
 
     public void updateCreateCounter(String title, long value, long maxValue, long minValue, long step, String grope) {
         if (value > maxValue){

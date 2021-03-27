@@ -1,5 +1,6 @@
 package com.yaroslavgorbachh.counter.fullscreenCounter;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.view.View;
 
@@ -25,12 +26,12 @@ public class FullscreenCounterViewModel extends ViewModel {
         mRes = resources;
     }
 
-    public void incCounter(View view) {
-        counter.getValue().inc(view.getContext(), mRes, mRepo, mAccessibility, view);
+    public void incCounter(Context context) {
+        counter.getValue().inc(context, mRes, mRepo, mAccessibility);
     }
 
-    public void decCounter(View view){
-        counter.getValue().dec(view.getContext(), mRes, mRepo, mAccessibility, view);
+    public void decCounter(Context context){
+        counter.getValue().dec(context, mRes, mRepo, mAccessibility);
     }
 
     public void setCounterId(Long id){
