@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         application.appComponent.settingsComponentFactory().create().inject(this);
         super.onCreate(savedInstanceState);
         new Utility().setTheme(PreferenceManager.getDefaultSharedPreferences(this), this, repo);
-        setContentView(R.layout.activity_settings);
+        setContentView( R.layout.activity_settings);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.settings_container, new SettingsFragment())

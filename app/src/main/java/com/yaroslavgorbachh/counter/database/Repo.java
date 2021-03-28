@@ -1,7 +1,5 @@
 package com.yaroslavgorbachh.counter.database;
 
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.database.Daos.AppStyleDao;
@@ -16,7 +14,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Singleton
 public class Repo {
@@ -33,32 +35,43 @@ public class Repo {
    }
 
    public AppStyle getCurrentStyle(){
-        //TODO: 2/19/2021 make in background
        return mAppStyleDao.getCurrentColor();
    }
 
     public void insertCounter(Counter counter){
-        new Thread(() -> mCounterDao.insert(counter)).start();
+        Completable.create(emitter -> mCounterDao.insert(counter))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     public void deleteCounter(Counter counter){
-        new Thread(() -> mCounterDao.delete(counter)).start();
+        Completable.create(emitter -> mCounterDao.delete(counter))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     public void updateCounter(Counter counter){
-        new Thread(() -> mCounterDao.update(counter)).start();
+        Completable.create(emitter -> mCounterDao.update(counter))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     public void deleteCounters(){
-        new Thread(mCounterDao::deleteAllCounters).start();
+        Completable.create(emitter -> mCounterDao.deleteAllCounters())
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     public void insertCounterHistory(CounterHistory counterHistory){
-        new Thread(() -> mCounterHistoryDao.insert(counterHistory)).start();
+        Completable.create(emitter -> mCounterHistoryDao.insert(counterHistory))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     public void deleteCounterHistory(long counterId){
-        new Thread(() -> mCounterHistoryDao.delete(counterId)).start();
+        Completable.create(emitter -> mCounterHistoryDao.delete(counterId))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     public Single<List<Counter>> getAllCountersNoLiveData(){
@@ -82,7 +95,9 @@ public class Repo {
     }
 
     public void changeTheme(AppStyle style) {
-        new Thread(() -> mAppStyleDao.update(style)).start();
+        Completable.create(emitter -> mAppStyleDao.update(style))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 }
 
