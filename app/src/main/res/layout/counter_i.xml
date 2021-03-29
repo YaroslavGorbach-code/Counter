@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    app:cardCornerRadius="5dp"
     android:background="?colorSurface"
-    app:rippleColor="@null"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    app:cardCornerRadius="5dp"
+    app:rippleColor="@null">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/counter_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="105dp"
         android:clickable="false"
         android:focusable="false"
         android:padding="10dp"
@@ -28,15 +28,16 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/value_i"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/counterValueColor"
+            android:ellipsize="middle"
+            android:gravity="center|start"
+            android:singleLine="true"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
+            android:textColor="@color/counterValueColor"
             android:textSize="40sp"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_i"
             tools:text="0" />
@@ -45,36 +46,38 @@
             android:id="@+id/title_i"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:maxLines="1"
-            tools:text="CounterTitle"
+
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="@+id/value_i"
             app:layout_constraintStart_toStartOf="@+id/value_i"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="CounterTitle" />
 
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@drawable/item_button_background"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toTopOf="@+id/guideline6">
 
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/minus_i"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:background="?selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:text="−"
-                android:layout_gravity="center"
                 android:textColor="?colorAccent"
                 android:textSize="25sp" />
 
@@ -88,16 +91,39 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/plus_i"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:background="?selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:layout_gravity="center"
                 android:text="+"
                 android:textColor="?colorAccent"
                 android:textSize="25sp" />
 
         </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.70" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.17" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.83" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

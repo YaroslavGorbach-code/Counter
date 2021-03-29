@@ -21,7 +21,6 @@
     <string name="there_are_no_active_counters">There are no active counters</string>
     <string name="click_on_the_button_below_to_create">click on the button below to create</string>
     <string name="there_are_no_groups_yet">There are no groups</string>
-    <string name="there_no_history_yet">There no history</string>
     <string name="selectionModTitle">Selected: %1$s</string>
     <string name="exportSelected">Export in CSV</string>
     <string name="counterReset">Counter was reset</string>
@@ -45,6 +44,8 @@
     <!-- History fragment -->
     <string name="historyFragmentToolbarTitle">History</string>
     <string name="counterHistoryMenuClean">Clear</string>
+    <string name="there_no_history_yet">There no history</string>
+
 
     <!-- Add counter dialog -->
     <string name="addCounterDialogTitle">Add counter</string>
@@ -105,9 +106,7 @@
     <string name="resetAllCounters">Reset all counters</string>
     <string name="countersReset">Counters have been reset</string>
     <string name="backup">Backup</string>
-    <string name="backup_instructions">1. Create a backup.
-        Send the file by mail or in another convenient way.
-        Restore your backup.</string>
+    <string name="backup_instructions">1. Create a backup.\n2. Send the file by mail or in another convenient way.\nG3. Restore your backup.</string>
     <string name="backup_instructions_2">* After restoring the backup, the existing counters will be overwritten.
         * If the dialog box does not appear or you see the error "Could not find an application to perform this action", then download the file manager from Google Play.</string>
     <string name="create_backup">Create a backup</string>
