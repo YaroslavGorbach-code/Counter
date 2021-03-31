@@ -28,7 +28,7 @@ public class CreateCounterDialogViewModel extends ViewModel {
     public void createCounter(String title, String group) {
             Counter counter = new Counter(title, 0, Counter.MAX_VALUE,
                     Counter.MIN_VALUE, 1, group, new Date(),
-                    new Date(), null, 0, 0, 0);
+                    new Date(), null, 0, 0, 0, null);
             mRepo.insertCounter(counter);
     }
 

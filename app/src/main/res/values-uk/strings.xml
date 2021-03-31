@@ -3,8 +3,8 @@
 <resources>
     <string name="app_name">Лічильник</string>
     <string-array name="history_sort_items">
-        <item>Сортировка по дате</item>
-        <item>Сортировка по значению</item>
+        <item>Сортувати по даті</item>
+        <item>Сортувати по значенню</item>
     </string-array>
 
     <!-- Counters fragment -->
@@ -13,7 +13,7 @@
     <string name="rate">Оцінити</string>
     <string name="resetSelectionMenu">Обнулити вибрані</string>
     <string name="deleteSelectionMenu">Видалити вибрані</string>
-    <string name="selectAllSelectionMenu">Вибрати всі</string>
+    <string name="selectAllSelectionMenu">Обрати усі</string>
     <string name="editSelectionMenu">Редагувати</string>
     <string name="drawerSettings">Налаштування</string>
     <string name="click_on_the_button_below_to_create">Натисніть кнопку нижче, щоб створити</string>
@@ -122,11 +122,12 @@
 
     <!-- Settings fragment -->
     <string name="successCreatedToast">Копія успішно збережена в %1$s</string>
-    <string name="failCreatedToast">Помилка. %1$s Спробуйте зберегти в другу папку.</string>
+    <string name="failCreatedToast">Помилка. %1$s Спробуйте зберегти в іншу папку.</string>
     <string name="successRestore">Копія успішно відновлена. Додаток перезапуститься.</string>
     <string name="failRestore">Некоректний файл.</string>
-
-
     <string name="apply">застосувати</string>
+
+    <!-- Widget configuration activity -->
+    <string name="confWidgetActivityToolbarTitle">Оберіть лічильник</string>
 
     </resources>

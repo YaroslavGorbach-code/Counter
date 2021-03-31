@@ -1,6 +1,7 @@
 package com.yaroslavgorbachh.counter.database;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 
 import com.yaroslavgorbachh.counter.database.Daos.AppStyleDao;
 import com.yaroslavgorbachh.counter.database.Daos.CounterDao;
@@ -14,10 +15,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Singleton
@@ -90,6 +89,11 @@ public class Repo {
         return mCounterDao.getCounter(id);
     }
 
+    public Counter getCounterWidget(long widgetId) {
+        return mCounterDao.getCounterWidget(widgetId);
+    }
+
+
     public LiveData<List<String>> getGroups(){
         return mCounterDao.getGroups();
     }
@@ -98,6 +102,14 @@ public class Repo {
         Completable.create(emitter -> mAppStyleDao.update(style))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
+    }
+
+    public Counter getCounterNoLiveData(long id) {
+        return mCounterDao.getCounterNoLiveData(id);
+    }
+
+    public LiveData<Counter> getCounterWidgetLiveData(long widgetId){
+        return mCounterDao.getCounterWidgetLiveData(widgetId);
     }
 }
 

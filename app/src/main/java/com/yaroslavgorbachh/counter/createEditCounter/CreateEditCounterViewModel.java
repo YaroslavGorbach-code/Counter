@@ -51,7 +51,7 @@ public class CreateEditCounterViewModel extends ViewModel {
         /*if mCounter == null insert counter*/
         if (mCounter.getValue() == null) {
             Counter newCounter = new Counter(title, value, maxValue, minValue, step, grope,
-                    new Date(), new Date(), null, 0, 0, 0);
+                    new Date(), new Date(), null, 0, 0, 0, null);
             new Handler().postDelayed(() ->  mRepo.insertCounter(newCounter),500);
         } else {
             /*if mCounter != null update counter*/

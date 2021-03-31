@@ -31,22 +31,20 @@ public class CounterViewModel extends ViewModel {
     private final Repo mRepo;
     private  CopyBeforeReset mCopyBeforeReset;
     private final Accessibility mAccessibility;
-    private final Resources mRes;
     public LiveData<Counter> counter;
 
     @Inject
-    public CounterViewModel(Repo repo, Context context, Accessibility accessibility) {
+    public CounterViewModel(Repo repo, Accessibility accessibility) {
         mRepo = repo;
         mAccessibility = accessibility;
-        mRes = context.getResources();
     }
 
     public void incCounter(Context context) {
-        counter.getValue().inc(context, mRes, mRepo, mAccessibility);
+        counter.getValue().inc(context, mRepo, mAccessibility);
     }
 
     public void decCounter(Context context){
-        counter.getValue().dec(context, mRes, mRepo, mAccessibility);
+        counter.getValue().dec(context, mRepo, mAccessibility);
     }
 
     public void resetCounter(){

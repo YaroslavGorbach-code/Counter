@@ -38,4 +38,13 @@ public interface CounterDao {
     @Query("SELECT grope FROM counter_table WHERE grope<>'' ORDER BY grope ASC")
     LiveData<List<String>> getGroups();
 
+    @Query("SELECT * FROM counter_table WHERE widgetId = :widgetId")
+    Counter getCounterWidget(long widgetId);
+
+    @Query("SELECT * FROM counter_table WHERE id = :id")
+    Counter getCounterNoLiveData(long id);
+
+    @Query("SELECT * FROM counter_table WHERE widgetId = :widgetId")
+    LiveData<Counter> getCounterWidgetLiveData(long widgetId);
+
 }

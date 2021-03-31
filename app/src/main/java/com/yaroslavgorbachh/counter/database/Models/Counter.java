@@ -40,6 +40,7 @@ public class Counter {
     public long counterMaxValue;
     @ColumnInfo(defaultValue = "0")
     public long counterMinValue;
+    public Long widgetId;
 
     public Counter(String title,
                    long value,
@@ -52,7 +53,8 @@ public class Counter {
                    Date lastResetDate,
                    long lastResetValue,
                    long counterMaxValue,
-                   long counterMinValue) {
+                   long counterMinValue,
+                   Long widgetId) {
         this.title = title;
         this.value = value;
         this.maxValue = maxValue;
@@ -65,13 +67,14 @@ public class Counter {
         this.lastResetValue = lastResetValue;
         this.counterMaxValue = counterMaxValue;
         this.counterMinValue = counterMinValue;
+        this.widgetId = widgetId;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public void inc(Context context, Resources resources, Repo repo, Accessibility accessibility){
+    public void inc(Context context, Repo repo, Accessibility accessibility){
             long maxValue;
             long incOn;
             long value = this.value;
@@ -80,14 +83,14 @@ public class Counter {
             value += incOn;
 
             if (value > maxValue) {
-                Toast.makeText(context, resources.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getResources().getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
                 this.value = maxValue;
             } else {
                 this.value = Math.max(this.minValue, value);
             }
 
             if (this.value == this.minValue){
-                Toast.makeText(context, resources.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getResources().getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
             }
 
             if (this.value > this.counterMaxValue) this.counterMaxValue = this.value;
@@ -98,7 +101,7 @@ public class Counter {
             accessibility.playIncFeedback(String.valueOf(this.value));
     }
 
-    public void dec(Context context, Resources resources, Repo repo, Accessibility accessibility){
+    public void dec(Context context, Repo repo, Accessibility accessibility){
         long minValue;
         long decOn;
         minValue = this.minValue;
@@ -107,13 +110,13 @@ public class Counter {
         value -= decOn;
 
         if (value < minValue){
-            Toast.makeText(context, resources.getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getResources().getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
             this.value = minValue;
         }else {
             this.value = Math.min(this.maxValue, value);
         }
         if (this.value == this.maxValue){
-            Toast.makeText(context, resources.getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getResources().getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
         }
 
         if (this.value > this.counterMaxValue) this.counterMaxValue = this.value;

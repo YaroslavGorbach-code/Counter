@@ -16,22 +16,20 @@ import javax.inject.Inject;
 public class FullscreenCounterViewModel extends ViewModel {
     private final Repo mRepo;
     private final Accessibility mAccessibility;
-    private final Resources mRes;
     public LiveData<Counter> counter;
 
     @Inject
-    public FullscreenCounterViewModel(Repo repo, Resources resources, Accessibility accessibility) {
+    public FullscreenCounterViewModel(Repo repo, Accessibility accessibility) {
         mRepo = repo;
         mAccessibility = accessibility;
-        mRes = resources;
     }
 
     public void incCounter(Context context) {
-        counter.getValue().inc(context, mRes, mRepo, mAccessibility);
+        counter.getValue().inc(context, mRepo, mAccessibility);
     }
 
     public void decCounter(Context context){
-        counter.getValue().dec(context, mRes, mRepo, mAccessibility);
+        counter.getValue().dec(context, mRepo, mAccessibility);
     }
 
     public void setCounterId(Long id){

@@ -21,24 +21,22 @@ import javax.inject.Inject;
 
 public class CountersViewModel extends ViewModel {
     private final Repo mRepo;
-    private final Resources mRes;
     private final LiveData<List<Counter>> mCounters;
     private final LiveData<List<String>> mGroups;
 
     @Inject
-    public CountersViewModel(Repo repo, Resources resources) {
+    public CountersViewModel(Repo repo) {
         mRepo = repo;
-        mRes = resources;
         mCounters = mRepo.getAllCounters();
         mGroups = mRepo.getGroups();
     }
 
     public void incCounter(Counter counter, Accessibility accessibility, Context context) {
-        counter.inc(context, mRes, mRepo, accessibility);
+        counter.inc(context, mRepo, accessibility);
     }
 
     public void decCounter(Counter counter, Accessibility accessibility, Context context) {
-        counter.dec(context, mRes, mRepo, accessibility);
+        counter.dec(context, mRepo, accessibility);
     }
 
     public void countersMoved(Counter counterFrom, Counter counterTo) {

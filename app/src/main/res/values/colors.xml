@@ -3,7 +3,7 @@
     <!--   color material 600-->
 
 
-<!--      Standard theme colors-->
+    <!--      Standard theme colors-->
     <color name="colorPrimary">#FFC51162</color>
     <color name="colorPrimaryDark">#66FF7AB6</color>
     <color name="colorAccent">#FFC51162</color>
@@ -22,7 +22,7 @@
     <color name="colorIconNoHistory">#CA3F7D</color>
     <color name="colorIconDrawer">#FFC51162</color>
 
-<!--      Orange theme colors-->
+    <!--      Orange theme colors-->
     <color name="colorPrimary_orange">#E53935</color>
     <color name="colorPrimaryDark_orange">#66E53935</color>
     <color name="colorAccent_orange">#E53935</color>

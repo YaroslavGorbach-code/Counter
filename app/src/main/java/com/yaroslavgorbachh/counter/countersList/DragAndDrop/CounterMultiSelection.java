@@ -31,15 +31,13 @@ public class CounterMultiSelection implements MultiSelection {
     private RecyclerView.ViewHolder mDraggingHolder;
     private final MutableLiveData<Integer> mCountSelected = new MutableLiveData<>(mSelectedCounters.size());
     private final Context mContext;
-    private final Resources mResources;
     private final Accessibility mAccessibility;
     public LiveData<Boolean> isMultiSelection = mIsMultiSelection;
     public CopyBeforeReset mCopyBeforeReset;
 
-    public CounterMultiSelection(Repo repo, Context context, Resources resources, Accessibility accessibility) {
+    public CounterMultiSelection(Repo repo, Context context, Accessibility accessibility) {
         mRepo = repo;
         mContext = context;
-        mResources = resources;
         mAccessibility = accessibility;
     }
 
@@ -125,14 +123,14 @@ public class CounterMultiSelection implements MultiSelection {
 
     public void incSelectedCounters() {
         for (Counter counter : mSelectedCounters) {
-            counter.inc(mContext, mResources, mRepo, null);
+            counter.inc(mContext, mRepo, null);
         }
         mAccessibility.playIncFeedback(null);
     }
 
     public void decSelectedCounters() {
         for (Counter counter : mSelectedCounters) {
-            counter.dec(mContext, mResources, mRepo, null);
+            counter.dec(mContext, mRepo, null);
         }
         mAccessibility.playDecFeedback(null);
     }

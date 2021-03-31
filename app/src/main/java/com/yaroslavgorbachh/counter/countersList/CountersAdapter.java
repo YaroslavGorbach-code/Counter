@@ -49,7 +49,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         public CountersAdapter(CounterItemListener counterItemListener,
                                Application application, SharedPreferences sharedPreferences, Accessibility accessibility, Repo repo) {
             setHasStableIds(true);
-            mCounterMultiSelection = new CounterMultiSelection(repo, application, application.getResources(), accessibility);
+            mCounterMultiSelection = new CounterMultiSelection(repo, application, accessibility);
             mCounterItemListener = counterItemListener;
             mSharedPreferences = sharedPreferences;
             leftHandMod = mSharedPreferences.getBoolean("leftHandMod", false);

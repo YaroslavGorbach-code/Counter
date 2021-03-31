@@ -27,6 +27,10 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+import static com.yaroslavgorbachh.counter.database.Models.Migrations.MIGRATION_24_25;
+import static com.yaroslavgorbachh.counter.database.Models.Migrations.MIGRATION_25_26;
+import static com.yaroslavgorbachh.counter.database.Models.Migrations.MIGRATION_26_27;
+
 
 @Module
 public class RoomModule {
@@ -61,31 +65,8 @@ public class RoomModule {
                             }
                         })
                         .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
-                        .addMigrations(MIGRATION_24_25)
-                        .addMigrations(MIGRATION_25_26)
+                        .allowMainThreadQueries()
+                        .addMigrations(MIGRATION_24_25, MIGRATION_25_26, MIGRATION_26_27)
                         .build();
             }
-
-
-
-    private static final Migration MIGRATION_24_25 = new Migration(24, 25) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE counter_table ADD COLUMN createDataSort INTEGER DEFAULT null ");
-            database.execSQL("ALTER TABLE counter_table ADD COLUMN lastResetData INTEGER DEFAULT null");
-            database.execSQL("ALTER TABLE counter_table ADD COLUMN lastResetValue INTEGER NOT NULL DEFAULT 0 ");
-            database.execSQL("ALTER TABLE counter_table ADD COLUMN counterMaxValue INTEGER NOT NULL DEFAULT 0 ");
-            database.execSQL("ALTER TABLE counter_table ADD COLUMN counterMinValue INTEGER NOT NULL DEFAULT 0 ");
-        }
-    };
-
-    private static final Migration MIGRATION_25_26 = new Migration(25, 26) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("CREATE TABLE app_style (" +
-                    "id INTEGER PRIMARY KEY NOT NULL," +
-                    "style INTEGER NOT NULL DEFAULT 0) ");
-            database.execSQL("INSERT INTO app_style (id, style) VALUES(1, 0)");
-        }
-    };
 }

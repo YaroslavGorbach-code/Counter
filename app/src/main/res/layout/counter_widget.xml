@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="8dp">
+    <LinearLayout
+        android:id="@+id/widget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+        <TextView
+            android:id="@+id/appwidget_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:textColor="?android:colorBackground"
+            android:maxLines="2"
+            tools:textColor="@color/counterValueColor_yellow"
+            android:text="Counter nameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            android:gravity="center"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/widget_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            tools:text="222"
+            tools:textColor="@color/counterValueColor_yellow"
+            android:ellipsize="middle"
+            android:textSize="25sp"
+            android:textColor="?android:colorBackground"
+            android:layout_gravity="center"
+            android:gravity="center"
+             />
+    </LinearLayout>
+
+</RelativeLayout>

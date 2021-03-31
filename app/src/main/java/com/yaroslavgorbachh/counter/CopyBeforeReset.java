@@ -17,7 +17,7 @@ public class CopyBeforeReset {
                 counter.maxValue, counter.minValue, counter.step,
                 counter.grope, counter.createDate, counter.createDateSort,
                 counter.lastResetDate, counter.lastResetValue,
-                counter.counterMaxValue, counter.counterMinValue);
+                counter.counterMaxValue, counter.counterMinValue, null);
         copy.setId(counter.id);
         mCopyList.add(copy);
     }

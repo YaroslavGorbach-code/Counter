@@ -132,6 +132,9 @@
     <string name="successRestore">The backup was successfully restored. Application will restart</string>
     <string name="failRestore">Invalid file</string>
 
+    <!-- Widget configuration activity -->
+    <string name="confWidgetActivityToolbarTitle">Chose counter</string>
+
 
     <string name="apply">Apply</string>
 

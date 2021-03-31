@@ -21,7 +21,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-@Database(entities = {Counter.class, CounterHistory.class, AppStyle.class},  version = 26)
+@Database(entities = {Counter.class, CounterHistory.class, AppStyle.class},  version = 27)
 @TypeConverters({Converters.class})
 public abstract class CounterDatabase extends RoomDatabase {
     public abstract CounterDao counterDao();

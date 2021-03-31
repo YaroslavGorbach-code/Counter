@@ -129,8 +129,9 @@
     <string name="failCreatedToast">Ошибка. %1$s Попробуйте сохранить в другую папку.</string>
     <string name="successRestore">Копия успешно восстановлена. Приложение перезапуститься.</string>
     <string name="failRestore">Некорректный файл.</string>
-
-
     <string name="apply">применить</string>
+
+    <!-- Widget configuration activity -->
+    <string name="confWidgetActivityToolbarTitle">Выберете счетчик</string>
 
 </resources>
