@@ -16,9 +16,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_mainActivity"
+            android:id="@+id/toolbar_widget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_close"
             android:background="?android:colorBackground"
             app:title="@string/confWidgetActivityToolbarTitle"
             app:titleTextColor="?colorAccent" />
@@ -26,8 +27,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/widget_counters_rv"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:paddingTop="8dp"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,7 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         MyApplication application = (MyApplication) getApplication();
@@ -41,6 +43,10 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_widget_configuration);
         mRecyclerView = findViewById(R.id.widget_counters_rv);
+        Toolbar toolbar = findViewById(R.id.toolbar_widget);
+        toolbar.setNavigationOnClickListener(v->{
+            finish();
+        });
 
         Intent configIntent = getIntent();
         Bundle extras = configIntent.getExtras();

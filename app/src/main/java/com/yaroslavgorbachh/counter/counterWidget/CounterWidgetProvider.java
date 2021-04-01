@@ -80,13 +80,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
     private static void resizeWidgetViews(Bundle newOptions, RemoteViews views) {
 
         int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
-        int maxWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
-        int minHeight = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
         int maxHeight = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
-        Log.v("teg", "minWidth "+minWidth);
-        Log.v("teg", "maxWidth "+maxWidth);
-        Log.v("teg", "minHeight "+minHeight);
-        Log.v("teg", "maxHeight "+maxHeight);
 
 
         if (maxHeight > 100 || minWidth > 100) {
