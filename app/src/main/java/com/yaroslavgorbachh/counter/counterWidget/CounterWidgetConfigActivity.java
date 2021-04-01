@@ -65,7 +65,7 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
                 Toast.makeText(this, "The widget for this counter already exists", Toast.LENGTH_LONG).show();
             }else {
                 appWidgetManager.updateAppWidget(appWidgetId,
-                        CounterWidgetProvider.getRemoteViews(widgetCounter, appWidgetId, this));
+                        CounterWidgetProvider.getRemoteViews(widgetCounter, appWidgetId, this, appWidgetManager));
                 widgetCounter.widgetId = appWidgetId;
                 repo.updateCounter(widgetCounter);
 

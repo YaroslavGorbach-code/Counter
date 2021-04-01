@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.preference.PreferenceManager;
 
@@ -14,6 +15,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
+import com.yaroslavgorbachh.counter.countersList.CountersFragmentDirections;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.DeleteCounterDialog;
@@ -39,6 +42,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
+import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.START_MAIN_ACTIVITY_EXTRA;
 
 public class CounterFragment extends Fragment {
     private TextView mValue_tv;
@@ -220,6 +224,7 @@ public class CounterFragment extends Fragment {
 
         return view;
     }
+
 
     @Override
     public void onDestroyView() {

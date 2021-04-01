@@ -14,15 +14,20 @@ import android.widget.RemoteViews;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.yaroslavgorbachh.counter.counterSettings.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider;
+import com.yaroslavgorbachh.counter.countersList.CountersFragmentDirections;
 import com.yaroslavgorbachh.counter.database.Repo;
 
 import javax.inject.Inject;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_DOWN;
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_UP;
+import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.START_MAIN_ACTIVITY_EXTRA;
 
 
 public class MainActivity extends AppCompatActivity {

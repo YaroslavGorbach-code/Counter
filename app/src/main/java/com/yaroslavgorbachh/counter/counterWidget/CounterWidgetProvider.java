@@ -7,12 +7,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
-import androidx.annotation.NonNull;
-
-import com.yaroslavgorbachh.counter.Accessibility;
+import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
@@ -22,13 +22,17 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
+import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class CounterWidgetProvider extends AppWidgetProvider {
-    public static String INC_CLICK = "INC_CLICK";
+    public static final String INC_CLICK = "INC_CLICK";
+    public static final String DEC_CLICK = "DECK_CLICK";
+    public static final String OPEN_CLICK = "OPEN_CLICK";
+    public static final String START_MAIN_ACTIVITY_EXTRA = "START_MAIN_ACTIVITY_EXTRA";
+
     @Inject
     Repo mRepo;
 
@@ -46,48 +50,124 @@ public class CounterWidgetProvider extends AppWidgetProvider {
             counterWidget.inc(context, mRepo, null);
             counterWidget = mRepo.getCounterWidget(widgetId);
             appWidgetManager.updateAppWidget(counterWidget.widgetId,
-                    getRemoteViews(counterWidget, counterWidget.widgetId, context));
+                    getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager));
+        }
+
+        if (Objects.requireNonNull(intent.getAction()).equals(DEC_CLICK) && counterWidget != null) {
+            counterWidget.dec(context, mRepo, null);
+            counterWidget = mRepo.getCounterWidget(widgetId);
+            appWidgetManager.updateAppWidget(counterWidget.widgetId,
+                    getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager));
+        }
+
+        if (Objects.requireNonNull(intent.getAction()).equals(OPEN_CLICK) && counterWidget != null) {
+            Intent startMainActivityIntent = new Intent(context, MainActivity.class);
+            startMainActivityIntent.putExtra(START_MAIN_ACTIVITY_EXTRA, counterWidget.id);
+            startMainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(startMainActivityIntent);
+
         }
         super.onReceive(context, intent);
     }
 
-    public static RemoteViews getRemoteViews(Counter widgetCounter, int appWidgetId, Context context) {
-        Intent intent = new Intent(context, CounterWidgetProvider.class);
-        intent.setAction(INC_CLICK);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        // we need to embed the extras into the data so that the extras will not be ignored.
-        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
-        views.setOnClickPendingIntent(R.id.widget, pendingIntent);
+        resizeWidgetViews(newOptions, views);
+        appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    private static void resizeWidgetViews(Bundle newOptions, RemoteViews views) {
+
+        int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        int maxWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
+        int minHeight = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+        int maxHeight = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+        Log.v("teg", "minWidth "+minWidth);
+        Log.v("teg", "maxWidth "+maxWidth);
+        Log.v("teg", "minHeight "+minHeight);
+        Log.v("teg", "maxHeight "+maxHeight);
+
+
+        if (maxHeight > 100 || minWidth > 100) {
+            views.setViewVisibility(R.id.widget_minus, View.VISIBLE);
+            views.setViewVisibility(R.id.widget_fullscreen, View.VISIBLE);
+            views.setTextViewTextSize(R.id.widget_value, COMPLEX_UNIT_SP, 50);
+            views.setTextViewTextSize(R.id.widget_title, COMPLEX_UNIT_SP, 16);
+        }
+
+        if (maxHeight > 400 || minWidth > 400) {
+            views.setTextViewTextSize(R.id.widget_value, COMPLEX_UNIT_SP, 70);
+        }
+
+        if (maxHeight < 100 || minWidth < 100){
+            views.setViewVisibility(R.id.widget_minus, View.GONE);
+            views.setViewVisibility(R.id.widget_fullscreen, View.GONE);
+            views.setTextViewTextSize(R.id.widget_value, COMPLEX_UNIT_SP, 25);
+            views.setTextViewTextSize(R.id.widget_title, COMPLEX_UNIT_SP, 12);
+
+        }
+    }
+
+
+    public static RemoteViews getRemoteViews(Counter widgetCounter, int appWidgetId, Context context, AppWidgetManager appWidgetManager) {
+        Bundle appWidgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
+
+        Intent incIntent = new Intent(context, CounterWidgetProvider.class);
+        incIntent.setAction(INC_CLICK);
+        incIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        // we need to embed the extras into the data so that the extras will not be ignored.
+        incIntent.setData(Uri.parse(incIntent.toUri(Intent.URI_INTENT_SCHEME)));
+        PendingIntent incPendingIntent = PendingIntent.getBroadcast(context, 0, incIntent, 0);
+        views.setOnClickPendingIntent(R.id.widget_value, incPendingIntent);
+
+        Intent decIntent = new Intent(context, CounterWidgetProvider.class);
+        decIntent.setAction(DEC_CLICK);
+        decIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        // we need to embed the extras into the data so that the extras will not be ignored.
+        decIntent.setData(Uri.parse(incIntent.toUri(Intent.URI_INTENT_SCHEME)));
+        PendingIntent decPendingIntent = PendingIntent.getBroadcast(context, 0, decIntent, 0);
+        views.setOnClickPendingIntent(R.id.widget_minus, decPendingIntent);
+
+        Intent openIntent = new Intent(context, CounterWidgetProvider.class);
+        openIntent.setAction(OPEN_CLICK);
+        openIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        // we need to embed the extras into the data so that the extras will not be ignored.
+        openIntent.setData(Uri.parse(incIntent.toUri(Intent.URI_INTENT_SCHEME)));
+        PendingIntent openPendingIntent = PendingIntent.getBroadcast(context, 0, openIntent, 0);
+        views.setOnClickPendingIntent(R.id.widget_fullscreen, openPendingIntent);
+
 
         if (widgetCounter != null) {
             views.setTextViewText(R.id.widget_value, String.valueOf(widgetCounter.value));
-            views.setTextViewText(R.id.appwidget_text, widgetCounter.title);
+            views.setTextViewText(R.id.widget_title, widgetCounter.title);
+            resizeWidgetViews(appWidgetOptions, views);
         }
-
         return views;
     }
 
     public static void updateWidgets(Context context, Repo repo) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+
         int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, CounterWidgetProvider.class));
         if (ids != null) {
             for (int id : ids) {
                 Counter counter = repo.getCounterWidget(id);
                 if (counter != null) {
                     appWidgetManager.updateAppWidget(counter.widgetId,
-                            getRemoteViews(counter, counter.widgetId, context));
+                            getRemoteViews(counter, counter.widgetId, context, appWidgetManager));
                 } else {
                     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
                     // TODO: 4/1/2021 translate
                     views.setTextViewText(R.id.widget_value, "DELETED");
-                    views.setTextViewText(R.id.appwidget_text, "DELETED");
+                    views.setTextViewText(R.id.widget_title, "DELETED");
                     appWidgetManager.updateAppWidget(id, views);
                 }
+
             }
         }
+
     }
 
     public static boolean checkWidgetIfExists(int widgetId, Context context) {

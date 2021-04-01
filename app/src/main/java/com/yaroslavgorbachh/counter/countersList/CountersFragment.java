@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.Accessibility;
+import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
@@ -56,6 +58,7 @@ import javax.inject.Inject;
 
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
+import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.START_MAIN_ACTIVITY_EXTRA;
 
 public class CountersFragment extends Fragment {
     private static final String CURRENT_GROUP = "CURRENT_GROUP";
@@ -82,9 +85,17 @@ public class CountersFragment extends Fragment {
     @Inject SharedPreferences sharedPreferences;
     @Inject Repo repo;
 
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+
         MyApplication application = (MyApplication) requireActivity().getApplication();
         application.appComponent.countersComponentFactory().create().inject(this);
     }
@@ -308,9 +319,21 @@ public class CountersFragment extends Fragment {
             new FastCountButton(mIncAllSelectedCounters_bt, this::incSelectedCounters, sharedPreferences);
         }
         mCounters_rv.setAdapter(mCountersAdapter);
-
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        long counterId = requireActivity().getIntent().getLongExtra(START_MAIN_ACTIVITY_EXTRA, -1);
+        Log.v("test", "counter id" + counterId);
+        if (counterId > 0) {
+            NavDirections action = CountersFragmentDirections
+                    .actionCountersFragmentToCounterFragment().setCounterId(counterId);
+            Navigation.findNavController(requireView()).navigate(action);
+            requireActivity().getIntent().putExtra(START_MAIN_ACTIVITY_EXTRA, -1);
+        }
+    }
 
     @Override
     public void onDestroyView() {
