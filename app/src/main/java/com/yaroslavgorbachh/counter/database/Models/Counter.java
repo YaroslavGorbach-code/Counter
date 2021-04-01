@@ -40,7 +40,7 @@ public class Counter {
     public long counterMaxValue;
     @ColumnInfo(defaultValue = "0")
     public long counterMinValue;
-    public Long widgetId;
+    public Integer widgetId;
 
     public Counter(String title,
                    long value,
@@ -54,7 +54,7 @@ public class Counter {
                    long lastResetValue,
                    long counterMaxValue,
                    long counterMinValue,
-                   Long widgetId) {
+                   Integer widgetId) {
         this.title = title;
         this.value = value;
         this.maxValue = maxValue;

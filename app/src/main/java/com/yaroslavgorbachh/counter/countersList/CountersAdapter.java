@@ -1,6 +1,7 @@
 package com.yaroslavgorbachh.counter.countersList;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;

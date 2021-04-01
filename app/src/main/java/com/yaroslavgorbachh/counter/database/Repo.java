@@ -1,8 +1,12 @@
 package com.yaroslavgorbachh.counter.database;
 
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 
+import com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider;
 import com.yaroslavgorbachh.counter.database.Daos.AppStyleDao;
 import com.yaroslavgorbachh.counter.database.Daos.CounterDao;
 import com.yaroslavgorbachh.counter.database.Daos.CounterHistoryDao;
@@ -18,6 +22,7 @@ import javax.inject.Singleton;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+
 
 @Singleton
 public class Repo {
@@ -44,7 +49,8 @@ public class Repo {
     }
 
     public void deleteCounter(Counter counter){
-        Completable.create(emitter -> mCounterDao.delete(counter))
+        Completable.create(emitter ->
+                mCounterDao.delete(counter))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
@@ -93,6 +99,9 @@ public class Repo {
         return mCounterDao.getCounterWidget(widgetId);
     }
 
+    public Counter getCounterNoLiveData(long id) {
+        return mCounterDao.getCounterNoLiveData(id);
+    }
 
     public LiveData<List<String>> getGroups(){
         return mCounterDao.getGroups();
@@ -104,13 +113,7 @@ public class Repo {
                 .subscribe();
     }
 
-    public Counter getCounterNoLiveData(long id) {
-        return mCounterDao.getCounterNoLiveData(id);
-    }
 
-    public LiveData<Counter> getCounterWidgetLiveData(long widgetId){
-        return mCounterDao.getCounterWidgetLiveData(widgetId);
-    }
 }
 
 

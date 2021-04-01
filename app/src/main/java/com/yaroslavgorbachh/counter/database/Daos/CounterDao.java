@@ -44,7 +44,5 @@ public interface CounterDao {
     @Query("SELECT * FROM counter_table WHERE id = :id")
     Counter getCounterNoLiveData(long id);
 
-    @Query("SELECT * FROM counter_table WHERE widgetId = :widgetId")
-    LiveData<Counter> getCounterWidgetLiveData(long widgetId);
 
 }

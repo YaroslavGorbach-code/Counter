@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,13 +26,12 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.YOUR_AWESOME_ACTION;
+import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.INC_CLICK;
 
 public class CounterWidgetConfigActivity extends AppCompatActivity {
     @Inject Repo repo;
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private RecyclerView mRecyclerView;
-    private Counter widgetCounter;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     @Override
@@ -56,28 +57,23 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
         }
 
         WidgetCountersAdapter adapter = new WidgetCountersAdapter(counter -> {
-            widgetCounter = repo.getCounterNoLiveData(counter.id);
-
+            Counter widgetCounter = repo.getCounterNoLiveData(counter.id);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-            Intent intent = new Intent(this, CounterWidgetProvider.class);
-            intent.setAction(YOUR_AWESOME_ACTION);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            // we need to embed the extras into the data so that the extras will not be ignored.
-            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
-            RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.counter_widget);
-            views.setOnClickPendingIntent(R.id.widget, pendingIntent);
-            views.setTextViewText(R.id.widget_value, String.valueOf(widgetCounter.value));
-            views.setTextViewText(R.id.appwidget_text, widgetCounter.title);
+            if (widgetCounter.widgetId!=null && CounterWidgetProvider.checkWidgetIfExists(widgetCounter.widgetId, this)){
+                // TODO: 4/1/2021 translate
+                Toast.makeText(this, "The widget for this counter already exists", Toast.LENGTH_LONG).show();
+            }else {
+                appWidgetManager.updateAppWidget(appWidgetId,
+                        CounterWidgetProvider.getRemoteViews(widgetCounter, appWidgetId, this));
+                widgetCounter.widgetId = appWidgetId;
+                repo.updateCounter(widgetCounter);
 
-            appWidgetManager.updateAppWidget(appWidgetId, views);
-            widgetCounter.widgetId = (long) appWidgetId;
-            repo.updateCounter(widgetCounter);
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            setResult(RESULT_OK, resultIntent);
-            finish();
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+                setResult(RESULT_OK, resultIntent);
+                finish();
+            }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -90,6 +86,8 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
                 });
         disposables.add(disposable);
     }
+
+
 
     @Override
     protected void onDestroy() {
