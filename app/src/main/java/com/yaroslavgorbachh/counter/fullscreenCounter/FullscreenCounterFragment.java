@@ -20,8 +20,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.yaroslavgorbachh.counter.Animtions.Animations;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.R;
@@ -37,6 +39,7 @@ public class FullscreenCounterFragment extends Fragment {
     private static final int UI_ANIMATION_DELAY = 300;
     private int mSavedFlags;
     private ConstraintLayout mContentView;
+    private LinearLayout mSwipeHelperLayout;
     private TextView mCounterValue_tv;
     private final Handler mHideHandler = new Handler();
 
@@ -75,6 +78,7 @@ public class FullscreenCounterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fullscreen_counter, container, false);
         mContentView = view.findViewById(R.id.viewGroup);
         mCounterValue_tv = view.findViewById(R.id.value);
+        mSwipeHelperLayout = view.findViewById(R.id.swipe_helper);
         mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(FullscreenCounterViewModel.class);
         mViewModel.setCounterId(FullscreenCounterFragmentArgs.fromBundle(requireArguments()).getCounterId());
 
@@ -82,7 +86,7 @@ public class FullscreenCounterFragment extends Fragment {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(view).popBackStack());
         /* save previous status bar configuration to restore it when fullscreen fragment is destroyed */
-        mSavedFlags = getActivity().getWindow().getDecorView().getSystemUiVisibility();
+        mSavedFlags = requireActivity().getWindow().getDecorView().getSystemUiVisibility();
 
         return view;
     }
@@ -112,8 +116,11 @@ public class FullscreenCounterFragment extends Fragment {
         });
 
         mViewModel.counter.observe(getViewLifecycleOwner(), counter -> {
+            if (mCounterValue_tv.getText().length()>1)
+                Animations.hideSwipeHelper(mSwipeHelperLayout);
             mCounterValue_tv.setTextSize(Utility.getValueTvSize(counter));
             mCounterValue_tv.setText(String.valueOf(counter.value));
+
         });
 
         mContentView.setOnTouchListener(new CounterSwipeListener(getActivity()){

@@ -1,6 +1,7 @@
 package com.yaroslavgorbachh.counter.counterHistory;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
@@ -60,7 +62,14 @@ public class CounterHistoryFragment extends Fragment {
         toolbar.setNavigationOnClickListener(i -> Navigation.findNavController(view).popBackStack());
 
         toolbar.setOnMenuItemClickListener(item -> {
-            mViewModel.clean(mCounterId);
+            new MaterialAlertDialogBuilder(requireContext())
+                    // TODO: 4/2/2021 translate
+                    .setTitle("Clear history ?")
+                    .setMessage("This action cannot be undo")
+                    .setPositiveButton("Clear", (dialog, which) -> mViewModel.clean(mCounterId))
+                    .setNegativeButton("cancel", null)
+                    .create()
+                    .show();
             return true;
         });
 

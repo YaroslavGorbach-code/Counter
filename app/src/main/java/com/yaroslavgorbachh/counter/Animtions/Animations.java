@@ -1,20 +1,20 @@
-package com.yaroslavgorbachh.counter.countersList.Animtions;
+package com.yaroslavgorbachh.counter.Animtions;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.LinearLayout;
 
 import com.google.android.material.button.MaterialButton;
 
 public class Animations {
 
-    public static void showButtons(MaterialButton mDecAllSelectedCounters_bt, MaterialButton mIncAllSelectedCounters_bt) {
+    public static void showButtonsMultiSelection(MaterialButton mDecAllSelectedCounters_bt, MaterialButton mIncAllSelectedCounters_bt) {
 
         ObjectAnimator animator = ObjectAnimator.ofFloat(mDecAllSelectedCounters_bt, View.TRANSLATION_Y, 100, 0);
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mIncAllSelectedCounters_bt, View.TRANSLATION_Y, 100, 0);
@@ -34,7 +34,7 @@ public class Animations {
 
     }
 
-    public static void hideButtons(MaterialButton mDecAllSelectedCounters_bt, MaterialButton mIncAllSelectedCounters_bt) {
+    public static void hideButtonsMultiSelection(MaterialButton mDecAllSelectedCounters_bt, MaterialButton mIncAllSelectedCounters_bt) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(mDecAllSelectedCounters_bt, View.TRANSLATION_Y, 0, 500);
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mIncAllSelectedCounters_bt, View.TRANSLATION_Y, 0, 500);
         AnimatorSet animatorSet = new AnimatorSet();
@@ -50,5 +50,19 @@ public class Animations {
             }
         });
         animatorSet.start();
+    }
+
+    public static void hideSwipeHelper(View linearLayout) {
+        ValueAnimator animator = ValueAnimator.ofFloat(1f, 0f);
+        animator.addUpdateListener(animation -> linearLayout.setAlpha((Float) animation.getAnimatedValue()));
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                linearLayout.setVisibility(View.GONE);
+            }
+        });
+        animator.setDuration(300);
+        animator.start();
     }
 }

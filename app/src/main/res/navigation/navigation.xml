@@ -37,24 +37,24 @@
         <action
             android:id="@+id/action_counterFragment_to_counterHistoryFragment"
             app:destination="@id/counterHistoryFragment"
-            app:enterAnim="@anim/bottom_up"
-            app:exitAnim="@anim/bottom_down"
-            app:popEnterAnim="@anim/bottom_up"
-            app:popExitAnim="@anim/bottom_down" />
+            app:enterAnim="@anim/slide_id"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_counterFragment_to_createEditCounterFragment"
             app:destination="@id/createEditCounterFragment"
-            app:enterAnim="@anim/bottom_up"
-            app:exitAnim="@anim/bottom_down"
-            app:popEnterAnim="@anim/bottom_up"
-            app:popExitAnim="@anim/bottom_down" />
+            app:enterAnim="@anim/slide_id"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_counterFragment_to_aboutCounterFragment"
             app:destination="@id/aboutCounterFragment"
-            app:enterAnim="@anim/bottom_up"
-            app:exitAnim="@anim/bottom_down"
-            app:popEnterAnim="@anim/bottom_up"
-            app:popExitAnim="@anim/bottom_down" />
+            app:enterAnim="@anim/slide_id"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_counterFragment_to_fullscreenCounterFragment"
             app:destination="@id/fullscreenCounterFragment"

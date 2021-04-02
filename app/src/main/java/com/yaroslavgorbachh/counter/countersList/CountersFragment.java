@@ -41,7 +41,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
-import com.yaroslavgorbachh.counter.countersList.Animtions.Animations;
+import com.yaroslavgorbachh.counter.Animtions.Animations;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.createEditCounter.CreateCounterDialog;
@@ -366,7 +366,7 @@ public class CountersFragment extends Fragment {
     /*set up toolbar configuration depending on selection mod*/
     private void setUpUiConfigurationForSelectionMod(boolean isSelectionMod) {
         if (isSelectionMod) {
-            Animations.showButtons(mDecAllSelectedCounters_bt, mIncAllSelectedCounters_bt);
+            Animations.showButtonsMultiSelection(mDecAllSelectedCounters_bt, mIncAllSelectedCounters_bt);
             mToolbar.setNavigationIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close, getActivity().getTheme()));
             mToolbar.getMenu().clear();
             mToolbar.inflateMenu(R.menu.menu_selection_mod);
@@ -408,7 +408,7 @@ public class CountersFragment extends Fragment {
             });
 
         } else {
-            Animations.hideButtons(mDecAllSelectedCounters_bt, mIncAllSelectedCounters_bt);
+            Animations.hideButtonsMultiSelection(mDecAllSelectedCounters_bt, mIncAllSelectedCounters_bt);
             mToolbar.setNavigationIcon(mNavigationIcon);
             mToolbar.getMenu().clear();
             mToolbar.inflateMenu(R.menu.menu_counter_main_fragment);
