@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -40,9 +39,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.Accessibility;
-import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
+import com.yaroslavgorbachh.counter.countersList.Animtions.Animations;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.createEditCounter.CreateCounterDialog;
@@ -53,7 +52,6 @@ import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -280,7 +278,7 @@ public class CountersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         /*set up listeners for selection mod*/
         mCountersAdapter.getSelectionMod().observe(getViewLifecycleOwner(), isSelectionMod -> {
-            setUpToolbarConfiguration(isSelectionMod);
+            setUpUiConfigurationForSelectionMod(isSelectionMod);
             mMessageReceiver.setSelectionMod(isSelectionMod);
             mCountersAdapter.getSelectedCountersCount().observe(getViewLifecycleOwner(), count -> {
                 mToolbar.setTitle(getString(R.string.selectionModTitle, String.valueOf(count)));
@@ -366,10 +364,9 @@ public class CountersFragment extends Fragment {
     }
 
     /*set up toolbar configuration depending on selection mod*/
-    private void setUpToolbarConfiguration(boolean isSelectionMod) {
+    private void setUpUiConfigurationForSelectionMod(boolean isSelectionMod) {
         if (isSelectionMod) {
-            mDecAllSelectedCounters_bt.setVisibility(View.VISIBLE);
-            mIncAllSelectedCounters_bt.setVisibility(View.VISIBLE);
+            Animations.showButtons(mDecAllSelectedCounters_bt, mIncAllSelectedCounters_bt);
             mToolbar.setNavigationIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close, getActivity().getTheme()));
             mToolbar.getMenu().clear();
             mToolbar.inflateMenu(R.menu.menu_selection_mod);
@@ -411,8 +408,7 @@ public class CountersFragment extends Fragment {
             });
 
         } else {
-            mDecAllSelectedCounters_bt.setVisibility(View.GONE);
-            mIncAllSelectedCounters_bt.setVisibility(View.GONE);
+            Animations.hideButtons(mDecAllSelectedCounters_bt, mIncAllSelectedCounters_bt);
             mToolbar.setNavigationIcon(mNavigationIcon);
             mToolbar.getMenu().clear();
             mToolbar.inflateMenu(R.menu.menu_counter_main_fragment);

@@ -13,6 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="0dp"
@@ -99,10 +100,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="32dp"
             android:backgroundTint="?android:colorBackground"
-            tools:icon="@drawable/ic_minus"
+            app:icon="@drawable/ic_plus"
             app:iconSize="50dp"
             app:iconGravity="textStart"
             app:cornerRadius="7dp"
+            android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -120,6 +123,8 @@
             android:backgroundTint="?android:colorBackground"
             tools:icon="@drawable/ic_minus"
             app:iconSize="50dp"
+            tools:visibility="visible"
+            android:visibility="gone"
             app:iconGravity="textStart"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintEnd_toStartOf="@+id/allSelectedInc"
