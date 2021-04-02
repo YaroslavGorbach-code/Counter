@@ -10,13 +10,21 @@
         android:label="@string/allCountersItem" >
         <action
             android:id="@+id/action_countersFragment_to_counterFragment"
-            app:destination="@id/counterFragment" />
+            app:destination="@id/counterFragment"
+            app:enterAnim="@anim/slide_id"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_countersFragment_to_createEditCounterFragment2"
             app:destination="@id/createEditCounterFragment" />
         <action
             android:id="@+id/action_countersFragment_to_createEditCounterFragment"
-            app:destination="@id/createEditCounterFragment" />
+            app:destination="@id/createEditCounterFragment"
+            app:enterAnim="@anim/bottom_up"
+            app:exitAnim="@anim/bottom_down"
+            app:popEnterAnim="@anim/bottom_up"
+            app:popExitAnim="@anim/bottom_down" />
     </fragment>
     <fragment
         android:id="@+id/counterFragment"
@@ -28,16 +36,32 @@
             android:defaultValue="-1L" />
         <action
             android:id="@+id/action_counterFragment_to_counterHistoryFragment"
-            app:destination="@id/counterHistoryFragment" />
+            app:destination="@id/counterHistoryFragment"
+            app:enterAnim="@anim/bottom_up"
+            app:exitAnim="@anim/bottom_down"
+            app:popEnterAnim="@anim/bottom_up"
+            app:popExitAnim="@anim/bottom_down" />
         <action
             android:id="@+id/action_counterFragment_to_createEditCounterFragment"
-            app:destination="@id/createEditCounterFragment" />
+            app:destination="@id/createEditCounterFragment"
+            app:enterAnim="@anim/bottom_up"
+            app:exitAnim="@anim/bottom_down"
+            app:popEnterAnim="@anim/bottom_up"
+            app:popExitAnim="@anim/bottom_down" />
         <action
             android:id="@+id/action_counterFragment_to_aboutCounterFragment"
-            app:destination="@id/aboutCounterFragment" />
+            app:destination="@id/aboutCounterFragment"
+            app:enterAnim="@anim/bottom_up"
+            app:exitAnim="@anim/bottom_down"
+            app:popEnterAnim="@anim/bottom_up"
+            app:popExitAnim="@anim/bottom_down" />
         <action
             android:id="@+id/action_counterFragment_to_fullscreenCounterFragment"
-            app:destination="@id/fullscreenCounterFragment" />
+            app:destination="@id/fullscreenCounterFragment"
+            app:enterAnim="@anim/bottom_up"
+            app:exitAnim="@anim/bottom_down"
+            app:popEnterAnim="@anim/bottom_up"
+            app:popExitAnim="@anim/bottom_down" />
     </fragment>
     <fragment
         android:id="@+id/counterHistoryFragment"

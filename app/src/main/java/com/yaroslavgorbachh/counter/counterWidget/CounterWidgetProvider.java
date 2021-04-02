@@ -99,7 +99,6 @@ public class CounterWidgetProvider extends AppWidgetProvider {
             views.setViewVisibility(R.id.widget_fullscreen, View.GONE);
             views.setTextViewTextSize(R.id.widget_value, COMPLEX_UNIT_SP, 25);
             views.setTextViewTextSize(R.id.widget_title, COMPLEX_UNIT_SP, 12);
-
         }
     }
 
