@@ -19,7 +19,6 @@ import javax.inject.Inject;
 public class SettingsActivity extends AppCompatActivity {
    @Inject
    SharedPreferences sharedPreferences;
-
    @Inject Repo repo;
 
     @Override

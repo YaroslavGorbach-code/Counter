@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.CopyBeforeReset;
 import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.counterSettings.Animations.AnimateThemeChange;
 import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyBackup;
 import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyRestore;
 import com.yaroslavgorbachh.counter.database.CounterDatabase;
@@ -102,9 +103,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         assert mRemoveAllCountersPref != null;
         mRemoveAllCountersPref.setOnPreferenceClickListener(preference -> {
-            new DeleteCounterDialog(() -> {
-                mViewModel.deleteCounters();
-            }, 2).show(getChildFragmentManager(), "tag");
+            new DeleteCounterDialog(() -> mViewModel.deleteCounters(), 2).show(getChildFragmentManager(), "tag");
             return true;
         });
 
@@ -116,9 +115,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         assert mExportAllCountersPref != null;
         mExportAllCountersPref.setOnPreferenceClickListener(preference -> {
-            mViewModel.getAllCounters().observe(getViewLifecycleOwner(), list -> {
-                startActivity(Utility.getShareCountersInCSVIntent(list));
-            });
+            mViewModel.getAllCounters().observe(getViewLifecycleOwner(), list -> startActivity(Utility.getShareCountersInCSVIntent(list)));
             return true;
         });
 
@@ -148,9 +145,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("nightMod") && sharedPreferences.getBoolean("nightMod", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            AnimateThemeChange.animate(requireActivity());
         }
         if (key.equals("nightMod") && !sharedPreferences.getBoolean("nightMod", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            AnimateThemeChange.animate(requireActivity());
         }
         if (key.equals("keepScreenOn") && sharedPreferences.getBoolean("keepScreenOn", true)) {
             requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

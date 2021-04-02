@@ -15,6 +15,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.counterSettings.Animations.AnimateThemeChange;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -50,8 +51,8 @@ public class ColorPickerDialog extends AppCompatDialogFragment {
 
                     // notify MainActivity that theme changed
                     Intent intent = new Intent(THEME_CHANGED_BROADCAST);
-                    LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
-                    getActivity().recreate();
+                    LocalBroadcastManager.getInstance(requireActivity()).sendBroadcast(intent);
+                    AnimateThemeChange.animate(requireActivity());
                 });
 
          return builder.create();
