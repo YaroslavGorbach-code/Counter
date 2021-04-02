@@ -35,6 +35,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -52,6 +53,7 @@ import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -70,8 +72,8 @@ public class CountersFragment extends Fragment {
     private GroupsAdapter mGroupsAdapter;
     private DrawerLayout mDrawer;
     private LinearLayout mAllCounters_drawerItem;
-    private TextView mIncAllSelectedCounters_bt;
-    private TextView mDecAllSelectedCounters_bt;
+    private MaterialButton mIncAllSelectedCounters_bt;
+    private MaterialButton mDecAllSelectedCounters_bt;
     private String currentItem;
     private ConstraintLayout mIconAndTextThereAreNoCounters;
     private ConstraintLayout mThereAreNoGroupsTextAndIcon;
@@ -308,13 +310,13 @@ public class CountersFragment extends Fragment {
         }
 
         if (sharedPreferences.getBoolean("leftHandMod", false)) {
-            mDecAllSelectedCounters_bt.setText("+");
-            mIncAllSelectedCounters_bt.setText("−");
+            mIncAllSelectedCounters_bt.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_minus,  requireActivity().getTheme()));
+            mDecAllSelectedCounters_bt.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_plus,  requireActivity().getTheme()));
             new FastCountButton(mDecAllSelectedCounters_bt, this::incSelectedCounters, sharedPreferences);
             new FastCountButton(mIncAllSelectedCounters_bt, this::decSelectedCounters, sharedPreferences);
         } else {
-            mIncAllSelectedCounters_bt.setText("+");
-            mDecAllSelectedCounters_bt.setText("−");
+            mDecAllSelectedCounters_bt.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_minus, requireActivity().getTheme()));
+            mIncAllSelectedCounters_bt.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_plus,  requireActivity().getTheme()));
             new FastCountButton(mDecAllSelectedCounters_bt, this::decSelectedCounters, sharedPreferences);
             new FastCountButton(mIncAllSelectedCounters_bt, this::incSelectedCounters, sharedPreferences);
         }

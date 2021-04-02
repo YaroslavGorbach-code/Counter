@@ -1,7 +1,6 @@
 package com.yaroslavgorbachh.counter.countersList;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
@@ -109,7 +108,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         @Override
         public CountersAdapter.Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             if (leftHandMod){
-                return new CountersAdapter.Vh(parent, R.layout.counter_left_hend_i);
+                return new CountersAdapter.Vh(parent, R.layout.counter_i_left_hand);
             }else {
                 return new CountersAdapter.Vh(parent, R.layout.counter_i);
             }

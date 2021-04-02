@@ -154,7 +154,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="6dp"
-        app:iconSize="70dp"
+        app:iconSize="60dp"
         app:icon="@drawable/ic_refresh"
         app:layout_constraintDimensionRatio="1.5"
         app:iconGravity="textStart"
@@ -172,15 +172,16 @@
         android:layout_marginStart="6dp"
         android:layout_marginEnd="12dp"
         android:clickable="true"
-        android:focusable="true"
         app:iconGravity="textStart"
+        android:focusable="true"
+        app:iconSize="75dp"
         app:icon="@drawable/ic_minus"
         app:layout_constraintDimensionRatio="1.5"
-        android:textColor="?colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/inc_value"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/reset_value" />
+        app:layout_constraintStart_toEndOf="@+id/reset_value"
+        tools:ignore="HardcodedText,SpUsage" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/inc_value"
@@ -191,12 +192,12 @@
         android:layout_marginEnd="12dp"
         android:clickable="true"
         android:focusable="true"
+        app:icon="@drawable/ic_plus"
+        app:iconSize="100dp"
         app:iconGravity="textStart"
         app:layout_constraintDimensionRatio="2.5"
         android:hapticFeedbackEnabled="true"
         android:soundEffectsEnabled="true"
-        app:icon="@drawable/ic_pluse"
-        android:textColor="?colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

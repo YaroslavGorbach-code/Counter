@@ -106,11 +106,11 @@
     <string name="resetAllCounters">Reset all counters</string>
     <string name="countersReset">Counters have been reset</string>
     <string name="backup">Backup</string>
-    <string name="backup_instructions">1. Create a backup.\n2. Send the file by mail or in another convenient way.\nG3. Restore your backup.</string>
+    <string name="backup_instructions">1. Create a backup.\n2. Send the file by mail or in another convenient way.\n3. Restore the backup.</string>
     <string name="backup_instructions_2">* After restoring the backup, the existing counters will be overwritten.
         * If the dialog box does not appear or you see the error "Could not find an application to perform this action", then download the file manager from Google Play.</string>
     <string name="create_backup">Create a backup</string>
-    <string name="restore_backup">Restore backup</string>
+    <string name="restore_backup">Restore a backup</string>
 
 
     <!-- About counter fragment -->

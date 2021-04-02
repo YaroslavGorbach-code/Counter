@@ -5,6 +5,7 @@
             android:fromAlpha="0"
             android:toAlpha="1"/>
 
-    <translate android:fromYDelta="60%p" android:toYDelta="0%p"
-        android:fillAfter="true" />
+    <translate android:fromYDelta="75%p" android:toYDelta="0%p"
+        android:fillAfter="true"
+        android:interpolator="@android:anim/linear_interpolator"/>
 </set>

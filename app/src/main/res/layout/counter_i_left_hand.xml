@@ -77,10 +77,9 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="?selectableItemBackgroundBorderless"
-                android:gravity="center"
-                android:text="+"
-                android:textColor="?colorAccent"
-                android:textSize="25sp" />
+                app:icon="@drawable/ic_plus"
+                app:iconGravity="textEnd"
+                app:iconSize="30dp" />
 
             <View
                 android:id="@+id/view"
@@ -97,10 +96,9 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="?selectableItemBackgroundBorderless"
-                android:gravity="center"
-                android:text="−"
-                android:textColor="?colorAccent"
-                android:textSize="25sp" />
+                app:icon="@drawable/ic_minus"
+                app:iconGravity="textStart"
+                app:iconSize="30dp"/>
 
         </LinearLayout>
 
