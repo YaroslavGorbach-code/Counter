@@ -5,17 +5,24 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
 import com.google.android.material.button.MaterialButton;
+import com.yaroslavgorbachh.counter.Utility;
+import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
+
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Animations {
 
     public static void showButtonsMultiSelection(MaterialButton mDecAllSelectedCounters_bt, MaterialButton mIncAllSelectedCounters_bt) {
-
         ObjectAnimator animator = ObjectAnimator.ofFloat(mDecAllSelectedCounters_bt, View.TRANSLATION_Y, 100, 0);
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mIncAllSelectedCounters_bt, View.TRANSLATION_Y, 100, 0);
         AnimatorSet animatorSet = new AnimatorSet();
@@ -64,5 +71,9 @@ public class Animations {
         });
         animator.setDuration(300);
         animator.start();
+    }
+
+    public static void hideSwipeHelperWithDelay(View linearLayout){
+        new Handler(Looper.getMainLooper()).postDelayed(() -> hideSwipeHelper(linearLayout), 3000);
     }
 }

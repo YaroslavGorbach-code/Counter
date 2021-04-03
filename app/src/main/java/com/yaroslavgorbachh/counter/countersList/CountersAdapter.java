@@ -23,7 +23,7 @@ import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.countersList.DragAndDrop.ItemTouchHelperAdapter;
 import com.yaroslavgorbachh.counter.countersList.DragAndDrop.ItemTouchHelperViewHolder;
-import com.yaroslavgorbachh.counter.countersList.DragAndDrop.MyItemTouchHelper;
+import com.yaroslavgorbachh.counter.countersList.DragAndDrop.CounterItemTouchHelper;
 import com.yaroslavgorbachh.counter.countersList.DragAndDrop.CounterMultiSelection;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         private final CounterMultiSelection mCounterMultiSelection;
         private List<Counter> mData = new ArrayList<>();
         private final CounterItemListener mCounterItemListener;
-        private final ItemTouchHelper.Callback callback = new MyItemTouchHelper(this);
+        private final ItemTouchHelper.Callback callback = new CounterItemTouchHelper(this);
         public final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         public final boolean leftHandMod;
         private final SharedPreferences mSharedPreferences;

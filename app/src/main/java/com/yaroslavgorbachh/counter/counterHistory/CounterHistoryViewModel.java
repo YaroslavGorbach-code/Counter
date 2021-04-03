@@ -29,4 +29,12 @@ public class CounterHistoryViewModel extends ViewModel {
     public void clean(long id) {
         mRepo.deleteCounterHistory(id);
     }
+
+    public void deleteHistoryItem(CounterHistory counterHistory) {
+        mRepo.deleteHistoryItem(counterHistory);
+    }
+
+    public void addHistoryItem(CounterHistory copy) {
+        mRepo.insertCounterHistory(copy);
+    }
 }

@@ -78,4 +78,31 @@
             app:layout_constraintTop_toBottomOf="@+id/iconThereAreNoCounters" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+    <LinearLayout
+        android:id="@+id/swipe_helper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/counterHistory_rv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rotation="90"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_swipe_top_bot_help" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You can delete an item using a swipe"
+            android:textColor="@color/counterValueColor" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

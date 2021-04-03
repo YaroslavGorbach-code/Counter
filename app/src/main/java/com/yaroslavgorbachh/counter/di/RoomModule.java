@@ -2,34 +2,26 @@ package com.yaroslavgorbachh.counter.di;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.NonNull;
-import androidx.preference.PreferenceManager;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.database.CounterDatabase;
-import com.yaroslavgorbachh.counter.database.Daos.AppStyleDao;
-import com.yaroslavgorbachh.counter.database.Daos.CounterDao;
-import com.yaroslavgorbachh.counter.database.Models.AppStyle;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 
 
 import java.util.Date;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 
-import static com.yaroslavgorbachh.counter.database.Models.Migrations.MIGRATION_24_25;
-import static com.yaroslavgorbachh.counter.database.Models.Migrations.MIGRATION_25_26;
-import static com.yaroslavgorbachh.counter.database.Models.Migrations.MIGRATION_26_27;
+import static com.yaroslavgorbachh.counter.database.Migrations.MIGRATION_24_25;
+import static com.yaroslavgorbachh.counter.database.Migrations.MIGRATION_25_26;
+import static com.yaroslavgorbachh.counter.database.Migrations.MIGRATION_26_27;
 
 
 @Module

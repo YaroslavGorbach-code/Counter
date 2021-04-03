@@ -61,13 +61,14 @@ public class Utility {
     }
 
     public static String convertDateToString(Date date){
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm:ss", Locale.getDefault());
-        return  dateFormat.format(date);
+        DateFormat dataFormat = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.SHORT, Locale.getDefault());
+
+        return  dataFormat.format(date);
     }
 
     public static String getCurrentDate(){
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
-        return dateFormat.format(new Date());
+        DateFormat dataFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
+        return dataFormat.format(new Date());
     }
 
 

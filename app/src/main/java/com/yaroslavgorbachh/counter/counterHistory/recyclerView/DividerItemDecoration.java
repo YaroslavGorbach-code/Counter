@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.counterHistory;
+package com.yaroslavgorbachh.counter.counterHistory.recyclerView;
 
 import android.content.Context;
 import android.graphics.Canvas;

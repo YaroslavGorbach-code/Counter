@@ -2,6 +2,7 @@ package com.yaroslavgorbachh.counter.database.Daos;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -17,6 +18,9 @@ public interface CounterHistoryDao {
 
     @Query("DELETE FROM counterHistory_table WHERE counterId = :counterId")
     void delete(long counterId);
+
+    @Delete
+    void delete(CounterHistory counterHistory);
 
     @Query("SELECT * FROM counterHistory_table WHERE counterId = :counterId ORDER BY id DESC")
     LiveData<List<CounterHistory>> getCounterHistoryList(long counterId );

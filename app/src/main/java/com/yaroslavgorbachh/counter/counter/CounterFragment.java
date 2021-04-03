@@ -52,22 +52,13 @@ public class CounterFragment extends Fragment {
     private TextView mCounterTitle;
     private View mLayout;
     private long mCounterId;
-    private Button mSaveToHistoryButton;
-    private ImageView mAllInclusiveMin_iv;
-    private ImageView mAllInclusiveMAx_iv;
-    private TextView mMaxValue_tv;
-    private TextView mMinValue_tv;
     private TextView mGroupTitle;
     private VolumeButtonBroadcastReceiver mMessageReceiver;
 
     private CounterViewModel mViewModel;
 
-
-    @Inject
-    ViewModelProviderFactory viewModelProviderFactory;
-
-    @Inject
-    SharedPreferences sharedPreferences;
+    @Inject ViewModelProviderFactory viewModelProviderFactory;
+    @Inject SharedPreferences sharedPreferences;
 
 
     @Override
@@ -97,11 +88,6 @@ public class CounterFragment extends Fragment {
         mResetButton = view.findViewById(R.id.reset_value);
         mCounterTitle = view.findViewById(R.id.counterTitle);
         mLayout = view.findViewById(R.id.counterLayout);
-        mSaveToHistoryButton = view.findViewById(R.id.saveToHistoryButton);
-        mAllInclusiveMAx_iv = view.findViewById(R.id.iconAllInclusiveMax);
-        mAllInclusiveMin_iv = view.findViewById(R.id.iconAllInclusiveMin);
-        mMaxValue_tv = view.findViewById(R.id.maxValue);
-        mMinValue_tv = view.findViewById(R.id.minValue);
         mGroupTitle = view.findViewById(R.id.groupTitle);
 
         mCounterId = CounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
@@ -151,36 +137,9 @@ public class CounterFragment extends Fragment {
                 mValue_tv.setText(String.valueOf(counter.value));
                 mCounterTitle.setText(counter.title);
                 mGroupTitle.setText(counter.grope);
-
-
-                if (counter.maxValue != Counter.MAX_VALUE) {
-                    mAllInclusiveMAx_iv.setVisibility(View.GONE);
-                    mMaxValue_tv.setVisibility(View.VISIBLE);
-                    mMaxValue_tv.setText(String.valueOf(counter.maxValue));
-                } else {
-                    mAllInclusiveMAx_iv.setVisibility(View.VISIBLE);
-                    mMaxValue_tv.setVisibility(View.GONE);
-                }
-
-                if (counter.minValue != Counter.MIN_VALUE) {
-                    mAllInclusiveMin_iv.setVisibility(View.GONE);
-                    mMinValue_tv.setVisibility(View.VISIBLE);
-                    mMinValue_tv.setText(String.valueOf(counter.minValue));
-                } else {
-                    mAllInclusiveMin_iv.setVisibility(View.VISIBLE);
-                    mMinValue_tv.setVisibility(View.GONE);
-                }
-
             } else {
                 Navigation.findNavController(view).popBackStack();
             }
-        });
-
-        /*saving counter value to history*/
-        mSaveToHistoryButton.setOnClickListener(v -> {
-            mViewModel.saveValueToHistory();
-            Toast.makeText(requireContext(), getResources().getString(R.string.createEditCounterCounterValueHint) + " " +
-                    Objects.requireNonNull(mViewModel.counter.getValue()).value + " " +getResources().getString(R.string.saveToHistoryToast), Toast.LENGTH_SHORT).show();
         });
 
         /*counter +*/

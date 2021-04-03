@@ -1,26 +1,40 @@
-package com.yaroslavgorbachh.counter.counterHistory;
+package com.yaroslavgorbachh.counter.counterHistory.recyclerView;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yaroslavgorbachh.counter.counterHistory.recyclerView.DividerItemDecoration;
+import com.yaroslavgorbachh.counter.countersList.DragAndDrop.CounterItemTouchHelper;
 import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CounterHistoryList_rv {
+public class CounterHistoryRv {
+
+
+    public interface CounterHistorySwipeListener{
+        void onSwipe(CounterHistory counterHistory);
+    }
 
     private final Adapter mAdapter = new Adapter();
+    private static CounterHistorySwipeListener mCounterHistorySwipeListener;
 
-    public CounterHistoryList_rv(RecyclerView rv) {
+
+    public CounterHistoryRv(RecyclerView rv, CounterHistorySwipeListener counterHistorySwipeListener) {
+        mCounterHistorySwipeListener = counterHistorySwipeListener;
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rv.getContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext());
+        ItemTouchHelper.Callback callback = new HistoryItemTouchHelper();
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(rv);
         rv.setLayoutManager(mLayoutManager);
         rv.setAdapter(mAdapter);
         rv.setHasFixedSize(true);
@@ -64,7 +78,7 @@ public class CounterHistoryList_rv {
             return mData.get(position).id;
         }
 
-        private static class Vh extends RecyclerView.ViewHolder {
+        private class Vh extends RecyclerView.ViewHolder implements ItemTouchHelperSwipeListener{
             private final TextView mValue;
             private final TextView mCreateData;
 
@@ -75,10 +89,17 @@ public class CounterHistoryList_rv {
                 mCreateData = itemView.findViewById(R.id.historyData);
             }
 
+            @Override
+            public void onSwipe() {
+                mCounterHistorySwipeListener.onSwipe(mData.get(getBindingAdapterPosition()));
+            }
+
             private void bind(CounterHistory counterHistory) {
                 mValue.setText(String.valueOf(counterHistory.value));
                 mCreateData.setText(counterHistory.data);
             }
+
+
         }
     }
 }

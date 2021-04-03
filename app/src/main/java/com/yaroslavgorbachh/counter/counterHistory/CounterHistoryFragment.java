@@ -1,13 +1,13 @@
 package com.yaroslavgorbachh.counter.counterHistory;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -19,8 +19,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbachh.counter.Animtions.Animations;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.counterHistory.recyclerView.CounterHistoryRv;
+import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import java.util.Collections;
@@ -28,10 +33,11 @@ import java.util.Collections;
 import javax.inject.Inject;
 
 public class CounterHistoryFragment extends Fragment {
-    private CounterHistoryList_rv mHistoryList;
+    private CounterHistoryRv mHistoryList;
     private Spinner mSpinner;
     private long mCounterId;
     private ConstraintLayout mIconAndTextThereNoHistory;
+    private LinearLayout mSwipeHelper;
 
     private CounterHistoryViewModel mViewModel;
     @Inject ViewModelProviderFactory viewModelProviderFactory;
@@ -53,6 +59,7 @@ public class CounterHistoryFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar_history);
         mSpinner = view.findViewById(R.id.spinner);
         mIconAndTextThereNoHistory = view.findViewById(R.id.iconAndTextThereAreNoHistory);
+        mSwipeHelper = view.findViewById(R.id.swipe_helper);
 
         mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CounterHistoryViewModel.class);
         mCounterId = CounterHistoryFragmentArgs.fromBundle(requireArguments()).getCounterId();
@@ -74,7 +81,14 @@ public class CounterHistoryFragment extends Fragment {
         });
 
         setAdapterForSpinner();
-        mHistoryList = new CounterHistoryList_rv(view.findViewById(R.id.counterHistory_rv));
+        mHistoryList = new CounterHistoryRv(view.findViewById(R.id.counterHistory_rv), counterHistory -> {
+            CounterHistory copy = new CounterHistory(counterHistory.value, counterHistory.data, counterHistory.counterId);
+            copy.setId(counterHistory.id);
+            mViewModel.deleteHistoryItem(counterHistory);
+            // TODO: 4/3/2021 translate
+            Snackbar.make(view, "Item has ben deleted", BaseTransientBottomBar.LENGTH_LONG)
+                    .setAction("UNDO", v -> mViewModel.addHistoryItem(copy)).show();
+        });
 
         /*setting listener for selected item in spinner*/
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -96,8 +110,10 @@ public class CounterHistoryFragment extends Fragment {
 
                     if (counterHistories.size() <= 0) {
                         mIconAndTextThereNoHistory.setVisibility(View.VISIBLE);
+                        mSwipeHelper.setVisibility(View.GONE);
                     } else {
                         mIconAndTextThereNoHistory.setVisibility(View.GONE);
+                        Animations.hideSwipeHelperWithDelay(mSwipeHelper);
                     }
 
                     if (position == 0) {

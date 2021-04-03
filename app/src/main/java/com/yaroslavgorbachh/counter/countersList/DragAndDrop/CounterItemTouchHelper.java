@@ -4,11 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyItemTouchHelper extends ItemTouchHelper.Callback {
+public class CounterItemTouchHelper extends ItemTouchHelper.Callback {
 
     private final ItemTouchHelperAdapter mItemTouchHelperAdapter;
 
-    public MyItemTouchHelper(ItemTouchHelperAdapter itemTouchHelperAdapter) {
+    public CounterItemTouchHelper(ItemTouchHelperAdapter itemTouchHelperAdapter) {
         mItemTouchHelperAdapter = itemTouchHelperAdapter;
     }
 

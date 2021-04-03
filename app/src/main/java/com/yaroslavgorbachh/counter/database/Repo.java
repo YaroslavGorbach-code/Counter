@@ -113,7 +113,12 @@ public class Repo {
                 .subscribe();
     }
 
-
+    public void deleteHistoryItem(CounterHistory counterHistory) {
+        Completable.create(emitter ->
+                mCounterHistoryDao.delete(counterHistory))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
 }
 
 

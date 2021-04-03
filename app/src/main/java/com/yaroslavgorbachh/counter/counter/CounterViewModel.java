@@ -60,11 +60,6 @@ public class CounterViewModel extends ViewModel {
         mCopyBeforeReset = null;
     }
 
-    public void saveValueToHistory(){
-        mRepo.insertCounterHistory(new CounterHistory(Objects.requireNonNull(
-                counter.getValue()).value, Utility.convertDateToString(new Date()), counter.getValue().id));
-    }
-
     public void deleteCounter(){
         mRepo.deleteCounterHistory(Objects.requireNonNull(counter.getValue()).id);
         new Handler().postDelayed(() -> mRepo.deleteCounter(counter.getValue()),500);

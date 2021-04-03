@@ -1,8 +1,6 @@
 package com.yaroslavgorbachh.counter.database.Models;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.room.ColumnInfo;
@@ -10,6 +8,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.yaroslavgorbachh.counter.Accessibility;
+import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
 import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.R;
 
@@ -96,9 +95,14 @@ public class Counter {
             if (this.value > this.counterMaxValue) this.counterMaxValue = this.value;
 
             if (this.value < this.counterMinValue) this.counterMaxValue = this.value;
-         repo.updateCounter(this);
+
+        repo.updateCounter(this);
+
         if (accessibility!=null)
             accessibility.playIncFeedback(String.valueOf(this.value));
+        HistoryManager.getInstance().saveValueWitDelay(value, id, repo);
+
+
     }
 
     public void dec(Context context, Repo repo, Accessibility accessibility){
@@ -122,9 +126,13 @@ public class Counter {
         if (this.value > this.counterMaxValue) this.counterMaxValue = this.value;
 
         if (this.value < this.counterMinValue) this.counterMinValue = this.value;
+
         repo.updateCounter(this);
+
         if (accessibility!=null)
             accessibility.playDecFeedback(String.valueOf(this.value));
+        HistoryManager.getInstance().saveValueWitDelay(value, id, repo);
+
     }
 
     public void reset(Repo repo){
@@ -136,5 +144,6 @@ public class Counter {
             value = 0;
         }
         repo.updateCounter(this);
+        HistoryManager.getInstance().saveValueWitDelay(value, id, repo);
     }
 }
