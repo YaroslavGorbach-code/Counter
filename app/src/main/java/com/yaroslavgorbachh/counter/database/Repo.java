@@ -95,10 +95,12 @@ public class Repo {
         return mCounterDao.getCounter(id);
     }
 
+    // TODO: 4/3/2021 new thread
     public Counter getCounterWidget(long widgetId) {
         return mCounterDao.getCounterWidget(widgetId);
     }
 
+    // TODO: 4/3/2021 new thread
     public Counter getCounterNoLiveData(long id) {
         return mCounterDao.getCounterNoLiveData(id);
     }

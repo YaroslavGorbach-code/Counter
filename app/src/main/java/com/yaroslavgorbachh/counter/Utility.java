@@ -3,10 +3,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.yaroslavgorbachh.counter.database.Models.AppStyle;
@@ -125,9 +133,9 @@ public class Utility {
 
     public static int fetchAccentColor(Context context) {
         TypedValue typedValue = new TypedValue();
-        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
-        int color = a.getColor(0, 0);
-        a.recycle();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
+        @ColorInt int color = typedValue.data;
         return color;
     }
 

@@ -6,15 +6,16 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
 
@@ -50,14 +51,14 @@ public class CounterWidgetProvider extends AppWidgetProvider {
             counterWidget.inc(context, mRepo, null);
             counterWidget = mRepo.getCounterWidget(widgetId);
             appWidgetManager.updateAppWidget(counterWidget.widgetId,
-                    getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager));
+                    getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager, false));
         }
 
         if (Objects.requireNonNull(intent.getAction()).equals(DEC_CLICK) && counterWidget != null) {
             counterWidget.dec(context, mRepo, null);
             counterWidget = mRepo.getCounterWidget(widgetId);
             appWidgetManager.updateAppWidget(counterWidget.widgetId,
-                    getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager));
+                    getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager, false));
         }
 
         if (Objects.requireNonNull(intent.getAction()).equals(OPEN_CLICK) && counterWidget != null) {
@@ -94,7 +95,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
             views.setTextViewTextSize(R.id.widget_value, COMPLEX_UNIT_SP, 70);
         }
 
-        if (maxHeight < 100 || minWidth < 100){
+        if (maxHeight < 100 || minWidth < 100) {
             views.setViewVisibility(R.id.widget_minus, View.GONE);
             views.setViewVisibility(R.id.widget_fullscreen, View.GONE);
             views.setTextViewTextSize(R.id.widget_value, COMPLEX_UNIT_SP, 25);
@@ -103,7 +104,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
     }
 
 
-    public static RemoteViews getRemoteViews(Counter widgetCounter, int appWidgetId, Context context, AppWidgetManager appWidgetManager) {
+    public static RemoteViews getRemoteViews(Counter widgetCounter, int appWidgetId, Context context, AppWidgetManager appWidgetManager, boolean isFirsTimeCreated) {
         Bundle appWidgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
 
@@ -133,33 +134,39 @@ public class CounterWidgetProvider extends AppWidgetProvider {
 
 
         if (widgetCounter != null) {
+            if (isFirsTimeCreated){
+                views.setImageViewResource(R.id.widget_toolbar_color, R.drawable.widget_toolbar_bg);
+                views.setInt(R.id.widget_toolbar_color, "setColorFilter", Utility.fetchAccentColor(context));
+            }
+
             views.setTextViewText(R.id.widget_value, String.valueOf(widgetCounter.value));
             views.setTextViewText(R.id.widget_title, widgetCounter.title);
             resizeWidgetViews(appWidgetOptions, views);
         }
+
         return views;
     }
 
     public static void updateWidgets(Context context, Repo repo) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-
         int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, CounterWidgetProvider.class));
         if (ids != null) {
             for (int id : ids) {
                 Counter counter = repo.getCounterWidget(id);
                 if (counter != null) {
                     appWidgetManager.updateAppWidget(counter.widgetId,
-                            getRemoteViews(counter, counter.widgetId, context, appWidgetManager));
+                            getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
+                    setWidgetColor(context, counter.widgetId, appWidgetManager);
+
                 } else {
                     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
                     views.setTextViewText(R.id.widget_value, context.getString(R.string.widget_deleted));
                     views.setTextViewText(R.id.widget_title, context.getString(R.string.widget_deleted));
+                    views.setInt(R.id.widget_toolbar_color, "setBackgroundColor", Color.GRAY);
                     appWidgetManager.updateAppWidget(id, views);
                 }
-
             }
         }
-
     }
 
     public static boolean checkWidgetIfExists(int widgetId, Context context) {
@@ -173,5 +180,14 @@ public class CounterWidgetProvider extends AppWidgetProvider {
         }
         return false;
     }
-}
+
+    public static void setWidgetColor(Context context, int widgetId, AppWidgetManager appWidgetManager) {
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
+        views.setImageViewResource(R.id.widget_toolbar_color, R.drawable.widget_toolbar_bg);
+        views.setInt(R.id.widget_toolbar_color, "setColorFilter", Utility.fetchAccentColor(context));
+        appWidgetManager.updateAppWidget(widgetId, views);
+        }
+
+    }
+
 

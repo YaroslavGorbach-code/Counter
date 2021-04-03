@@ -91,7 +91,7 @@ public class CounterFragment extends Fragment {
             switch (i.getItemId()) {
                 case R.id.counterDelete:
                     new MaterialAlertDialogBuilder(requireContext())
-                            .setTitle(getString(R.string.deleteCountersDeleteDialog))
+                            .setTitle(getString(R.string.deleteCounterDeleteDialog))
                             .setMessage(R.string.deleteCounterDialogText)
                             .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which) -> {
                                 mViewModel.deleteCounter();

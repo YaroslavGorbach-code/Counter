@@ -1,8 +1,12 @@
 package com.yaroslavgorbachh.counter.counterWidget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -13,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
 
@@ -23,8 +28,14 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.DEC_CLICK;
+import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.INC_CLICK;
+import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.OPEN_CLICK;
+
 public class CounterWidgetConfigActivity extends AppCompatActivity {
     @Inject Repo repo;
+    @Inject SharedPreferences sharedPreferences;
+
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private RecyclerView mRecyclerView;
     private final CompositeDisposable disposables = new CompositeDisposable();
@@ -34,6 +45,7 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         MyApplication application = (MyApplication) getApplication();
         application.appComponent.counterWidgetComponent().create().inject(this);
+        new Utility().setTheme(sharedPreferences, this, repo);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_widget_configuration);
         mRecyclerView = findViewById(R.id.widget_counters_rv);
@@ -64,7 +76,7 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.widget_exists), Toast.LENGTH_LONG).show();
             }else {
                 appWidgetManager.updateAppWidget(appWidgetId,
-                        CounterWidgetProvider.getRemoteViews(widgetCounter, appWidgetId, this, appWidgetManager));
+                        CounterWidgetProvider.getRemoteViews(widgetCounter, appWidgetId, this, appWidgetManager, true));
                 widgetCounter.widgetId = appWidgetId;
                 repo.updateCounter(widgetCounter);
 
