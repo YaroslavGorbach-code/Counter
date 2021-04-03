@@ -2,47 +2,37 @@ package com.yaroslavgorbachh.counter.counter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.preference.PreferenceManager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
-import com.yaroslavgorbachh.counter.countersList.CountersFragmentDirections;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
-import com.yaroslavgorbachh.counter.DeleteCounterDialog;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
-import java.util.Objects;
-
 import javax.inject.Inject;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
-import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.START_MAIN_ACTIVITY_EXTRA;
 
 public class CounterFragment extends Fragment {
     private TextView mValue_tv;
@@ -100,10 +90,15 @@ public class CounterFragment extends Fragment {
         toolbar.setOnMenuItemClickListener(i -> {
             switch (i.getItemId()) {
                 case R.id.counterDelete:
-                    new DeleteCounterDialog(() -> {
-                        mViewModel.deleteCounter();
-                        Navigation.findNavController(view).popBackStack();
-                    }, 1).show(getChildFragmentManager(), "DialogCounterDelete");
+                    new MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(getString(R.string.deleteCountersDeleteDialog))
+                            .setMessage(R.string.deleteCounterDialogText)
+                            .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which) -> {
+                                mViewModel.deleteCounter();
+                                Navigation.findNavController(view).popBackStack();
+                            })
+                            .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
+                            .show();
                     break;
                 case R.id.counterEdit:
                     Navigation.findNavController(view).navigate(CounterFragmentDirections.

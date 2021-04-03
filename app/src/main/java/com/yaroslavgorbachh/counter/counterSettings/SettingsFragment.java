@@ -6,44 +6,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbachh.counter.CopyBeforeReset;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.counterSettings.Animations.AnimateThemeChange;
-import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyBackup;
-import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyRestore;
-import com.yaroslavgorbachh.counter.database.CounterDatabase;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
-import com.yaroslavgorbachh.counter.database.Repo;
-import com.yaroslavgorbachh.counter.DeleteCounterDialog;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
-import java.util.Objects;
-
 import javax.inject.Inject;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
@@ -103,7 +87,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         assert mRemoveAllCountersPref != null;
         mRemoveAllCountersPref.setOnPreferenceClickListener(preference -> {
-            new DeleteCounterDialog(() -> mViewModel.deleteCounters(), 2).show(getChildFragmentManager(), "tag");
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(getString(R.string.deleteCountersDeleteDialog))
+                    .setMessage(R.string.deleteCounterDialogText)
+                    .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which)
+                            -> mViewModel.deleteCounters())
+                    .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
+                    .show();
             return true;
         });
 

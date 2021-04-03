@@ -39,12 +39,21 @@
     <string name="counterFragmentDeleteMenu">Delete</string>
     <string name="createEditCounterEditToolbarTitle">Edit</string>
     <string name="foolScreen">Full screen</string>
+    <string name="fullscreen_swipe_helper">Use swipes</string>
+
 
 
     <!-- History fragment -->
     <string name="historyFragmentToolbarTitle">History</string>
     <string name="counterHistoryMenuClean">Clear</string>
     <string name="there_no_history_yet">There no history</string>
+    <string name="history_swipe_helper">You can remove an item with a swipe</string>
+    <string name="clear_history_title">Clear history?</string>
+    <string name="clear_history_message">This action cannot be undone</string>
+    <string name="clear_history_pos_button">Сlear</string>
+    <string name="clear_history_neg_button">Сancel</string>
+    <string name="history_item_removed">The item has been removed</string>
+
 
 
     <!-- Add counter dialog -->
@@ -134,6 +143,8 @@
 
     <!-- Widget configuration activity -->
     <string name="confWidgetActivityToolbarTitle">Chose counter</string>
+    <string name="widget_exists">The widget for this counter already exists</string>
+    <string name="widget_deleted">DELETED</string>
 
 
     <string name="apply">Apply</string>

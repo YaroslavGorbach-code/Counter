@@ -21,7 +21,7 @@ import androidx.navigation.Navigation;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbachh.counter.Animtions.Animations;
+import com.yaroslavgorbachh.counter.Animations;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.counterHistory.recyclerView.CounterHistoryRv;
@@ -70,11 +70,10 @@ public class CounterHistoryFragment extends Fragment {
 
         toolbar.setOnMenuItemClickListener(item -> {
             new MaterialAlertDialogBuilder(requireContext())
-                    // TODO: 4/2/2021 translate
-                    .setTitle("Clear history ?")
-                    .setMessage("This action cannot be undo")
-                    .setPositiveButton("Clear", (dialog, which) -> mViewModel.clean(mCounterId))
-                    .setNegativeButton("cancel", null)
+                    .setTitle(getString(R.string.clear_history_title))
+                    .setMessage(getString(R.string.clear_history_message))
+                    .setPositiveButton(getString(R.string.clear_history_pos_button), (dialog, which) -> mViewModel.clean(mCounterId))
+                    .setNegativeButton(getString(R.string.clear_history_neg_button), null)
                     .create()
                     .show();
             return true;
@@ -85,9 +84,8 @@ public class CounterHistoryFragment extends Fragment {
             CounterHistory copy = new CounterHistory(counterHistory.value, counterHistory.data, counterHistory.counterId);
             copy.setId(counterHistory.id);
             mViewModel.deleteHistoryItem(counterHistory);
-            // TODO: 4/3/2021 translate
-            Snackbar.make(view, "Item has ben deleted", BaseTransientBottomBar.LENGTH_LONG)
-                    .setAction("UNDO", v -> mViewModel.addHistoryItem(copy)).show();
+            Snackbar.make(view, getString(R.string.history_item_removed), BaseTransientBottomBar.LENGTH_LONG)
+                    .setAction(getString(R.string.counterResetUndo), v -> mViewModel.addHistoryItem(copy)).show();
         });
 
         /*setting listener for selected item in spinner*/

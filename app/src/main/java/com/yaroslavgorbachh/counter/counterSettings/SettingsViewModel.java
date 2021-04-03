@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbachh.counter.CopyBeforeReset;
+import com.yaroslavgorbachh.counter.CopyCounterBeforeReset;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.counterSettings.di.SettingsScope;
 import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyBackup;
@@ -88,15 +88,15 @@ public class SettingsViewModel extends ViewModel {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(counters -> {
-                    CopyBeforeReset copyBeforeReset = new CopyBeforeReset();
+                    CopyCounterBeforeReset copyCounterBeforeReset = new CopyCounterBeforeReset();
                     for (Counter counter : counters) {
-                        copyBeforeReset.addCounter(counter);
+                        copyCounterBeforeReset.addCounter(counter);
                         counter.reset(mRepo);
                     }
                     Snackbar.make(view, view.getContext().getResources().getString(R.string
                             .countersReset), BaseTransientBottomBar.LENGTH_LONG)
                             .setAction( view.getContext().getString(R.string.counterResetUndo), v1 -> {
-                                for (Counter counter : copyBeforeReset.getCounters()) {
+                                for (Counter counter : copyCounterBeforeReset.getCounters()) {
                                     mRepo.updateCounter(counter);
                                 }
                             }).show();

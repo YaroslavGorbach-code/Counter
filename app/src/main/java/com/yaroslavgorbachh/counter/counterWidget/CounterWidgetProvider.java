@@ -152,9 +152,8 @@ public class CounterWidgetProvider extends AppWidgetProvider {
                             getRemoteViews(counter, counter.widgetId, context, appWidgetManager));
                 } else {
                     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
-                    // TODO: 4/1/2021 translate
-                    views.setTextViewText(R.id.widget_value, "DELETED");
-                    views.setTextViewText(R.id.widget_title, "DELETED");
+                    views.setTextViewText(R.id.widget_value, context.getString(R.string.widget_deleted));
+                    views.setTextViewText(R.id.widget_title, context.getString(R.string.widget_deleted));
                     appWidgetManager.updateAppWidget(id, views);
                 }
 

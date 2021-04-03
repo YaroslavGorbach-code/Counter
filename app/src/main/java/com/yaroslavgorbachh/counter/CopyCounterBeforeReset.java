@@ -5,10 +5,10 @@ import com.yaroslavgorbachh.counter.database.Models.Counter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CopyBeforeReset {
+public class CopyCounterBeforeReset {
     private final List<Counter> mCopyList;
 
-    public CopyBeforeReset(){
+    public CopyCounterBeforeReset(){
         mCopyList = new ArrayList<>();
     }
 

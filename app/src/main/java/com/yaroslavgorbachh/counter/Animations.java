@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.Animtions;
+package com.yaroslavgorbachh.counter;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

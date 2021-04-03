@@ -19,7 +19,6 @@
     <string name="click_on_the_button_below_to_create">Натисніть кнопку нижче, щоб створити</string>
     <string name="there_are_no_active_counters">Лічильників немає</string>
     <string name="there_are_no_groups_yet">Груп немає</string>
-    <string name="there_no_history_yet">Історій немає</string>
     <string name="exportSelected">Експорт в CSV</string>
     <string name="counterReset">Ви обнулили лічильники</string>
     <string name="counterResetUndo">СКАСУВАТИ</string>
@@ -36,10 +35,21 @@
     <string name="counterFragmentEditMenu">Редагувати</string>
     <string name="counterFragmentDeleteMenu">Видалити</string>
     <string name="foolScreen">Повноекранний режим</string>
+    <string name="fullscreen_swipe_helper">Використовуйте свайпи </string>
+    <string name="clear_history_title">Очистити історію?</string>
+    <string name="clear_history_message">Ця дія не можна буде скасувати</string>
+    <string name="clear_history_pos_button">Очистити</string>
+    <string name="clear_history_neg_button">Скасувати</string>
+
 
     <!-- History fragment -->
     <string name="historyFragmentToolbarTitle">Історія</string>
     <string name="counterHistoryMenuClean">Очистити</string>
+    <string name="there_no_history_yet">Історій немає</string>
+    <string name="history_swipe_helper">Ви можете видалити елемент свайпом</string>
+    <string name="history_item_removed">Елемент видалений</string>
+
+
 
     <!-- Add counter dialog -->
     <string name="addCounterDialogTitle">Додати лічильник</string>
@@ -129,5 +139,8 @@
 
     <!-- Widget configuration activity -->
     <string name="confWidgetActivityToolbarTitle">Оберіть лічильник</string>
+    <string name="widget_exists">Віджет для цього лічильника вже існує</string>
+    <string name="widget_deleted">ВИДАЛЕНО</string>
 
-    </resources>
+
+</resources>

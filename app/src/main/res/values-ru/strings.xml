@@ -20,7 +20,6 @@
     <string name="click_on_the_button_below_to_create">Нажмите кнопку ниже, чтобы создать</string>
     <string name="there_are_no_active_counters">Счетчиков нету!</string>
     <string name="there_are_no_groups_yet">Групп нету</string>
-    <string name="there_no_history_yet">Историй нету</string>
     <string name="exportSelected">Экспорт в CSV</string>
     <string name="counterReset">Счетчик сброшен</string>
     <string name="counterResetUndo">ОТМЕНИТЬ</string>
@@ -37,10 +36,19 @@
     <string name="counterFragmentEditMenu">Редактировать</string>
     <string name="counterFragmentDeleteMenu">Удалить</string>
     <string name="foolScreen">Полноэкранный режим</string>
+    <string name="fullscreen_swipe_helper">Используйте свайпы</string>
+    <string name="clear_history_title">Очистить историю?</string>
+    <string name="clear_history_message">Это действие нельзя будет отменить</string>
+    <string name="clear_history_pos_button">Очистить</string>
+    <string name="clear_history_neg_button">Отмена</string>
 
     <!-- History fragment -->
     <string name="historyFragmentToolbarTitle">История</string>
     <string name="counterHistoryMenuClean">Очистить</string>
+    <string name="there_no_history_yet">Историй нету</string>
+    <string name="history_swipe_helper">Вы можете удалить элемент свайпом</string>
+    <string name="history_item_removed">Элемент удален</string>
+
 
     <!-- Add counter dialog -->
     <string name="addCounterDialogTitle">Добавить счетчик</string>
@@ -71,8 +79,6 @@
     <string name="deleteCountersDeleteDialog">Удалить счетчики?</string>
     <string name="deleteCounterDeleteDialog">Удалить счетчик?</string>
 
-
-
     <!-- Preference Display -->
     <string name="display_header">Дисплей</string>
     <string name="nightMod">Темная тема</string>
@@ -81,7 +87,6 @@
     <string name="SettingToolbar">Настройки</string>
     <string name="lockOrientation">Не поворачивать экран</string>
     <string name="changeAccentColor">Изменить акцентный цвет</string>
-
 
     <!-- Preference Feedback -->
     <string name="feedBack_header">Обратная связь</string>
@@ -109,8 +114,6 @@
     <string name="create_backup">Создать копию</string>
     <string name="restore_backup">Восстановить копию</string>
 
-
-
     <!-- About counter fragment -->
     <string name="aboutCounter">О счетчике</string>
     <string name="counterName">Имя счетчика</string>
@@ -133,5 +136,8 @@
 
     <!-- Widget configuration activity -->
     <string name="confWidgetActivityToolbarTitle">Выберете счетчик</string>
+    <string name="widget_exists">Виджет для этого счетчика уже существует</string>
+    <string name="widget_deleted">УДАЛЕНО</string>
+
 
 </resources>

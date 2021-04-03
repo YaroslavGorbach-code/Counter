@@ -1,18 +1,14 @@
 package com.yaroslavgorbachh.counter.countersList.DragAndDrop;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.Accessibility;
-import com.yaroslavgorbachh.counter.CopyBeforeReset;
+import com.yaroslavgorbachh.counter.CopyCounterBeforeReset;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.R;
@@ -33,7 +29,7 @@ public class CounterMultiSelection implements MultiSelection {
     private final Context mContext;
     private final Accessibility mAccessibility;
     public LiveData<Boolean> isMultiSelection = mIsMultiSelection;
-    public CopyBeforeReset mCopyBeforeReset;
+    public CopyCounterBeforeReset mCopyCounterBeforeReset;
 
     public CounterMultiSelection(Repo repo, Context context, Accessibility accessibility) {
         mRepo = repo;
@@ -136,22 +132,22 @@ public class CounterMultiSelection implements MultiSelection {
     }
 
     public void resetSelectedCounters() {
-        mCopyBeforeReset = new CopyBeforeReset();
+        mCopyCounterBeforeReset = new CopyCounterBeforeReset();
         for (Counter counter : mSelectedCounters) {
-            mCopyBeforeReset.addCounter(counter);
+            mCopyCounterBeforeReset.addCounter(counter);
             counter.reset(mRepo);
         }
         mCountSelected.setValue(mSelectedCounters.size());
     }
 
     public void undoReset() {
-        for (Counter counter : mCopyBeforeReset.getCounters()) {
+        for (Counter counter : mCopyCounterBeforeReset.getCounters()) {
             mRepo.updateCounter(counter);
         }
-        mSelectedCounters = mCopyBeforeReset.getCounters();
+        mSelectedCounters = mCopyCounterBeforeReset.getCounters();
         mIsMultiSelection.setValue(mSelectedCounters != null);
         mCountSelected.setValue(mSelectedCounters.size());
-        mCopyBeforeReset = null;
+        mCopyCounterBeforeReset = null;
     }
 
     public void deleteSelectedCounters() {

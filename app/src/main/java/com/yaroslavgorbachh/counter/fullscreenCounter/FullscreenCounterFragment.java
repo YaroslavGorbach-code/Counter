@@ -23,7 +23,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.yaroslavgorbachh.counter.Animtions.Animations;
+import com.yaroslavgorbachh.counter.Animations;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.R;

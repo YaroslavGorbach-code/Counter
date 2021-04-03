@@ -1,14 +1,10 @@
 package com.yaroslavgorbachh.counter.counterWidget;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -26,8 +22,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-
-import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.INC_CLICK;
 
 public class CounterWidgetConfigActivity extends AppCompatActivity {
     @Inject Repo repo;
@@ -67,8 +61,7 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 
             if (widgetCounter.widgetId!=null && CounterWidgetProvider.checkWidgetIfExists(widgetCounter.widgetId, this)){
-                // TODO: 4/1/2021 translate
-                Toast.makeText(this, "The widget for this counter already exists", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.widget_exists), Toast.LENGTH_LONG).show();
             }else {
                 appWidgetManager.updateAppWidget(appWidgetId,
                         CounterWidgetProvider.getRemoteViews(widgetCounter, appWidgetId, this, appWidgetManager));

@@ -35,17 +35,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
-import com.yaroslavgorbachh.counter.Animtions.Animations;
+import com.yaroslavgorbachh.counter.Animations;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.createEditCounter.CreateCounterDialog;
-import com.yaroslavgorbachh.counter.DeleteCounterDialog;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
@@ -397,10 +397,19 @@ public class CountersFragment extends Fragment {
                         break;
                     }
                     case R.id.deleteSelected:
-                        new DeleteCounterDialog(() -> {
-                            mCountersAdapter.deleteSelectedCounters();
-                        }, mCountersAdapter.getSelectedCountersCount().getValue())
-                                .show(getChildFragmentManager(), "DialogCounterDelete");
+                        String title;
+                        if ( mCountersAdapter.getSelectedCountersCount().getValue() >1){
+                            title = getString(R.string.deleteCountersDeleteDialog);
+                        }else {
+                            title = getString(R.string.deleteCounterDeleteDialog);
+                        }
+                        new MaterialAlertDialogBuilder(requireContext())
+                                .setTitle(title)
+                                .setMessage(R.string.deleteCounterDialogText)
+                                .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which)
+                                        -> mCountersAdapter.deleteSelectedCounters())
+                                .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
+                                .show();
                         break;
                 }
                 return true;
