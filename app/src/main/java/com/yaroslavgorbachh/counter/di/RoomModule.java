@@ -57,7 +57,6 @@ public class RoomModule {
                             }
                         })
                         .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
-                        .allowMainThreadQueries()
                         .addMigrations(MIGRATION_24_25, MIGRATION_25_26, MIGRATION_26_27)
                         .build();
             }

@@ -95,14 +95,12 @@ public class Repo {
         return mCounterDao.getCounter(id);
     }
 
-    // TODO: 4/3/2021 new thread
-    public Counter getCounterWidget(long widgetId) {
-        return mCounterDao.getCounterWidget(widgetId);
+    public Single<Counter> getCounterWidget(long widgetId) {
+        return  Single.create(emitter -> emitter.onSuccess(mCounterDao.getCounterWidget(widgetId)));
     }
 
-    // TODO: 4/3/2021 new thread
-    public Counter getCounterNoLiveData(long id) {
-        return mCounterDao.getCounterNoLiveData(id);
+    public Single<Counter> getCounterNoLiveData(long id) {
+        return Single.create(emitter -> emitter.onSuccess(mCounterDao.getCounterNoLiveData(id)));
     }
 
     public LiveData<List<String>> getGroups(){

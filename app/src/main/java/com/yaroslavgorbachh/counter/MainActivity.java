@@ -25,6 +25,8 @@ import com.yaroslavgorbachh.counter.database.Repo;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_DOWN;
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_UP;
 import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.START_MAIN_ACTIVITY_EXTRA;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject SharedPreferences sharedPreferences;
     @Inject Repo repo;
+    private final CompositeDisposable mDisposables = new CompositeDisposable();
+
 
 
     @Override
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        CounterWidgetProvider.updateWidgets(this, repo);
+        mDisposables.add(CounterWidgetProvider.updateWidgets(this, repo));
     }
 
 
@@ -99,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        mDisposables.dispose();
     }
 
 }

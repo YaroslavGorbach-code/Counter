@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
 import com.yaroslavgorbachh.counter.MainActivity;
@@ -22,6 +23,12 @@ import com.yaroslavgorbachh.counter.database.Repo;
 import java.util.Objects;
 
 import javax.inject.Inject;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
@@ -36,6 +43,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
 
     @Inject
     Repo mRepo;
+    private final CompositeDisposable mDisposables = new CompositeDisposable();
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -45,29 +53,34 @@ public class CounterWidgetProvider extends AppWidgetProvider {
         long widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        Counter counterWidget = mRepo.getCounterWidget(widgetId);
 
-        if (Objects.requireNonNull(intent.getAction()).equals(INC_CLICK) && counterWidget != null) {
-            counterWidget.inc(context, mRepo, null);
-            counterWidget = mRepo.getCounterWidget(widgetId);
-            appWidgetManager.updateAppWidget(counterWidget.widgetId,
-                    getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager, false));
-        }
 
-        if (Objects.requireNonNull(intent.getAction()).equals(DEC_CLICK) && counterWidget != null) {
-            counterWidget.dec(context, mRepo, null);
-            counterWidget = mRepo.getCounterWidget(widgetId);
-            appWidgetManager.updateAppWidget(counterWidget.widgetId,
-                    getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager, false));
-        }
+       Disposable disposable = mRepo.getCounterWidget(widgetId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(counter -> {
+                    if (Objects.requireNonNull(intent.getAction()).equals(INC_CLICK) && counter != null) {
+                        counter.inc(context, mRepo, null);
+                        appWidgetManager.updateAppWidget(counter.widgetId,
+                                getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
+                    }
 
-        if (Objects.requireNonNull(intent.getAction()).equals(OPEN_CLICK) && counterWidget != null) {
-            Intent startMainActivityIntent = new Intent(context, MainActivity.class);
-            startMainActivityIntent.putExtra(START_MAIN_ACTIVITY_EXTRA, counterWidget.id);
-            startMainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(startMainActivityIntent);
+                    if (Objects.requireNonNull(intent.getAction()).equals(DEC_CLICK) && counter != null) {
+                        counter.dec(context, mRepo, null);
+                        appWidgetManager.updateAppWidget(counter.widgetId,
+                                getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
+                    }
 
-        }
+                    if (Objects.requireNonNull(intent.getAction()).equals(OPEN_CLICK) && counter != null) {
+                        Intent startMainActivityIntent = new Intent(context, MainActivity.class);
+                        startMainActivityIntent.putExtra(START_MAIN_ACTIVITY_EXTRA, counter.id);
+                        startMainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(startMainActivityIntent);
+                    }
+                },error->{});
+
+       mDisposables.add(disposable);
+
         super.onReceive(context, intent);
     }
 
@@ -147,26 +160,32 @@ public class CounterWidgetProvider extends AppWidgetProvider {
         return views;
     }
 
-    public static void updateWidgets(Context context, Repo repo) {
+    public static Disposable updateWidgets(Context context, Repo repo) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        Disposable disposable = null;
         int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, CounterWidgetProvider.class));
         if (ids != null) {
             for (int id : ids) {
-                Counter counter = repo.getCounterWidget(id);
-                if (counter != null) {
-                    appWidgetManager.updateAppWidget(counter.widgetId,
-                            getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
-                    setWidgetColor(context, counter.widgetId, appWidgetManager);
+                disposable = repo.getCounterWidget(id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(counter -> {
+                            if (counter != null) {
+                                appWidgetManager.updateAppWidget(counter.widgetId,
+                                        getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
+                                setWidgetColor(context, counter.widgetId, appWidgetManager);
 
-                } else {
-                    RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
-                    views.setTextViewText(R.id.widget_value, context.getString(R.string.widget_deleted));
-                    views.setTextViewText(R.id.widget_title, context.getString(R.string.widget_deleted));
-                    views.setInt(R.id.widget_toolbar_color, "setBackgroundColor", Color.GRAY);
-                    appWidgetManager.updateAppWidget(id, views);
-                }
+                            } else {
+                                RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
+                                views.setTextViewText(R.id.widget_value, context.getString(R.string.widget_deleted));
+                                views.setTextViewText(R.id.widget_title, context.getString(R.string.widget_deleted));
+                                views.setInt(R.id.widget_toolbar_color, "setBackgroundColor", Color.GRAY);
+                                appWidgetManager.updateAppWidget(id, views);
+                            }
+                        }, error ->{});
             }
         }
+    return disposable;
     }
 
     public static boolean checkWidgetIfExists(int widgetId, Context context) {
@@ -188,6 +207,11 @@ public class CounterWidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(widgetId, views);
         }
 
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+        mDisposables.dispose();
     }
+}
 
 
