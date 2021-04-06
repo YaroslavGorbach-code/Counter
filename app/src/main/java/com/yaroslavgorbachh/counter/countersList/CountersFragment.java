@@ -43,6 +43,8 @@ import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.Animations;
+import com.yaroslavgorbachh.counter.countersList.DragAndDrop.MultiSelection.MultiCount;
+import com.yaroslavgorbachh.counter.countersList.navigationDrawer.DrawerItemSelector;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.createEditCounter.CreateCounterDialog;
@@ -63,8 +65,6 @@ import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.S
 public class CountersFragment extends Fragment {
     private static final String CURRENT_GROUP = "CURRENT_GROUP";
 
-    private RecyclerView mCounters_rv;
-    private CountersAdapter mCountersAdapter;
     private Toolbar mToolbar;
     private Drawable mNavigationIcon;
     private GroupsAdapter mGroupsAdapter;
@@ -79,22 +79,20 @@ public class CountersFragment extends Fragment {
 
     private CountersViewModel mViewModel;
 
+    private RecyclerView mCounters_rv;
+    private CountersAdapter mCountersAdapter;
+
     @Inject ViewModelProviderFactory viewModelProviderFactory;
     @Inject AudioManager mAudioManager;
     @Inject Accessibility accessibility;
     @Inject SharedPreferences sharedPreferences;
     @Inject Repo repo;
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
+    @Inject MultiCount counterMultiCount;
+    @Inject DrawerItemSelector drawerItemSelector;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         MyApplication application = (MyApplication) requireActivity().getApplication();
         application.appComponent.countersComponentFactory().create().inject(this);
     }
@@ -109,7 +107,7 @@ public class CountersFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (mCountersAdapter.getSelectionMod().getValue()) {
+                if (counterMultiCount.getSelectionModState().getValue()) {
                     mCountersAdapter.clearSelectedCounters();
                 } else {
                     requireActivity().finish();
@@ -131,7 +129,9 @@ public class CountersFragment extends Fragment {
         mCounters_rv = view.findViewById(R.id.counters_list);
         mIconAndTextThereAreNoCounters = view.findViewById(R.id.iconAndTextThereAreNoCounters);
         mThereAreNoGroupsTextAndIcon = view.findViewById(R.id.thereAreNoGroupsTextAndIcon);
+
         mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CountersViewModel.class);
+
 
         /*navController set up*/
         NavigationView navigationDrawerView = view.findViewById(R.id.navigationDrawerView);
@@ -160,7 +160,7 @@ public class CountersFragment extends Fragment {
         });
 
         /*initialize RecyclerView and listener for groups*/
-        mGroupsAdapter = new GroupsAdapter();
+        mGroupsAdapter = new GroupsAdapter(drawerItemSelector);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(requireContext());
         RecyclerView groups_rv = view.findViewById(R.id.groupsList_rv);
         groups_rv.setLayoutManager(mLayoutManager);
@@ -172,7 +172,7 @@ public class CountersFragment extends Fragment {
                 groups_rv.setVisibility(View.VISIBLE);
                 mThereAreNoGroupsTextAndIcon.setVisibility(View.GONE);
             } else {
-                if (!mCountersAdapter.getSelectionMod().getValue()) {
+                if (!counterMultiCount.getSelectionModState().getValue()) {
                     groups_rv.setVisibility(View.GONE);
                     mThereAreNoGroupsTextAndIcon.setVisibility(View.VISIBLE);
                 }
@@ -181,7 +181,7 @@ public class CountersFragment extends Fragment {
         });
 
         /*set up rv with counters*/
-        mCountersAdapter = new CountersAdapter(new CountersAdapter.CounterItemListener() {
+        mCountersAdapter = new CountersAdapter(new CountersAdapter.CounterItemClickListener() {
             @Override
             public void onPlusClick(Counter counter) {
                 mViewModel.incCounter(counter, accessibility, requireContext());
@@ -203,7 +203,7 @@ public class CountersFragment extends Fragment {
             public void onMoved(Counter counterFrom, Counter counterTo) {
                 mViewModel.countersMoved(counterFrom, counterTo);
             }
-        }, requireActivity().getApplication(), sharedPreferences, accessibility, repo);
+        }, sharedPreferences, counterMultiCount);
 
         // Handling receiver witch MainActivity sends when volume buttons presed
         mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
@@ -239,14 +239,14 @@ public class CountersFragment extends Fragment {
         mCountersAdapter.setStateRestorationPolicy(PREVENT_WHEN_EMPTY);
 
         if (currentItem != null && !currentItem.equals(getResources().getString(R.string.allCountersItem))) {
-            mGroupsAdapter.restoreSelectedItem(currentItem);
+            mGroupsAdapter.selectItem(currentItem);
         } else {
             /*set up all counters in the adapter when first open*/
             mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
         }
 
         /*filter the list depending on the selected group */
-        mGroupsAdapter.getSelectedItem().observe(getViewLifecycleOwner(), selectedItem -> {
+        drawerItemSelector.getSelectedItemTitle().observe(getViewLifecycleOwner(), selectedItem -> {
             mViewModel.getCounters().removeObservers(getViewLifecycleOwner());
             mViewModel.getCounters().observe(getViewLifecycleOwner(), counters -> {
                 if (!selectedItem.equals(getResources().getString(R.string.allCountersItem))) {
@@ -261,7 +261,7 @@ public class CountersFragment extends Fragment {
                     mCountersAdapter.setData(counters);
                 }
 
-                showIconEmptyList(counters.size());
+                showIconIfListIsEmpty(counters.size());
             });
             currentItem = selectedItem;
             mToolbar.setTitle(currentItem);
@@ -276,10 +276,10 @@ public class CountersFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         /*set up listeners for selection mod*/
-        mCountersAdapter.getSelectionMod().observe(getViewLifecycleOwner(), isSelectionMod -> {
+        counterMultiCount.getSelectionModState().observe(getViewLifecycleOwner(), isSelectionMod -> {
             setUpUiConfigurationForSelectionMod(isSelectionMod);
             mMessageReceiver.setSelectionMod(isSelectionMod);
-            mCountersAdapter.getSelectedCountersCount().observe(getViewLifecycleOwner(), count -> {
+            counterMultiCount.getSelectedCount().observe(getViewLifecycleOwner(), count -> {
                 mToolbar.setTitle(getString(R.string.selectionModTitle, String.valueOf(count)));
                 if (count == 0)
                     mToolbar.setTitle(currentItem);
@@ -293,10 +293,10 @@ public class CountersFragment extends Fragment {
     public void onStart() {
         super.onStart();
         /*we initialise all this methods in on start because their behavior can change depends on pref*/
-        if (sharedPreferences.getBoolean("leftHandMod", false) && !mCountersAdapter.leftHandMod) {
+        if (sharedPreferences.getBoolean("leftHandMod", false) && !mCountersAdapter.getLeftHandMod()) {
             requireActivity().recreate();
         }
-        if (!sharedPreferences.getBoolean("leftHandMod", false) && mCountersAdapter.leftHandMod) {
+        if (!sharedPreferences.getBoolean("leftHandMod", false) && mCountersAdapter.getLeftHandMod()) {
             requireActivity().recreate();
         }
 
@@ -346,7 +346,7 @@ public class CountersFragment extends Fragment {
         outState.putString(CURRENT_GROUP, currentItem);
     }
 
-    private void showIconEmptyList(int size) {
+    private void showIconIfListIsEmpty(int size) {
         if (size <= 0) {
             mIconAndTextThereAreNoCounters.setVisibility(View.VISIBLE);
         } else {
@@ -355,11 +355,11 @@ public class CountersFragment extends Fragment {
     }
 
     private void incSelectedCounters() {
-        mCountersAdapter.incSelectedCounters();
+        counterMultiCount.incAll();
     }
 
     private void decSelectedCounters() {
-        mCountersAdapter.decSelectedCounters();
+        counterMultiCount.decAll();
     }
 
     /*set up toolbar configuration depending on selection mod*/
@@ -377,28 +377,28 @@ public class CountersFragment extends Fragment {
             mToolbar.setOnMenuItemClickListener(menuItem -> {
                 switch (menuItem.getItemId()) {
                     case R.id.editSelected:
-                        Counter counter = mCountersAdapter.getSelectedCounter();
-                        Navigation.findNavController(getView()).navigate(CountersFragmentDirections.
+                        Counter counter = counterMultiCount.getFirstSelected();
+                        Navigation.findNavController(requireView()).navigate(CountersFragmentDirections.
                                 actionCountersFragmentToCreateEditCounterFragment().setCounterId(counter.id));
                         break;
                     case R.id.selectAllCounter:
                         mCountersAdapter.selectAllCounters();
                         break;
                     case R.id.resetSelected:
-                        mCountersAdapter.resetSelectedCounters();
+                        counterMultiCount.resetAll();
                         Snackbar.make(requireView(), getResources().getString(R.string
                                 .counterReset), BaseTransientBottomBar.LENGTH_LONG)
                                 .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
-                                    mCountersAdapter.undoReset();
+                                    counterMultiCount.undoResetAll();
                                 }).show();
                         break;
                     case R.id.exportSelected: {
-                        startActivity(Utility.getShareCountersInCSVIntent(mCountersAdapter.getSelectedCounters()));
+                        startActivity(Utility.getShareCountersInCSVIntent(counterMultiCount.getAllSelected()));
                         break;
                     }
                     case R.id.deleteSelected:
                         String title;
-                        if ( mCountersAdapter.getSelectedCountersCount().getValue() >1){
+                        if (counterMultiCount.getSelectedCount().getValue() >1){
                             title = getString(R.string.deleteCountersDeleteDialog);
                         }else {
                             title = getString(R.string.deleteCounterDeleteDialog);
@@ -407,7 +407,7 @@ public class CountersFragment extends Fragment {
                                 .setTitle(title)
                                 .setMessage(R.string.deleteCounterDialogText)
                                 .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which)
-                                        -> mCountersAdapter.deleteSelectedCounters())
+                                        -> counterMultiCount.deleteAll())
                                 .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
                                 .show();
                         break;

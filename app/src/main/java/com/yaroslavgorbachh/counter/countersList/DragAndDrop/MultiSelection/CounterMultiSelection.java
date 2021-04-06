@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.countersList.DragAndDrop;
+package com.yaroslavgorbachh.counter.countersList.DragAndDrop.MultiSelection;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -17,26 +17,28 @@ import com.yaroslavgorbachh.counter.countersList.CountersAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CounterMultiSelection implements MultiSelection {
+import javax.inject.Inject;
 
-    private final Repo mRepo;
-    private  Drawable mDefaultBackground = null;
-    private final MutableLiveData<Boolean> mIsMultiSelection = new MutableLiveData<>(false);
-    private List<Counter> mSelectedCounters = new ArrayList<>();
-    private final List<RecyclerView.ViewHolder> mSelectedVhs = new ArrayList<>();
-    private RecyclerView.ViewHolder mDraggingHolder;
-    private final MutableLiveData<Integer> mCountSelected = new MutableLiveData<>(mSelectedCounters.size());
-    private final Context mContext;
+public class CounterMultiSelection implements MultiCount {
     private final Accessibility mAccessibility;
-    public LiveData<Boolean> isMultiSelection = mIsMultiSelection;
+    private final Repo mRepo;
     public CopyCounterBeforeReset mCopyCounterBeforeReset;
 
+    private Drawable mDefaultBackground = null;
+    private RecyclerView.ViewHolder mDraggingHolder;
+    private final Context mContext;
+
+    private final MutableLiveData<Boolean> mMultiSelectionState = new MutableLiveData<>(false);
+    private List<Counter> mSelectedCounters = new ArrayList<>();
+    private final List<RecyclerView.ViewHolder> mSelectedVhs = new ArrayList<>();
+    private final MutableLiveData<Integer> mCountSelected = new MutableLiveData<>(mSelectedCounters.size());
+
+    @Inject
     public CounterMultiSelection(Repo repo, Context context, Accessibility accessibility) {
         mRepo = repo;
         mContext = context;
         mAccessibility = accessibility;
     }
-
 
     @Override
     public void select(Counter counter, RecyclerView.ViewHolder viewHolder) {
@@ -49,8 +51,8 @@ public class CounterMultiSelection implements MultiSelection {
             }
         }
         if (!isAlreadySelected) {
-            if (!mIsMultiSelection.getValue())
-                mIsMultiSelection.setValue(true);
+            if (!mMultiSelectionState.getValue())
+                mMultiSelectionState.setValue(true);
 
             mSelectedCounters.add(counter);
             mSelectedVhs.add(viewHolder);
@@ -63,7 +65,7 @@ public class CounterMultiSelection implements MultiSelection {
     public void unSelect(Counter counter, RecyclerView.ViewHolder viewHolder) {
         setDefaultBackground(viewHolder);
         if (mSelectedCounters.size() == 1)
-            mIsMultiSelection.setValue(false);
+            mMultiSelectionState.setValue(false);
         mSelectedCounters.remove(counter);
         mSelectedVhs.remove(viewHolder);
     }
@@ -72,13 +74,13 @@ public class CounterMultiSelection implements MultiSelection {
     public void selectAll(List<Counter> counters) {
         mSelectedCounters.clear();
         mSelectedCounters.addAll(counters);
-        mIsMultiSelection.setValue(true);
+        mMultiSelectionState.setValue(true);
         mCountSelected.setValue(counters.size());
     }
 
     @Override
     public void clearAllSelections() {
-        mIsMultiSelection.setValue(false);
+        mMultiSelectionState.setValue(false);
         for (RecyclerView.ViewHolder vh : mSelectedVhs) {
             setDefaultBackground(vh);
         }
@@ -87,24 +89,15 @@ public class CounterMultiSelection implements MultiSelection {
         mCountSelected.setValue(0);
     }
 
+    @Override
+    public void bindBackground(Counter newCounter, RecyclerView.ViewHolder viewHolder, Drawable background) {
+        if (mDefaultBackground == null)
+            mDefaultBackground = background;
 
-    public void dragHolder(RecyclerView.ViewHolder viewHolder) {
-        clearAllSelections();
-        setItemDraggingBackground(viewHolder);
-    }
-
-    public void clearDragHolderBackground() {
-        if (mDraggingHolder != null) {
-            setDefaultBackground(mDraggingHolder);
-            mDraggingHolder = null;
-        }
-    }
-
-    public void bindVhBackground(Counter newCounter, CountersAdapter.Vh vh) {
         boolean isAlreadySelected = false;
         for (Counter oldCounter : mSelectedCounters) {
             if (newCounter.id == oldCounter.id) {
-                setItemSelectedBackground(vh);
+                setItemSelectedBackground(viewHolder);
                 isAlreadySelected = true;
                 break;
             }
@@ -112,26 +105,64 @@ public class CounterMultiSelection implements MultiSelection {
 
         if (!isAlreadySelected) {
             if (mDraggingHolder == null) {
-                setDefaultBackground(vh);
+                setDefaultBackground(viewHolder);
             }
         }
     }
 
-    public void incSelectedCounters() {
-        for (Counter counter : mSelectedCounters) {
-            counter.inc(mContext, mRepo, null);
-        }
-        mAccessibility.playIncFeedback(null);
+    @Override
+    public LiveData<Boolean> getSelectionModState() {
+        return mMultiSelectionState;
     }
 
-    public void decSelectedCounters() {
+    @Override
+    public LiveData<Integer> getSelectedCount() {
+        return mCountSelected;
+    }
+
+    @Override
+    public List<Counter> getAllSelected() {
+        return mSelectedCounters;
+    }
+
+    @Override
+    public Counter getFirstSelected() {
+        return mSelectedCounters.get(0);
+    }
+
+
+    @Override
+    public void startDragging(RecyclerView.ViewHolder viewHolder) {
+        clearAllSelections();
+        setItemDraggingBackground(viewHolder);
+    }
+
+    @Override
+    public void stopDragging() {
+        if (mDraggingHolder != null) {
+            setDefaultBackground(mDraggingHolder);
+            mDraggingHolder = null;
+        }
+    }
+
+    @Override
+    public void decAll() {
         for (Counter counter : mSelectedCounters) {
             counter.dec(mContext, mRepo, null);
         }
         mAccessibility.playDecFeedback(null);
     }
 
-    public void resetSelectedCounters() {
+    @Override
+    public void incAll() {
+        for (Counter counter : mSelectedCounters) {
+            counter.inc(mContext, mRepo, null);
+        }
+        mAccessibility.playIncFeedback(null);
+    }
+
+    @Override
+    public void resetAll() {
         mCopyCounterBeforeReset = new CopyCounterBeforeReset();
         for (Counter counter : mSelectedCounters) {
             mCopyCounterBeforeReset.addCounter(counter);
@@ -140,40 +171,25 @@ public class CounterMultiSelection implements MultiSelection {
         mCountSelected.setValue(mSelectedCounters.size());
     }
 
-    public void undoReset() {
+    @Override
+    public void undoResetAll() {
         for (Counter counter : mCopyCounterBeforeReset.getCounters()) {
             mRepo.updateCounter(counter);
         }
         mSelectedCounters = mCopyCounterBeforeReset.getCounters();
-        mIsMultiSelection.setValue(mSelectedCounters != null);
+        mMultiSelectionState.setValue(mSelectedCounters != null);
         mCountSelected.setValue(mSelectedCounters.size());
         mCopyCounterBeforeReset = null;
     }
 
-    public void deleteSelectedCounters() {
+    @Override
+    public void deleteAll() {
         for (Counter counter : mSelectedCounters) {
             mRepo.deleteCounter(counter);
         }
-        mIsMultiSelection.setValue(false);
+        mMultiSelectionState.setValue(false);
         mCountSelected.setValue(0);
         mSelectedCounters.clear();
-    }
-
-    public LiveData<Integer> getSelectedCountersCount() {
-        return mCountSelected;
-    }
-
-    public List<Counter> getSelectedCounters() {
-        return mSelectedCounters;
-    }
-
-    public Counter getSelectedCounter() {
-        return mSelectedCounters.get(0);
-    }
-
-    public void setDefaultBackground(Drawable background) {
-        if (mDefaultBackground == null)
-            mDefaultBackground = background;
     }
 
 

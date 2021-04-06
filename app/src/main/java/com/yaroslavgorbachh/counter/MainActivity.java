@@ -26,6 +26,7 @@ import com.yaroslavgorbachh.counter.database.Repo;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_DOWN;
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_UP;
@@ -95,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mDisposables.add(CounterWidgetProvider.updateWidgets(this, repo));
+       Disposable disposable = CounterWidgetProvider.updateWidgets(this, repo);
+       if (disposable!=null)
+       mDisposables.add(disposable);
     }
 
 

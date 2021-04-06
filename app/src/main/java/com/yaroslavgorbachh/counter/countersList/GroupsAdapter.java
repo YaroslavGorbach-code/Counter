@@ -9,17 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.countersList.navigationDrawer.CounterDrawerMenuItemSelector;
+import com.yaroslavgorbachh.counter.countersList.navigationDrawer.DrawerItemSelector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
 
-    private final DrawerMenuItemClickHelper mDrawerMenuItemClickHelper;
+    private final DrawerItemSelector mCounterDrawerItemSelector;
     private List<String> mData = new ArrayList<>();
 
-    public GroupsAdapter() {
-        mDrawerMenuItemClickHelper = new DrawerMenuItemClickHelper();
+    public GroupsAdapter(DrawerItemSelector drawerItemSelector) {
+        mCounterDrawerItemSelector = drawerItemSelector;
     }
 
     public void setGroups (List<String> list) {
@@ -27,16 +29,14 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
         notifyDataSetChanged();
     }
 
-    public LiveData<String> getSelectedItem() {
-        return mDrawerMenuItemClickHelper.getSelectedItem();
-    }
-
     public void allCountersItemSelected(View view) {
-        mDrawerMenuItemClickHelper.allCountersItemSelected(view);
+        mCounterDrawerItemSelector.allCountersItemSelected(view);
         notifyDataSetChanged();
     }
-    public void restoreSelectedItem(String string) {
-        mDrawerMenuItemClickHelper.restoreSelectedItem(string);
+
+    // this method needs for restoring already selected item after onStop
+    public void selectItem(String string) {
+        mCounterDrawerItemSelector.selectItem(string, null);
         notifyDataSetChanged();
     }
 
@@ -69,7 +69,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
 
         public void bind(String s) {
             mTitle.setText(s);
-            mDrawerMenuItemClickHelper.bindBackground(s,this);
+            mCounterDrawerItemSelector.bindBackground(s,this);
         }
 
         @Override
@@ -80,7 +80,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
                     break;
                 case MotionEvent.ACTION_UP:
                     itemView.performClick();
-                    mDrawerMenuItemClickHelper.selectRvItem(mData.get(getBindingAdapterPosition()), this);
+                    mCounterDrawerItemSelector.selectItem(mData.get(getBindingAdapterPosition()), this);
                     notifyDataSetChanged();
                     //no break
                 case MotionEvent.ACTION_CANCEL:
