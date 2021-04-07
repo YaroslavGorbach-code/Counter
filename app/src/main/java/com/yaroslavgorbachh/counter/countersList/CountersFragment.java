@@ -325,7 +325,6 @@ public class CountersFragment extends Fragment {
     public void onResume() {
         super.onResume();
         long counterId = requireActivity().getIntent().getLongExtra(START_MAIN_ACTIVITY_EXTRA, -1);
-        Log.v("test", "counter id" + counterId);
         if (counterId > 0) {
             NavDirections action = CountersFragmentDirections
                     .actionCountersFragmentToCounterFragment().setCounterId(counterId);
@@ -433,9 +432,7 @@ public class CountersFragment extends Fragment {
                 return true;
             });
 
-            mToolbar.setNavigationOnClickListener(v -> {
-                mDrawer.open();
-            });
+            mToolbar.setNavigationOnClickListener(v -> mDrawer.open());
         }
     }
 

@@ -12,6 +12,7 @@ import com.yaroslavgorbachh.counter.counterSettings.SettingsFragment;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
+import com.yaroslavgorbachh.counter.counterSettings.themes.ThemeUtility;
 import com.yaroslavgorbachh.counter.database.Repo;
 
 import javax.inject.Inject;
@@ -26,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
         MyApplication application = (MyApplication) getApplication();
         application.appComponent.settingsComponentFactory().create().inject(this);
         super.onCreate(savedInstanceState);
-        new Utility().setTheme(PreferenceManager.getDefaultSharedPreferences(this), this, repo);
+        ThemeUtility.setTheme(sharedPreferences, this, repo);
         setContentView( R.layout.activity_settings);
         getSupportFragmentManager()
                 .beginTransaction()

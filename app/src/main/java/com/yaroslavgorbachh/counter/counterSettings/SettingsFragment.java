@@ -15,16 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.MyApplication;
-import com.yaroslavgorbachh.counter.counterSettings.Animations.AnimateThemeChange;
+import com.yaroslavgorbachh.counter.counterSettings.animations.AnimateThemeChange;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
+import com.yaroslavgorbachh.counter.counterSettings.themes.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -60,7 +60,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                mViewModel.backup(data, requireContext());
             }
         }
-
 
         if (requestCode == RESTORE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {

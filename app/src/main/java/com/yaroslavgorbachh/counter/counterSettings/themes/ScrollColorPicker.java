@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.counterSettings;
+package com.yaroslavgorbachh.counter.counterSettings.themes;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.counterSettings.ColorPicker;
 
 public class ScrollColorPicker implements ColorPicker {
     private final int[] colors;
@@ -17,15 +16,15 @@ public class ScrollColorPicker implements ColorPicker {
     private int mSelectedColor;
 
     public ScrollColorPicker(View root, Resources resources) {
-        colors = new int[]{resources.getColor(R.color.colorAccent),
-                resources.getColor(R.color.colorAccent_orange),
-                resources.getColor(R.color.colorAccent_blue),
-                resources.getColor(R.color.colorAccent_yellow),
-                resources.getColor(R.color.colorAccent_purple),
-                resources.getColor(R.color.colorAccent_blue_l),
-                resources.getColor(R.color.colorAccent_green_d),
-                resources.getColor(R.color.colorAccent_green),
-                resources.getColor(R.color.colorAccent_gray)};
+        colors = new int[]{resources.getColor(ThemesColors.RED.getColorId()),
+                resources.getColor(ThemesColors.ORANGE.getColorId()),
+                resources.getColor(ThemesColors.BLUE.getColorId()),
+                resources.getColor(ThemesColors.YELLOW.getColorId()),
+                resources.getColor(ThemesColors.PURPLE.getColorId()),
+                resources.getColor(ThemesColors.BLUE_LIGHT.getColorId()),
+                resources.getColor(ThemesColors.GREEN_DARK.getColorId()),
+                resources.getColor(ThemesColors.GREEN.getColorId()),
+                resources.getColor(ThemesColors.GREY.getColorId())};
         marks = new View[colors.length];
 
         ViewGroup content = root.findViewById(R.id.colors);
@@ -40,7 +39,7 @@ public class ScrollColorPicker implements ColorPicker {
             item.setOnClickListener(v -> setColor(color));
             content.addView(item, i);
         }
-        setColor(Utility.fetchAccentColor(root.getContext()));
+        setColor(ThemeUtility.fetchAccentColor(root.getContext()));
     }
 
     @Override

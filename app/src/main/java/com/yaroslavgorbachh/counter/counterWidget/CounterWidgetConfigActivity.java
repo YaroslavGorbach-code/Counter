@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
+import com.yaroslavgorbachh.counter.counterSettings.themes.ThemeUtility;
 import com.yaroslavgorbachh.counter.database.Repo;
 
 import javax.inject.Inject;
@@ -37,7 +38,7 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         MyApplication application = (MyApplication) getApplication();
         application.appComponent.counterWidgetComponent().create().inject(this);
-        new Utility().setTheme(sharedPreferences, this, repo);
+        ThemeUtility.setTheme(sharedPreferences, this, repo);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_widget_configuration);
         mRecyclerView = findViewById(R.id.widget_counters_rv);

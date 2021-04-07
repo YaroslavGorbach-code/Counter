@@ -1,26 +1,19 @@
 package com.yaroslavgorbachh.counter;
-import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.WindowManager;
-import android.widget.RemoteViews;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 
-import com.yaroslavgorbachh.counter.counterSettings.ColorPickerDialog;
+import com.yaroslavgorbachh.counter.counterSettings.themes.ColorPickerDialog;
+import com.yaroslavgorbachh.counter.counterSettings.themes.ThemeUtility;
 import com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider;
-import com.yaroslavgorbachh.counter.countersList.CountersFragmentDirections;
 import com.yaroslavgorbachh.counter.database.Repo;
 
 import javax.inject.Inject;
@@ -30,7 +23,6 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_DOWN;
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_UP;
-import static com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider.START_MAIN_ACTIVITY_EXTRA;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         MyApplication application = (MyApplication) getApplication();
         application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
-        new Utility().setTheme(sharedPreferences, this, repo);
+        ThemeUtility.setTheme(sharedPreferences, this, repo);
         setContentView(R.layout.activity_main);
 
         // recreating activity when theme is changed

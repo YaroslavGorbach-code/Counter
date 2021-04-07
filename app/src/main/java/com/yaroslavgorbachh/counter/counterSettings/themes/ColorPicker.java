@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.counterSettings;
+package com.yaroslavgorbachh.counter.counterSettings.themes;
 
 import android.content.Context;
 

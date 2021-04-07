@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.counterSettings;
+package com.yaroslavgorbachh.counter.counterSettings.themes;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -15,7 +15,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.counterSettings.Animations.AnimateThemeChange;
+import com.yaroslavgorbachh.counter.counterSettings.animations.AnimateThemeChange;
+import com.yaroslavgorbachh.counter.counterSettings.SettingsViewModel;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -47,7 +48,7 @@ public class ColorPickerDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setView(view)
                 .setPositiveButton(getString(R.string.apply), (dialog, which) -> {
-                    mViewModel.changeThemeColor(colorPicker.getColor(requireContext()), requireContext().getResources());
+                    mViewModel.changeTheme(colorPicker.getColor(requireContext()), requireContext().getResources());
 
                     // notify MainActivity that theme changed
                     Intent intent = new Intent(THEME_CHANGED_BROADCAST);

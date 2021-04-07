@@ -15,6 +15,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.CopyCounterBeforeReset;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.counterSettings.di.SettingsScope;
+import com.yaroslavgorbachh.counter.counterSettings.themes.Themes;
+import com.yaroslavgorbachh.counter.counterSettings.themes.ThemesColors;
 import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyBackup;
 import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyRestore;
 import com.yaroslavgorbachh.counter.database.CounterDatabase;
@@ -104,33 +106,33 @@ public class SettingsViewModel extends ViewModel {
     }
 
 
-    public void changeThemeColor(int color, Resources resources){
-        if (color == resources.getColor(R.color.colorAccent)){
-            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme));
+    public void changeTheme(int color, Resources resources){
+        if (color == resources.getColor(ThemesColors.RED.getColorId())){
+            mRepo.changeTheme(new AppStyle(1, Themes.RED.getStyleId()));
         }
-        if (color == resources.getColor(R.color.colorAccent_orange)){
-            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_orange));
+        if (color == resources.getColor(ThemesColors.ORANGE.getColorId())){
+            mRepo.changeTheme(new AppStyle(1, Themes.ORANGE.getStyleId()));
         }
-        if (color == resources.getColor(R.color.colorAccent_blue)){
-            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_blue));
+        if (color == resources.getColor(ThemesColors.BLUE.getColorId())){
+            mRepo.changeTheme(new AppStyle(1, Themes.BLUE.getStyleId()));
         }
-        if (color == resources.getColor(R.color.colorAccent_yellow)){
-            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_yellow));
+        if (color == resources.getColor(ThemesColors.YELLOW.getColorId())){
+            mRepo.changeTheme(new AppStyle(1, Themes.YELLOW.getStyleId()));
         }
-        if (color == resources.getColor(R.color.colorAccent_purple)){
-            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_purple));
+        if (color == resources.getColor(ThemesColors.PURPLE.getColorId())){
+            mRepo.changeTheme(new AppStyle(1, Themes.PURPLE.getStyleId()));
         }
-        if (color == resources.getColor(R.color.colorAccent_blue_l)){
-            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_blue_light));
+        if (color == resources.getColor(ThemesColors.BLUE_LIGHT.getColorId())){
+            mRepo.changeTheme(new AppStyle(1, Themes.BLUE_LIGHT.getStyleId()));
         }
-        if (color == resources.getColor(R.color.colorAccent_green_d)){
-            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_green_dark));
+        if (color == resources.getColor(ThemesColors.GREEN_DARK.getColorId())){
+            mRepo.changeTheme(new AppStyle(1, Themes.GREEN_DARK.getStyleId()));
         }
-        if (color == resources.getColor(R.color.colorAccent_green)){
-            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_green));
+        if (color == resources.getColor(ThemesColors.GREEN.getColorId())){
+            mRepo.changeTheme(new AppStyle(1, Themes.GREEN.getStyleId()));
         }
-        if (color == resources.getColor(R.color.colorAccent_gray)){
-            mRepo.changeTheme(new AppStyle(1, R.style.AppTheme_gray));
+        if (color == resources.getColor(ThemesColors.GREY.getColorId())){
+            mRepo.changeTheme(new AppStyle(1, Themes.GREY.getStyleId()));
         }
     }
 }

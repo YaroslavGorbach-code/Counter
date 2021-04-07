@@ -44,19 +44,6 @@ public class Utility {
         return mList;
     }
 
-    public void setTheme(SharedPreferences sharedPreferences, Activity activity, Repo repo) {
-        new Thread(() -> {
-            if (repo.getCurrentStyle() != null){
-                activity.setTheme(repo.getCurrentStyle().style);
-            }
-        }).start();
-        if (sharedPreferences.getBoolean("nightMod", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-    }
-
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -129,14 +116,6 @@ public class Utility {
         sendIntent.putExtra(Intent.EXTRA_TEXT, textToSend.toString());
         sendIntent.setType("text/plain");
         return Intent.createChooser(sendIntent, null);
-    }
-
-    public static int fetchAccentColor(Context context) {
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
-        @ColorInt int color = typedValue.data;
-        return color;
     }
 
 }

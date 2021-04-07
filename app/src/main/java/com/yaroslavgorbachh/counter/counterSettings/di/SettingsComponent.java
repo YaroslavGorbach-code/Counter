@@ -1,10 +1,8 @@
 package com.yaroslavgorbachh.counter.counterSettings.di;
 
-import com.yaroslavgorbachh.counter.counterSettings.ColorPickerDialog;
+import com.yaroslavgorbachh.counter.counterSettings.themes.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsFragment;
-import com.yaroslavgorbachh.counter.createEditCounter.CreateCounterDialog;
-import com.yaroslavgorbachh.counter.createEditCounter.CreateEditCounterFragment;
 
 import dagger.Subcomponent;
 

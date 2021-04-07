@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.counterSettings.Animations;
+package com.yaroslavgorbachh.counter.counterSettings.animations;
 
 import android.app.Activity;
 import android.content.Intent;

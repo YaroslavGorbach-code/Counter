@@ -28,7 +28,8 @@
                 android:resource="@xml/counter_widget_info" />
         </receiver>
 
-        <activity android:name=".counterSettings.SettingsActivity" />
+        <activity android:name=".counterSettings.SettingsActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
