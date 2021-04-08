@@ -29,7 +29,7 @@ public class RoomModule {
 
     @Provides
     public CounterDatabase provideDatabase(Context context){
-        return Room.databaseBuilder(context.getApplicationContext(),CounterDatabase.class, "counter.db")
+        return Room.databaseBuilder(context.getApplicationContext(), CounterDatabase.class, "counter.db")
                         .addCallback(new RoomDatabase.Callback() {
                             @Override
                             public void onCreate(@NonNull SupportSQLiteDatabase db) {

@@ -10,6 +10,7 @@ import java.util.Objects;
 
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.CopyCounterBeforeReset;
+import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
 

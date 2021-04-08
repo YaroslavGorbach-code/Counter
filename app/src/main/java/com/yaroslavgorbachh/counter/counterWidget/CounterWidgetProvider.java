@@ -10,13 +10,13 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
+import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.Utility;
+import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
 import com.yaroslavgorbachh.counter.counterSettings.themes.ThemeUtility;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
@@ -28,7 +28,6 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
@@ -41,10 +40,9 @@ public class CounterWidgetProvider extends AppWidgetProvider {
     public static final String DEC_CLICK = "DECK_CLICK";
     public static final String OPEN_CLICK = "OPEN_CLICK";
     public static final String START_MAIN_ACTIVITY_EXTRA = "START_MAIN_ACTIVITY_EXTRA";
-
-    @Inject
-    Repo mRepo;
     private final CompositeDisposable mDisposables = new CompositeDisposable();
+
+    @Inject Repo repo;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -56,18 +54,18 @@ public class CounterWidgetProvider extends AppWidgetProvider {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
 
-       Disposable disposable = mRepo.getCounterWidget(widgetId)
+       Disposable disposable = repo.getCounterWidget(widgetId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(counter -> {
                     if (Objects.requireNonNull(intent.getAction()).equals(INC_CLICK) && counter != null) {
-                        counter.inc(context, mRepo, null);
+                        counter.inc(context, repo, null);
                         appWidgetManager.updateAppWidget(counter.widgetId,
                                 getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
                     }
 
                     if (Objects.requireNonNull(intent.getAction()).equals(DEC_CLICK) && counter != null) {
-                        counter.dec(context, mRepo, null);
+                        counter.dec(context, repo, null);
                         appWidgetManager.updateAppWidget(counter.widgetId,
                                 getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
                     }

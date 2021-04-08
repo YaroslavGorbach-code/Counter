@@ -26,7 +26,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Singleton
 public class Repo {
-
    private final CounterDao mCounterDao;
    private final CounterHistoryDao mCounterHistoryDao;
    private final AppStyleDao mAppStyleDao;

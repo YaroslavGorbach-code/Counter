@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.CopyCounterBeforeReset;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
 import com.yaroslavgorbachh.counter.counterSettings.di.SettingsScope;
 import com.yaroslavgorbachh.counter.counterSettings.themes.Themes;
 import com.yaroslavgorbachh.counter.counterSettings.themes.ThemesColors;
@@ -29,6 +30,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -36,6 +38,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class SettingsViewModel extends ViewModel {
     private final CounterDatabase mDatabase;
     private final Repo mRepo;
+    private final CompositeDisposable mDisposables = new CompositeDisposable();
+
 
     @Inject
     SettingsViewModel(CounterDatabase counterDatabase, Repo repo){
@@ -103,6 +107,7 @@ public class SettingsViewModel extends ViewModel {
                                 }
                             }).show();
                 });
+        mDisposables.add(disposable);
     }
 
 
@@ -134,5 +139,11 @@ public class SettingsViewModel extends ViewModel {
         if (color == resources.getColor(ThemesColors.GREY.getColorId())){
             mRepo.changeTheme(new AppStyle(1, Themes.GREY.getStyleId()));
         }
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        mDisposables.dispose();
     }
 }

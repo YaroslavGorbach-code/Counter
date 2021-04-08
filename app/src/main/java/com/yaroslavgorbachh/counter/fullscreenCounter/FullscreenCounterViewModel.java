@@ -8,15 +8,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.yaroslavgorbachh.counter.Accessibility;
+import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
 
 import javax.inject.Inject;
 
 public class FullscreenCounterViewModel extends ViewModel {
+    public LiveData<Counter> counter;
+
     private final Repo mRepo;
     private final Accessibility mAccessibility;
-    public LiveData<Counter> counter;
 
     @Inject
     public FullscreenCounterViewModel(Repo repo, Accessibility accessibility) {

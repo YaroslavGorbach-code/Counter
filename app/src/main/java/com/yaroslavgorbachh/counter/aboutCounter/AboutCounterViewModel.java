@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 public class AboutCounterViewModel extends ViewModel {
     public LiveData<Counter> counter;
-    Repo mRepo;
+    private final Repo mRepo;
 
     @Inject
     public AboutCounterViewModel(@NonNull Repo repo) {

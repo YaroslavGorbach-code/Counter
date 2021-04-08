@@ -97,10 +97,10 @@ public class Counter {
             if (this.value < this.counterMinValue) this.counterMaxValue = this.value;
 
         repo.updateCounter(this);
+        HistoryManager.getInstance().saveValueWitDelay(this.value, this.id, repo);
 
         if (accessibility!=null)
             accessibility.playIncFeedback(String.valueOf(this.value));
-        HistoryManager.getInstance().saveValueWitDelay(value, id, repo);
 
 
     }
@@ -128,10 +128,10 @@ public class Counter {
         if (this.value < this.counterMinValue) this.counterMinValue = this.value;
 
         repo.updateCounter(this);
+        HistoryManager.getInstance().saveValueWitDelay(this.value, this.id, repo);
 
         if (accessibility!=null)
             accessibility.playDecFeedback(String.valueOf(this.value));
-        HistoryManager.getInstance().saveValueWitDelay(value, id, repo);
 
     }
 
@@ -144,6 +144,6 @@ public class Counter {
             value = 0;
         }
         repo.updateCounter(this);
-        HistoryManager.getInstance().saveValueWitDelay(value, id, repo);
+        HistoryManager.getInstance().saveValueWitDelay(this.value, this.id, repo);
     }
 }

@@ -28,10 +28,10 @@ import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_
 public class MainActivity extends AppCompatActivity {
     private boolean mAllowedVolumeButtons;
     private BroadcastReceiver mMessageReceiver;
+    private final CompositeDisposable mDisposables = new CompositeDisposable();
 
     @Inject SharedPreferences sharedPreferences;
     @Inject Repo repo;
-    private final CompositeDisposable mDisposables = new CompositeDisposable();
 
 
 

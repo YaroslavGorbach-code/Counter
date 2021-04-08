@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.CopyCounterBeforeReset;
+import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.R;
@@ -22,7 +23,7 @@ import javax.inject.Inject;
 public class CounterMultiSelection implements MultiCount {
     private final Accessibility mAccessibility;
     private final Repo mRepo;
-    public CopyCounterBeforeReset mCopyCounterBeforeReset;
+    private CopyCounterBeforeReset mCopyCounterBeforeReset;
 
     private Drawable mDefaultBackground = null;
     private RecyclerView.ViewHolder mDraggingHolder;
@@ -32,6 +33,7 @@ public class CounterMultiSelection implements MultiCount {
     private List<Counter> mSelectedCounters = new ArrayList<>();
     private final List<RecyclerView.ViewHolder> mSelectedVhs = new ArrayList<>();
     private final MutableLiveData<Integer> mCountSelected = new MutableLiveData<>(mSelectedCounters.size());
+
 
     @Inject
     public CounterMultiSelection(Repo repo, Context context, Accessibility accessibility) {
@@ -148,17 +150,15 @@ public class CounterMultiSelection implements MultiCount {
     @Override
     public void decAll() {
         for (Counter counter : mSelectedCounters) {
-            counter.dec(mContext, mRepo, null);
+            counter.dec(mContext, mRepo, mAccessibility);
         }
-        mAccessibility.playDecFeedback(null);
     }
 
     @Override
     public void incAll() {
         for (Counter counter : mSelectedCounters) {
-            counter.inc(mContext, mRepo, null);
+            counter.inc(mContext, mRepo, mAccessibility);
         }
-        mAccessibility.playIncFeedback(null);
     }
 
     @Override

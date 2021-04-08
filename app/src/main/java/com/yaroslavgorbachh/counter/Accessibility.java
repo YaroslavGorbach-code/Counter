@@ -42,7 +42,7 @@ public class Accessibility {
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .build();
         mSoundPool = new SoundPool.Builder()
-                .setMaxStreams(4)
+                .setMaxStreams(1)
                 .setAudioAttributes(audioAttributes)
                 .build();
             try {
