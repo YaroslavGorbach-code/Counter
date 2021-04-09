@@ -5,6 +5,8 @@ import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.database.Repo;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,7 +14,7 @@ public class HistoryManager {
 
     private static HistoryManager sInstance = null;
     private final Timer timer = new Timer();
-    private long pValue;
+    private final Map<Long, Long> previousValues = new HashMap<>();
 
     private HistoryManager(){}
 
@@ -24,14 +26,15 @@ public class HistoryManager {
     }
 
     public void saveValueWitDelay(long value, long id, Repo repo){
+        previousValues.put(id, value);
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (value==pValue)
+                    if (previousValues.get(id)==value)
                 repo.insertCounterHistory(new CounterHistory(value, Utility.convertDateToString(new Date()), id));
             }
         }, 2000);
-        pValue = value;
+
     }
 
 }
