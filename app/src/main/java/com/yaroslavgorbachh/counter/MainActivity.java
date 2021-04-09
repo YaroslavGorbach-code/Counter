@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         /* depending on pref keeps screen on or let it off*/
-        mAllowedVolumeButtons = sharedPreferences.getBoolean("useVolumeButtons", false);
+        mAllowedVolumeButtons = sharedPreferences.getBoolean("useVolumeButtons", true);
         if (sharedPreferences.getBoolean("keepScreenOn", true)) {
             MainActivity.this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
