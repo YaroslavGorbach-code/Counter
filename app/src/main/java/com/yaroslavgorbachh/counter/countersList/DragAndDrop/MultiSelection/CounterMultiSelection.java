@@ -150,15 +150,19 @@ public class CounterMultiSelection implements MultiCount {
     @Override
     public void decAll() {
         for (Counter counter : mSelectedCounters) {
-            counter.dec(mContext, mRepo, mAccessibility);
+            counter.dec(mContext, mRepo, null);
         }
+    //we do it here because wen a lot of counters increments simultaneously feedback is incorrect
+    mAccessibility.playDecFeedback(null);
     }
 
     @Override
     public void incAll() {
         for (Counter counter : mSelectedCounters) {
-            counter.inc(mContext, mRepo, mAccessibility);
+            counter.inc(mContext, mRepo, null);
         }
+        //we do it here because wen a lot of counters increments simultaneously feedback is incorrect
+        mAccessibility.playIncFeedback(null);
     }
 
     @Override

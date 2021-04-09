@@ -23,7 +23,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 public class Accessibility {
-
     private final SoundPool mSoundPool;
     private int mSoundIncId;
     private int mSoundDecId;
@@ -84,12 +83,12 @@ public class Accessibility {
 
     private void playIncSoundEffect(){
         if (mClickSoundIsAllowed)
-        mSoundPool.play(mSoundIncId, 1f, 1, 1, 0, 1f);
+        mSoundPool.play(mSoundIncId, 1f, 1f, 1, 0, 1f);
     }
 
     private void playDecSoundEffect(){
         if (mClickSoundIsAllowed)
-        mSoundPool.play(mSoundDecId, 1, 1f, 1, 0, 1f);
+        mSoundPool.play(mSoundDecId, 1f, 1f, 1, 0, 1f);
 
     }
 
