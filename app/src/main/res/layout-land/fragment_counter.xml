@@ -10,7 +10,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/counterActivity_toolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:colorBackground"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/counterTitle"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -30,7 +30,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/counterActivity_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:text="title" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -43,15 +43,15 @@
         android:textColor="@color/counterValueColor"
         android:textSize="150sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/inc_value"
+        app:layout_constraintEnd_toStartOf="@+id/inc"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/groupTitle"
+        app:layout_constraintTop_toBottomOf="@+id/group_title"
         tools:text="0" />
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/reset_value"
+        android:id="@+id/reset"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -59,14 +59,14 @@
         app:icon="@drawable/ic_refresh"
         app:iconGravity="textStart"
         app:iconSize="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/dec_value"
-        app:layout_constraintEnd_toStartOf="@+id/dec_value"
+        app:layout_constraintBottom_toBottomOf="@+id/dec"
+        app:layout_constraintEnd_toStartOf="@+id/dec"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/inc_value"
-        app:layout_constraintTop_toTopOf="@+id/dec_value" />
+        app:layout_constraintStart_toStartOf="@+id/inc"
+        app:layout_constraintTop_toTopOf="@+id/dec" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/dec_value"
+        android:id="@+id/dec"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -75,14 +75,14 @@
         app:icon="@drawable/ic_minus"
         app:iconGravity="textStart"
         app:iconSize="75dp"
-        app:layout_constraintBottom_toTopOf="@+id/inc_value"
-        app:layout_constraintEnd_toEndOf="@+id/inc_value"
+        app:layout_constraintBottom_toTopOf="@+id/inc"
+        app:layout_constraintEnd_toEndOf="@+id/inc"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/reset_value"
+        app:layout_constraintStart_toEndOf="@+id/reset"
         app:layout_constraintTop_toTopOf="@+id/value" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/inc_value"
+        android:id="@+id/inc"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -95,16 +95,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/value"
-        app:layout_constraintTop_toBottomOf="@+id/dec_value" />
+        app:layout_constraintTop_toBottomOf="@+id/dec" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/groupTitle"
+        android:id="@+id/group_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/counterTitle"
+        app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="group title" />
 
 

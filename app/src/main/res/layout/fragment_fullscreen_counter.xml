@@ -8,7 +8,7 @@
     tools:context=".fullscreenCounter.FullscreenCounterFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/fullScreenToolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="0"
+        tools:text="0"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
         android:textColor="@color/counterValueColor"
         android:textSize="150sp"

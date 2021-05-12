@@ -2,24 +2,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true">
 
-
-    <RelativeLayout
-        android:id="@+id/widget"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
 
         <ImageView
-            android:id="@+id/widget_toolbar_color"
+            android:id="@+id/toolbar_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/linear"
             android:layout_alignParentTop="true"
-            />
+            tools:ignore="ContentDescription" />
 
         <LinearLayout
             android:id="@+id/linear"
@@ -30,7 +24,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/widget_title"
+                android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -42,8 +36,9 @@
                 android:gravity="center|start"
                 android:textColor="#fafafa"
                 android:textSize="12sp" />
+
             <ImageView
-                android:id="@+id/widget_minus"
+                android:id="@+id/dec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -55,9 +50,11 @@
                 android:clickable="true"
                 android:background="@drawable/widget_ic_ripple"
                 android:src="@drawable/ic_widget_minus"
-                android:focusable="true" />
+                android:focusable="true"
+                tools:ignore="ContentDescription" />
+
             <ImageView
-                android:id="@+id/widget_fullscreen"
+                android:id="@+id/fullscreen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -69,11 +66,12 @@
                 android:focusable="true"
                 tools:visibility="visible"
                 android:background="@drawable/widget_ic_ripple"
-                android:src="@drawable/ic_fullscreen_widget"/>
+                android:src="@drawable/ic_fullscreen_widget"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/widget_value"
+            android:id="@+id/value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linear"
@@ -87,6 +85,5 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textSize="25sp"
             tools:text="222" />
-    </RelativeLayout>
 
 </RelativeLayout>

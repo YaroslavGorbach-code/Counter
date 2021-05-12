@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.Utility;
 
 public class ScrollColorPicker implements ColorPicker {
     private final int[] colors;
@@ -27,12 +26,12 @@ public class ScrollColorPicker implements ColorPicker {
                 resources.getColor(ThemesColors.GREY.getColorId())};
         marks = new View[colors.length];
 
-        ViewGroup content = root.findViewById(R.id.colors);
+        ViewGroup content = root.findViewById(R.id.parent);
         LayoutInflater inflater = LayoutInflater.from(content.getContext());
         for (int i = 0; i < colors.length; i++) {
-            View item = inflater.inflate(R.layout.color_picker_i, content, false);
-            ImageView bg = item.findViewById(R.id.i_color_bg);
-            ImageView mark = item.findViewById(R.id.i_color_selected);
+            View item = inflater.inflate(R.layout.i_color_picker, content, false);
+            ImageView bg = item.findViewById(R.id.bg);
+            ImageView mark = item.findViewById(R.id.mark);
             marks[i] = mark;
             final int color = colors[i];
             bg.setColorFilter(color);

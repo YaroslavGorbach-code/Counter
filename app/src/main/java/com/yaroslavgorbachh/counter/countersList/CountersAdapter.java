@@ -66,9 +66,9 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     @Override
     public CountersAdapter.Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (leftHandMod) {
-            return new CountersAdapter.Vh(parent, R.layout.counter_i_left_hand);
+            return new CountersAdapter.Vh(parent, R.layout.i_counter_left);
         } else {
-            return new CountersAdapter.Vh(parent, R.layout.counter_i);
+            return new CountersAdapter.Vh(parent, R.layout.i_counter);
         }
     }
 
@@ -117,10 +117,10 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
         public Vh(@NonNull ViewGroup parent, int idLayout) {
             super(LayoutInflater.from(parent.getContext()).inflate(idLayout, parent, false));
-            mTitle = itemView.findViewById(R.id.title_i);
-            mValue = itemView.findViewById(R.id.value_i);
-            mPlus = itemView.findViewById(R.id.plus_i);
-            mMinus = itemView.findViewById(R.id.minus_i);
+            mTitle = itemView.findViewById(R.id.title);
+            mValue = itemView.findViewById(R.id.value);
+            mPlus = itemView.findViewById(R.id.inc);
+            mMinus = itemView.findViewById(R.id.dec);
             mGestureDetector = new GestureDetector(parent.getContext(), this);
             itemView.setOnTouchListener(this);
 

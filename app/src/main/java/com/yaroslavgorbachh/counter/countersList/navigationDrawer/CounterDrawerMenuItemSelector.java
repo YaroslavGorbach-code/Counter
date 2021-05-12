@@ -77,7 +77,7 @@ public class CounterDrawerMenuItemSelector implements DrawerItemSelector {
     }
 
     private void setSelectedBackground(View view){
-        view.setBackgroundResource(R.drawable.group_item_selected);
+        view.setBackgroundResource(R.drawable.i_group_selected_bg);
     }
 
 }

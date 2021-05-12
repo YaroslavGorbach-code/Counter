@@ -57,16 +57,16 @@ public class CreateEditCounterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_edit_counter, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_counter, container, false);
 
         /*initialize fields*/
-        mTitle_et = view.findViewById(R.id.counterTitle_addCounter_detailed);
-        mValue_et = view.findViewById(R.id.counterValue_addCounter_detailed);
-        mStep_et = view.findViewById(R.id.counterStep_addCounter_detailed);
-        mMaxValue_et = view.findViewById(R.id.counterMaxValue_addCounter_detailed);
-        mMinValue_et = view.findViewById(R.id.counterMinValue_addCounter_detailed);
-        mToolbar = view.findViewById(R.id.toolbar_counterCreateActivity);
-        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown);
+        mTitle_et = view.findViewById(R.id.title);
+        mValue_et = view.findViewById(R.id.value);
+        mStep_et = view.findViewById(R.id.step);
+        mMaxValue_et = view.findViewById(R.id.max);
+        mMinValue_et = view.findViewById(R.id.min);
+        mToolbar = view.findViewById(R.id.toolbar);
+        mGroups_et = view.findViewById(R.id.dropdown);
 
         long counterId = CreateEditCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
         mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CreateEditCounterViewModel.class);
@@ -121,7 +121,7 @@ public class CreateEditCounterFragment extends Fragment {
         mViewModel.getGroups().observe(getViewLifecycleOwner(), groups -> {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(
                     requireContext(),
-                    R.layout.dropdown_menu_popup_item,
+                    R.layout.item_popup,
                     Utility.deleteTheSameGroups(groups));
             mGroups_et.setAdapter(adapter);
         });

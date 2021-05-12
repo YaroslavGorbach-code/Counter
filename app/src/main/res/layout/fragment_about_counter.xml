@@ -15,8 +15,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_aboutCounter"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:colorBackground"
@@ -63,7 +63,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/lastResetedValue"
+                    android:id="@+id/last_reset_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -191,12 +191,12 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/minValue"
+                    android:id="@+id/min_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="12dp"
-                    android:text="9999999999999" />
+                    tools:text="9999999999999" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -221,12 +221,12 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/maxValue"
+                    android:id="@+id/max_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="12dp"
-                    android:text="9999999999999" />
+                    tools:text="9999999999999" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -256,7 +256,7 @@
                     android:textSize="20sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/lastReset"
+                    android:id="@+id/last_reset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -278,7 +278,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/counterName"
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|top"
@@ -289,12 +289,12 @@
                     android:textSize="20sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/createData"
+                    android:id="@+id/create_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
-                    android:text="Created: 22.12.2020"
+                    tools:text="Created: 22.12.2020"
                     android:textSize="15sp" />
             </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>

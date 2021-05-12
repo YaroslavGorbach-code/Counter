@@ -116,12 +116,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         assert mBackupPref != null;
         mBackupPref.setOnPreferenceClickListener(preference -> {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.backup_dialog,
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_backup,
                     null);
             new MaterialAlertDialogBuilder(requireContext())
                     .setView(view).show();
-            MaterialButton create_bt = view.findViewById(R.id.createCopy);
-            MaterialButton restore_bt = view.findViewById(R.id.restoreCopy);
+            MaterialButton create_bt = view.findViewById(R.id.copy);
+            MaterialButton restore_bt = view.findViewById(R.id.restore);
             create_bt.setOnClickListener(v -> createFile());
             restore_bt.setOnClickListener(v -> openFile());
 

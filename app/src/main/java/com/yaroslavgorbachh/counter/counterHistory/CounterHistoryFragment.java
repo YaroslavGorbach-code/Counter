@@ -56,9 +56,9 @@ public class CounterHistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_counter_history, container, false);
 
         /*initialize fields*/
-        Toolbar toolbar = view.findViewById(R.id.toolbar_history);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         mSpinner = view.findViewById(R.id.spinner);
-        mIconAndTextThereNoHistory = view.findViewById(R.id.iconAndTextThereAreNoHistory);
+        mIconAndTextThereNoHistory = view.findViewById(R.id.no_history);
         mSwipeHelper = view.findViewById(R.id.swipe_helper);
 
         mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CounterHistoryViewModel.class);
@@ -80,7 +80,7 @@ public class CounterHistoryFragment extends Fragment {
         });
 
         setAdapterForSpinner();
-        mHistoryList = new CounterHistoryRv(view.findViewById(R.id.counterHistory_rv), counterHistory -> {
+        mHistoryList = new CounterHistoryRv(view.findViewById(R.id.rv), counterHistory -> {
             CounterHistory copy = new CounterHistory(counterHistory.value, counterHistory.data, counterHistory.counterId);
             copy.setId(counterHistory.id);
             mViewModel.deleteHistoryItem(counterHistory);

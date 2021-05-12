@@ -12,11 +12,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
 import com.yaroslavgorbachh.counter.counterSettings.themes.ThemeUtility;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
@@ -85,7 +83,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_counter_widget);
         resizeWidgetViews(newOptions, views);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -97,28 +95,28 @@ public class CounterWidgetProvider extends AppWidgetProvider {
 
 
         if (maxHeight > 100 || minWidth > 100) {
-            views.setViewVisibility(R.id.widget_minus, View.VISIBLE);
-            views.setViewVisibility(R.id.widget_fullscreen, View.VISIBLE);
-            views.setTextViewTextSize(R.id.widget_value, COMPLEX_UNIT_SP, 50);
-            views.setTextViewTextSize(R.id.widget_title, COMPLEX_UNIT_SP, 16);
+            views.setViewVisibility(R.id.dec, View.VISIBLE);
+            views.setViewVisibility(R.id.fullScreen, View.VISIBLE);
+            views.setTextViewTextSize(R.id.value, COMPLEX_UNIT_SP, 50);
+            views.setTextViewTextSize(R.id.title, COMPLEX_UNIT_SP, 16);
         }
 
         if (maxHeight > 400 || minWidth > 400) {
-            views.setTextViewTextSize(R.id.widget_value, COMPLEX_UNIT_SP, 70);
+            views.setTextViewTextSize(R.id.value, COMPLEX_UNIT_SP, 70);
         }
 
         if (maxHeight < 100 || minWidth < 100) {
-            views.setViewVisibility(R.id.widget_minus, View.GONE);
-            views.setViewVisibility(R.id.widget_fullscreen, View.GONE);
-            views.setTextViewTextSize(R.id.widget_value, COMPLEX_UNIT_SP, 25);
-            views.setTextViewTextSize(R.id.widget_title, COMPLEX_UNIT_SP, 12);
+            views.setViewVisibility(R.id.dec, View.GONE);
+            views.setViewVisibility(R.id.fullScreen, View.GONE);
+            views.setTextViewTextSize(R.id.value, COMPLEX_UNIT_SP, 25);
+            views.setTextViewTextSize(R.id.title, COMPLEX_UNIT_SP, 12);
         }
     }
 
 
     public static RemoteViews getRemoteViews(Counter widgetCounter, int appWidgetId, Context context, AppWidgetManager appWidgetManager, boolean isFirsTimeCreated) {
         Bundle appWidgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_counter_widget);
 
         Intent incIntent = new Intent(context, CounterWidgetProvider.class);
         incIntent.setAction(INC_CLICK);
@@ -126,7 +124,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
         // we need to embed the extras into the data so that the extras will not be ignored.
         incIntent.setData(Uri.parse(incIntent.toUri(Intent.URI_INTENT_SCHEME)));
         PendingIntent incPendingIntent = PendingIntent.getBroadcast(context, 0, incIntent, 0);
-        views.setOnClickPendingIntent(R.id.widget_value, incPendingIntent);
+        views.setOnClickPendingIntent(R.id.value, incPendingIntent);
 
         Intent decIntent = new Intent(context, CounterWidgetProvider.class);
         decIntent.setAction(DEC_CLICK);
@@ -134,7 +132,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
         // we need to embed the extras into the data so that the extras will not be ignored.
         decIntent.setData(Uri.parse(incIntent.toUri(Intent.URI_INTENT_SCHEME)));
         PendingIntent decPendingIntent = PendingIntent.getBroadcast(context, 0, decIntent, 0);
-        views.setOnClickPendingIntent(R.id.widget_minus, decPendingIntent);
+        views.setOnClickPendingIntent(R.id.dec, decPendingIntent);
 
         Intent openIntent = new Intent(context, CounterWidgetProvider.class);
         openIntent.setAction(OPEN_CLICK);
@@ -142,17 +140,17 @@ public class CounterWidgetProvider extends AppWidgetProvider {
         // we need to embed the extras into the data so that the extras will not be ignored.
         openIntent.setData(Uri.parse(incIntent.toUri(Intent.URI_INTENT_SCHEME)));
         PendingIntent openPendingIntent = PendingIntent.getBroadcast(context, 0, openIntent, 0);
-        views.setOnClickPendingIntent(R.id.widget_fullscreen, openPendingIntent);
+        views.setOnClickPendingIntent(R.id.fullScreen, openPendingIntent);
 
 
         if (widgetCounter != null) {
             if (isFirsTimeCreated){
-                views.setImageViewResource(R.id.widget_toolbar_color, R.drawable.widget_toolbar_bg);
-                views.setInt(R.id.widget_toolbar_color, "setColorFilter", ThemeUtility.fetchAccentColor(context));
+                views.setImageViewResource(R.id.toolbar_color, R.drawable.widget_toolbar_bg);
+                views.setInt(R.id.toolbar_color, "setColorFilter", ThemeUtility.fetchAccentColor(context));
             }
 
-            views.setTextViewText(R.id.widget_value, String.valueOf(widgetCounter.value));
-            views.setTextViewText(R.id.widget_title, widgetCounter.title);
+            views.setTextViewText(R.id.value, String.valueOf(widgetCounter.value));
+            views.setTextViewText(R.id.title, widgetCounter.title);
             resizeWidgetViews(appWidgetOptions, views);
         }
 
@@ -175,10 +173,10 @@ public class CounterWidgetProvider extends AppWidgetProvider {
                                 setWidgetColor(context, counter.widgetId, appWidgetManager);
 
                             } else {
-                                RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
-                                views.setTextViewText(R.id.widget_value, context.getString(R.string.widget_deleted));
-                                views.setTextViewText(R.id.widget_title, context.getString(R.string.widget_deleted));
-                                views.setInt(R.id.widget_toolbar_color, "setBackgroundColor", Color.GRAY);
+                                RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_counter_widget);
+                                views.setTextViewText(R.id.value, context.getString(R.string.widget_deleted));
+                                views.setTextViewText(R.id.title, context.getString(R.string.widget_deleted));
+                                views.setInt(R.id.toolbar_color, "setBackgroundColor", Color.GRAY);
                                 appWidgetManager.updateAppWidget(id, views);
                             }
                         }, error ->{});
@@ -200,9 +198,9 @@ public class CounterWidgetProvider extends AppWidgetProvider {
     }
 
     public static void setWidgetColor(Context context, int widgetId, AppWidgetManager appWidgetManager) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counter_widget);
-        views.setImageViewResource(R.id.widget_toolbar_color, R.drawable.widget_toolbar_bg);
-        views.setInt(R.id.widget_toolbar_color, "setColorFilter", ThemeUtility.fetchAccentColor(context));
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_counter_widget);
+        views.setImageViewResource(R.id.toolbar_color, R.drawable.widget_toolbar_bg);
+        views.setInt(R.id.toolbar_color, "setColorFilter", ThemeUtility.fetchAccentColor(context));
         appWidgetManager.updateAppWidget(widgetId, views);
         }
 

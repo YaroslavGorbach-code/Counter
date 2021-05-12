@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/LaunchDetailed"
+    <ImageView
+        android:id="@+id/detailed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -45,7 +44,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/counterTitle_addCounter"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/addCounterDialogCounterTitle"
@@ -56,7 +55,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/counterGroups_addCounter"
+        android:id="@+id/groups"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

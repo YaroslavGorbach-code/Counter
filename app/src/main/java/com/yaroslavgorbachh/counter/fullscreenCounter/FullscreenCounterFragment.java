@@ -82,7 +82,7 @@ public class FullscreenCounterFragment extends Fragment {
         mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(FullscreenCounterViewModel.class);
         mViewModel.setCounterId(FullscreenCounterFragmentArgs.fromBundle(requireArguments()).getCounterId());
 
-        Toolbar toolbar = view.findViewById(R.id.fullScreenToolbar);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(view).popBackStack());
         /* save previous status bar configuration to restore it when fullscreen fragment is destroyed */

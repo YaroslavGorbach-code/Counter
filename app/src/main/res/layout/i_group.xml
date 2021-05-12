@@ -12,10 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_folder_open"
-        android:layout_marginStart="10dp"/>
+        android:layout_marginStart="10dp"
+        tools:ignore="ContentDescription" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/group_title_i"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:text="Group"

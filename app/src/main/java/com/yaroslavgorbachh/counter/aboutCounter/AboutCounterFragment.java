@@ -17,7 +17,6 @@ import com.google.android.material.textview.MaterialTextView;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.di.ViewModelBuilderModule;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -51,17 +50,17 @@ public class AboutCounterFragment extends Fragment {
         viewModel = new ViewModelProvider(this, viewModelProviderFactory).get(AboutCounterViewModel.class);
         viewModel.setCounterId(counterId);
 
-        mCounterName = view.findViewById(R.id.counterName);
-        mCreateData = view.findViewById(R.id.createData);
-        mLastResetedValue = view.findViewById(R.id.lastResetedValue);
+        mCounterName = view.findViewById(R.id.name);
+        mCreateData = view.findViewById(R.id.create_data);
+        mLastResetedValue = view.findViewById(R.id.last_reset_value);
         mCounterValue = view.findViewById(R.id.value);
         mCounterStep = view.findViewById(R.id.step);
         mCounterGroup = view.findViewById(R.id.group);
-        mCounterMinValue = view.findViewById(R.id.minValue);
-        mCounterMaxValue = view.findViewById(R.id.maxValue);
-        mLastResetData = view.findViewById(R.id.lastReset);
+        mCounterMinValue = view.findViewById(R.id.min_value);
+        mCounterMaxValue = view.findViewById(R.id.max_value);
+        mLastResetData = view.findViewById(R.id.last_reset);
 
-        Toolbar toolbar = view.findViewById(R.id.toolbar_aboutCounter);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(view).popBackStack());
 

@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaroslavgorbachh.counter.counterHistory.recyclerView.DividerItemDecoration;
-import com.yaroslavgorbachh.counter.countersList.DragAndDrop.CounterItemTouchHelper;
 import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.R;
 
@@ -83,10 +81,10 @@ public class CounterHistoryRv {
             private final TextView mCreateData;
 
             public Vh(@NonNull ViewGroup parent) {
-                super(LayoutInflater.from(parent.getContext()).inflate(R.layout.counter_history_i,
+                super(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_counter_history,
                         parent, false));
-                mValue = itemView.findViewById(R.id.history_value);
-                mCreateData = itemView.findViewById(R.id.historyData);
+                mValue = itemView.findViewById(R.id.value);
+                mCreateData = itemView.findViewById(R.id.date);
             }
 
             @Override

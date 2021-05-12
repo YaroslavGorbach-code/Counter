@@ -28,7 +28,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/widget_item_title"
+                android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -42,7 +42,7 @@
                 tools:text="Counter" />
 
             <ImageView
-                android:id="@+id/widget_minus"
+                android:id="@+id/dec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/widget_ic_ripple"
@@ -52,10 +52,11 @@
                 android:paddingTop="8dp"
                 android:paddingEnd="4dp"
                 android:paddingBottom="8dp"
-                android:src="@drawable/ic_widget_minus" />
+                android:src="@drawable/ic_widget_minus"
+                tools:ignore="ContentDescription" />
 
             <ImageView
-                android:id="@+id/widget_fullscreen"
+                android:id="@+id/fullscreen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/widget_ic_ripple"
@@ -65,11 +66,12 @@
                 android:focusable="false"
                 android:paddingEnd="4dp"
                 android:paddingBottom="8dp"
-                android:src="@drawable/ic_fullscreen_widget" />
+                android:src="@drawable/ic_fullscreen_widget"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/widget_item_value"
+            android:id="@+id/value"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_gravity="center"

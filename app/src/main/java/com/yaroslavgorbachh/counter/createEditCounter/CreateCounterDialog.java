@@ -22,10 +22,7 @@ import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.countersList.CountersFragmentDirections;
-import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
-
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -57,7 +54,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
        View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_create_counter, null);
        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
-       mCounterName_et = view.findViewById(R.id.counterTitle_addCounter);
+       mCounterName_et = view.findViewById(R.id.title);
 
        mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CreateCounterDialogViewModel.class);
 
@@ -83,7 +80,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
         setGroups(view.getContext());
 
         /*start CreateCounterDetailed_AND_EditCounterActivity*/
-            view.findViewById(R.id.LaunchDetailed).setOnClickListener(v -> {
+            view.findViewById(R.id.detailed).setOnClickListener(v -> {
                 dismiss();
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
                 navController.navigate(CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2());
@@ -97,7 +94,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
             ArrayAdapter<String> adapter =
                     new ArrayAdapter<>(
                             context,
-                            R.layout.dropdown_menu_popup_item,
+                            R.layout.item_popup,
                             Utility.deleteTheSameGroups(groups));
             mGroups_et.setAdapter(adapter);
         });

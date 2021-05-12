@@ -6,10 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.countersList.navigationDrawer.CounterDrawerMenuItemSelector;
 import com.yaroslavgorbachh.counter.countersList.navigationDrawer.DrawerItemSelector;
 
 import java.util.ArrayList;
@@ -61,8 +59,8 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
         private final TextView mTitle;
 
         public Vh(@NonNull ViewGroup parent) {
-            super(LayoutInflater.from(parent.getContext()).inflate(R.layout.group_i, parent, false));
-            mTitle = itemView.findViewById(R.id.group_title_i);
+            super(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_group, parent, false));
+            mTitle = itemView.findViewById(R.id.group_title);
             itemView.setOnTouchListener(this);
 
         }

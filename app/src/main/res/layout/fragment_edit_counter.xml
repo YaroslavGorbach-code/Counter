@@ -7,7 +7,7 @@
     tools:context="com.yaroslavgorbachh.counter.createEditCounter.CreateEditCounterFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_counterCreateActivity"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:colorBackground"
@@ -23,7 +23,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_counterCreateActivity">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -45,7 +45,7 @@
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/counterTitle_addCounter_detailed"
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/createEditCounterCounterTitleHint"
@@ -70,7 +70,7 @@
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/counterValue_addCounter_detailed"
+                    android:id="@+id/value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/createEditCounterCounterValueHint"
@@ -96,7 +96,7 @@
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/counterStep_addCounter_detailed"
+                    android:id="@+id/step"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/createEditCounterCounterStepHint"
@@ -123,7 +123,7 @@
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/counterMaxValue_addCounter_detailed"
+                    android:id="@+id/max"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/createEditCounterCounterMaxValueHint"
@@ -149,7 +149,7 @@
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/counterMinValue_addCounter_detailed"
+                    android:id="@+id/min"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/createEditCounterCounterMinValueHint"
@@ -175,7 +175,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/outlinedTextField4">
 
                 <AutoCompleteTextView
-                    android:id="@+id/filled_exposed_dropdown"
+                    android:id="@+id/dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"

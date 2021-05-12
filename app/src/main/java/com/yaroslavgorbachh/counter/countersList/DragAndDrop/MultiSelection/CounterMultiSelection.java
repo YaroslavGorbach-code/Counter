@@ -9,11 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.CopyCounterBeforeReset;
-import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.countersList.CountersAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -199,12 +197,12 @@ public class CounterMultiSelection implements MultiCount {
 
     private void setDefaultBackground(RecyclerView.ViewHolder vh) {
         vh.itemView.setBackground(mDefaultBackground);
-        vh.itemView.findViewById(R.id.counter_item).setBackgroundResource(0);
+        vh.itemView.findViewById(R.id.item).setBackgroundResource(0);
         vh.itemView.setElevation(7F);
     }
 
     private void setItemSelectedBackground(RecyclerView.ViewHolder vh) {
-        vh.itemView.findViewById(R.id.counter_item).setBackgroundResource(R.drawable.item_selected);
+        vh.itemView.findViewById(R.id.item).setBackgroundResource(R.drawable.i_selected);
         vh.itemView.setElevation(8f);
     }
 

@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,15 +119,15 @@ public class CountersFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.counters_fragment, container, false);
-        mDecAllSelectedCounters_bt = view.findViewById(R.id.allSelectedDec);
-        mIncAllSelectedCounters_bt = view.findViewById(R.id.allSelectedInc);
-        mAllCounters_drawerItem = view.findViewById(R.id.AllCounters);
-        mToolbar = view.findViewById(R.id.toolbar_mainActivity);
+        View view = inflater.inflate(R.layout.fragment_counters, container, false);
+        mDecAllSelectedCounters_bt = view.findViewById(R.id.dec_selected);
+        mIncAllSelectedCounters_bt = view.findViewById(R.id.inc_selected);
+        mAllCounters_drawerItem = view.findViewById(R.id.all_counters);
+        mToolbar = view.findViewById(R.id.toolbar);
         mDrawer = view.findViewById(R.id.drawer);
-        mCounters_rv = view.findViewById(R.id.counters_list);
-        mIconAndTextThereAreNoCounters = view.findViewById(R.id.iconAndTextThereAreNoCounters);
-        mThereAreNoGroupsTextAndIcon = view.findViewById(R.id.thereAreNoGroupsTextAndIcon);
+        mCounters_rv = view.findViewById(R.id.rv);
+        mIconAndTextThereAreNoCounters = view.findViewById(R.id.no_counters);
+        mThereAreNoGroupsTextAndIcon = view.findViewById(R.id.no_groups);
 
         mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CountersViewModel.class);
 
@@ -155,14 +154,14 @@ public class CountersFragment extends Fragment {
             startActivity(startSettingsActivity);
         });
 
-        view.findViewById(R.id.iconThereAreNoCounters).setOnClickListener(v -> {
+        view.findViewById(R.id.no_counters).setOnClickListener(v -> {
             new CreateCounterDialog().show(getParentFragmentManager(), "Add Counter");
         });
 
         /*initialize RecyclerView and listener for groups*/
         mGroupsAdapter = new GroupsAdapter(drawerItemSelector);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(requireContext());
-        RecyclerView groups_rv = view.findViewById(R.id.groupsList_rv);
+        RecyclerView groups_rv = view.findViewById(R.id.groups_list);
         groups_rv.setLayoutManager(mLayoutManager);
         groups_rv.setAdapter(mGroupsAdapter);
         groups_rv.setHasFixedSize(true);

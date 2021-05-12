@@ -6,24 +6,24 @@
     android:layout_margin="4dp"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/history_i_bg"
+    android:background="@drawable/i_history_bg"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="8dp">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/history_value"
+        android:id="@+id/value"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:gravity="center|start"
         tools:text="Value"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/historyData"
+        app:layout_constraintEnd_toStartOf="@+id/date"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/historyData"
+        android:id="@+id/date"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="bottom|end"
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/history_value"
+        app:layout_constraintStart_toEndOf="@+id/value"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

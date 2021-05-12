@@ -75,7 +75,7 @@
     <fragment
         android:id="@+id/createEditCounterFragment"
         android:name="com.yaroslavgorbachh.counter.createEditCounter.CreateEditCounterFragment"
-        tools:layout="@layout/fragment_create_edit_counter" >
+        tools:layout="@layout/fragment_edit_counter" >
         <argument
             android:name="counterId"
             app:argType="long"

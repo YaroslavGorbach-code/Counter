@@ -2,7 +2,6 @@ package com.yaroslavgorbachh.counter.counter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,7 +9,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.Navigation;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -74,18 +72,18 @@ public class CounterFragment extends Fragment {
         /*initialize fields*/
         mValue_tv = view.findViewById(R.id.value);
         mIncButton = view.findViewById(R.id.inc_value);
-        mDecButton = view.findViewById(R.id.dec_value);
-        mResetButton = view.findViewById(R.id.reset_value);
-        mCounterTitle = view.findViewById(R.id.counterTitle);
+        mDecButton = view.findViewById(R.id.dec);
+        mResetButton = view.findViewById(R.id.reset);
+        mCounterTitle = view.findViewById(R.id.title);
         mLayout = view.findViewById(R.id.counterLayout);
-        mGroupTitle = view.findViewById(R.id.groupTitle);
+        mGroupTitle = view.findViewById(R.id.group_title);
 
         mCounterId = CounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
 
         mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CounterViewModel.class);
         mViewModel.setCounterId(mCounterId);
         /*inflating menu, navigationIcon and set listeners*/
-        Toolbar toolbar = view.findViewById(R.id.counterActivity_toolbar);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_counter_fragment);
         toolbar.setOnMenuItemClickListener(i -> {
             switch (i.getItemId()) {
