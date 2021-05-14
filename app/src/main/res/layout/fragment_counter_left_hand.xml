@@ -8,10 +8,12 @@
     android:orientation="vertical"
     tools:context="com.yaroslavgorbachh.counter.counter.CounterFragment">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:menu="@menu/menu_counter_fragment"
+        app:navigationIcon="@drawable/ic_arrow_back"
         android:background="?android:colorBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -118,7 +118,7 @@ public class FullscreenCounterFragment extends Fragment {
         mViewModel.counter.observe(getViewLifecycleOwner(), counter -> {
             if (mCounterValue_tv.getText().length()>1)
                 Animations.hideSwipeHelper(mSwipeHelperLayout);
-            mCounterValue_tv.setTextSize(Utility.getValueTvSize(counter));
+            mCounterValue_tv.setTextSize(Utility.getValueTvSize(counter.value));
             mCounterValue_tv.setText(String.valueOf(counter.value));
 
         });

@@ -13,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:colorBackground"
+        app:menu="@menu/menu_counter_fragment"
+        app:navigationIcon="@drawable/ic_arrow_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -73,14 +75,14 @@
         app:iconSize="75dp"
         app:icon="@drawable/ic_minus"
         app:layout_constraintDimensionRatio="1.5"
-        app:layout_constraintBottom_toTopOf="@+id/inc_value"
+        app:layout_constraintBottom_toTopOf="@+id/inc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/reset"
         tools:ignore="HardcodedText,SpUsage" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/inc_value"
+        android:id="@+id/inc"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -98,7 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/value"
         android:layout_width="0dp"
         android:layout_height="0dp"

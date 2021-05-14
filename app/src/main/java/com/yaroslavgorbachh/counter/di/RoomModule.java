@@ -16,6 +16,8 @@ import com.yaroslavgorbachh.counter.database.Models.Counter;
 
 import java.util.Date;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 

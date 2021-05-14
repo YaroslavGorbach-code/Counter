@@ -68,8 +68,8 @@ public class Utility {
 
 
     /*method for changing the font size depending on the counter value*/
-    public static int getValueTvSize(Counter counter) {
-        switch (String.valueOf(counter.value).length()) {
+    public static int getValueTvSize(long value) {
+        switch (String.valueOf(value).length()) {
             case 1:
             case 2:
                 return 150;

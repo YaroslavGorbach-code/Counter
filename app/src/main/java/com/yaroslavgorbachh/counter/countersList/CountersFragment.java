@@ -51,6 +51,7 @@ import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
 import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import java.util.stream.Collectors;
