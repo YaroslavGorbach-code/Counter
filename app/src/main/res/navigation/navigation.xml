@@ -92,7 +92,7 @@
     </fragment>
     <fragment
         android:id="@+id/fullscreenCounterFragment"
-        android:name="com.yaroslavgorbachh.counter.screen.fullscreenCounter.FullscreenCounterFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.fullscreen.FullscreenCounterFragment"
         android:label="fragment_fullscreen_counter"
         tools:layout="@layout/fragment_fullscreen_counter" >
         <argument

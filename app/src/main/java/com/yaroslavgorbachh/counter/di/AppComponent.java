@@ -15,7 +15,7 @@ import com.yaroslavgorbachh.counter.screen.counterWidget.CounterWidgetProvider;
 import com.yaroslavgorbachh.counter.screen.countersList.CountersFragment;
 import com.yaroslavgorbachh.counter.screen.createEditCounter.CreateCounterDialog;
 import com.yaroslavgorbachh.counter.screen.createEditCounter.CreateEditCounterFragment;
-import com.yaroslavgorbachh.counter.screen.fullscreenCounter.FullscreenCounterFragment;
+import com.yaroslavgorbachh.counter.screen.fullscreen.FullscreenCounterFragment;
 
 import javax.inject.Singleton;
 

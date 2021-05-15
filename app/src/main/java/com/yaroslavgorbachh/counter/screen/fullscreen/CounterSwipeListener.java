@@ -1,11 +1,11 @@
-package com.yaroslavgorbachh.counter.screen.fullscreenCounter;
+package com.yaroslavgorbachh.counter.screen.fullscreen;
 
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class CounterSwipeListener implements View.OnTouchListener, SwipeListener{
+public class CounterSwipeListener implements View.OnTouchListener{
 
     private final GestureDetector gestureDetector;
 
@@ -19,13 +19,8 @@ public class CounterSwipeListener implements View.OnTouchListener, SwipeListener
         return gestureDetector.onTouchEvent(event);
     }
 
-    @Override
-    public void onSwipeBottom() {
-    }
-
-    @Override
-    public void onSwipeTop() {
-    }
+    public void onSwipeBottom(){}
+    public void onSwipeTop(){}
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_THRESHOLD = 100;
@@ -38,7 +33,6 @@ public class CounterSwipeListener implements View.OnTouchListener, SwipeListener
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            boolean result = false;
                 float diffY = e2.getY() - e1.getY();
                 if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffY > 0) {
@@ -46,10 +40,8 @@ public class CounterSwipeListener implements View.OnTouchListener, SwipeListener
                     } else {
                         onSwipeTop();
                     }
-                    result = true;
                 }
-
-            return result;
+            return true;
         }
     }
 
