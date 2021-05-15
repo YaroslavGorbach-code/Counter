@@ -2,10 +2,10 @@ package com.yaroslavgorbachh.counter.counter;
 
 import androidx.lifecycle.ViewModel;
 
-import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.component.CounterComp;
 import com.yaroslavgorbachh.counter.component.CounterCompImp;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 public class CounterViewModel extends ViewModel {
     private CounterComp counterComp;

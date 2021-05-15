@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.CopyCounterBeforeReset;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 import com.yaroslavgorbachh.counter.R;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import javax.inject.Inject;
 
 public class CounterMultiSelection implements MultiCount {
     private final Accessibility mAccessibility;
-    private final Repo mRepo;
+    private final Repo repo;
     private CopyCounterBeforeReset mCopyCounterBeforeReset;
 
     private Drawable mDefaultBackground = null;
@@ -35,7 +36,7 @@ public class CounterMultiSelection implements MultiCount {
 
     @Inject
     public CounterMultiSelection(Repo repo, Context context, Accessibility accessibility) {
-        mRepo = repo;
+        this.repo = repo;
         mContext = context;
         mAccessibility = accessibility;
     }
@@ -148,7 +149,7 @@ public class CounterMultiSelection implements MultiCount {
     @Override
     public void decAll() {
         for (Counter counter : mSelectedCounters) {
-            counter.dec(mContext, mRepo, null);
+            repo.decCounter(counter.id);
         }
     //we do it here because wen a lot of counters increments simultaneously feedback is incorrect
     mAccessibility.playDecFeedback(null);
@@ -157,7 +158,7 @@ public class CounterMultiSelection implements MultiCount {
     @Override
     public void incAll() {
         for (Counter counter : mSelectedCounters) {
-            counter.inc(mContext, mRepo, null);
+            repo.incCounter(counter.id);
         }
         //we do it here because wen a lot of counters increments simultaneously feedback is incorrect
         mAccessibility.playIncFeedback(null);
@@ -168,7 +169,7 @@ public class CounterMultiSelection implements MultiCount {
         mCopyCounterBeforeReset = new CopyCounterBeforeReset();
         for (Counter counter : mSelectedCounters) {
             mCopyCounterBeforeReset.addCounter(counter);
-            counter.reset(mRepo);
+            repo.resetCounter(counter.id);
         }
         mCountSelected.setValue(mSelectedCounters.size());
     }
@@ -176,7 +177,7 @@ public class CounterMultiSelection implements MultiCount {
     @Override
     public void undoResetAll() {
         for (Counter counter : mCopyCounterBeforeReset.getCounters()) {
-            mRepo.updateCounter(counter);
+            repo.updateCounter(counter);
         }
         mSelectedCounters = mCopyCounterBeforeReset.getCounters();
         mMultiSelectionState.setValue(mSelectedCounters != null);
@@ -187,7 +188,7 @@ public class CounterMultiSelection implements MultiCount {
     @Override
     public void deleteAll() {
         for (Counter counter : mSelectedCounters) {
-            mRepo.deleteCounter(counter);
+            repo.decCounter(counter.id);
         }
         mMultiSelectionState.setValue(false);
         mCountSelected.setValue(0);

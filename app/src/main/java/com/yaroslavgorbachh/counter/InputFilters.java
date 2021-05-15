@@ -3,7 +3,7 @@ package com.yaroslavgorbachh.counter;
 import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 public class InputFilters {
 

@@ -3,12 +3,10 @@ package com.yaroslavgorbachh.counter.countersList.DragAndDrop.MultiSelection;
 import android.graphics.drawable.Drawable;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaroslavgorbachh.counter.database.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface MultiSelection extends DragAndDrop{

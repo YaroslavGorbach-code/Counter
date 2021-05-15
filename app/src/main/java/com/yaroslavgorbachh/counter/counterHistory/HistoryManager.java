@@ -1,8 +1,9 @@
 package com.yaroslavgorbachh.counter.counterHistory;
 
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 import java.util.Date;
 import java.util.HashMap;

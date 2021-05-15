@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.database.Daos;
+package com.yaroslavgorbachh.counter.data.Daos;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.yaroslavgorbachh.counter.database.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 import java.util.List;
 
@@ -44,5 +44,12 @@ public interface CounterDao {
     @Query("SELECT * FROM counter_table WHERE id = :id")
     Counter getCounterNoLiveData(long id);
 
+    @Query("UPDATE counter_table SET value = value + 1 WHERE id = :id")
+    void inc(long id);
 
+    @Query("UPDATE counter_table SET value = value - 1 WHERE id = :id")
+    void dec(long id);
+
+    @Query("UPDATE counter_table SET value = 0 WHERE id = :id")
+    void reset(long id);
 }

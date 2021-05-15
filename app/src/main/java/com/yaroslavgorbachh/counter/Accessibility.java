@@ -66,6 +66,7 @@ public class Accessibility {
         playIncSoundEffect();
         playIncVibrationEffect();
         speechOutput(text);
+        Log.v("counter","incFeedback");
     }
 
     public void playDecFeedback(String text){

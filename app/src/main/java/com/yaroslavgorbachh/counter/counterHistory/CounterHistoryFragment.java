@@ -25,11 +25,9 @@ import com.yaroslavgorbachh.counter.Animations;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.counterHistory.recyclerView.CounterHistoryRv;
-import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
 
 import java.util.Collections;
-
-import javax.inject.Inject;
 
 public class CounterHistoryFragment extends Fragment {
     private CounterHistoryRv mHistoryList;

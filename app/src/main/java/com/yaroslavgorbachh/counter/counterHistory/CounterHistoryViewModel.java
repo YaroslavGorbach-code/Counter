@@ -1,40 +1,37 @@
 package com.yaroslavgorbachh.counter.counterHistory;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 public class CounterHistoryViewModel extends ViewModel {
-    private final Repo mRepo;
+    private final Repo repo;
 
     @Inject
     public CounterHistoryViewModel(Repo repo) {
-        mRepo = repo;
+        this.repo = repo;
     }
 
     public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId) {
-        return mRepo.getCounterHistoryList(counterId);
+        return repo.getCounterHistoryList(counterId);
     }
 
     public void clean(long id) {
-        mRepo.deleteCounterHistory(id);
+        repo.deleteCounterHistory(id);
     }
 
     public void deleteHistoryItem(CounterHistory counterHistory) {
-        mRepo.deleteHistoryItem(counterHistory);
+        repo.deleteHistoryItem(counterHistory);
     }
 
     public void addHistoryItem(CounterHistory copy) {
-        mRepo.insertCounterHistory(copy);
+        repo.insertCounterHistory(copy);
     }
 }

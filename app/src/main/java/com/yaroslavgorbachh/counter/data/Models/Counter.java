@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.database.Models;
+package com.yaroslavgorbachh.counter.data.Models;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -9,7 +9,8 @@ import androidx.room.PrimaryKey;
 
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 import com.yaroslavgorbachh.counter.R;
 
 import java.util.Date;

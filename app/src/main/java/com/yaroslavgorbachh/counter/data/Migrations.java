@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.database;
+package com.yaroslavgorbachh.counter.data;
 
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;

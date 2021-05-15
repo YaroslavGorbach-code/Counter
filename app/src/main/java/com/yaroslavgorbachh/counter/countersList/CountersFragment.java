@@ -46,13 +46,14 @@ import com.yaroslavgorbachh.counter.countersList.DragAndDrop.MultiSelection.Coun
 import com.yaroslavgorbachh.counter.countersList.DragAndDrop.MultiSelection.MultiCount;
 import com.yaroslavgorbachh.counter.countersList.navigationDrawer.CounterDrawerMenuItemSelector;
 import com.yaroslavgorbachh.counter.countersList.navigationDrawer.DrawerItemSelector;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.createEditCounter.CreateCounterDialog;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 import java.util.stream.Collectors;
 
@@ -311,13 +312,13 @@ public class CountersFragment extends Fragment {
         if (sharedPreferences.getBoolean("leftHandMod", false)) {
             mIncAllSelectedCounters_bt.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_minus,  requireActivity().getTheme()));
             mDecAllSelectedCounters_bt.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_plus,  requireActivity().getTheme()));
-            new FastCountButton(mDecAllSelectedCounters_bt, this::incSelectedCounters, sharedPreferences);
-            new FastCountButton(mIncAllSelectedCounters_bt, this::decSelectedCounters, sharedPreferences);
+            new FastCountButton(mDecAllSelectedCounters_bt, this::incSelectedCounters, sharedPreferences, null);
+            new FastCountButton(mIncAllSelectedCounters_bt, this::decSelectedCounters, sharedPreferences, null);
         } else {
             mDecAllSelectedCounters_bt.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_minus, requireActivity().getTheme()));
             mIncAllSelectedCounters_bt.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_plus,  requireActivity().getTheme()));
-            new FastCountButton(mDecAllSelectedCounters_bt, this::decSelectedCounters, sharedPreferences);
-            new FastCountButton(mIncAllSelectedCounters_bt, this::incSelectedCounters, sharedPreferences);
+            new FastCountButton(mDecAllSelectedCounters_bt, this::decSelectedCounters, sharedPreferences, null);
+            new FastCountButton(mIncAllSelectedCounters_bt, this::incSelectedCounters, sharedPreferences, null);
         }
         mCounters_rv.setAdapter(mCountersAdapter);
     }

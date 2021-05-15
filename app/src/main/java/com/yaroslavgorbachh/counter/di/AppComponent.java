@@ -25,7 +25,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {
         AppModule.class,
-        RoomModule.class})
+        DataModule.class})
 
 public interface AppComponent {
 

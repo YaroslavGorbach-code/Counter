@@ -1,41 +1,39 @@
 package com.yaroslavgorbachh.counter.fullscreenCounter;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.yaroslavgorbachh.counter.Accessibility;
-import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 import javax.inject.Inject;
 
 public class FullscreenCounterViewModel extends ViewModel {
     public LiveData<Counter> counter;
 
-    private final Repo mRepo;
+    private final Repo repo;
     private final Accessibility mAccessibility;
 
     @Inject
     public FullscreenCounterViewModel(Repo repo, Accessibility accessibility) {
-        mRepo = repo;
+        this.repo = repo;
         mAccessibility = accessibility;
     }
 
     public void incCounter(Context context) {
-        counter.getValue().inc(context, mRepo, mAccessibility);
+        repo.incCounter(counter.getValue().id);
     }
 
     public void decCounter(Context context){
-        counter.getValue().dec(context, mRepo, mAccessibility);
+        repo.decCounter(counter.getValue().id);
     }
 
     public void setCounterId(Long id){
-        counter = mRepo.getCounter(id);
+        counter = repo.getCounter(id);
     }
 
 }

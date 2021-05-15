@@ -14,7 +14,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.yaroslavgorbachh.counter.counterSettings.themes.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.counterSettings.themes.ThemeUtility;
 import com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 import javax.inject.Inject;
 
@@ -31,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private final CompositeDisposable mDisposables = new CompositeDisposable();
 
     @Inject SharedPreferences sharedPreferences;
-    @Inject Repo repo;
+    @Inject
+    Repo repo;
 
 
 

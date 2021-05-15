@@ -6,20 +6,17 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.preference.PreferenceManager;
 
-import com.yaroslavgorbachh.counter.counterSettings.SettingsFragment;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.counterSettings.themes.ThemeUtility;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 import javax.inject.Inject;
 
 public class SettingsActivity extends AppCompatActivity {
-   @Inject
-   SharedPreferences sharedPreferences;
+   @Inject SharedPreferences sharedPreferences;
    @Inject Repo repo;
 
     @Override

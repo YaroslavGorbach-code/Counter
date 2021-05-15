@@ -10,7 +10,8 @@ import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 public class ThemeUtility {
     public static int fetchAccentColor(Context context) {
@@ -22,16 +23,17 @@ public class ThemeUtility {
     }
 
     public static void setTheme(SharedPreferences sharedPreferences, Activity activity, Repo repo) {
-        new Thread(() -> {
-            if (repo.getCurrentStyle() != null){
-                activity.setTheme(repo.getCurrentStyle().style);
-            }
-        }).start();
-        if (sharedPreferences.getBoolean("nightMod", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        // TODO: 5/15/2021  
+//        new Thread(() -> {
+//            if (repoImp.getCurrentStyle() != null){
+//                activity.setTheme(repo.getCurrentStyle().style);
+//            }
+//        }).start();
+//        if (sharedPreferences.getBoolean("nightMod", false)) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//        } else {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//        }
     }
 
 }

@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.counterSettings.themes.ThemeUtility;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 import javax.inject.Inject;
 
@@ -61,38 +62,39 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
         }
 
         WidgetCountersAdapter adapter = new WidgetCountersAdapter(counter -> {
-         Disposable disposable = repo.getCounterNoLiveData(counter.id)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(widgetCounter -> {
-                        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                        if (widgetCounter.widgetId!=null && CounterWidgetProvider.checkWidgetIfExists(widgetCounter.widgetId, this)){
-                            Toast.makeText(this, getString(R.string.widget_exists), Toast.LENGTH_LONG).show();
-                        }else {
-                            appWidgetManager.updateAppWidget(appWidgetId,
-                                    CounterWidgetProvider.getRemoteViews(widgetCounter, appWidgetId, this, appWidgetManager, true));
-                            widgetCounter.widgetId = appWidgetId;
-                            repo.updateCounter(widgetCounter);
-
-                            Intent resultIntent = new Intent();
-                            resultIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-                            setResult(RESULT_OK, resultIntent);
-                            finish();
-                        }
-                    }, error->{});
-         mDisposables.add(disposable);
+            // TODO: 5/15/2021
+//         Disposable disposable = repo.getCounterNoLiveData(counter.id)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(widgetCounter -> {
+//                        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//                        if (widgetCounter.widgetId!=null && CounterWidgetProvider.checkWidgetIfExists(widgetCounter.widgetId, this)){
+//                            Toast.makeText(this, getString(R.string.widget_exists), Toast.LENGTH_LONG).show();
+//                        }else {
+//                            appWidgetManager.updateAppWidget(appWidgetId,
+//                                    CounterWidgetProvider.getRemoteViews(widgetCounter, appWidgetId, this, appWidgetManager, true));
+//                            widgetCounter.widgetId = appWidgetId;
+//                            repoImp.updateCounter(widgetCounter);
+//
+//                            Intent resultIntent = new Intent();
+//                            resultIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+//                            setResult(RESULT_OK, resultIntent);
+//                            finish();
+//                        }
+//                    }, error->{});
+//         mDisposables.add(disposable);
 
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Disposable disposable = repo.getAllCountersNoLiveData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(counters -> {
-                    adapter.setData(counters);
-                    mRecyclerView.setAdapter(adapter);
-                });
-        mDisposables.add(disposable);
+//        Disposable disposable = repo.getAllCountersNoLiveData()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(counters -> {
+//                    adapter.setData(counters);
+//                    mRecyclerView.setAdapter(adapter);
+//                });
+//        mDisposables.add(disposable);
     }
 
 

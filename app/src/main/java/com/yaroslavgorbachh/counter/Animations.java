@@ -10,15 +10,8 @@ import android.os.Looper;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
-import android.widget.LinearLayout;
 
 import com.google.android.material.button.MaterialButton;
-import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
-
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Animations {
 

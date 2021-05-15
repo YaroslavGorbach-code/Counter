@@ -18,13 +18,11 @@ import android.widget.AutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.yaroslavgorbachh.counter.InputFilters;
 import com.yaroslavgorbachh.counter.MyApplication;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 
 import java.util.Objects;
-
-import javax.inject.Inject;
 
 
 public class CreateEditCounterFragment extends Fragment {

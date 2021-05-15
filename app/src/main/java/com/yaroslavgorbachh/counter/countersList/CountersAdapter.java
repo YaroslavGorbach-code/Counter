@@ -20,7 +20,7 @@ import com.yaroslavgorbachh.counter.countersList.DragAndDrop.CounterItemTouchHel
 import com.yaroslavgorbachh.counter.countersList.DragAndDrop.ItemTouchHelperAdapter;
 import com.yaroslavgorbachh.counter.countersList.DragAndDrop.ItemTouchHelperViewHolder;
 import com.yaroslavgorbachh.counter.countersList.DragAndDrop.MultiSelection.MultiSelection;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,12 +127,12 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             new FastCountButton(mPlus, () -> {
                 if (getBindingAdapterPosition() != -1)
                     mCounterItemClickListener.onPlusClick(mData.get(getBindingAdapterPosition()));
-            }, mSharedPreferences);
+            }, mSharedPreferences, null);
 
             new FastCountButton(mMinus, () -> {
                 if (getBindingAdapterPosition() != -1)
                     mCounterItemClickListener.onMinusClick(mData.get(getBindingAdapterPosition()));
-            }, mSharedPreferences);
+            }, mSharedPreferences, null);
 
             /*if selection mod is active we need to disable buttons plus and minos*/
             mCounterMultiSelection.getSelectionModState().observe((LifecycleOwner) itemView.getContext(), aBoolean -> {

@@ -2,7 +2,7 @@ package com.yaroslavgorbachh.counter.component;
 
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.database.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 public interface CounterComp {
     void incCounter();

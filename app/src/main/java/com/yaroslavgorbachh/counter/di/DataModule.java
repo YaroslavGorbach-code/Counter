@@ -10,8 +10,10 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.database.CounterDatabase;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
+import com.yaroslavgorbachh.counter.data.CounterDatabase;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 
 import java.util.Date;
@@ -21,13 +23,13 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-import static com.yaroslavgorbachh.counter.database.Migrations.MIGRATION_24_25;
-import static com.yaroslavgorbachh.counter.database.Migrations.MIGRATION_25_26;
-import static com.yaroslavgorbachh.counter.database.Migrations.MIGRATION_26_27;
+import static com.yaroslavgorbachh.counter.data.Migrations.MIGRATION_24_25;
+import static com.yaroslavgorbachh.counter.data.Migrations.MIGRATION_25_26;
+import static com.yaroslavgorbachh.counter.data.Migrations.MIGRATION_26_27;
 
 
 @Module
-public class RoomModule {
+public class DataModule {
 
     @Provides
     public CounterDatabase provideDatabase(Context context){
@@ -59,7 +61,13 @@ public class RoomModule {
                             }
                         })
                         .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
+                        .allowMainThreadQueries()
                         .addMigrations(MIGRATION_24_25, MIGRATION_25_26, MIGRATION_26_27)
                         .build();
             }
+
+    @Provides
+    public Repo provideRepo(CounterDatabase database){
+       return new RepoImp(database);
+    }
 }

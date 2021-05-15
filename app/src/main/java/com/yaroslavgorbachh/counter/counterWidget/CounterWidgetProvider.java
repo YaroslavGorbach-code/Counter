@@ -16,8 +16,9 @@ import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.counterSettings.themes.ThemeUtility;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 import java.util.Objects;
 
@@ -40,7 +41,8 @@ public class CounterWidgetProvider extends AppWidgetProvider {
     public static final String START_MAIN_ACTIVITY_EXTRA = "START_MAIN_ACTIVITY_EXTRA";
     private final CompositeDisposable mDisposables = new CompositeDisposable();
 
-    @Inject Repo repo;
+    @Inject
+    Repo repo;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -51,32 +53,32 @@ public class CounterWidgetProvider extends AppWidgetProvider {
                 AppWidgetManager.INVALID_APPWIDGET_ID);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
-
-       Disposable disposable = repo.getCounterWidget(widgetId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(counter -> {
-                    if (Objects.requireNonNull(intent.getAction()).equals(INC_CLICK) && counter != null) {
-                        counter.inc(context, repo, null);
-                        appWidgetManager.updateAppWidget(counter.widgetId,
-                                getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
-                    }
-
-                    if (Objects.requireNonNull(intent.getAction()).equals(DEC_CLICK) && counter != null) {
-                        counter.dec(context, repo, null);
-                        appWidgetManager.updateAppWidget(counter.widgetId,
-                                getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
-                    }
-
-                    if (Objects.requireNonNull(intent.getAction()).equals(OPEN_CLICK) && counter != null) {
-                        Intent startMainActivityIntent = new Intent(context, MainActivity.class);
-                        startMainActivityIntent.putExtra(START_MAIN_ACTIVITY_EXTRA, counter.id);
-                        startMainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(startMainActivityIntent);
-                    }
-                },error->{});
-
-       mDisposables.add(disposable);
+        // TODO: 5/15/2021
+//       Disposable disposable = repo.getCounterWidget(widgetId)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(counter -> {
+//                    if (Objects.requireNonNull(intent.getAction()).equals(INC_CLICK) && counter != null) {
+//                        counter.inc(context, repoImp, null);
+//                        appWidgetManager.updateAppWidget(counter.widgetId,
+//                                getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
+//                    }
+//
+//                    if (Objects.requireNonNull(intent.getAction()).equals(DEC_CLICK) && counter != null) {
+//                        counter.dec(context, repoImp, null);
+//                        appWidgetManager.updateAppWidget(counter.widgetId,
+//                                getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
+//                    }
+//
+//                    if (Objects.requireNonNull(intent.getAction()).equals(OPEN_CLICK) && counter != null) {
+//                        Intent startMainActivityIntent = new Intent(context, MainActivity.class);
+//                        startMainActivityIntent.putExtra(START_MAIN_ACTIVITY_EXTRA, counter.id);
+//                        startMainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        context.startActivity(startMainActivityIntent);
+//                    }
+//                },error->{});
+//
+//       mDisposables.add(disposable);
 
         super.onReceive(context, intent);
     }
@@ -160,28 +162,29 @@ public class CounterWidgetProvider extends AppWidgetProvider {
     public static Disposable updateWidgets(Context context, Repo repo) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         Disposable disposable = null;
-        int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, CounterWidgetProvider.class));
-        if (ids != null) {
-            for (int id : ids) {
-                disposable = repo.getCounterWidget(id)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(counter -> {
-                            if (counter != null) {
-                                appWidgetManager.updateAppWidget(counter.widgetId,
-                                        getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
-                                setWidgetColor(context, counter.widgetId, appWidgetManager);
-
-                            } else {
-                                RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_counter_widget);
-                                views.setTextViewText(R.id.value, context.getString(R.string.widget_deleted));
-                                views.setTextViewText(R.id.title, context.getString(R.string.widget_deleted));
-                                views.setInt(R.id.toolbar_color, "setBackgroundColor", Color.GRAY);
-                                appWidgetManager.updateAppWidget(id, views);
-                            }
-                        }, error ->{});
-            }
-        }
+//        int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, CounterWidgetProvider.class));
+//        if (ids != null) {
+//            for (int id : ids) {
+//                disposable = repo.getCounterWidget(id)
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(counter -> {
+//                            if (counter != null) {
+//                                appWidgetManager.updateAppWidget(counter.widgetId,
+//                                        getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
+//                                setWidgetColor(context, counter.widgetId, appWidgetManager);
+//
+//                            } else {
+//                                RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_counter_widget);
+//                                views.setTextViewText(R.id.value, context.getString(R.string.widget_deleted));
+//                                views.setTextViewText(R.id.title, context.getString(R.string.widget_deleted));
+//                                views.setInt(R.id.toolbar_color, "setBackgroundColor", Color.GRAY);
+//                                appWidgetManager.updateAppWidget(id, views);
+//                            }
+//                        }, error ->{});
+//            }
+//        }
+        // TODO: 5/15/2021
     return disposable;
     }
 

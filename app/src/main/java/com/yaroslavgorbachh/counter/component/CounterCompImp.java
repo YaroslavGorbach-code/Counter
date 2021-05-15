@@ -1,17 +1,9 @@
 package com.yaroslavgorbachh.counter.component;
-
-import android.content.Context;
-import android.os.Handler;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import com.yaroslavgorbachh.counter.Accessibility;
-import com.yaroslavgorbachh.counter.CopyCounterBeforeReset;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
-import com.yaroslavgorbachh.counter.database.Repo;
-
-
+import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 public class CounterCompImp implements CounterComp {
     private Repo mRepo;
@@ -27,13 +19,11 @@ public class CounterCompImp implements CounterComp {
     @Override
     public void incCounter() {
         mRepo.incCounter(mId);
-
     }
 
     @Override
     public void decCounter() {
         mRepo.decCounter(mId);
-
     }
 
     public void resetCounter(){
@@ -51,7 +41,7 @@ public class CounterCompImp implements CounterComp {
 
     @Override
     public LiveData<Counter> getCounter() {
-        return null;
+        return mRepo.getCounter(mId);
     }
 
 }

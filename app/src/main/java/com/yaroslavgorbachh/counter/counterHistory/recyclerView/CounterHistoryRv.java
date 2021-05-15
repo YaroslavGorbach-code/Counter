@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.R;
 
 import java.util.ArrayList;

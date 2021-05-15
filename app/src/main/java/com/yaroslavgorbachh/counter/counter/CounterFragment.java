@@ -24,7 +24,8 @@ import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.CounterComp;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
 
 import javax.inject.Inject;
@@ -69,7 +70,7 @@ public class CounterFragment extends Fragment {
         CounterComp counter = vm.getCounterComponent(repo, id);
 
         // init view
-        CounterView v = new CounterView(FragmentCounterBinding.bind(requireView()), accessibility, new CounterView.Callback() {
+        CounterView v = new CounterView(FragmentCounterBinding.bind(requireView()), new CounterView.Callback() {
             @Override
             public void onDelete() {
                 new MaterialAlertDialogBuilder(requireContext())
@@ -126,12 +127,12 @@ public class CounterFragment extends Fragment {
 
             @Override
             public void onInc(View view) {
-                new FastCountButton(view, counter::incCounter, sharedPreferences);
+                new FastCountButton(view, counter::incCounter, sharedPreferences, accessibility);
             }
 
             @Override
             public void onDec(View view) {
-                new FastCountButton(view, counter::decCounter, sharedPreferences);
+                new FastCountButton(view, counter::decCounter, sharedPreferences, accessibility);
             }
 
             @Override

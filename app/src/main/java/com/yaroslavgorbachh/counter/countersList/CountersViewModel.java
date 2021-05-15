@@ -1,43 +1,37 @@
 package com.yaroslavgorbachh.counter.countersList;
 
-import android.app.Application;
 import android.content.Context;
-import android.content.res.Resources;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.yaroslavgorbachh.counter.Accessibility;
-import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
-import com.yaroslavgorbachh.counter.database.Models.Counter;
-import com.yaroslavgorbachh.counter.database.Repo;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.data.RepoImp;
 
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class CountersViewModel extends ViewModel {
-    private final Repo mRepo;
+    private final Repo repo;
     private final LiveData<List<Counter>> mCounters;
     private final LiveData<List<String>> mGroups;
 
     public CountersViewModel(Repo repo) {
-        mRepo = repo;
-        mCounters = mRepo.getAllCounters();
-        mGroups = mRepo.getGroups();
+        this.repo = repo;
+        mCounters = repo.getAllCounters();
+        mGroups = repo.getGroups();
     }
 
     public void incCounter(Counter counter, Accessibility accessibility, Context context) {
-        counter.inc(context, mRepo, accessibility);
+       repo.incCounter(counter.id);
     }
 
     public void decCounter(Counter counter, Accessibility accessibility, Context context) {
-        counter.dec(context, mRepo, accessibility);
+     repo.decCounter(counter.id);
     }
 
     public void countersMoved(Counter counterFrom, Counter counterTo) {
@@ -54,9 +48,9 @@ public class CountersViewModel extends ViewModel {
 
         if (!dataFrom.equals(dataTo)) {
             counterTo.createDateSort = dataFrom;
-            mRepo.updateCounter(counterTo);
+            repo.updateCounter(counterTo);
             counterFrom.createDateSort = dataTo;
-            mRepo.updateCounter(counterFrom);
+            repo.updateCounter(counterFrom);
         }
 
     }

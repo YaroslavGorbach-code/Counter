@@ -1,11 +1,11 @@
-package com.yaroslavgorbachh.counter.database.Daos;
+package com.yaroslavgorbachh.counter.data.Daos;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.yaroslavgorbachh.counter.database.Models.AppStyle;
+import com.yaroslavgorbachh.counter.data.Models.AppStyle;
 
 @Dao
 public interface AppStyleDao {

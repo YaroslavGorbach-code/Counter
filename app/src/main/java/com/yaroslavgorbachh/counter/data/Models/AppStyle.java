@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.database.Models;
+package com.yaroslavgorbachh.counter.data.Models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
