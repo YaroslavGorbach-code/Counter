@@ -17,7 +17,6 @@ import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.counterSettings.animations.AnimateThemeChange;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsViewModel;
-import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
@@ -26,13 +25,11 @@ public class ColorPickerDialog extends AppCompatDialogFragment {
     public static final String THEME_CHANGED_BROADCAST = "THEME_CHANGED_BROADCAST";
     private SettingsViewModel mViewModel;
 
-    @Inject ViewModelProviderFactory viewModelProviderFactory;
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication application = (MyApplication) requireActivity().getApplication();
-        application.appComponent.settingsComponentFactory().create().inject(this);
+        application.appComponent.inject(this);
     }
 
     public static ColorPickerDialog newInstance() {
@@ -42,7 +39,7 @@ public class ColorPickerDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
        View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_color_picker, null);
-       mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(SettingsViewModel.class);
+       mViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
        ColorPicker colorPicker = new ScrollColorPicker(view, getResources());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())

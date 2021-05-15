@@ -17,7 +17,6 @@ import com.google.android.material.textview.MaterialTextView;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
@@ -33,13 +32,12 @@ public class AboutCounterFragment extends Fragment {
     private MaterialTextView mLastResetData;
     private AboutCounterViewModel viewModel;
 
-    @Inject ViewModelProviderFactory viewModelProviderFactory;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication app = (MyApplication) (requireActivity().getApplication());
-        app.appComponent.aboutCounterComponentFactory().create().inject(this);
+        app.appComponent.inject(this);
     }
 
     @Override
@@ -47,7 +45,7 @@ public class AboutCounterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about_counter, container, false);
         long counterId = AboutCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
-        viewModel = new ViewModelProvider(this, viewModelProviderFactory).get(AboutCounterViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AboutCounterViewModel.class);
         viewModel.setCounterId(counterId);
 
         mCounterName = view.findViewById(R.id.name);

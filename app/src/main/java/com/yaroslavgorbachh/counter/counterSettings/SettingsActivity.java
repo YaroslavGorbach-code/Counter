@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MyApplication application = (MyApplication) getApplication();
-        application.appComponent.settingsComponentFactory().create().inject(this);
+        application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
         ThemeUtility.setTheme(sharedPreferences, this, repo);
         setContentView( R.layout.activity_settings);

@@ -28,7 +28,6 @@ import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
@@ -42,10 +41,8 @@ public class FullscreenCounterFragment extends Fragment {
     private LinearLayout mSwipeHelperLayout;
     private TextView mCounterValue_tv;
     private final Handler mHideHandler = new Handler();
-
     private FullscreenCounterViewModel mViewModel;
     private VolumeButtonBroadcastReceiver mMessageReceiver;
-    @Inject ViewModelProviderFactory viewModelProviderFactory;
 
     private final Runnable mHidePart2Runnable = () -> {
         // Delayed removal of status and navigation bar
@@ -67,7 +64,7 @@ public class FullscreenCounterFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication app = (MyApplication) requireActivity().getApplication();
-        app.appComponent.fullscreenCounterComponent().create().inject(this);
+        app.appComponent.inject(this);
     }
 
     @Nullable
@@ -79,7 +76,7 @@ public class FullscreenCounterFragment extends Fragment {
         mContentView = view.findViewById(R.id.viewGroup);
         mCounterValue_tv = view.findViewById(R.id.value);
         mSwipeHelperLayout = view.findViewById(R.id.swipe_helper);
-        mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(FullscreenCounterViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(FullscreenCounterViewModel.class);
         mViewModel.setCounterId(FullscreenCounterFragmentArgs.fromBundle(requireArguments()).getCounterId());
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);

@@ -42,7 +42,9 @@ import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.Animations;
+import com.yaroslavgorbachh.counter.countersList.DragAndDrop.MultiSelection.CounterMultiSelection;
 import com.yaroslavgorbachh.counter.countersList.DragAndDrop.MultiSelection.MultiCount;
+import com.yaroslavgorbachh.counter.countersList.navigationDrawer.CounterDrawerMenuItemSelector;
 import com.yaroslavgorbachh.counter.countersList.navigationDrawer.DrawerItemSelector;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.FastCountButton;
@@ -51,8 +53,6 @@ import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.database.Repo;
-import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
-import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import java.util.stream.Collectors;
 
@@ -82,19 +82,18 @@ public class CountersFragment extends Fragment {
     private RecyclerView mCounters_rv;
     private CountersAdapter mCountersAdapter;
 
-    @Inject ViewModelProviderFactory viewModelProviderFactory;
     @Inject AudioManager mAudioManager;
     @Inject Accessibility accessibility;
     @Inject SharedPreferences sharedPreferences;
     @Inject Repo repo;
-    @Inject MultiCount counterMultiCount;
-    @Inject DrawerItemSelector drawerItemSelector;
+    private MultiCount counterMultiCount;
+    private DrawerItemSelector drawerItemSelector;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication application = (MyApplication) requireActivity().getApplication();
-        application.appComponent.countersComponentFactory().create().inject(this);
+        application.appComponent.inject(this);
     }
 
     @Override
@@ -103,6 +102,8 @@ public class CountersFragment extends Fragment {
         if (savedInstanceState != null)
             currentItem = savedInstanceState.getString(CURRENT_GROUP);
 
+        counterMultiCount = new CounterMultiSelection(repo, requireContext(), accessibility);
+        drawerItemSelector = new CounterDrawerMenuItemSelector();
         /*callback for callback for handling back press button*/
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -130,7 +131,8 @@ public class CountersFragment extends Fragment {
         mIconAndTextThereAreNoCounters = view.findViewById(R.id.no_counters);
         mThereAreNoGroupsTextAndIcon = view.findViewById(R.id.no_groups);
 
-        mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CountersViewModel.class);
+        mViewModel = new ViewModelProvider(this, new CountersViewModel.CountersVmFactory(repo))
+                .get(CountersViewModel.class);
 
 
         /*navController set up*/

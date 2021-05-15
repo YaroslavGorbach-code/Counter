@@ -26,7 +26,6 @@ import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.counterHistory.recyclerView.CounterHistoryRv;
 import com.yaroslavgorbachh.counter.database.Models.CounterHistory;
-import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import java.util.Collections;
 
@@ -38,15 +37,13 @@ public class CounterHistoryFragment extends Fragment {
     private long mCounterId;
     private ConstraintLayout mIconAndTextThereNoHistory;
     private LinearLayout mSwipeHelper;
-
     private CounterHistoryViewModel mViewModel;
-    @Inject ViewModelProviderFactory viewModelProviderFactory;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication application = (MyApplication) requireActivity().getApplication();
-        application.appComponent.counterHistoryComponent().create().inject(this);
+        application.appComponent.inject(this);
     }
 
     @Nullable
@@ -61,7 +58,7 @@ public class CounterHistoryFragment extends Fragment {
         mIconAndTextThereNoHistory = view.findViewById(R.id.no_history);
         mSwipeHelper = view.findViewById(R.id.swipe_helper);
 
-        mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CounterHistoryViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(CounterHistoryViewModel.class);
         mCounterId = CounterHistoryFragmentArgs.fromBundle(requireArguments()).getCounterId();
 
         /*initialize navigation listener*/

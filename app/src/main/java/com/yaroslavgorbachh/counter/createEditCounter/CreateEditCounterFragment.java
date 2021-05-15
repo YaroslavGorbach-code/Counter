@@ -21,7 +21,6 @@ import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
-import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import java.util.Objects;
 
@@ -45,13 +44,12 @@ public class CreateEditCounterFragment extends Fragment {
     private Toolbar mToolbar;
 
     private CreateEditCounterViewModel mViewModel;
-    @Inject ViewModelProviderFactory viewModelProviderFactory;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication application = (MyApplication) requireActivity().getApplication();
-        application.appComponent.createEditCounterComponent().create().inject(this);
+        application.appComponent.inject(this);
     }
 
     @Nullable
@@ -69,7 +67,7 @@ public class CreateEditCounterFragment extends Fragment {
         mGroups_et = view.findViewById(R.id.dropdown);
 
         long counterId = CreateEditCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
-        mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CreateEditCounterViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(CreateEditCounterViewModel.class);
         mViewModel.setCounterId(counterId);
 
         /*set navigationIcon, inflate menu, and set listeners*/

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
@@ -25,7 +26,6 @@ public class CountersViewModel extends ViewModel {
     private final LiveData<List<Counter>> mCounters;
     private final LiveData<List<String>> mGroups;
 
-    @Inject
     public CountersViewModel(Repo repo) {
         mRepo = repo;
         mCounters = mRepo.getAllCounters();
@@ -67,5 +67,25 @@ public class CountersViewModel extends ViewModel {
 
     public LiveData<List<Counter>> getCounters(){
          return mCounters;
+    }
+
+
+
+    public static class CountersVmFactory extends ViewModelProvider.NewInstanceFactory {
+        private final Repo repo;
+
+        public CountersVmFactory(Repo repo) {
+            super();
+            this.repo = repo;
+        }
+
+        @NonNull
+        @Override
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            if (modelClass.isAssignableFrom(CountersViewModel.class)) {
+                return (T) new CountersViewModel(repo);
+            }
+            throw new IllegalArgumentException("Unknown ViewModel class");
+        }
     }
 }

@@ -45,7 +45,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         MyApplication application = (MyApplication) context.getApplicationContext();
-        application.appComponent.counterWidgetComponent().create().inject(this);
+        application.appComponent.inject(this);
 
         long widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);

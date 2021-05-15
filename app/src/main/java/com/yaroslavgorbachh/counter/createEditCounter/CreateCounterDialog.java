@@ -22,17 +22,13 @@ import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.countersList.CountersFragmentDirections;
-import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
 public class CreateCounterDialog extends AppCompatDialogFragment {
     private AutoCompleteTextView mGroups_et;
     private TextInputEditText mCounterName_et;
-
     private CreateCounterDialogViewModel mViewModel;
-
-    @Inject ViewModelProviderFactory viewModelProviderFactory;
 
     public static CreateCounterDialog newInstance(String group) {
         CreateCounterDialog f = new CreateCounterDialog();
@@ -46,7 +42,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication app = (MyApplication) requireActivity().getApplication();
-        app.appComponent.createEditCounterComponent().create().inject(this);
+        app.appComponent.inject(this);
     }
 
     @NonNull
@@ -56,7 +52,7 @@ public class CreateCounterDialog extends AppCompatDialogFragment {
        mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
        mCounterName_et = view.findViewById(R.id.title);
 
-       mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(CreateCounterDialogViewModel.class);
+       mViewModel = new ViewModelProvider(this).get(CreateCounterDialogViewModel.class);
 
        if (getArguments()!=null)
            mGroups_et.setText(getArguments().getString("group"));

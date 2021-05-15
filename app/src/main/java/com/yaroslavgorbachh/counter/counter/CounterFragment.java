@@ -17,14 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.component.CounterComp;
+import com.yaroslavgorbachh.counter.database.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
-import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
@@ -33,15 +34,15 @@ import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_
 public class CounterFragment extends Fragment {
 
     private VolumeButtonBroadcastReceiver mMessageReceiver;
-    @Inject ViewModelProviderFactory viewModelProviderFactory;
     @Inject SharedPreferences sharedPreferences;
-
+    @Inject Repo repo;
+    @Inject Accessibility accessibility;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication application = (MyApplication) requireActivity().getApplication();
-        application.appComponent.counterComponentFactory().create().inject(this);
+        application.appComponent.inject(this);
     }
 
     @Nullable
@@ -61,18 +62,21 @@ public class CounterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         long counterId = CounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
-        CounterViewModel vm = new ViewModelProvider(this, viewModelProviderFactory).get(CounterViewModel.class);
-        vm.setCounterId(counterId);
+
+        // init component
+        long id = CounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
+        CounterViewModel vm = new ViewModelProvider(this).get(CounterViewModel.class);
+        CounterComp counter = vm.getCounterComponent(repo, id);
 
         // init view
-        CounterView v = new CounterView(FragmentCounterBinding.bind(requireView()), new CounterView.Callback() {
+        CounterView v = new CounterView(FragmentCounterBinding.bind(requireView()), accessibility, new CounterView.Callback() {
             @Override
             public void onDelete() {
                 new MaterialAlertDialogBuilder(requireContext())
                         .setTitle(getString(R.string.deleteCounterDeleteDialog))
                         .setMessage(R.string.deleteCounterDialogText)
                         .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which) -> {
-                            vm.deleteCounter();
+                            counter.delete();
                             Navigation.findNavController(view).popBackStack();
                         })
                         .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
@@ -122,34 +126,34 @@ public class CounterFragment extends Fragment {
 
             @Override
             public void onInc(View view) {
-                new FastCountButton(view, () -> vm.incCounter(requireContext()), sharedPreferences);
+                new FastCountButton(view, counter::incCounter, sharedPreferences);
             }
 
             @Override
             public void onDec(View view) {
-                new FastCountButton(view, () -> vm.decCounter(requireContext()), sharedPreferences);
+                new FastCountButton(view, counter::decCounter, sharedPreferences);
             }
 
             @Override
             public void onReset() {
-                vm.resetCounter();
+                counter.resetCounter();
                 Snackbar.make(requireView(), getResources().getString(R.string.counterReset), Snackbar.LENGTH_LONG)
-                        .setAction(getResources().getString(R.string.counterResetUndo), v1 -> vm.restoreValue()).show();
+                        .setAction(getResources().getString(R.string.counterResetUndo), v1 -> counter.undoReset()).show();
             }
 
         });
 
-        vm.counter.observe(getViewLifecycleOwner(), v::setCounter);
+        counter.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
 
         mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
             @Override
             public void decCounters() {
-                vm.decCounter(requireContext());
+                counter.decCounter();
             }
 
             @Override
             public void incCounters() {
-                vm.incCounter(requireContext());
+                counter.incCounter();
             }
 
             @Override

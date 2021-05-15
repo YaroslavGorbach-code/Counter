@@ -14,8 +14,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.CopyCounterBeforeReset;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
-import com.yaroslavgorbachh.counter.counterSettings.di.SettingsScope;
+
 import com.yaroslavgorbachh.counter.counterSettings.themes.Themes;
 import com.yaroslavgorbachh.counter.counterSettings.themes.ThemesColors;
 import com.yaroslavgorbachh.counter.database.BackupAndRestore.MyBackup;
@@ -34,7 +33,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-@SettingsScope
 public class SettingsViewModel extends ViewModel {
     private final CounterDatabase mDatabase;
     private final Repo mRepo;

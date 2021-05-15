@@ -25,7 +25,6 @@ import com.yaroslavgorbachh.counter.counterSettings.animations.AnimateThemeChang
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.counterSettings.themes.ColorPickerDialog;
-import com.yaroslavgorbachh.counter.di.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
@@ -33,20 +32,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
     private static final int RESTORE_REQUEST_CODE = 0;
     private static final int CREATE_FILE = 1;
-
     private SettingsViewModel mViewModel;
-    @Inject ViewModelProviderFactory viewModelProviderFactory;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication application = (MyApplication) requireActivity().getApplication();
-        application.appComponent.settingsComponentFactory().create().inject(this);
+        application.appComponent.inject(this);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(SettingsViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         return super.onCreateView(inflater, container, savedInstanceState);
 
     }

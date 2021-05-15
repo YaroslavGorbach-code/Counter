@@ -36,7 +36,7 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         MyApplication application = (MyApplication) getApplication();
-        application.appComponent.counterWidgetComponent().create().inject(this);
+        application.appComponent.inject(this);
         ThemeUtility.setTheme(sharedPreferences, this, repo);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_widget_configuration);

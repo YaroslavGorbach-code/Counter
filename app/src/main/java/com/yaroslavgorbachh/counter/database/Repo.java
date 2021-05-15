@@ -1,12 +1,7 @@
 package com.yaroslavgorbachh.counter.database;
 
-import android.appwidget.AppWidgetManager;
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
 
-import com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider;
 import com.yaroslavgorbachh.counter.database.Daos.AppStyleDao;
 import com.yaroslavgorbachh.counter.database.Daos.CounterDao;
 import com.yaroslavgorbachh.counter.database.Daos.CounterHistoryDao;
@@ -26,68 +21,68 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Singleton
 public class Repo {
-   private final CounterDao mCounterDao;
-   private final CounterHistoryDao mCounterHistoryDao;
-   private final AppStyleDao mAppStyleDao;
+    private final CounterDao mCounterDao;
+    private final CounterHistoryDao mCounterHistoryDao;
+    private final AppStyleDao mAppStyleDao;
 
     @Inject
-    public Repo(CounterDatabase database){
-       mCounterHistoryDao = database.counterHistoryDao();
-       mCounterDao = database.counterDao();
-       mAppStyleDao = database.appStyleDao();
-   }
+    public Repo(CounterDatabase database) {
+        mCounterHistoryDao = database.counterHistoryDao();
+        mCounterDao = database.counterDao();
+        mAppStyleDao = database.appStyleDao();
+    }
 
-   public AppStyle getCurrentStyle(){
-       return mAppStyleDao.getCurrentColor();
-   }
+    public AppStyle getCurrentStyle() {
+        return mAppStyleDao.getCurrentColor();
+    }
 
-    public void insertCounter(Counter counter){
+    public void insertCounter(Counter counter) {
         Completable.create(emitter -> mCounterDao.insert(counter))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 
-    public void deleteCounter(Counter counter){
+    public void deleteCounter(Counter counter) {
         Completable.create(emitter ->
                 mCounterDao.delete(counter))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 
-    public void updateCounter(Counter counter){
+    public void updateCounter(Counter counter) {
         Completable.create(emitter -> mCounterDao.update(counter))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 
-    public void deleteCounters(){
+    public void deleteCounters() {
         Completable.create(emitter -> mCounterDao.deleteAllCounters())
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 
-    public void insertCounterHistory(CounterHistory counterHistory){
+    public void insertCounterHistory(CounterHistory counterHistory) {
         Completable.create(emitter -> mCounterHistoryDao.insert(counterHistory))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 
-    public void deleteCounterHistory(long counterId){
+    public void deleteCounterHistory(long counterId) {
         Completable.create(emitter -> mCounterHistoryDao.delete(counterId))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 
-    public Single<List<Counter>> getAllCountersNoLiveData(){
+    public Single<List<Counter>> getAllCountersNoLiveData() {
         return Single.create(emitter -> emitter.onSuccess(mCounterDao.getAllCountersNoLiveData()));
     }
 
-    public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId){
+    public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId) {
         return mCounterHistoryDao.getCounterHistoryList(counterId);
     }
 
-    public LiveData<List<Counter>> getAllCounters(){
-       return mCounterDao.getAllCounters();
+    public LiveData<List<Counter>> getAllCounters() {
+        return mCounterDao.getAllCounters();
     }
 
     public LiveData<Counter> getCounter(long id) {
@@ -95,14 +90,14 @@ public class Repo {
     }
 
     public Single<Counter> getCounterWidget(long widgetId) {
-        return  Single.create(emitter -> emitter.onSuccess(mCounterDao.getCounterWidget(widgetId)));
+        return Single.create(emitter -> emitter.onSuccess(mCounterDao.getCounterWidget(widgetId)));
     }
 
     public Single<Counter> getCounterNoLiveData(long id) {
         return Single.create(emitter -> emitter.onSuccess(mCounterDao.getCounterNoLiveData(id)));
     }
 
-    public LiveData<List<String>> getGroups(){
+    public LiveData<List<String>> getGroups() {
         return mCounterDao.getGroups();
     }
 
@@ -117,6 +112,22 @@ public class Repo {
                 mCounterHistoryDao.delete(counterHistory))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
+    }
+
+    public void incCounter(long mId) {
+
+    }
+
+    public void decCounter(long mId) {
+
+    }
+
+    public void resetCounter(long mId) {
+
+    }
+
+    public void deleteCounter(long mId) {
+
     }
 }
 

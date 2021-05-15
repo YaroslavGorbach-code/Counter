@@ -4,29 +4,31 @@ import android.app.Application;
 import android.content.Context;
 
 import com.yaroslavgorbachh.counter.MainActivity;
-import com.yaroslavgorbachh.counter.aboutCounter.di.AboutCounterComponent;
-import com.yaroslavgorbachh.counter.counter.di.CounterComponent;
-import com.yaroslavgorbachh.counter.counterHistory.di.CounterHistoryComponent;
-import com.yaroslavgorbachh.counter.counterSettings.di.SettingsComponent;
-import com.yaroslavgorbachh.counter.counterWidget.di.CounterWidgetComponent;
-import com.yaroslavgorbachh.counter.countersList.di.CountersComponent;
-import com.yaroslavgorbachh.counter.createEditCounter.di.CreateEditCounterComponent;
-import com.yaroslavgorbachh.counter.fullscreenCounter.di.FullscreenCounterComponent;
+import com.yaroslavgorbachh.counter.aboutCounter.AboutCounterFragment;
+import com.yaroslavgorbachh.counter.counter.CounterFragment;
+import com.yaroslavgorbachh.counter.counterHistory.CounterHistoryFragment;
+import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
+import com.yaroslavgorbachh.counter.counterSettings.SettingsFragment;
+import com.yaroslavgorbachh.counter.counterSettings.themes.ColorPickerDialog;
+import com.yaroslavgorbachh.counter.counterWidget.CounterWidgetConfigActivity;
+import com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider;
+import com.yaroslavgorbachh.counter.countersList.CountersFragment;
+import com.yaroslavgorbachh.counter.createEditCounter.CreateCounterDialog;
+import com.yaroslavgorbachh.counter.createEditCounter.CreateEditCounterFragment;
+import com.yaroslavgorbachh.counter.fullscreenCounter.FullscreenCounterFragment;
 
 import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import dagger.android.support.AndroidSupportInjectionModule;
 
 @Singleton
 @Component(modules = {
         AppModule.class,
-        ViewModelBuilderModule.class,
-        RoomModule.class,
-        SubcomponentsModule.class})
+        RoomModule.class})
 
 public interface AppComponent {
+
 
     @Component.Factory
     interface Factory {
@@ -34,14 +36,19 @@ public interface AppComponent {
     }
 
     void inject(MainActivity activity);
+    void inject(CounterFragment  fragment);
+    void inject(AboutCounterFragment fragment);
+    void inject(CounterHistoryFragment fragment);
+    void inject(SettingsFragment fragment);
+    void inject(CountersFragment fragment);
+    void inject(CounterWidgetConfigActivity a);
+    void inject(CounterWidgetProvider widgetProvider);
+    void inject(FullscreenCounterFragment fragment);
+    void inject(ColorPickerDialog dialog);
+    void inject(CreateCounterDialog dialog);
+    void inject(CreateEditCounterFragment fragment);
+    void inject(SettingsActivity a);
 
-    AboutCounterComponent.Builder aboutCounterComponentFactory();
-    CounterComponent.Builder counterComponentFactory();
-    CountersComponent.Builder countersComponentFactory();
-    FullscreenCounterComponent.Builder fullscreenCounterComponent();
-    CreateEditCounterComponent.Builder createEditCounterComponent();
-    SettingsComponent.Builder settingsComponentFactory();
-    CounterHistoryComponent.Builder counterHistoryComponent();
-    CounterWidgetComponent.Builder counterWidgetComponent();
+
 
 }

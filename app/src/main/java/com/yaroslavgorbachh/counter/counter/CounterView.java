@@ -1,6 +1,7 @@
 package com.yaroslavgorbachh.counter.counter;
 import android.view.View;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.yaroslavgorbachh.counter.Accessibility;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
 import com.yaroslavgorbachh.counter.database.Models.Counter;
@@ -22,10 +23,12 @@ public class CounterView {
 
     private final FragmentCounterBinding mBinding;
     private final Callback mCallback;
+    private final Accessibility mAccessibility;
 
-    public CounterView(FragmentCounterBinding binding, Callback callback){
+    public CounterView(FragmentCounterBinding binding, Accessibility accessibility, Callback callback){
         mBinding = binding;
         mCallback = callback;
+        mAccessibility = accessibility;
 
         ((MaterialToolbar)binding.toolbar).setOnMenuItemClickListener(i -> {
             switch (i.getItemId()) {
@@ -48,9 +51,18 @@ public class CounterView {
             return true;
         });
         ((MaterialToolbar)binding.toolbar).setNavigationOnClickListener(i -> callback.onBack());
-        binding.inc.setOnClickListener(callback::onInc);
-        binding.dec.setOnClickListener(callback::onDec);
-        binding.reset.setOnClickListener(v -> callback.onReset());
+        binding.inc.setOnClickListener(v->{
+            callback.onInc(v);
+            mAccessibility.playIncFeedback(mBinding.value.getText().toString());
+        });
+        binding.dec.setOnClickListener(v->{
+            callback.onDec(v);
+            mAccessibility.playDecFeedback(mBinding.value.getText().toString());
+        });
+        binding.reset.setOnClickListener(v -> {
+            callback.onReset();
+            mAccessibility.speechOutput(mBinding.value.getText().toString());
+        });
     }
     public void setCounter(Counter counter) {
         if (counter != null) {
