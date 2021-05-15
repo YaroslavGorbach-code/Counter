@@ -23,9 +23,8 @@ import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.FastCountButton;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.component.CounterComp;
+import com.yaroslavgorbachh.counter.component.counter.CounterComp;
 import com.yaroslavgorbachh.counter.data.Repo;
-import com.yaroslavgorbachh.counter.data.RepoImp;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
 
 import javax.inject.Inject;

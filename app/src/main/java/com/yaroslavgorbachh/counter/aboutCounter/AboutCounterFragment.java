@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,21 +18,19 @@ import com.google.android.material.textview.MaterialTextView;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.Utility;
+import com.yaroslavgorbachh.counter.component.aboutcounter.AboutCounter;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.databinding.FragmentAboutCounterBinding;
 
 import javax.inject.Inject;
 
 public class AboutCounterFragment extends Fragment {
-    private MaterialTextView mCounterName;
-    private MaterialTextView mCreateData;
-    private MaterialTextView mLastResetedValue;
-    private MaterialTextView mCounterValue;
-    private MaterialTextView mCounterStep;
-    private MaterialTextView mCounterGroup;
-    private MaterialTextView mCounterMinValue;
-    private MaterialTextView mCounterMaxValue;
-    private MaterialTextView mLastResetData;
-    private AboutCounterViewModel viewModel;
 
+    public AboutCounterFragment() {
+        super(R.layout.fragment_about_counter);
+    }
+
+    @Inject Repo repo;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -41,41 +40,16 @@ public class AboutCounterFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_about_counter, container, false);
-        long counterId = AboutCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
-        viewModel = new ViewModelProvider(this).get(AboutCounterViewModel.class);
-        viewModel.setCounterId(counterId);
+    public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        mCounterName = view.findViewById(R.id.name);
-        mCreateData = view.findViewById(R.id.create_data);
-        mLastResetedValue = view.findViewById(R.id.last_reset_value);
-        mCounterValue = view.findViewById(R.id.value);
-        mCounterStep = view.findViewById(R.id.step);
-        mCounterGroup = view.findViewById(R.id.group);
-        mCounterMinValue = view.findViewById(R.id.min_value);
-        mCounterMaxValue = view.findViewById(R.id.max_value);
-        mLastResetData = view.findViewById(R.id.last_reset);
+        // init component
+        long id = AboutCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
+        AboutCounterViewModel vm = new ViewModelProvider(this).get(AboutCounterViewModel.class);
+        AboutCounter aboutCounter = vm.getAboutCounter(repo, id);
 
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(view).popBackStack());
-
-        viewModel.counter.observe(getViewLifecycleOwner(), counter -> {
-            mCounterName.setText(counter.title);
-            mCreateData.setText(getString(R.string.created, Utility.convertDateToString(counter.createDate)));
-            mLastResetedValue.setText(String.valueOf(counter.lastResetValue));
-            mCounterValue.setText(String.valueOf(counter.value));
-            mCounterStep.setText(String.valueOf(counter.step));
-            if (counter.grope!=null)
-            mCounterGroup.setText(counter.grope);
-            mCounterMinValue.setText(String.valueOf(counter.counterMinValue));
-            mCounterMaxValue.setText(String.valueOf(counter.counterMaxValue));
-            if (counter.lastResetDate!=null)
-            mLastResetData.setText(Utility.convertDateToString(counter.lastResetDate));
-        });
-
-        return view;
+        // init view
+        AboutCounterView v = new AboutCounterView(FragmentAboutCounterBinding.bind(view), () -> Navigation.findNavController(view).popBackStack());
+        aboutCounter.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
     }
 }

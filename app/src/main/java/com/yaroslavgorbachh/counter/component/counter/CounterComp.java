@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.component;
+package com.yaroslavgorbachh.counter.component.counter;
 
 import androidx.lifecycle.LiveData;
 

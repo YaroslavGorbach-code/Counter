@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:background="?android:colorBackground"
             app:title="@string/aboutCounter"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:titleTextColor="?colorAccent" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -256,7 +257,7 @@
                     android:textSize="20sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/last_reset"
+                    android:id="@+id/last_reset_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

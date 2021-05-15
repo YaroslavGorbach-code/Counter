@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.yaroslavgorbachh.counter.component.aboutcounter.AboutCounter;
+import com.yaroslavgorbachh.counter.component.aboutcounter.AboutCounterImp;
+import com.yaroslavgorbachh.counter.component.counter.CounterComp;
+import com.yaroslavgorbachh.counter.component.counter.CounterCompImp;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.data.RepoImp;
@@ -11,15 +15,14 @@ import com.yaroslavgorbachh.counter.data.RepoImp;
 import javax.inject.Inject;
 
 public class AboutCounterViewModel extends ViewModel {
-    public LiveData<Counter> counter;
-    private final Repo repo;
+    private AboutCounter aboutCounter;
 
-    @Inject
-    public AboutCounterViewModel(@NonNull Repo repo) {
-        this.repo = repo;
+    public AboutCounter getAboutCounter(Repo repo, long id) {
+        if (aboutCounter == null) {
+            aboutCounter = new AboutCounterImp(repo, id) {
+            };
+        }
+        return aboutCounter;
     }
 
-    public void setCounterId(long counterId) {
-        counter = repo.getCounter(counterId);
-    }
 }

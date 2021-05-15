@@ -1,9 +1,8 @@
-package com.yaroslavgorbachh.counter.component;
+package com.yaroslavgorbachh.counter.component.counter;
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
-import com.yaroslavgorbachh.counter.data.RepoImp;
 
 public class CounterCompImp implements CounterComp {
     private Repo mRepo;
