@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.counterHistory;
+package com.yaroslavgorbachh.counter.screen.history;
 
 import androidx.lifecycle.ViewModel;
 

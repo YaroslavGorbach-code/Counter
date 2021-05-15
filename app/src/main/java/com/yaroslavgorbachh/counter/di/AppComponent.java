@@ -4,12 +4,12 @@ import android.app.Application;
 import android.content.Context;
 
 import com.yaroslavgorbachh.counter.MainActivity;
-import com.yaroslavgorbachh.counter.screen.aboutCounter.AboutCounterFragment;
+import com.yaroslavgorbachh.counter.screen.about.AboutCounterFragment;
 import com.yaroslavgorbachh.counter.screen.counter.CounterFragment;
-import com.yaroslavgorbachh.counter.screen.counterHistory.HistoryFragment;
-import com.yaroslavgorbachh.counter.screen.counterSettings.SettingsActivity;
-import com.yaroslavgorbachh.counter.screen.counterSettings.SettingsFragment;
-import com.yaroslavgorbachh.counter.screen.counterSettings.themes.ColorPickerDialog;
+import com.yaroslavgorbachh.counter.screen.history.HistoryFragment;
+import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
+import com.yaroslavgorbachh.counter.screen.settings.SettingsFragment;
+import com.yaroslavgorbachh.counter.screen.settings.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.screen.counterWidget.CounterWidgetConfigActivity;
 import com.yaroslavgorbachh.counter.screen.counterWidget.CounterWidgetProvider;
 import com.yaroslavgorbachh.counter.screen.countersList.CountersFragment;

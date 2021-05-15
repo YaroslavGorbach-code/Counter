@@ -1,5 +1,8 @@
 package com.yaroslavgorbachh.counter.data;
 
+import android.content.Context;
+import android.content.Intent;
+
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Models.AppStyle;
@@ -26,4 +29,6 @@ public interface Repo { void incCounter(long mId);
     LiveData<List<String>> getGroups();
     Single<Counter> getCounterNoLiveData(long id);
     void insertCounter(Counter counter);
+    void backup(Intent data, Context context);
+    void restore(Intent data, Context context);
 }

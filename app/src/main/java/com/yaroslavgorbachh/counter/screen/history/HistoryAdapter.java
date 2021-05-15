@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.counterHistory;
+package com.yaroslavgorbachh.counter.screen.history;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

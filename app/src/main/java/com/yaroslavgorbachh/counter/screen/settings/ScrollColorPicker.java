@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.counterSettings.themes;
+package com.yaroslavgorbachh.counter.screen.settings;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.data.ThemesColors;
+import com.yaroslavgorbachh.counter.utill.ThemeUtility;
 
 public class ScrollColorPicker implements ColorPicker {
     private final int[] colors;

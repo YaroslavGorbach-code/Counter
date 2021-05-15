@@ -1,5 +1,6 @@
-package com.yaroslavgorbachh.counter.screen.counterSettings;
+package com.yaroslavgorbachh.counter.screen.settings;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -8,30 +9,35 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.MyApplication;
-import com.yaroslavgorbachh.counter.screen.counterSettings.animations.AnimateThemeChange;
+import com.yaroslavgorbachh.counter.component.settings.Settings;
+import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.utill.AnimateThemeChange;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.utill.Utility;
-import com.yaroslavgorbachh.counter.screen.counterSettings.themes.ColorPickerDialog;
+
+import javax.inject.Inject;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
-        SharedPreferences.OnSharedPreferenceChangeListener {
+        SharedPreferences.OnSharedPreferenceChangeListener, ColorPickerDialog.Host {
+    public static final String THEME_CHANGED_BROADCAST = "THEME_CHANGED_BROADCAST";
     private static final int RESTORE_REQUEST_CODE = 0;
     private static final int CREATE_FILE = 1;
-    private SettingsViewModel mViewModel;
+    private Settings settings;
 
+    @Inject Repo repo;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -39,12 +45,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         application.appComponent.inject(this);
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
-        return super.onCreateView(inflater, container, savedInstanceState);
-
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -52,13 +52,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         if (requestCode == CREATE_FILE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-               mViewModel.backup(data, requireContext());
+                settings.backup(data, requireContext());
             }
         }
 
         if (requestCode == RESTORE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                mViewModel.restoreDb(data, requireContext());
+                settings.restore(data, requireContext());
             }
         }
     }
@@ -78,6 +78,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         Preference mExportAllCountersPref = findPreference("exportAllCounters");
         Preference mChangeAccentColorPref = findPreference("changeAccentColor");
         Preference mBackupPref = findPreference("backup");
+        SettingsViewModel vm = new ViewModelProvider(this).get(SettingsViewModel.class);
+        settings = vm.getSettings(repo);
 
         assert mRemoveAllCountersPref != null;
         mRemoveAllCountersPref.setOnPreferenceClickListener(preference -> {
@@ -85,7 +87,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     .setTitle(getString(R.string.deleteCountersDeleteDialog))
                     .setMessage(R.string.deleteCounterDialogText)
                     .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which)
-                            -> mViewModel.deleteCounters())
+                            -> settings.deleteAll())
                     .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
                     .show();
             return true;
@@ -93,19 +95,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         assert mResetAllCountersPref != null;
         mResetAllCountersPref.setOnPreferenceClickListener(preference -> {
-            mViewModel.resetAllCounters(requireView());
+            settings.resetAll();
             return true;
         });
 
         assert mExportAllCountersPref != null;
         mExportAllCountersPref.setOnPreferenceClickListener(preference -> {
-            mViewModel.getAllCounters().observe(getViewLifecycleOwner(), list -> startActivity(Utility.getShareCountersInCSVIntent(list)));
+            settings.getAll().observe(getViewLifecycleOwner(), list -> startActivity(Utility.getShareCountersInCSVIntent(list)));
             return true;
         });
 
         assert mChangeAccentColorPref != null;
         mChangeAccentColorPref.setOnPreferenceClickListener(preference -> {
-            ColorPickerDialog.newInstance().show(getParentFragmentManager(), "colorPicker");
+            ColorPickerDialog.newInstance().show(getChildFragmentManager(), "colorPicker");
             return true;
         });
 
@@ -125,6 +127,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     }
 
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("nightMod") && sharedPreferences.getBoolean("nightMod", false)) {
@@ -149,6 +152,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         }
     }
 
+    @Override
+    public void onThemeChange(int color) {
+        settings.changeTheme(color, requireContext().getResources());
+        Intent intent = new Intent(THEME_CHANGED_BROADCAST);
+        LocalBroadcastManager.getInstance(requireActivity()).sendBroadcast(intent);
+        AnimateThemeChange.animate(requireActivity());
+    }
 
     @Override
     public void onStop() {
@@ -171,5 +181,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         intent.putExtra(Intent.EXTRA_TITLE, "CounterBackup " + Utility.getCurrentDate());
         startActivityForResult(intent, CREATE_FILE);
     }
+
 
 }

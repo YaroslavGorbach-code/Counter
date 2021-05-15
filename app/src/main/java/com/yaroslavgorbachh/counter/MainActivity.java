@@ -11,8 +11,8 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.yaroslavgorbachh.counter.screen.counterSettings.themes.ColorPickerDialog;
-import com.yaroslavgorbachh.counter.screen.counterSettings.themes.ThemeUtility;
+import com.yaroslavgorbachh.counter.screen.settings.ColorPickerDialog;
+import com.yaroslavgorbachh.counter.utill.ThemeUtility;
 import com.yaroslavgorbachh.counter.screen.counterWidget.CounterWidgetProvider;
 import com.yaroslavgorbachh.counter.data.Repo;
 
@@ -23,6 +23,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_DOWN;
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_UP;
+import static com.yaroslavgorbachh.counter.screen.settings.SettingsFragment.THEME_CHANGED_BROADCAST;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private final CompositeDisposable mDisposables = new CompositeDisposable();
 
     @Inject SharedPreferences sharedPreferences;
-    @Inject
-    Repo repo;
+    @Inject Repo repo;
 
 
 
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter(ColorPickerDialog.THEME_CHANGED_BROADCAST));
+                new IntentFilter(THEME_CHANGED_BROADCAST));
     }
 
 

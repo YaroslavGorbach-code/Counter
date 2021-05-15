@@ -39,7 +39,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
-import com.yaroslavgorbachh.counter.screen.counterSettings.SettingsActivity;
+import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.feature.Animations;
 import com.yaroslavgorbachh.counter.screen.countersList.DragAndDrop.MultiSelection.CounterMultiSelection;

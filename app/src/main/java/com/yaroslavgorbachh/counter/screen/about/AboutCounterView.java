@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.aboutCounter;
+package com.yaroslavgorbachh.counter.screen.about;
 
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.utill.Utility;

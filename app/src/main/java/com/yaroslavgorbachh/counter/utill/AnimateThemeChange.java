@@ -1,10 +1,10 @@
-package com.yaroslavgorbachh.counter.screen.counterSettings.animations;
+package com.yaroslavgorbachh.counter.utill;
 
 import android.app.Activity;
 import android.content.Intent;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.screen.counterSettings.SettingsActivity;
+import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
 
 public class AnimateThemeChange {
     public static void animate(Activity activity){

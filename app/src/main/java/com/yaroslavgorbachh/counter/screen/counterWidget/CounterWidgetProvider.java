@@ -13,7 +13,7 @@ import android.widget.RemoteViews;
 
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.screen.counterSettings.themes.ThemeUtility;
+import com.yaroslavgorbachh.counter.utill.ThemeUtility;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 

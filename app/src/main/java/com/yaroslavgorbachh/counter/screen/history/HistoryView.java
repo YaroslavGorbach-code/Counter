@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.counterHistory;
+package com.yaroslavgorbachh.counter.screen.history;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;

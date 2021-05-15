@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/counterHistoryFragment"
-        android:name="com.yaroslavgorbachh.counter.screen.counterHistory.HistoryFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.history.HistoryFragment"
         tools:layout="@layout/fragment_counter_history" >
         <argument
             android:name="counterId"
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutCounterFragment"
-        android:name="com.yaroslavgorbachh.counter.screen.aboutCounter.AboutCounterFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.about.AboutCounterFragment"
         tools:layout="@layout/fragment_about_counter" >
         <argument
             android:name="counterId"
