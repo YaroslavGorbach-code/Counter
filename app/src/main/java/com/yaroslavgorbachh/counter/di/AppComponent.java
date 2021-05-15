@@ -4,18 +4,18 @@ import android.app.Application;
 import android.content.Context;
 
 import com.yaroslavgorbachh.counter.MainActivity;
-import com.yaroslavgorbachh.counter.aboutCounter.AboutCounterFragment;
-import com.yaroslavgorbachh.counter.counter.CounterFragment;
-import com.yaroslavgorbachh.counter.counterHistory.CounterHistoryFragment;
-import com.yaroslavgorbachh.counter.counterSettings.SettingsActivity;
-import com.yaroslavgorbachh.counter.counterSettings.SettingsFragment;
-import com.yaroslavgorbachh.counter.counterSettings.themes.ColorPickerDialog;
-import com.yaroslavgorbachh.counter.counterWidget.CounterWidgetConfigActivity;
-import com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider;
-import com.yaroslavgorbachh.counter.countersList.CountersFragment;
-import com.yaroslavgorbachh.counter.createEditCounter.CreateCounterDialog;
-import com.yaroslavgorbachh.counter.createEditCounter.CreateEditCounterFragment;
-import com.yaroslavgorbachh.counter.fullscreenCounter.FullscreenCounterFragment;
+import com.yaroslavgorbachh.counter.screen.aboutCounter.AboutCounterFragment;
+import com.yaroslavgorbachh.counter.screen.counter.CounterFragment;
+import com.yaroslavgorbachh.counter.screen.counterHistory.HistoryFragment;
+import com.yaroslavgorbachh.counter.screen.counterSettings.SettingsActivity;
+import com.yaroslavgorbachh.counter.screen.counterSettings.SettingsFragment;
+import com.yaroslavgorbachh.counter.screen.counterSettings.themes.ColorPickerDialog;
+import com.yaroslavgorbachh.counter.screen.counterWidget.CounterWidgetConfigActivity;
+import com.yaroslavgorbachh.counter.screen.counterWidget.CounterWidgetProvider;
+import com.yaroslavgorbachh.counter.screen.countersList.CountersFragment;
+import com.yaroslavgorbachh.counter.screen.createEditCounter.CreateCounterDialog;
+import com.yaroslavgorbachh.counter.screen.createEditCounter.CreateEditCounterFragment;
+import com.yaroslavgorbachh.counter.screen.fullscreenCounter.FullscreenCounterFragment;
 
 import javax.inject.Singleton;
 
@@ -38,7 +38,7 @@ public interface AppComponent {
     void inject(MainActivity activity);
     void inject(CounterFragment  fragment);
     void inject(AboutCounterFragment fragment);
-    void inject(CounterHistoryFragment fragment);
+    void inject(HistoryFragment fragment);
     void inject(SettingsFragment fragment);
     void inject(CountersFragment fragment);
     void inject(CounterWidgetConfigActivity a);

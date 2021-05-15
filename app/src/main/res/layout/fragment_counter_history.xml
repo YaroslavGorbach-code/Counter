@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yaroslavgorbachh.counter.counterHistory.CounterHistoryFragment"
+    tools:context=".screen.counterHistory.HistoryFragment"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv"
+        android:id="@+id/list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -87,7 +87,7 @@
         android:orientation="vertical"
         android:visibility="visible"
         tools:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/rv"
+        app:layout_constraintBottom_toBottomOf="@+id/list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="UseCompoundDrawables">

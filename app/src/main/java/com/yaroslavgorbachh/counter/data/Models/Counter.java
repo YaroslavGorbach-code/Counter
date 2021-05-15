@@ -7,10 +7,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.yaroslavgorbachh.counter.Accessibility;
-import com.yaroslavgorbachh.counter.counterHistory.HistoryManager;
+import com.yaroslavgorbachh.counter.feature.Accessibility;
+import com.yaroslavgorbachh.counter.feature.HistoryManager;
 import com.yaroslavgorbachh.counter.data.Repo;
-import com.yaroslavgorbachh.counter.data.RepoImp;
 import com.yaroslavgorbachh.counter.R;
 
 import java.util.Date;

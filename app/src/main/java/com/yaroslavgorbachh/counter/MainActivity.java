@@ -11,11 +11,10 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.yaroslavgorbachh.counter.counterSettings.themes.ColorPickerDialog;
-import com.yaroslavgorbachh.counter.counterSettings.themes.ThemeUtility;
-import com.yaroslavgorbachh.counter.counterWidget.CounterWidgetProvider;
+import com.yaroslavgorbachh.counter.screen.counterSettings.themes.ColorPickerDialog;
+import com.yaroslavgorbachh.counter.screen.counterSettings.themes.ThemeUtility;
+import com.yaroslavgorbachh.counter.screen.counterWidget.CounterWidgetProvider;
 import com.yaroslavgorbachh.counter.data.Repo;
-import com.yaroslavgorbachh.counter.data.RepoImp;
 
 import javax.inject.Inject;
 

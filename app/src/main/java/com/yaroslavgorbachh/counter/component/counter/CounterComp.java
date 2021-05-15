@@ -10,5 +10,5 @@ public interface CounterComp {
     void resetCounter();
     void undoReset();
     void delete();
-    LiveData<Counter> getCounter();
+    LiveData<com.yaroslavgorbachh.counter.data.Models.Counter> getCounter();
 }

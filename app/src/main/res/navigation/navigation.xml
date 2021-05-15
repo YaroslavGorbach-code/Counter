@@ -6,7 +6,7 @@
     app:startDestination="@id/countersFragment">
     <fragment
         android:id="@+id/countersFragment"
-        android:name="com.yaroslavgorbachh.counter.countersList.CountersFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.countersList.CountersFragment"
         android:label="@string/allCountersItem" >
         <action
             android:id="@+id/action_countersFragment_to_counterFragment"
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/counterFragment"
-        android:name="com.yaroslavgorbachh.counter.counter.CounterFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.counter.CounterFragment"
         tools:layout="@layout/fragment_counter" >
         <argument
             android:name="counterId"
@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/counterHistoryFragment"
-        android:name="com.yaroslavgorbachh.counter.counterHistory.CounterHistoryFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.counterHistory.HistoryFragment"
         tools:layout="@layout/fragment_counter_history" >
         <argument
             android:name="counterId"
@@ -74,7 +74,7 @@
     </fragment>
     <fragment
         android:id="@+id/createEditCounterFragment"
-        android:name="com.yaroslavgorbachh.counter.createEditCounter.CreateEditCounterFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.createEditCounter.CreateEditCounterFragment"
         tools:layout="@layout/fragment_edit_counter" >
         <argument
             android:name="counterId"
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutCounterFragment"
-        android:name="com.yaroslavgorbachh.counter.aboutCounter.AboutCounterFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.aboutCounter.AboutCounterFragment"
         tools:layout="@layout/fragment_about_counter" >
         <argument
             android:name="counterId"
@@ -92,7 +92,7 @@
     </fragment>
     <fragment
         android:id="@+id/fullscreenCounterFragment"
-        android:name="com.yaroslavgorbachh.counter.fullscreenCounter.FullscreenCounterFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.fullscreenCounter.FullscreenCounterFragment"
         android:label="fragment_fullscreen_counter"
         tools:layout="@layout/fragment_fullscreen_counter" >
         <argument
