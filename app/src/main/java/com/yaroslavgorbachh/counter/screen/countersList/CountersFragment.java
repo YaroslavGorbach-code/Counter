@@ -48,7 +48,7 @@ import com.yaroslavgorbachh.counter.screen.countersList.navigationDrawer.Counter
 import com.yaroslavgorbachh.counter.screen.countersList.navigationDrawer.DrawerItemSelector;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
-import com.yaroslavgorbachh.counter.screen.createEditCounter.CreateCounterDialog;
+import com.yaroslavgorbachh.counter.screen.edit.CreateCounterDialog;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.utill.Utility;

@@ -43,23 +43,23 @@ public class InputFilters {
         }
     }
 
-    public static long maxValueFilter(TextInputEditText mMaxValue_et) {
+    public static String maxValueFilter(TextInputEditText mMaxValue_et) {
         /*if maxValue is empty set default value if is not set value from editText*/
         if (String.valueOf(mMaxValue_et.getText()).trim().isEmpty()
                 || String.valueOf(mMaxValue_et.getText()).matches("-")) {
-            return Counter.MAX_VALUE;
+            return String.valueOf(Counter.MAX_VALUE);
         }else {
-            return Long.parseLong(String.valueOf(mMaxValue_et.getText()));
+            return String.valueOf(mMaxValue_et.getText());
         }
     }
 
-    public static long minValue(TextInputEditText mMinValue_et) {
+    public static String minValueFilter(TextInputEditText mMinValue_et) {
         /*if minValue is empty set default value if is not set value from editText*/
         if (String.valueOf(mMinValue_et.getText()).trim().isEmpty()
                 || String.valueOf(mMinValue_et.getText()).matches("-")) {
-            return Counter.MIN_VALUE;
+            return String.valueOf(Counter.MIN_VALUE);
         } else {
-            return Long.parseLong(String.valueOf(mMinValue_et.getText()));
+            return String.valueOf(mMinValue_et.getText());
         }
     }
 

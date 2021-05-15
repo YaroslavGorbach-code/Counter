@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.createEditCounter;
+package com.yaroslavgorbachh.counter.screen.edit;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;

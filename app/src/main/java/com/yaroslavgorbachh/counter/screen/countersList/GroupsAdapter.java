@@ -60,7 +60,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
 
         public Vh(@NonNull ViewGroup parent) {
             super(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_group, parent, false));
-            mTitle = itemView.findViewById(R.id.group_title);
+            mTitle = itemView.findViewById(R.id.title);
             itemView.setOnTouchListener(this);
 
         }
