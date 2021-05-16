@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.countersList;
+package com.yaroslavgorbachh.counter.screen.counters;
 
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.screen.countersList.navigationDrawer.DrawerItemSelector;
+import com.yaroslavgorbachh.counter.screen.counters.navigationDrawer.DrawerItemSelector;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.countersList.DragAndDrop.MultiSelection;
+package com.yaroslavgorbachh.counter.screen.counters.DragAndDrop.MultiSelection;
 
 public interface MultiCount extends MultiSelection{
     void decAll();

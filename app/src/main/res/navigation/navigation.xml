@@ -6,7 +6,7 @@
     app:startDestination="@id/countersFragment">
     <fragment
         android:id="@+id/countersFragment"
-        android:name="com.yaroslavgorbachh.counter.screen.countersList.CountersFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.counters.CountersFragment"
         android:label="@string/allCountersItem" >
         <action
             android:id="@+id/action_countersFragment_to_counterFragment"
@@ -74,7 +74,7 @@
     </fragment>
     <fragment
         android:id="@+id/createEditCounterFragment"
-        android:name="com.yaroslavgorbachh.counter.screen.edit.CreateEditCounterFragment"
+        android:name="com.yaroslavgorbachh.counter.screen.edit.EditCounterFragment"
         tools:layout="@layout/fragment_edit_counter" >
         <argument
             android:name="counterId"

@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.countersList;
+package com.yaroslavgorbachh.counter.screen.counters;
 
 import android.content.SharedPreferences;
 import android.view.GestureDetector;
@@ -10,16 +10,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.screen.countersList.DragAndDrop.CounterItemTouchHelper;
-import com.yaroslavgorbachh.counter.screen.countersList.DragAndDrop.ItemTouchHelperAdapter;
-import com.yaroslavgorbachh.counter.screen.countersList.DragAndDrop.ItemTouchHelperViewHolder;
-import com.yaroslavgorbachh.counter.screen.countersList.DragAndDrop.MultiSelection.MultiSelection;
+import com.yaroslavgorbachh.counter.screen.counters.DragAndDrop.CounterItemTouchHelper;
+import com.yaroslavgorbachh.counter.screen.counters.DragAndDrop.ItemTouchHelperAdapter;
+import com.yaroslavgorbachh.counter.screen.counters.DragAndDrop.ItemTouchHelperViewHolder;
+import com.yaroslavgorbachh.counter.screen.counters.DragAndDrop.MultiSelection.MultiSelection;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 import java.util.ArrayList;
@@ -33,14 +32,14 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     private final CounterItemClickListener mCounterItemClickListener;
     private final SharedPreferences mSharedPreferences;
     private List<Counter> mData = new ArrayList<>();
-    private final boolean leftHandMod;
+    private final boolean leftHandMod = false;
 
     public CountersAdapter(CounterItemClickListener counterItemClickListener, SharedPreferences sharedPreferences, MultiSelection multiSelection) {
         setHasStableIds(true);
         mCounterMultiSelection = multiSelection;
         mCounterItemClickListener = counterItemClickListener;
         mSharedPreferences = sharedPreferences;
-        leftHandMod = mSharedPreferences.getBoolean("leftHandMod", false);
+       // leftHandMod = mSharedPreferences.getBoolean("leftHandMod", false);
     }
 
     public void setData(List<Counter> data) {
@@ -135,25 +134,25 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             }, mSharedPreferences, null);
 
             /*if selection mod is active we need to disable buttons plus and minos*/
-            mCounterMultiSelection.getSelectionModState().observe((LifecycleOwner) itemView.getContext(), aBoolean -> {
-                if (aBoolean) {
-                    mMinus.setClickable(false);
-                    mPlus.setClickable(false);
-                    mPlus.setEnabled(false);
-                    mMinus.setEnabled(false);
-                } else {
-                    mMinus.setClickable(true);
-                    mPlus.setClickable(true);
-                    mPlus.setEnabled(true);
-                    mMinus.setEnabled(true);
-                }
-            });
+//            mCounterMultiSelection.getSelectionModState().observe((LifecycleOwner) itemView.getContext(), aBoolean -> {
+//                if (aBoolean) {
+//                    mMinus.setClickable(false);
+//                    mPlus.setClickable(false);
+//                    mPlus.setEnabled(false);
+//                    mMinus.setEnabled(false);
+//                } else {
+//                    mMinus.setClickable(true);
+//                    mPlus.setClickable(true);
+//                    mPlus.setEnabled(true);
+//                    mMinus.setEnabled(true);
+//                }
+//            });
         }
 
         private void bind(Counter counter) {
             mTitle.setText(counter.title);
             mValue.setText(String.valueOf(counter.value));
-            mCounterMultiSelection.bindBackground(counter, this, itemView.getBackground());
+            //mCounterMultiSelection.bindBackground(counter, this, itemView.getBackground());
         }
 
 
@@ -178,13 +177,13 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            if (mCounterMultiSelection.getSelectionModState().getValue()) {
-                if (getBindingAdapterPosition()!=-1)
-                mCounterMultiSelection.select(mData.get(getBindingAdapterPosition()), this);
-            } else {
+//            if (mCounterMultiSelection.getSelectionModState().getValue()) {
+//                if (getBindingAdapterPosition()!=-1)
+//                mCounterMultiSelection.select(mData.get(getBindingAdapterPosition()), this);
+//            } else {
                 if (getBindingAdapterPosition()!=-1)
                     mCounterItemClickListener.onOpen(mData.get(getBindingAdapterPosition()));
-            }
+         //   }
             return true;
         }
 
@@ -214,7 +213,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             mGestureDetector.onTouchEvent(event);
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    itemView.setPressed(!mCounterMultiSelection.getSelectionModState().getValue());
+                    //itemView.setPressed(!mCounterMultiSelection.getSelectionModState().getValue());
                     break;
                 case MotionEvent.ACTION_UP:
                     itemView.performClick();

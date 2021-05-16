@@ -16,7 +16,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-public class CreateEditCounterViewModel extends ViewModel {
+public class EditCounterViewModel extends ViewModel {
     private EditCounter editCounter;
 
     public EditCounter getEditCounter(Repo repo, long id){

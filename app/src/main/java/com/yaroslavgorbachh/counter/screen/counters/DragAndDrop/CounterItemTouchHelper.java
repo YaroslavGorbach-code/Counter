@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.countersList.DragAndDrop;
+package com.yaroslavgorbachh.counter.screen.counters.DragAndDrop;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;

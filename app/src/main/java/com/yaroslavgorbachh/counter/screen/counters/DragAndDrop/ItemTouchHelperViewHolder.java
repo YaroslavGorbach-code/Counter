@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.countersList.DragAndDrop;
+package com.yaroslavgorbachh.counter.screen.counters.DragAndDrop;
 
 import androidx.recyclerview.widget.RecyclerView;
 

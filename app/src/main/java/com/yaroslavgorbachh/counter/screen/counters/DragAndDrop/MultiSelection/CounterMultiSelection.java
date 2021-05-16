@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.countersList.DragAndDrop.MultiSelection;
+package com.yaroslavgorbachh.counter.screen.counters.DragAndDrop.MultiSelection;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

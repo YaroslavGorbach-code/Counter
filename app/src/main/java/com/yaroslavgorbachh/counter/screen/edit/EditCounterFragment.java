@@ -2,39 +2,27 @@ package com.yaroslavgorbachh.counter.screen.edit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.telecom.Call;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.yaroslavgorbachh.counter.component.edit.EditCounter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
-import com.yaroslavgorbachh.counter.feature.InputFilters;
 import com.yaroslavgorbachh.counter.MyApplication;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.utill.Utility;
-
-import java.util.Objects;
 
 import javax.inject.Inject;
 
 
-public class CreateEditCounterFragment extends Fragment {
+public class EditCounterFragment extends Fragment {
 
-    public CreateEditCounterFragment() {
+    public EditCounterFragment() {
         super(R.layout.fragment_edit_counter);
     }
 
@@ -52,8 +40,8 @@ public class CreateEditCounterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // init component
-        long id = CreateEditCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
-        CreateEditCounterViewModel vm = new ViewModelProvider(this).get(CreateEditCounterViewModel.class);
+        long id = EditCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
+        EditCounterViewModel vm = new ViewModelProvider(this).get(EditCounterViewModel.class);
         EditCounter editCounter = vm.getEditCounter(repo, id);
 
         // init view

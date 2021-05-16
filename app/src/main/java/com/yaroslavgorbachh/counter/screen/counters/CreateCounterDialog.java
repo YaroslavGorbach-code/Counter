@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.edit;
+package com.yaroslavgorbachh.counter.screen.counters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -21,7 +21,6 @@ import com.yaroslavgorbachh.counter.feature.InputFilters;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.utill.Utility;
-import com.yaroslavgorbachh.counter.screen.countersList.CountersFragmentDirections;
 
 public class CreateCounterDialog extends AppCompatDialogFragment {
     private AutoCompleteTextView mGroups_et;
