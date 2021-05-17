@@ -38,24 +38,15 @@ public class CounterFragment extends Fragment {
     @Inject Repo repo;
     @Inject Accessibility accessibility;
 
+    public CounterFragment(){
+        super(R.layout.fragment_counter);
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MyApplication application = (MyApplication) requireActivity().getApplication();
         application.appComponent.inject(this);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        boolean leftMod = sharedPreferences.getBoolean("leftHand", false);
-        View view;
-        if (leftMod){
-            view = inflater.inflate(R.layout.fragment_counter, container, false);
-        }else {
-            view = inflater.inflate(R.layout.fragment_counter_left_hand, container, false);
-        }
-        return view;
     }
 
     @Override
@@ -85,7 +76,7 @@ public class CounterFragment extends Fragment {
 
             @Override
             public void onEdit() {
-                NavDirections action = (NavDirections) CounterFragmentDirections
+                NavDirections action = CounterFragmentDirections
                         .actionCounterFragmentToCreateEditCounterFragment()
                         .setCounterId(counterId);
                 Navigation.findNavController(view)
@@ -94,7 +85,7 @@ public class CounterFragment extends Fragment {
 
             @Override
             public void onHistory() {
-                NavDirections action = (NavDirections) CounterFragmentDirections
+                NavDirections action = CounterFragmentDirections
                         .actionCounterFragmentToCounterHistoryFragment()
                         .setCounterId(counterId);
                 Navigation.findNavController(view)
@@ -103,7 +94,7 @@ public class CounterFragment extends Fragment {
 
             @Override
             public void onAbout() {
-                NavDirections action = (NavDirections) CounterFragmentDirections
+                NavDirections action = CounterFragmentDirections
                         .actionCounterFragmentToAboutCounterFragment()
                         .setCounterId(counterId);
                 Navigation.findNavController(view)
@@ -112,7 +103,7 @@ public class CounterFragment extends Fragment {
 
             @Override
             public void onFullScreen() {
-                NavDirections action = (NavDirections) CounterFragmentDirections.
+                NavDirections action = CounterFragmentDirections.
                         actionCounterFragmentToFullscreenCounterFragment()
                         .setCounterId(counterId);
                 Navigation.findNavController(view)

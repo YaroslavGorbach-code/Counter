@@ -21,10 +21,6 @@
             app:title="@string/lockOrientation"
             app:singleLineTitle="false"
             app:defaultValue="true"/>
-        <SwitchPreferenceCompat
-            app:key="leftHandMod"
-            app:singleLineTitle="false"
-            app:title="@string/left_hand_mod" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/feedBack_header">
