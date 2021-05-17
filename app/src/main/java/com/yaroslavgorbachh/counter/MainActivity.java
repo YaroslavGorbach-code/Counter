@@ -11,9 +11,8 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.yaroslavgorbachh.counter.screen.settings.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.utill.ThemeUtility;
-import com.yaroslavgorbachh.counter.screen.counterWidget.CounterWidgetProvider;
+import com.yaroslavgorbachh.counter.screen.widget.CounterWidgetProvider;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import javax.inject.Inject;

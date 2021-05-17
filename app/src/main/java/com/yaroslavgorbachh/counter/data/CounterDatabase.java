@@ -17,6 +17,5 @@ public abstract class CounterDatabase extends RoomDatabase {
     public abstract CounterDao counterDao();
     public abstract CounterHistoryDao counterHistoryDao();
     public abstract AppStyleDao appStyleDao();
-
 }
 

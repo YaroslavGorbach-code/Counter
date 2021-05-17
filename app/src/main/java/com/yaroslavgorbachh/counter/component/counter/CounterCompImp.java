@@ -4,15 +4,13 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 public class CounterCompImp implements CounterComp {
-    private Repo mRepo;
+    private final Repo mRepo;
     private final long mId;
-
 
     public CounterCompImp(Repo repo, long id){
         mRepo = repo;
         mId = id;
     }
-
 
     @Override
     public void incCounter() {
@@ -24,10 +22,12 @@ public class CounterCompImp implements CounterComp {
         mRepo.decCounter(mId);
     }
 
+    @Override
     public void resetCounter(){
         mRepo.resetCounter(mId);
     }
 
+    @Override
     public void undoReset(){
 
     }

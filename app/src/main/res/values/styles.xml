@@ -1,5 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+
+    <style name="InteractiveItem">
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:stateListAnimator"></item>
+    </style>
+
     <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">false</item>
         <item name="color">@color/colorIconDrawer</item>

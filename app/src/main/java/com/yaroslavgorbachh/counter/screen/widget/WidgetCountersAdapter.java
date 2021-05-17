@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.counterWidget;
+package com.yaroslavgorbachh.counter.screen.widget;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -18,6 +19,7 @@ import java.util.Set;
 public class Utility {
     /*delete the same groups*/
     static public List<String> deleteTheSameGroups(List<String> strings) {
+        if (strings == null) return new ArrayList<>();
         Set<String> set = new HashSet<>(strings);
         List<String> mList = Arrays.asList(set.toArray(new String[0]));
         Collections.sort(mList);

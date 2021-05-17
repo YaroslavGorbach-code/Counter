@@ -1,96 +1,74 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.fragment.app.DialogFragment;
 
-import com.google.android.material.textfield.TextInputEditText;
+import com.yaroslavgorbachh.counter.databinding.DialogCreateCounterBinding;
 import com.yaroslavgorbachh.counter.feature.InputFilters;
-import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.utill.Utility;
 
-public class CreateCounterDialog extends AppCompatDialogFragment {
-    private AutoCompleteTextView mGroups_et;
-    private TextInputEditText mCounterName_et;
-    private CreateCounterDialogViewModel mViewModel;
+import java.util.ArrayList;
 
-    public static CreateCounterDialog newInstance(String group) {
+
+public class CreateCounterDialog extends DialogFragment {
+    interface Host{
+        void onCreateCounter(String title, String group);
+        void onDetailed();
+    }
+
+    public static CreateCounterDialog newInstance(String group, ArrayList<String> groups) {
         CreateCounterDialog f = new CreateCounterDialog();
         Bundle args = new Bundle();
         args.putString("group", group);
+        args.putStringArrayList("groups", groups);
         f.setArguments(args);
         return f;
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        MyApplication app = (MyApplication) requireActivity().getApplication();
-        app.appComponent.inject(this);
-    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-       View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_create_counter, null);
-       mGroups_et = view.findViewById(R.id.filled_exposed_dropdown_createCounter_dialog);
-       mCounterName_et = view.findViewById(R.id.title);
+       DialogCreateCounterBinding binding = DialogCreateCounterBinding.bind(LayoutInflater.from(requireContext())
+               .inflate(R.layout.dialog_create_counter, null));
 
-       mViewModel = new ViewModelProvider(this).get(CreateCounterDialogViewModel.class);
-
-       if (getArguments()!=null)
-           mGroups_et.setText(getArguments().getString("group"));
+       if (getArguments()!=null && getArguments().getString("group")!=null)
+           binding.groups.setText(getArguments().getString("group"));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
-                .setView(view)
+                .setView(binding.getRoot())
                 .setNegativeButton(R.string.addCounterDialogCounterNegativeButton, null)
                 .setPositiveButton(R.string.addCounterDialogCounterPositiveButton, (dialog, which) -> {
-                    String group = InputFilters.groupsFilter(mGroups_et);
+                    String group = InputFilters.groupsFilter(binding.groups);
                     String title;
-
-                   if (InputFilters.titleFilter(mCounterName_et)){
-                        title = mCounterName_et.getText().toString();
+                   if (InputFilters.titleFilter(binding.title)){
+                        title = binding.title.getText().toString();
                    }else {
                        return;
                    }
-                   mViewModel.createCounter(title, group);
+                    ((Host)requireParentFragment()).onCreateCounter(title, group);
                 });
 
-        /*each new group sets into dropdown_menu*/
-        setGroups(view.getContext());
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(
+                        binding.getRoot().getContext(),
+                        R.layout.item_popup,
+                        Utility.deleteTheSameGroups(getArguments().getStringArrayList("groups")));
+        binding.groups.setAdapter(adapter);
 
-        /*start CreateCounterDetailed_AND_EditCounterActivity*/
-            view.findViewById(R.id.detailed).setOnClickListener(v -> {
+           binding.detailed.setOnClickListener(v -> {
                 dismiss();
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.hostFragment);
-                navController.navigate(CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2());
-                Utility.hideKeyboard(requireActivity());
+                ((Host)requireParentFragment()).onDetailed();
             });
          return builder.create();
-    }
 
-    private void setGroups(Context context) {
-        mViewModel.getGroups().observe(this, groups -> {
-            ArrayAdapter<String> adapter =
-                    new ArrayAdapter<>(
-                            context,
-                            R.layout.item_popup,
-                            Utility.deleteTheSameGroups(groups));
-            mGroups_et.setAdapter(adapter);
-        });
     }
-
 }

@@ -20,8 +20,8 @@ public interface CounterDao {
     @Update
     void update(Counter counter);
 
-    @Delete
-    void delete(Counter counter);
+    @Query("DELETE FROM counter_table WHERE id =:id")
+    void delete(long id);
 
     @Query("SELECT * FROM counter_table ORDER BY createDataSort DESC")
     LiveData<List<Counter>> getAllCounters();

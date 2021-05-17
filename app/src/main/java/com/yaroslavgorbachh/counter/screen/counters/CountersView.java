@@ -1,9 +1,12 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -14,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
-import com.yaroslavgorbachh.counter.screen.counters.DragAndDrop.MultiSelection.CounterMultiSelection;
-import com.yaroslavgorbachh.counter.screen.counters.DragAndDrop.MultiSelection.MultiCount;
-import com.yaroslavgorbachh.counter.screen.counters.DragAndDrop.MultiSelection.MultiSelection;
-import com.yaroslavgorbachh.counter.screen.counters.navigationDrawer.CounterDrawerMenuItemSelector;
-import com.yaroslavgorbachh.counter.screen.counters.navigationDrawer.DrawerItemSelector;
+import com.yaroslavgorbachh.counter.feature.Animations;
+import com.yaroslavgorbachh.counter.feature.multyselection.CounterMultiSelection;
+import com.yaroslavgorbachh.counter.screen.counters.drawer.CounterDrawerMenuItemSelector;
+import com.yaroslavgorbachh.counter.screen.counters.drawer.DrawerItemSelector;
+import com.yaroslavgorbachh.counter.screen.counters.drawer.GroupsAdapter;
 import com.yaroslavgorbachh.counter.utill.Utility;
 
 import java.util.List;
@@ -26,26 +29,42 @@ import java.util.List;
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
 
 public class CountersView {
-    private final Drawable mNavigationIcon;
-    private final DrawerItemSelector drawerItemSelector;
-    private final FragmentCountersBinding mBinding;
-    private MultiCount mCounterMultiCount;
-    private GroupsAdapter mGroupsAdapter;
-    private CountersAdapter mCountersAdapter;
-    public interface Callback{
+    public interface Callback {
         void onSettings();
-        void onNoCounters();
         void onInc(Counter counter);
         void onDec(Counter counter);
         void onOpen(Counter counter);
         void onMoved(Counter counterFrom, Counter counterTo);
-    }
-    CountersView(FragmentCountersBinding binding, Activity activity, Callback callback){
-        drawerItemSelector = new CounterDrawerMenuItemSelector();
-        mCounterMultiCount = new CounterMultiSelection(null, activity, null);
+        void onEdit(Counter counter);
+        void onReset(List<Counter> counters);
+        void onExport(List<Counter> counters);
+        void onRemove(List<Counter> counters);
+        void onShowCreateDialog();
+        void onDecSelected(List<Counter> selected);
+        void onIncSelected(List<Counter> selected);
 
+    }
+
+    private final FragmentCountersBinding mBinding;
+    private final GroupsAdapter mGroupsAdapter;
+    private final CountersAdapter mCountersAdapter;
+    private final Drawable mNavigationIcon;
+
+    CountersView(FragmentCountersBinding binding, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
+        DrawerItemSelector drawerItemSelector = new CounterDrawerMenuItemSelector();
         mBinding = binding;
-        /*navController set up*/
+        OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (mCountersAdapter.getSelected().size()>0) {
+                    mCountersAdapter.unselectAll();
+                } else {
+                    activity.finish();
+                }
+            }
+        };
+        activity.getOnBackPressedDispatcher().addCallback(lifecycleOwner, backPressedCallback);
+
         NavController mNavController = Navigation.findNavController(activity, R.id.hostFragment);
         AppBarConfiguration appBarConfiguration;
         appBarConfiguration = new AppBarConfiguration.Builder(mNavController.getGraph())
@@ -55,14 +74,12 @@ public class CountersView {
         NavigationUI.setupWithNavController(binding.drawer.navigationDrawer, mNavController);
         mNavigationIcon = binding.toolbar.getNavigationIcon();
 
-        /*when click set up the adapter with all the counters*/
         binding.drawer.allCounters.setOnClickListener(i -> {
-            //mGroupsAdapter.allCountersItemSelected(mAllCounters_drawerItem);
             binding.openableLayout.close();
         });
 
         binding.drawer.settings.setOnClickListener(i -> callback.onSettings());
-        binding.noCounters.setOnClickListener(v -> callback.onNoCounters());
+        binding.noCounters.setOnClickListener(v -> callback.onShowCreateDialog());
 
         mGroupsAdapter = new GroupsAdapter(drawerItemSelector);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(binding.getRoot().getContext());
@@ -70,15 +87,14 @@ public class CountersView {
         binding.drawer.groupsList.setAdapter(mGroupsAdapter);
         binding.drawer.groupsList.setHasFixedSize(true);
 
-        /*set up rv with counters*/
-         mCountersAdapter = new CountersAdapter(new CountersAdapter.CounterItemClickListener() {
+        mCountersAdapter = new CountersAdapter(new CounterMultiSelection(), new CountersAdapter.Callback() {
             @Override
-            public void onPlusClick(Counter counter) {
+            public void onInc(Counter counter) {
                 callback.onInc(counter);
             }
 
             @Override
-            public void onMinusClick(Counter counter) {
+            public void onDec(Counter counter) {
                 callback.onDec(counter);
             }
 
@@ -91,35 +107,82 @@ public class CountersView {
             public void onMoved(Counter counterFrom, Counter counterTo) {
                 callback.onMoved(counterFrom, counterTo);
             }
-        }, null, null);
+
+            @Override
+            public void onMultiSelectionStateChange(boolean isActive) {
+                if (isActive) {
+                    Animations.showButtonsMultiSelection(binding.decSelected, binding.incSelected);
+                    mBinding.toolbar.setNavigationIcon(ResourcesCompat.getDrawable(
+                            binding.getRoot().getContext().getResources(), R.drawable.ic_close, activity.getTheme()));
+                    binding.toolbar.getMenu().clear();
+                    binding.toolbar.inflateMenu(R.menu.menu_selection_mod);
+
+                } else {
+                    Animations.hideButtonsMultiSelection(binding.decSelected, binding.incSelected);
+                    mBinding.toolbar.setNavigationIcon(mNavigationIcon);
+                    binding.toolbar.getMenu().clear();
+                    binding.toolbar.inflateMenu(R.menu.menu_counters);
+                }
+            }
+
+            @Override
+            public void onSelect(int count) {
+                if (count == 0){
+                    binding.toolbar.setTitle("set group title"); // TODO: 5/17/2021
+                }else {
+                    binding.toolbar.setTitle(String.valueOf(mCountersAdapter.getSelected().size()));
+                }
+            }
+        }, activity);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mBinding.getRoot().getContext());
         mBinding.list.setLayoutManager(layoutManager);
         mBinding.list.setHasFixedSize(true);
         mBinding.list.setAdapter(mCountersAdapter);
         mCountersAdapter.itemTouchHelper.attachToRecyclerView(mBinding.list);
         mCountersAdapter.setStateRestorationPolicy(PREVENT_WHEN_EMPTY);
+
+        mBinding.toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.editSelected) {
+                callback.onEdit(mCountersAdapter.getFirsSelected());
+            }
+            if (item.getItemId() == R.id.selectAllCounter) {
+                mCountersAdapter.selectAllCounters();
+            }
+            if (item.getItemId() == R.id.resetSelected) {
+                callback.onReset(mCountersAdapter.getSelected());
+            }
+            if (item.getItemId() == R.id.exportSelected) {
+                callback.onExport(mCountersAdapter.getSelected());
+            }
+            if (item.getItemId() == R.id.deleteSelected) {
+                callback.onRemove(mCountersAdapter.getSelected());
+            }
+            if (item.getItemId() == R.id.counterCreate) {
+                callback.onShowCreateDialog();
+            }
+            return true;
+        });
+
+        mBinding.toolbar.setNavigationOnClickListener(v -> {
+            if (mCountersAdapter.getSelected().size()>0) {
+                mCountersAdapter.unselectAll();
+            } else {
+                mBinding.openableLayout.open();
+            }
+        });
+        binding.decSelected.setOnClickListener(v -> callback.onDecSelected(mCountersAdapter.getSelected()));
+        binding.incSelected.setOnClickListener(v -> callback.onIncSelected(mCountersAdapter.getSelected()));
     }
 
     public void setGroups(List<String> groups) {
-
         if (groups.size() > 0) {
             mBinding.drawer.groupsList.setVisibility(View.VISIBLE);
             mBinding.drawer.noGroups.setVisibility(View.GONE);
-        } else {
-            if (!mCounterMultiCount.getSelectionModState().getValue()) {
-                mBinding.drawer.groupsList.setVisibility(View.GONE);
-                mBinding.drawer.noGroups.setVisibility(View.VISIBLE);
-            }
         }
         mGroupsAdapter.setGroups(Utility.deleteTheSameGroups(groups));
     }
 
     public void setCounters(List<Counter> data) {
         mCountersAdapter.setData(data);
-    }
-
-
-    public MultiSelection getMultiSelection() {
-        return mCounterMultiCount;
     }
 }

@@ -55,7 +55,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/groups"
+        android:id="@+id/groups_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/outlinedTextField">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/filled_exposed_dropdown_createCounter_dialog"
+            android:id="@+id/groups"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"

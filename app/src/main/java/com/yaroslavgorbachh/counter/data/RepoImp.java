@@ -74,12 +74,6 @@ public class RepoImp implements Repo{
                 }).execute();
     }
 
-    public void deleteCounter(Counter counter) {
-        Completable.create(emitter ->
-                mDatabase.counterDao().delete(counter))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
-    }
 
     public void updateCounter(Counter counter) {
         Completable.create(emitter -> mDatabase.counterDao().update(counter))
@@ -159,7 +153,10 @@ public class RepoImp implements Repo{
     }
 
     public void deleteCounter(long mId) {
-
+        Completable.create(emitter ->
+                mDatabase.counterDao().delete(mId))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 }
 

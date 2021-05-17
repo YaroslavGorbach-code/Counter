@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.counterWidget;
+package com.yaroslavgorbachh.counter.screen.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;

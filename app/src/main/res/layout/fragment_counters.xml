@@ -27,6 +27,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:menu="@menu/menu_counters"
                 android:background="?android:colorBackground"
                 app:title="@string/countersFragmentToolbarTitle"
                 app:titleTextColor="?colorAccent" />
@@ -121,7 +122,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="16dp"
             android:backgroundTint="?android:colorBackground"
-            tools:icon="@drawable/ic_minus"
+            app:icon="@drawable/ic_minus"
             app:iconSize="50dp"
             tools:visibility="visible"
             android:visibility="gone"
@@ -159,7 +160,4 @@
     <include android:id="@+id/drawer"
         layout="@layout/drawer"
         />
-
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

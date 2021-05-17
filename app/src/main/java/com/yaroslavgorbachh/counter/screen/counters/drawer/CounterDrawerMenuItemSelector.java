@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.screen.counters.navigationDrawer;
+package com.yaroslavgorbachh.counter.screen.counters.drawer;
 
 import android.view.View;
 

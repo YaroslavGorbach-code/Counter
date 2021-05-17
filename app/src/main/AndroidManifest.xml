@@ -18,7 +18,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         >
 
-        <receiver android:name=".screen.counterWidget.CounterWidgetProvider">
+        <receiver android:name=".screen.widget.CounterWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".screen.counterWidget.CounterWidgetConfigActivity">
+        <activity android:name=".screen.widget.CounterWidgetConfigActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
