@@ -19,8 +19,6 @@ import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.feature.Animations;
 import com.yaroslavgorbachh.counter.feature.multyselection.CounterMultiSelection;
-import com.yaroslavgorbachh.counter.screen.counters.drawer.CounterDrawerMenuItemSelector;
-import com.yaroslavgorbachh.counter.screen.counters.drawer.DrawerItemSelector;
 import com.yaroslavgorbachh.counter.screen.counters.drawer.GroupsAdapter;
 import com.yaroslavgorbachh.counter.utill.Utility;
 
@@ -42,7 +40,8 @@ public class CountersView {
         void onShowCreateDialog();
         void onDecSelected(List<Counter> selected);
         void onIncSelected(List<Counter> selected);
-
+        void onGroupItemSelected(String group);
+        void onAllCountersItemSelected();
     }
 
     private final FragmentCountersBinding mBinding;
@@ -51,7 +50,6 @@ public class CountersView {
     private final Drawable mNavigationIcon;
 
     CountersView(FragmentCountersBinding binding, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
-        DrawerItemSelector drawerItemSelector = new CounterDrawerMenuItemSelector();
         mBinding = binding;
         OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
             @Override
@@ -81,7 +79,16 @@ public class CountersView {
         binding.drawer.settings.setOnClickListener(i -> callback.onSettings());
         binding.noCounters.setOnClickListener(v -> callback.onShowCreateDialog());
 
-        mGroupsAdapter = new GroupsAdapter(drawerItemSelector);
+        mGroupsAdapter = new GroupsAdapter(lifecycleOwner, group -> {
+            callback.onGroupItemSelected(group);
+            mBinding.openableLayout.close();
+        });
+
+        mBinding.drawer.allCounters.setOnClickListener(v -> {
+            callback.onAllCountersItemSelected();
+            mBinding.openableLayout.close();
+        });
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(binding.getRoot().getContext());
         binding.drawer.groupsList.setLayoutManager(mLayoutManager);
         binding.drawer.groupsList.setAdapter(mGroupsAdapter);

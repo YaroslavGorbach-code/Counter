@@ -8,11 +8,21 @@ import com.yaroslavgorbachh.counter.data.Repo;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public class CountersImp implements Counters {
     private final Repo mRepo;
-
+    private String mGroup;
     public CountersImp(Repo repo) {
         mRepo = repo;
+    }
+
+    @Override
+    public List<Counter> getSortedCounters(List<Counter> counters) {
+        return Observable.fromIterable(counters)
+                .filter(counter -> (counter.grope != null && counter.grope.equals(mGroup)))
+                .toList()
+                .blockingGet();
     }
 
     @Override
@@ -53,7 +63,11 @@ public class CountersImp implements Counters {
 
     @Override
     public LiveData<List<Counter>> getCounters() {
-        return mRepo.getAllCounters();
+        if (mGroup!=null){
+            return mRepo.getCounters(mGroup);
+        }else {
+            return mRepo.getCounters();
+        }
     }
 
     @Override
@@ -99,4 +113,16 @@ public class CountersImp implements Counters {
             mRepo.incCounter(counter.id);
         }
     }
+
+    @Override
+    public void setGroup(String group) {
+        mGroup = group;
+        mRepo.triggerCountersLiveData();
+    }
+
+    @Override
+    public String getCurrentGroup() {
+        return mGroup;
+    }
+
 }

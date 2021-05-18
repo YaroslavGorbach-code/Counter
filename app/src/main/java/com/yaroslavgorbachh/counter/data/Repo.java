@@ -22,7 +22,7 @@ public interface Repo { void incCounter(long mId);
     void deleteHistoryItem(CounterHistory counterHistory);
     void insertCounterHistory(CounterHistory copy);
     void deleteCounters();
-    LiveData<List<Counter>> getAllCounters();
+    LiveData<List<Counter>> getCounters();
     Single<List<Counter>> getAllCountersNoLiveData();
     void updateCounter(Counter counter);
     void changeTheme(AppStyle appStyle);
@@ -31,4 +31,7 @@ public interface Repo { void incCounter(long mId);
     void insertCounter(Counter counter);
     void backup(Intent data, Context context);
     void restore(Intent data, Context context);
+    LiveData<List<Counter>> getCounters(String mGroup);
+    void triggerCountersLiveData();
+
 }

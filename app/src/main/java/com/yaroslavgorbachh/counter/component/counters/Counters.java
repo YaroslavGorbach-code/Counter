@@ -23,4 +23,8 @@ public interface Counters {
     void update(List<Counter> copy);
     void decSelected(List<Counter> selected);
     void incSelected(List<Counter> selected);
+    void setGroup(String group);
+    String getCurrentGroup();
+    List<Counter> getSortedCounters(List<Counter> counters);
+
 }

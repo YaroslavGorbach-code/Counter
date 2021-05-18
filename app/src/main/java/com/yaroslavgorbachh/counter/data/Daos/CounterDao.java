@@ -2,7 +2,6 @@ package com.yaroslavgorbachh.counter.data.Daos;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -24,7 +23,7 @@ public interface CounterDao {
     void delete(long id);
 
     @Query("SELECT * FROM counter_table ORDER BY createDataSort DESC")
-    LiveData<List<Counter>> getAllCounters();
+    LiveData<List<Counter>> getCounters();
 
     @Query("SELECT * FROM counter_table ORDER BY createDataSort DESC")
     List<Counter> getAllCountersNoLiveData();
@@ -52,4 +51,7 @@ public interface CounterDao {
 
     @Query("UPDATE counter_table SET value = 0 WHERE id = :id")
     void reset(long id);
+
+    @Query("SELECT * FROM counter_table WHERE grope = :group")
+    LiveData<List<Counter>> getCounters(String group);
 }

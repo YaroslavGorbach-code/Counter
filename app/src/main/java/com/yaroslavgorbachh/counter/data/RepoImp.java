@@ -10,9 +10,6 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.BackupAndRestore.MyBackup;
 import com.yaroslavgorbachh.counter.data.BackupAndRestore.MyRestore;
-import com.yaroslavgorbachh.counter.data.Daos.AppStyleDao;
-import com.yaroslavgorbachh.counter.data.Daos.CounterDao;
-import com.yaroslavgorbachh.counter.data.Daos.CounterHistoryDao;
 import com.yaroslavgorbachh.counter.data.Models.AppStyle;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
@@ -74,6 +71,20 @@ public class RepoImp implements Repo{
                 }).execute();
     }
 
+    @Override
+    public LiveData<List<Counter>> getCounters(String mGroup) {
+       return mDatabase.counterDao().getCounters(mGroup);
+    }
+
+    @Override
+    public void triggerCountersLiveData() {
+       List<Counter> counters = mDatabase.counterDao().getAllCountersNoLiveData();
+       mDatabase.counterDao().deleteAllCounters();
+        for (Counter c: counters) {
+            mDatabase.counterDao().insert(c);
+        }
+    }
+
 
     public void updateCounter(Counter counter) {
         Completable.create(emitter -> mDatabase.counterDao().update(counter))
@@ -107,8 +118,8 @@ public class RepoImp implements Repo{
         return mDatabase.counterHistoryDao().getCounterHistoryList(counterId);
     }
 
-    public LiveData<List<Counter>> getAllCounters() {
-        return mDatabase.counterDao().getAllCounters();
+    public LiveData<List<Counter>> getCounters() {
+        return mDatabase.counterDao().getCounters();
     }
 
     public LiveData<Counter> getCounter(long id) {

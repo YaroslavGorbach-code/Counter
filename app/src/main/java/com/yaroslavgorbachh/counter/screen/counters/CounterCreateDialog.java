@@ -18,14 +18,14 @@ import com.yaroslavgorbachh.counter.utill.Utility;
 import java.util.ArrayList;
 
 
-public class CreateCounterDialog extends DialogFragment {
+public class CounterCreateDialog extends DialogFragment {
     interface Host{
         void onCreateCounter(String title, String group);
         void onDetailed();
     }
 
-    public static CreateCounterDialog newInstance(String group, ArrayList<String> groups) {
-        CreateCounterDialog f = new CreateCounterDialog();
+    public static CounterCreateDialog newInstance(String group, ArrayList<String> groups) {
+        CounterCreateDialog f = new CounterCreateDialog();
         Bundle args = new Bundle();
         args.putString("group", group);
         args.putStringArrayList("groups", groups);

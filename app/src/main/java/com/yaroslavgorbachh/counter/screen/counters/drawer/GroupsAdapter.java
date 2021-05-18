@@ -6,19 +6,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.databinding.IGroupBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
 
-    private final DrawerItemSelector mCounterDrawerItemSelector;
-    private List<String> mData = new ArrayList<>();
+    public interface Callback{
+        void onGroup(String string);
+    }
 
-    public GroupsAdapter(DrawerItemSelector drawerItemSelector) {
-        mCounterDrawerItemSelector = drawerItemSelector;
+    private List<String> mData = new ArrayList<>();
+    private Callback mCallback;
+    private DrawerItemSelector mDrawerItemSelector;
+
+    public GroupsAdapter(LifecycleOwner lifecycleOwner, Callback callback) {
+        mDrawerItemSelector = new CounterDrawerItemSelector();
+        mCallback = callback;
     }
 
     public void setGroups (List<String> list) {
@@ -26,21 +35,13 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
         notifyDataSetChanged();
     }
 
-    public void allCountersItemSelected(View view) {
-        mCounterDrawerItemSelector.allCountersItemSelected(view);
-        notifyDataSetChanged();
-    }
 
-    // this method needs for restoring already selected item after onStop
-    public void selectItem(String string) {
-        mCounterDrawerItemSelector.selectItem(string, null);
-        notifyDataSetChanged();
-    }
+
 
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Vh(parent);
+        return new Vh(IGroupBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -54,37 +55,21 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
     }
 
 
-    public class Vh extends RecyclerView.ViewHolder implements View.OnTouchListener {
-        private final TextView mTitle;
-
-        public Vh(@NonNull ViewGroup parent) {
-            super(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_group, parent, false));
-            mTitle = itemView.findViewById(R.id.title);
-            itemView.setOnTouchListener(this);
+    public class Vh extends RecyclerView.ViewHolder {
+        private final IGroupBinding mBinding;
+        public Vh(IGroupBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+            mBinding.getRoot().setOnClickListener(v -> {
+                mCallback.onGroup(mData.get(getBindingAdapterPosition()));
+                mDrawerItemSelector.selectItem(mData.get(getBindingAdapterPosition()), this);
+            });
 
         }
 
         public void bind(String s) {
-            mTitle.setText(s);
-            mCounterDrawerItemSelector.bindBackground(s,this);
+            mBinding.title.setText(s);
         }
 
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    itemView.setPressed(true);
-                    break;
-                case MotionEvent.ACTION_UP:
-                    itemView.performClick();
-                    mCounterDrawerItemSelector.selectItem(mData.get(getBindingAdapterPosition()), this);
-                    notifyDataSetChanged();
-                    //no break
-                case MotionEvent.ACTION_CANCEL:
-                    itemView.setPressed(false);
-                    break;
-            }
-            return true;
-        }
     }
 }

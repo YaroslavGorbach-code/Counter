@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CounterItemTouchHelper extends ItemTouchHelper.Callback {
+public class DragAndDropItemTouchHelper extends ItemTouchHelper.Callback {
 
     public interface CallbackAdapter {
         void onMoved(int fromPos, int toPos);
@@ -18,7 +18,7 @@ public class CounterItemTouchHelper extends ItemTouchHelper.Callback {
 
     private final CallbackAdapter mCallbackAdapter;
 
-    public CounterItemTouchHelper(CallbackAdapter callbackAdapter) {
+    public DragAndDropItemTouchHelper(CallbackAdapter callbackAdapter) {
         mCallbackAdapter = callbackAdapter;
     }
 

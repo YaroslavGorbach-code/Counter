@@ -8,31 +8,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.R;
 
-import javax.inject.Inject;
-
-public class CounterDrawerMenuItemSelector implements DrawerItemSelector {
+public class CounterDrawerItemSelector implements DrawerItemSelector {
     private final MutableLiveData<String> selectedItem = new MutableLiveData<>();
-    private RecyclerView.ViewHolder mSelected_vh;
-    private View mAllCountersItem_v;
-
-    @Inject
-    public CounterDrawerMenuItemSelector(){}
+    private RecyclerView.ViewHolder mSelectedItem;
+    private View mAllCountersItem;
 
     @Override
     public void selectItem(String string, RecyclerView.ViewHolder vh) {
-        if (mSelected_vh != null){
-            setDefaultBackground(mSelected_vh.itemView);
-            mSelected_vh = null;
+        if (mSelectedItem != null){
+            setDefaultBackground(mSelectedItem.itemView);
+            mSelectedItem = null;
         }
 
-        if (mAllCountersItem_v != null){
-            setDefaultBackground(mAllCountersItem_v);
-            mAllCountersItem_v = null;
+        if (mAllCountersItem != null){
+            setDefaultBackground(mAllCountersItem);
+            mAllCountersItem = null;
         }
 
         if (vh!=null){
-            mSelected_vh = vh;
-            setSelectedBackground(mSelected_vh.itemView);
+            mSelectedItem = vh;
+            setSelectedBackground(mSelectedItem.itemView);
         }
         selectedItem.setValue(string);
     }
@@ -44,9 +39,9 @@ public class CounterDrawerMenuItemSelector implements DrawerItemSelector {
 
     @Override
     public void bindBackground(String title, RecyclerView.ViewHolder viewHolder) {
-        if (mSelected_vh!=null){
-            setDefaultBackground(mSelected_vh.itemView);
-            mSelected_vh=null;
+        if (mSelectedItem !=null){
+            setDefaultBackground(mSelectedItem.itemView);
+            mSelectedItem =null;
         }
         if (title.equals(selectedItem.getValue())) {
             setSelectedBackground(viewHolder.itemView);
@@ -57,19 +52,19 @@ public class CounterDrawerMenuItemSelector implements DrawerItemSelector {
 
     @Override
     public void allCountersItemSelected(View view) {
-        if (mAllCountersItem_v != null){
-            setDefaultBackground(mAllCountersItem_v);
-            mAllCountersItem_v = null;
+        if (mAllCountersItem != null){
+            setDefaultBackground(mAllCountersItem);
+            mAllCountersItem = null;
         }
 
-        if (mSelected_vh!=null){
-            setDefaultBackground(mSelected_vh.itemView);
-            mSelected_vh = null;
+        if (mSelectedItem !=null){
+            setDefaultBackground(mSelectedItem.itemView);
+            mSelectedItem = null;
         }
 
         selectedItem.setValue(view.getResources().getString(R.string.allCountersItem));
-        mAllCountersItem_v = view;
-        setSelectedBackground(mAllCountersItem_v);
+        mAllCountersItem = view;
+        setSelectedBackground(mAllCountersItem);
     }
 
     private void setDefaultBackground(View view){

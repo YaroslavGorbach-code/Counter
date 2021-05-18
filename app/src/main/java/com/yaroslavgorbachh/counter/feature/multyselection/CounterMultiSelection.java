@@ -33,7 +33,7 @@ public class CounterMultiSelection implements MultiSelection {
 
             mSelectedCounters.add(counter);
             mSelectedVhs.add(viewHolder);
-            setItemSelectedBackground(viewHolder);
+            setSelectedBackground(viewHolder);
         }
         mSelectedCount.setValue(mSelectedCounters.size());
     }
@@ -62,7 +62,7 @@ public class CounterMultiSelection implements MultiSelection {
         boolean isAlreadySelected = false;
         for (Counter oldCounter : mSelectedCounters) {
             if (counter.id == oldCounter.id) {
-                setItemSelectedBackground(viewHolder);
+                setSelectedBackground(viewHolder);
                 isAlreadySelected = true;
                 break;
             }
@@ -106,7 +106,7 @@ public class CounterMultiSelection implements MultiSelection {
         vh.itemView.findViewById(R.id.item).setBackgroundResource(0);
     }
 
-    private void setItemSelectedBackground(RecyclerView.ViewHolder vh) {
+    private void setSelectedBackground(RecyclerView.ViewHolder vh) {
         vh.itemView.findViewById(R.id.item).setBackgroundResource(R.drawable.i_selected);
     }
 

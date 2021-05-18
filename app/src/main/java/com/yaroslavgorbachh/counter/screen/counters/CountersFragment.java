@@ -37,16 +37,15 @@ import javax.inject.Inject;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
-public class CountersFragment extends Fragment implements CreateCounterDialog.Host {
-    @Inject
-    AudioManager mAudioManager;
-    @Inject
-    Accessibility accessibility;
+public class CountersFragment extends Fragment implements CounterCreateDialog.Host {
+    @Inject AudioManager mAudioManager;
+    @Inject Accessibility accessibility;
     @Inject SharedPreferences sharedPreferences;
     @Inject Repo repo;
 
     private VolumeButtonBroadcastReceiver mMessageReceiver;
     private Counters mCounters;
+
     public CountersFragment() {
         super(R.layout.fragment_counters);
     }
@@ -137,7 +136,7 @@ public class CountersFragment extends Fragment implements CreateCounterDialog.Ho
 
             @Override
             public void onShowCreateDialog() {
-                CreateCounterDialog.newInstance(null, (ArrayList<String>) mCounters.getGroups().getValue())
+                CounterCreateDialog.newInstance(null, (ArrayList<String>) mCounters.getGroups().getValue())
                         .show(getChildFragmentManager(), "addCounter");
             }
 
@@ -150,10 +149,26 @@ public class CountersFragment extends Fragment implements CreateCounterDialog.Ho
             public void onIncSelected(List<Counter> selected) {
                 mCounters.incSelected(selected);
             }
+
+            @Override
+            public void onGroupItemSelected(String group) {
+                mCounters.setGroup(group);
+            }
+
+            @Override
+            public void onAllCountersItemSelected() {
+                mCounters.setGroup(null);
+            }
         });
 
         mCounters.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
-        mCounters.getCounters().observe(getViewLifecycleOwner(), v::setCounters);
+        mCounters.getCounters().observe(getViewLifecycleOwner(), counters -> {
+            if (mCounters.getCurrentGroup() != null) {
+                v.setCounters(mCounters.getSortedCounters(counters));
+            } else {
+                v.setCounters(counters);
+            }
+        });
 
 
         // Handling receiver witch MainActivity sends when volume buttons presed

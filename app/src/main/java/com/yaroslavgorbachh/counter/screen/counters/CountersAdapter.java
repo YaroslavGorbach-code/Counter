@@ -1,17 +1,14 @@
 package com.yaroslavgorbachh.counter.screen.counters;
-
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.ICounterBinding;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
@@ -21,7 +18,8 @@ import com.yaroslavgorbachh.counter.feature.multyselection.MultiSelection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> implements CounterItemTouchHelper.CallbackAdapter {
+public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> implements DragAndDropItemTouchHelper.CallbackAdapter {
+
     public interface Callback {
         void onInc(Counter counter);
         void onDec(Counter counter);
@@ -31,7 +29,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         void onSelect(int count);
     }
 
-    private final ItemTouchHelper.Callback itemTouchHelperCallback = new CounterItemTouchHelper(this);
+    private final ItemTouchHelper.Callback itemTouchHelperCallback = new DragAndDropItemTouchHelper(this);
     public final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
     private final Callback mCallback;
     private List<Counter> mData = new ArrayList<>();
@@ -49,6 +47,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         mData = data;
         notifyDataSetChanged();
     }
+
     public Counter getFirsSelected() {
         return mMultiSelection.getFirstSelected();
     }
@@ -99,7 +98,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         }
     }
 
-    public class Vh extends RecyclerView.ViewHolder implements CounterItemTouchHelper.CallbackViewHolder,
+    public class Vh extends RecyclerView.ViewHolder implements DragAndDropItemTouchHelper.CallbackViewHolder,
             View.OnTouchListener, GestureDetector.OnGestureListener {
         private final GestureDetector mGestureDetector;
         private final ICounterBinding mBinding;
