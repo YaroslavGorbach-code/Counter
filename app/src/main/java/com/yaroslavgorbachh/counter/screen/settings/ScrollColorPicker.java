@@ -8,25 +8,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.ThemesColors;
 import com.yaroslavgorbachh.counter.utill.ThemeUtility;
 
 public class ScrollColorPicker implements ColorPicker {
-    private final int[] colors;
-    private final View[] marks;
+    private final int[] colors = {};
+    private final View[] marks = {};
     private int mSelectedColor;
 
     public ScrollColorPicker(View root, Resources resources) {
-        colors = new int[]{resources.getColor(ThemesColors.RED.getColorId()),
-                resources.getColor(ThemesColors.ORANGE.getColorId()),
-                resources.getColor(ThemesColors.BLUE.getColorId()),
-                resources.getColor(ThemesColors.YELLOW.getColorId()),
-                resources.getColor(ThemesColors.PURPLE.getColorId()),
-                resources.getColor(ThemesColors.BLUE_LIGHT.getColorId()),
-                resources.getColor(ThemesColors.GREEN_DARK.getColorId()),
-                resources.getColor(ThemesColors.GREEN.getColorId()),
-                resources.getColor(ThemesColors.GREY.getColorId())};
-        marks = new View[colors.length];
+//        colors = new int[]{resources.getColor(ThemesColors.RED.getColorId()),
+//                resources.getColor(ThemesColors.ORANGE.getColorId()),
+//                resources.getColor(ThemesColors.BLUE.getColorId()),
+//                resources.getColor(ThemesColors.YELLOW.getColorId()),
+//                resources.getColor(ThemesColors.PURPLE.getColorId()),
+//                resources.getColor(ThemesColors.BLUE_LIGHT.getColorId()),
+//                resources.getColor(ThemesColors.GREEN_DARK.getColorId()),
+//                resources.getColor(ThemesColors.GREEN.getColorId()),
+//                resources.getColor(ThemesColors.GREY.getColorId())};
+       // marks = new View[colors.length];
 
         ViewGroup content = root.findViewById(R.id.parent);
         LayoutInflater inflater = LayoutInflater.from(content.getContext());

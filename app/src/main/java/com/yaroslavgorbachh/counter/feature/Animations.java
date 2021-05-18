@@ -10,12 +10,13 @@ import android.os.Looper;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.FrameLayout;
 
 import com.google.android.material.button.MaterialButton;
 
 public class Animations {
 
-    public static void showButtonsMultiSelection(MaterialButton mDecAllSelectedCounters_bt, MaterialButton mIncAllSelectedCounters_bt) {
+    public static void showButtonsMultiSelection(MaterialButton mDecAllSelectedCounters_bt, View mIncAllSelectedCounters_bt) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(mDecAllSelectedCounters_bt, View.TRANSLATION_Y, 100, 0);
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mIncAllSelectedCounters_bt, View.TRANSLATION_Y, 100, 0);
         AnimatorSet animatorSet = new AnimatorSet();
@@ -34,7 +35,7 @@ public class Animations {
 
     }
 
-    public static void hideButtonsMultiSelection(MaterialButton mDecAllSelectedCounters_bt, MaterialButton mIncAllSelectedCounters_bt) {
+    public static void hideButtonsMultiSelection(MaterialButton mDecAllSelectedCounters_bt, View mIncAllSelectedCounters_bt) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(mDecAllSelectedCounters_bt, View.TRANSLATION_Y, 0, 500);
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mIncAllSelectedCounters_bt, View.TRANSLATION_Y, 0, 500);
         AnimatorSet animatorSet = new AnimatorSet();

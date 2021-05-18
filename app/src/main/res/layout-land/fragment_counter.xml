@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         app:menu="@menu/menu_counter_fragment"
         app:navigationIcon="@drawable/ic_arrow_back"
-        android:background="?android:colorBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +41,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
-        android:textColor="@color/counterValueColor"
+        android:textColor="?colorControlNormal"
         android:textSize="150sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/inc"

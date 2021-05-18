@@ -10,14 +10,12 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:colorBackground"
         app:navigationIcon="@drawable/ic_close"
         app:menu="@menu/menu_counter_create_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/createEditCounterCounterTitleText"
-        app:titleTextColor="?colorAccent" />
+        app:title="@string/createEditCounterCounterTitleText" />
 
     <ScrollView
         android:layout_width="0dp"

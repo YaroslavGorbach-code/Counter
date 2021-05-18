@@ -2,29 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="@string/editSelectionMenu"
+    <item
         android:id="@+id/editSelected"
         android:icon="@drawable/ic_edit"
-        app:showAsAction="ifRoom"
-        />
+        android:title="@string/editSelectionMenu"
+        app:showAsAction="ifRoom" />
 
-    <item android:title="@string/selectAllSelectionMenu"
+    <item
         android:id="@+id/selectAllCounter"
-        />
+        android:title="@string/selectAllSelectionMenu" />
 
-    <item android:title="@string/resetSelectionMenu"
+    <item
         android:id="@+id/resetSelected"
-        android:icon="@drawable/ic_refresh"
-        app:showAsAction="ifRoom"
-        />
+        android:icon="@drawable/ic_menu_refresh"
+        android:title="@string/resetSelectionMenu"
+        app:showAsAction="ifRoom" />
 
 
-    <item android:title="@string/exportSelected"
+    <item
         android:id="@+id/exportSelected"
-        />
+        android:title="@string/exportSelected" />
 
-    <item android:title="@string/deleteSelectionMenu"
+    <item
         android:id="@+id/deleteSelected"
-        />
+        android:title="@string/deleteSelectionMenu" />
 
 </menu>

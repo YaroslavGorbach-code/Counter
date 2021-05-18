@@ -107,7 +107,7 @@ public class CounterMultiSelection implements MultiSelection {
     }
 
     private void setSelectedBackground(RecyclerView.ViewHolder vh) {
-        vh.itemView.findViewById(R.id.item).setBackgroundResource(R.drawable.i_selected);
+        vh.itemView.findViewById(R.id.item).setBackgroundResource(R.drawable.i_counter_selected_bg);
     }
 
 }

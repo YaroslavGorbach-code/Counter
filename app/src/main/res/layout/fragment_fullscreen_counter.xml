@@ -24,7 +24,7 @@
         android:gravity="center"
         tools:text="0"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
-        android:textColor="@color/counterValueColor"
+        android:textColor="?colorControlNormal"
         android:textSize="150sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fullscreen_swipe_helper"
-            android:textColor="@color/counterValueColor"
+            android:textColor="?colorControlHighlight"
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,8 +9,6 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.data.Models.AppStyle;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
-import com.yaroslavgorbachh.counter.data.Themes;
-import com.yaroslavgorbachh.counter.data.ThemesColors;
 
 import java.util.List;
 
@@ -61,33 +59,33 @@ public class SettingsImp implements Settings {
 
     @Override
     public void changeTheme(int color, Resources resources) {
-        if (color == resources.getColor(ThemesColors.RED.getColorId())) {
-            mRepo.changeTheme(new AppStyle(1, Themes.RED.getStyleId()));
-        }
-        if (color == resources.getColor(ThemesColors.ORANGE.getColorId())) {
-            mRepo.changeTheme(new AppStyle(1, Themes.ORANGE.getStyleId()));
-        }
-        if (color == resources.getColor(ThemesColors.BLUE.getColorId())) {
-            mRepo.changeTheme(new AppStyle(1, Themes.BLUE.getStyleId()));
-        }
-        if (color == resources.getColor(ThemesColors.YELLOW.getColorId())) {
-            mRepo.changeTheme(new AppStyle(1, Themes.YELLOW.getStyleId()));
-        }
-        if (color == resources.getColor(ThemesColors.PURPLE.getColorId())) {
-            mRepo.changeTheme(new AppStyle(1, Themes.PURPLE.getStyleId()));
-        }
-        if (color == resources.getColor(ThemesColors.BLUE_LIGHT.getColorId())) {
-            mRepo.changeTheme(new AppStyle(1, Themes.BLUE_LIGHT.getStyleId()));
-        }
-        if (color == resources.getColor(ThemesColors.GREEN_DARK.getColorId())) {
-            mRepo.changeTheme(new AppStyle(1, Themes.GREEN_DARK.getStyleId()));
-        }
-        if (color == resources.getColor(ThemesColors.GREEN.getColorId())) {
-            mRepo.changeTheme(new AppStyle(1, Themes.GREEN.getStyleId()));
-        }
-        if (color == resources.getColor(ThemesColors.GREY.getColorId())) {
-            mRepo.changeTheme(new AppStyle(1, Themes.GREY.getStyleId()));
-        }
+//        if (color == resources.getColor(ThemesColors.RED.getColorId())) {
+//            mRepo.changeTheme(new AppStyle(1, Themes.RED.getStyleId()));
+//        }
+//        if (color == resources.getColor(ThemesColors.ORANGE.getColorId())) {
+//            mRepo.changeTheme(new AppStyle(1, Themes.ORANGE.getStyleId()));
+//        }
+//        if (color == resources.getColor(ThemesColors.BLUE.getColorId())) {
+//            mRepo.changeTheme(new AppStyle(1, Themes.BLUE.getStyleId()));
+//        }
+//        if (color == resources.getColor(ThemesColors.YELLOW.getColorId())) {
+//            mRepo.changeTheme(new AppStyle(1, Themes.YELLOW.getStyleId()));
+//        }
+//        if (color == resources.getColor(ThemesColors.PURPLE.getColorId())) {
+//            mRepo.changeTheme(new AppStyle(1, Themes.PURPLE.getStyleId()));
+//        }
+//        if (color == resources.getColor(ThemesColors.BLUE_LIGHT.getColorId())) {
+//            mRepo.changeTheme(new AppStyle(1, Themes.BLUE_LIGHT.getStyleId()));
+//        }
+//        if (color == resources.getColor(ThemesColors.GREEN_DARK.getColorId())) {
+//            mRepo.changeTheme(new AppStyle(1, Themes.GREEN_DARK.getStyleId()));
+//        }
+//        if (color == resources.getColor(ThemesColors.GREEN.getColorId())) {
+//            mRepo.changeTheme(new AppStyle(1, Themes.GREEN.getStyleId()));
+//        }
+//        if (color == resources.getColor(ThemesColors.GREY.getColorId())) {
+//            mRepo.changeTheme(new AppStyle(1, Themes.GREY.getStyleId()));
+//        }
     }
 
     @Override

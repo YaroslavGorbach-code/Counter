@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="BaseAppTheme.v27.DayNight" />
+
+    <style name="BaseAppTheme.DayNight" />
+
+    <style name="BaseAppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#9575CD</item>
+        <item name="colorSecondary">#D1C4E9</item>
+        <item name="colorPrimarySurface">#fff</item>
+        <item name="android:statusBarColor">#222</item>
+        <item name="appBarLayoutStyle">@style/AppBar</item>
+        <item name="toolbarStyle">@style/Toolbar</item>
+
+    </style>
+
+    <style name="AppBar" parent="@style/Widget.MaterialComponents.AppBarLayout.Primary">
+        <item name="android:background">?colorPrimarySurface</item>
+        <item name="titleTextColor">?colorControlNormal</item>
+    </style>
+
+    <style name="Toolbar" parent="@style/Widget.MaterialComponents.Toolbar">
+        <item name="titleTextColor">?colorControlNormal</item>
+    </style>
+
+</resources>

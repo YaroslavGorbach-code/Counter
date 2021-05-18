@@ -26,9 +26,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:colorBackground"
-                app:title="@string/countersFragmentToolbarTitle"
-                app:titleTextColor="?colorAccent" />
+                app:title="@string/countersFragmentToolbarTitle" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView

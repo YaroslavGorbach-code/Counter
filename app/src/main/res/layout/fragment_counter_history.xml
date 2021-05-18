@@ -19,11 +19,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:colorBackground"
             app:menu="@menu/menu_counter_history_fragment"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="@string/historyFragmentToolbarTitle"
-            app:titleTextColor="?colorAccent" />
+            app:title="@string/historyFragmentToolbarTitle" />
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -104,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/history_swipe_helper"
-            android:textColor="@color/counterValueColor" />
+            android:textColor="?colorControlNormal" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
