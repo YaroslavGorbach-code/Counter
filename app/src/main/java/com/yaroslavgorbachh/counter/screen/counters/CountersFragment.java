@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -164,19 +165,17 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
         mCounters.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
         mCounters.getCounters().observe(getViewLifecycleOwner(), counters -> {
             if (mCounters.getCurrentGroup() != null) {
-                v.setCounters(mCounters.getSortedCounters(counters));
+                v.setCounters(mCounters.sortCounters(counters));
+                v.setGroup(mCounters.getCurrentGroup());
             } else {
                 v.setCounters(counters);
             }
         });
 
-
-        // Handling receiver witch MainActivity sends when volume buttons presed
         mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
             @Override
             public void decCounters() {
                 // TODO: 5/16/2021 dec selected
-
             }
 
             @Override
@@ -201,6 +200,12 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        mCounters.setGroup(mCounters.getCurrentGroup());
+
+    }
 
     @Override
     public void onDestroyView() {

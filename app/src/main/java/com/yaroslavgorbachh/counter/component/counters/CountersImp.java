@@ -1,5 +1,7 @@
 package com.yaroslavgorbachh.counter.component.counters;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
@@ -18,7 +20,7 @@ public class CountersImp implements Counters {
     }
 
     @Override
-    public List<Counter> getSortedCounters(List<Counter> counters) {
+    public List<Counter> sortCounters(List<Counter> counters) {
         return Observable.fromIterable(counters)
                 .filter(counter -> (counter.grope != null && counter.grope.equals(mGroup)))
                 .toList()
@@ -63,11 +65,7 @@ public class CountersImp implements Counters {
 
     @Override
     public LiveData<List<Counter>> getCounters() {
-        if (mGroup!=null){
-            return mRepo.getCounters(mGroup);
-        }else {
             return mRepo.getCounters();
-        }
     }
 
     @Override
@@ -117,7 +115,7 @@ public class CountersImp implements Counters {
     @Override
     public void setGroup(String group) {
         mGroup = group;
-        mRepo.triggerCountersLiveData();
+         mRepo.triggerCountersLiveData();
     }
 
     @Override

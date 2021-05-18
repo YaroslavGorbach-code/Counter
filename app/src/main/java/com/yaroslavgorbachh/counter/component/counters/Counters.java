@@ -25,6 +25,6 @@ public interface Counters {
     void incSelected(List<Counter> selected);
     void setGroup(String group);
     String getCurrentGroup();
-    List<Counter> getSortedCounters(List<Counter> counters);
+    List<Counter> sortCounters(List<Counter> counters);
 
 }

@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="8dp"
+    android:background="@drawable/i_group"
     android:orientation="horizontal"
     android:padding="15dp">
 

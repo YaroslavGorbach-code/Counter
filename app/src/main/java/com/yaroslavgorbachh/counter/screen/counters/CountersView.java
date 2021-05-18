@@ -27,6 +27,7 @@ import java.util.List;
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
 
 public class CountersView {
+
     public interface Callback {
         void onSettings();
         void onInc(Counter counter);
@@ -48,9 +49,11 @@ public class CountersView {
     private final GroupsAdapter mGroupsAdapter;
     private final CountersAdapter mCountersAdapter;
     private final Drawable mNavigationIcon;
+    private String mGroupTitle;
 
     CountersView(FragmentCountersBinding binding, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
         mBinding = binding;
+        mGroupTitle = binding.getRoot().getContext().getString(R.string.allCountersItem);
         OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -61,8 +64,8 @@ public class CountersView {
                 }
             }
         };
-        activity.getOnBackPressedDispatcher().addCallback(lifecycleOwner, backPressedCallback);
 
+        activity.getOnBackPressedDispatcher().addCallback(lifecycleOwner, backPressedCallback);
         NavController mNavController = Navigation.findNavController(activity, R.id.hostFragment);
         AppBarConfiguration appBarConfiguration;
         appBarConfiguration = new AppBarConfiguration.Builder(mNavController.getGraph())
@@ -72,22 +75,22 @@ public class CountersView {
         NavigationUI.setupWithNavController(binding.drawer.navigationDrawer, mNavController);
         mNavigationIcon = binding.toolbar.getNavigationIcon();
 
-        binding.drawer.allCounters.setOnClickListener(i -> {
-            binding.openableLayout.close();
-        });
-
         binding.drawer.settings.setOnClickListener(i -> callback.onSettings());
         binding.noCounters.setOnClickListener(v -> callback.onShowCreateDialog());
 
         mGroupsAdapter = new GroupsAdapter(group -> {
             callback.onGroupItemSelected(group);
             mBinding.openableLayout.close();
+            binding.drawer.allCounters.setBackgroundResource(R.drawable.i_group);
         });
 
         mBinding.drawer.allCounters.setOnClickListener(v -> {
             callback.onAllCountersItemSelected();
             mBinding.openableLayout.close();
-            mGroupsAdapter.onAllCountersSelected();
+            binding.drawer.allCounters.setBackgroundResource(R.drawable.i_group_selected_bg);
+            mGroupsAdapter.unselect();
+            mGroupTitle = mBinding.getRoot().getContext().getString(R.string.allCountersItem);
+            mBinding.toolbar.setTitle(mGroupTitle);
         });
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(binding.getRoot().getContext());
@@ -135,10 +138,10 @@ public class CountersView {
 
             @Override
             public void onSelect(int count) {
-                if (count == 0){
-                    binding.toolbar.setTitle("set group title"); // TODO: 5/17/2021
-                }else {
+                if (mCountersAdapter!=null && mCountersAdapter.getSelected().size() > 0){
                     binding.toolbar.setTitle(String.valueOf(mCountersAdapter.getSelected().size()));
+                }else{
+                    binding.toolbar.setTitle(mGroupTitle);
                 }
             }
         }, activity);
@@ -192,5 +195,17 @@ public class CountersView {
 
     public void setCounters(List<Counter> data) {
         mCountersAdapter.setData(data);
+    }
+
+    public void setGroup(String currentGroup) {
+        if (currentGroup == null){
+            mGroupTitle = mBinding.getRoot().getContext().getString(R.string.allCountersItem);
+            mBinding.toolbar.setTitle(mGroupTitle);
+        }else {
+            mBinding.toolbar.setTitle(currentGroup);
+            mGroupTitle = currentGroup;
+            mGroupsAdapter.select(currentGroup);
+            mBinding.drawer.allCounters.setBackgroundResource(R.drawable.i_group);
+        }
     }
 }
