@@ -19,7 +19,6 @@
         android:layout_height="105dp"
         android:clickable="false"
         android:focusable="false"
-        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,16 +28,16 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/value"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="wrap_content"
             android:ellipsize="middle"
-            android:gravity="center|start"
+            android:gravity="center"
             android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
             android:textSize="35sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/inc"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/dec"
             app:layout_constraintTop_toBottomOf="@+id/title"
             tools:text="0" />
 
@@ -46,81 +45,52 @@
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
             android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/value"
             app:layout_constraintEnd_toEndOf="@+id/value"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/value"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="CounterTitle" />
 
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dec"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/i_counter_buttons_bg"
-            app:layout_constraintBottom_toTopOf="@+id/guideline7"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="?selectableItemBackgroundBorderless"
+            app:icon="@drawable/ic_minus"
+            app:iconGravity="textEnd"
+            app:iconSize="40dp"
+            app:iconTint="?colorSecondary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/value"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inc"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="?selectableItemBackgroundBorderless"
+            app:icon="@drawable/ic_plus"
+            app:iconGravity="textStart"
+            app:iconSize="40dp"
+            app:iconTint="?colorSecondary"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toTopOf="@+id/guideline6">
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/dec"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="?selectableItemBackgroundBorderless"
-                app:icon="@drawable/ic_minus"
-                app:iconGravity="textEnd"
-                app:iconSize="30dp" />
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="1dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="?colorPrimary" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/inc"
-                android:layout_width="0dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                app:icon="@drawable/ic_plus"
-                app:iconGravity="textStart"
-                app:iconSize="30dp"
-                android:background="?selectableItemBackgroundBorderless"/>
-
-        </LinearLayout>
-
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.70" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.17" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.83" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/value"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
