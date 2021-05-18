@@ -16,16 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
-
     public interface Callback{
         void onGroup(String string);
     }
 
     private List<String> mData = new ArrayList<>();
-    private Callback mCallback;
-    private DrawerItemSelector mDrawerItemSelector;
+    private final Callback mCallback;
+    private final DrawerItemSelector mDrawerItemSelector;
 
-    public GroupsAdapter(LifecycleOwner lifecycleOwner, Callback callback) {
+    public GroupsAdapter(Callback callback) {
         mDrawerItemSelector = new CounterDrawerItemSelector();
         mCallback = callback;
     }
@@ -35,8 +34,9 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
         notifyDataSetChanged();
     }
 
-
-
+    public void onAllCountersSelected() {
+        mDrawerItemSelector.clearSelected();
+    }
 
     @NonNull
     @Override

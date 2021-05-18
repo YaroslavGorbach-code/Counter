@@ -11,18 +11,12 @@ import com.yaroslavgorbachh.counter.R;
 public class CounterDrawerItemSelector implements DrawerItemSelector {
     private final MutableLiveData<String> selectedItem = new MutableLiveData<>();
     private RecyclerView.ViewHolder mSelectedItem;
-    private View mAllCountersItem;
 
     @Override
     public void selectItem(String string, RecyclerView.ViewHolder vh) {
         if (mSelectedItem != null){
             setDefaultBackground(mSelectedItem.itemView);
             mSelectedItem = null;
-        }
-
-        if (mAllCountersItem != null){
-            setDefaultBackground(mAllCountersItem);
-            mAllCountersItem = null;
         }
 
         if (vh!=null){
@@ -38,6 +32,14 @@ public class CounterDrawerItemSelector implements DrawerItemSelector {
     }
 
     @Override
+    public void clearSelected() {
+        if (mSelectedItem !=null){
+            setDefaultBackground(mSelectedItem.itemView);
+            mSelectedItem = null;
+        }
+    }
+
+    @Override
     public void bindBackground(String title, RecyclerView.ViewHolder viewHolder) {
         if (mSelectedItem !=null){
             setDefaultBackground(mSelectedItem.itemView);
@@ -48,23 +50,6 @@ public class CounterDrawerItemSelector implements DrawerItemSelector {
         }else {
             setDefaultBackground(viewHolder.itemView);
         }
-    }
-
-    @Override
-    public void allCountersItemSelected(View view) {
-        if (mAllCountersItem != null){
-            setDefaultBackground(mAllCountersItem);
-            mAllCountersItem = null;
-        }
-
-        if (mSelectedItem !=null){
-            setDefaultBackground(mSelectedItem.itemView);
-            mSelectedItem = null;
-        }
-
-        selectedItem.setValue(view.getResources().getString(R.string.allCountersItem));
-        mAllCountersItem = view;
-        setSelectedBackground(mAllCountersItem);
     }
 
     private void setDefaultBackground(View view){

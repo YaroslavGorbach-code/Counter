@@ -79,7 +79,7 @@ public class CountersView {
         binding.drawer.settings.setOnClickListener(i -> callback.onSettings());
         binding.noCounters.setOnClickListener(v -> callback.onShowCreateDialog());
 
-        mGroupsAdapter = new GroupsAdapter(lifecycleOwner, group -> {
+        mGroupsAdapter = new GroupsAdapter(group -> {
             callback.onGroupItemSelected(group);
             mBinding.openableLayout.close();
         });
@@ -87,6 +87,7 @@ public class CountersView {
         mBinding.drawer.allCounters.setOnClickListener(v -> {
             callback.onAllCountersItemSelected();
             mBinding.openableLayout.close();
+            mGroupsAdapter.onAllCountersSelected();
         });
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(binding.getRoot().getContext());
