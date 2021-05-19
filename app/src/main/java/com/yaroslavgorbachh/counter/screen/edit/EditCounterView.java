@@ -79,7 +79,7 @@ public class EditCounterView {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 mBinding.getRoot().getContext(),
                 R.layout.item_popup,
-                Utility.deleteTheSameGroups(groups));
+                groups);
         mBinding.dropdown.setAdapter(adapter);
     }
 

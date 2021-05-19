@@ -18,14 +18,6 @@ import java.util.Locale;
 import java.util.Set;
 
 public class Utility {
-    /*delete the same groups*/
-    static public List<String> deleteTheSameGroups(List<String> strings) {
-        if (strings == null) return new ArrayList<>();
-        Set<String> set = new HashSet<>(strings);
-        List<String> mList = Arrays.asList(set.toArray(new String[0]));
-        Collections.sort(mList);
-        return mList;
-    }
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);

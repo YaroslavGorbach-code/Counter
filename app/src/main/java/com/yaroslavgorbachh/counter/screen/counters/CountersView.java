@@ -190,7 +190,7 @@ public class CountersView {
             mBinding.drawer.groupsList.setVisibility(View.VISIBLE);
             mBinding.drawer.noGroups.setVisibility(View.GONE);
         }
-        mGroupsAdapter.setGroups(Utility.deleteTheSameGroups(groups));
+        mGroupsAdapter.setGroups(groups);
     }
 
     public void setCounters(List<Counter> data) {

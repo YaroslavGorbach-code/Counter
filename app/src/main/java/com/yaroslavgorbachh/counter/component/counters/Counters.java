@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Counters {
+
+
 
     interface ResetCallback{
         void onReset(List<Counter> copy);

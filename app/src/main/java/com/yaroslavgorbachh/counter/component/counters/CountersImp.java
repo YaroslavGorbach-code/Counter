@@ -1,7 +1,5 @@
 package com.yaroslavgorbachh.counter.component.counters;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
@@ -15,6 +13,7 @@ import io.reactivex.rxjava3.core.Observable;
 public class CountersImp implements Counters {
     private final Repo mRepo;
     private String mGroup;
+
     public CountersImp(Repo repo) {
         mRepo = repo;
     }
@@ -65,7 +64,7 @@ public class CountersImp implements Counters {
 
     @Override
     public LiveData<List<Counter>> getCounters() {
-            return mRepo.getCounters();
+        return mRepo.getCounters();
     }
 
     @Override
@@ -78,14 +77,14 @@ public class CountersImp implements Counters {
 
     @Override
     public void remove(List<Counter> counters) {
-        for (Counter counter: counters) {
+        for (Counter counter : counters) {
             mRepo.deleteCounter(counter.id);
         }
     }
 
     @Override
     public void reset(List<Counter> counters, ResetCallback resetCallback) {
-        for (Counter counter: counters) {
+        for (Counter counter : counters) {
             mRepo.resetCounter(counter.id);
         }
         resetCallback.onReset(counters);
@@ -93,21 +92,21 @@ public class CountersImp implements Counters {
 
     @Override
     public void update(List<Counter> copy) {
-        for (Counter counter: copy) {
+        for (Counter counter : copy) {
             mRepo.updateCounter(counter);
         }
     }
 
     @Override
     public void decSelected(List<Counter> selected) {
-        for (Counter counter: selected) {
+        for (Counter counter : selected) {
             mRepo.decCounter(counter.id);
         }
     }
 
     @Override
     public void incSelected(List<Counter> selected) {
-        for (Counter counter: selected) {
+        for (Counter counter : selected) {
             mRepo.incCounter(counter.id);
         }
     }
@@ -115,7 +114,7 @@ public class CountersImp implements Counters {
     @Override
     public void setGroup(String group) {
         mGroup = group;
-         mRepo.triggerCountersLiveData();
+        mRepo.triggerCountersLiveData();
     }
 
     @Override

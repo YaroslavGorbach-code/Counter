@@ -12,6 +12,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
@@ -137,7 +138,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onShowCreateDialog() {
-                CounterCreateDialog.newInstance(null, (ArrayList<String>) mCounters.getGroups().getValue())
+                CounterCreateDialog.newInstance(mCounters.getCurrentGroup())
                         .show(getChildFragmentManager(), "addCounter");
             }
 
