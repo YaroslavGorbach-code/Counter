@@ -63,6 +63,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
     public void unselectAll() {
         mMultiSelection.unselectAll();
+        notifyDataSetChanged();
     }
 
     @NonNull
