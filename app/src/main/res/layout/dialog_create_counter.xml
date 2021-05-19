@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/addCounterDialogTitle"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/outlinedTextField"
         app:layout_constraintStart_toStartOf="@+id/outlinedTextField"
@@ -48,8 +47,9 @@
             android:layout_height="wrap_content"
             android:hint="@string/addCounterDialogCounterTitle"
             android:imeOptions="actionDone"
-            android:inputType="text"
-            />
+            android:inputType="text">
+            <requestFocus/>
+        </com.google.android.material.textfield.TextInputEditText>
 
     </com.google.android.material.textfield.TextInputLayout>
 

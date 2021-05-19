@@ -1,8 +1,11 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,7 @@ import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.utill.Utility;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class CounterCreateDialog extends DialogFragment {
@@ -39,14 +43,13 @@ public class CounterCreateDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
        DialogCreateCounterBinding binding = DialogCreateCounterBinding.bind(LayoutInflater.from(requireContext())
                .inflate(R.layout.dialog_create_counter, null));
-
        if (getArguments()!=null && getArguments().getString("group")!=null)
            binding.groups.setText(getArguments().getString("group"));
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setView(binding.getRoot())
                 .setNegativeButton(R.string.addCounterDialogCounterNegativeButton, null)
-                .setPositiveButton(R.string.addCounterDialogCounterPositiveButton, (dialog, which) -> {
+                .setPositiveButton(R.string.addCounterDialogCounterPositiveButton, (dialog1, which) -> {
                     String group = InputFilters.groupsFilter(binding.groups);
                     String title;
                    if (InputFilters.titleFilter(binding.title)){
@@ -55,20 +58,19 @@ public class CounterCreateDialog extends DialogFragment {
                        return;
                    }
                     ((Host)requireParentFragment()).onCreateCounter(title, group);
-                });
-
+                }).create();
+        Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(
                         binding.getRoot().getContext(),
                         R.layout.item_popup,
                         Utility.deleteTheSameGroups(getArguments().getStringArrayList("groups")));
         binding.groups.setAdapter(adapter);
-
-           binding.detailed.setOnClickListener(v -> {
+        binding.detailed.setOnClickListener(v -> {
                 dismiss();
                 ((Host)requireParentFragment()).onDetailed();
             });
-         return builder.create();
-
+        return dialog;
     }
+
 }
