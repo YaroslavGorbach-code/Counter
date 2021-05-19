@@ -78,7 +78,7 @@
 
 
     <LinearLayout
-        android:id="@+id/swipe_helper"
+        android:id="@+id/help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"

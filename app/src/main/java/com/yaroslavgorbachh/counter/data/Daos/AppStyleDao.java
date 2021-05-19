@@ -9,13 +9,13 @@ import com.yaroslavgorbachh.counter.data.Models.AppStyle;
 
 @Dao
 public interface AppStyleDao {
-        @Insert
-        void insert(AppStyle style);
+    @Insert
+    void insert(AppStyle style);
 
-        @Update
-        void update(AppStyle style);
+    @Update
+    void update(AppStyle style);
 
-        @Query("SELECT * FROM app_style")
-        AppStyle getCurrentColor();
+    @Query("SELECT * FROM app_style")
+    AppStyle getCurrentColor();
 
 }

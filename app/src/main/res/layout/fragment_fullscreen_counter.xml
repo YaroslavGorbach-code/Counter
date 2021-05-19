@@ -4,6 +4,7 @@
     android:id="@+id/viewGroup"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
     android:layout_height="match_parent"
     tools:context=".screen.fullscreen.FullscreenCounterFragment">
 
@@ -11,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIcon="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,6 +24,7 @@
         android:layout_weight="1"
         android:gravity="center"
         tools:text="0"
+        android:padding="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
         android:textColor="?colorControlNormal"
         android:textSize="150sp"
@@ -32,26 +34,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/swipe_helper"
+        android:id="@+id/help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/value"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_swipe_top_bot_help" />
+            android:src="@drawable/ic_swipe_top_bot_help"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fullscreen_swipe_helper"
-            android:textColor="?colorControlHighlight"
+            android:textColor="?colorControlNormal"
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

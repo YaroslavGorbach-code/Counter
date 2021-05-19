@@ -1,10 +1,15 @@
 package com.yaroslavgorbachh.counter.screen.fullscreen;
 
 import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentFullscreenCounterBinding;
 import com.yaroslavgorbachh.counter.utill.Utility;
+
+import java.util.Timer;
 
 public class FullscreenCounterView {
     public interface Callback {
@@ -17,6 +22,7 @@ public class FullscreenCounterView {
     @SuppressLint("ClickableViewAccessibility")
     public FullscreenCounterView(FragmentFullscreenCounterBinding binding, Callback callback) {
         mBinding = binding;
+        showHelp();
         binding.toolbar.setNavigationOnClickListener(v -> callback.onBack());
         mBinding.viewGroup.setOnTouchListener(new CounterSwipeListener(binding.getRoot().getContext()){
             @Override
@@ -35,4 +41,8 @@ public class FullscreenCounterView {
         mBinding.value.setText(String.valueOf(counter.value));
     }
 
+    private void showHelp(){
+        new Handler(Looper.getMainLooper()).postDelayed(() ->
+                mBinding.help.setVisibility(View.GONE),2000);
+    }
 }
