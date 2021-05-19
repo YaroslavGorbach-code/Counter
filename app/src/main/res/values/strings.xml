@@ -148,5 +148,6 @@
 
 
     <string name="apply">Apply</string>
+    <string name="menu_counter_reset">Reset</string>
 
 </resources>

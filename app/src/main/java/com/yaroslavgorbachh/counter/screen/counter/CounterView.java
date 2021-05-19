@@ -4,9 +4,9 @@ import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.utill.Utility;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
+import com.yaroslavgorbachh.counter.utill.Utility;
 
 public class CounterView {
 
@@ -18,29 +18,29 @@ public class CounterView {
         mCallback = callback;
 
         ((MaterialToolbar) binding.toolbar).setOnMenuItemClickListener(i -> {
-            switch (i.getItemId()) {
-                case R.id.counterDelete:
-                    callback.onDelete();
-                    break;
-                case R.id.counterEdit:
-                    callback.onEdit();
-                    break;
-                case R.id.counterHistory:
-                    callback.onHistory();
-                    break;
-                case R.id.aboutCounter:
-                    callback.onAbout();
-                    break;
-                case R.id.fullScreen:
-                    callback.onFullScreen();
-                    break;
+            if (i.getItemId() == R.id.delete) {
+                callback.onDelete();
+            }
+            if (i.getItemId() == R.id.edit) {
+                callback.onEdit();
+            }
+            if (i.getItemId() == R.id.history) {
+                callback.onHistory();
+            }
+            if (i.getItemId() == R.id.about) {
+                callback.onAbout();
+            }
+            if (i.getItemId() == R.id.fullScreen) {
+                callback.onFullScreen();
+            }
+            if (i.getItemId() == R.id.reset) {
+                callback.onReset();
             }
             return true;
         });
         ((MaterialToolbar) binding.toolbar).setNavigationOnClickListener(i -> callback.onBack());
         binding.inc.setOnClickListener(callback::onInc);
         binding.dec.setOnClickListener(callback::onDec);
-        binding.reset.setOnClickListener(v -> callback.onReset());
     }
 
     public void setCounter(Counter counter) {

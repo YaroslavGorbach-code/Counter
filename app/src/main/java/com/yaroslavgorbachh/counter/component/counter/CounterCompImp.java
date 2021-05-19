@@ -1,6 +1,7 @@
 package com.yaroslavgorbachh.counter.component.counter;
 import androidx.lifecycle.LiveData;
 
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 public class CounterCompImp implements CounterComp {
@@ -23,14 +24,11 @@ public class CounterCompImp implements CounterComp {
     }
 
     @Override
-    public void resetCounter(){
+    public void resetCounter(ResetCallback callback){
+        callback.onReset(mRepo.getCounterNoLiveData(mId).blockingGet());
         mRepo.resetCounter(mId);
     }
 
-    @Override
-    public void undoReset(){
-
-    }
 
     public void delete(){
         mRepo.deleteCounter(mId);
@@ -38,7 +36,12 @@ public class CounterCompImp implements CounterComp {
     }
 
     @Override
-    public LiveData<com.yaroslavgorbachh.counter.data.Models.Counter> getCounter() {
+    public void insert(Counter copy) {
+        mRepo.insertCounter(copy);
+    }
+
+    @Override
+    public LiveData<Counter> getCounter() {
         return mRepo.getCounter(mId);
     }
 

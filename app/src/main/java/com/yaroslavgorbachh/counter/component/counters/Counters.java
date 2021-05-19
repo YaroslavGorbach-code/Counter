@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface Counters {
 
-
-
     interface ResetCallback{
         void onReset(List<Counter> copy);
     }

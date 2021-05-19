@@ -7,21 +7,23 @@
         android:icon="@drawable/ic_fullscreen"
         app:showAsAction="ifRoom"
         />
-
-    <item android:title="@string/historyFragmentToolbarTitle"
-        android:id="@+id/counterHistory"
+    <item android:title="@string/menu_counter_reset"
+        android:id="@+id/reset"
         />
 
     <item android:title="@string/counterFragmentEditMenu"
-        android:id="@+id/counterEdit"
+        android:id="@+id/edit"
         />
 
     <item android:title="@string/counterFragmentDeleteMenu"
-        android:id="@+id/counterDelete"
+        android:id="@+id/delete"
+        />
+    <item android:title="@string/historyFragmentToolbarTitle"
+        android:id="@+id/history"
         />
 
     <item android:title="@string/aboutCounter"
-        android:id="@+id/aboutCounter"
+        android:id="@+id/about"
         />
 
 

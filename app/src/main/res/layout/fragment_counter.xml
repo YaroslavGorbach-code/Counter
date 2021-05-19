@@ -12,11 +12,11 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/menu_counter_fragment"
-        app:navigationIcon="@drawable/ic_arrow_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/menu_counter_fragment"
+        app:navigationIcon="@drawable/ic_arrow_back" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
@@ -44,73 +44,59 @@
         app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="group title" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/reset"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="6dp"
-        app:iconSize="60dp"
-        app:icon="@drawable/ic_refresh"
-        app:layout_constraintDimensionRatio="1.5"
-        app:iconGravity="textStart"
-        app:layout_constraintBottom_toBottomOf="@+id/dec"
-        app:layout_constraintEnd_toStartOf="@+id/dec"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dec" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/dec"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="12dp"
-        android:clickable="true"
-        app:iconGravity="textStart"
-        android:focusable="true"
-        app:iconSize="75dp"
-        app:icon="@drawable/ic_minus"
-        app:layout_constraintDimensionRatio="1.5"
-        app:layout_constraintBottom_toTopOf="@+id/inc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/reset"
-        tools:ignore="HardcodedText,SpUsage" />
-
-    <com.google.android.material.button.MaterialButton
+    <ImageButton
         android:id="@+id/inc"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:icon="@drawable/ic_plus"
-        app:iconSize="100dp"
-        app:iconGravity="textStart"
-        app:layout_constraintDimensionRatio="2.5"
-        android:hapticFeedbackEnabled="true"
-        android:soundEffectsEnabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="32dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="16dp"
+        android:src="@drawable/ic_plus"
+        app:iconTint="?colorSecondary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dec"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <ImageButton
+        android:id="@+id/dec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="16dp"
+        android:src="@drawable/ic_minus"
+        app:iconTint="?colorSecondary"
+        app:layout_constraintEnd_toStartOf="@+id/inc"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        tools:ignore="HardcodedText,SpUsage" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/value"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
+        android:padding="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
         android:textColor="?colorControlNormal"
-        app:layout_constraintBottom_toTopOf="@+id/reset"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/group_title"
         tools:text="0"
         tools:textSize="150sp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

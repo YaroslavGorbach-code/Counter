@@ -5,10 +5,14 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 public interface CounterComp {
+
+    interface ResetCallback{
+        void onReset(Counter copy);
+    }
     void incCounter();
     void decCounter();
-    void resetCounter();
-    void undoReset();
+    void resetCounter(ResetCallback resetCallback);
     void delete();
-    LiveData<com.yaroslavgorbachh.counter.data.Models.Counter> getCounter();
+    void insert(Counter copy);
+    LiveData<Counter> getCounter();
 }

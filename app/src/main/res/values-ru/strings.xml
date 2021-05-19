@@ -138,6 +138,7 @@
     <string name="confWidgetActivityToolbarTitle">Выберете счетчик</string>
     <string name="widget_exists">Виджет для этого счетчика уже существует</string>
     <string name="widget_deleted">УДАЛЕНО</string>
+    <string name="menu_counter_reset">Сбросить</string>
 
 
 </resources>

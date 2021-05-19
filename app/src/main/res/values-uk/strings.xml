@@ -141,6 +141,7 @@
     <string name="confWidgetActivityToolbarTitle">Оберіть лічильник</string>
     <string name="widget_exists">Віджет для цього лічильника вже існує</string>
     <string name="widget_deleted">ВИДАЛЕНО</string>
+    <string name="menu_counter_reset">Обнулити</string>
 
 
 </resources>

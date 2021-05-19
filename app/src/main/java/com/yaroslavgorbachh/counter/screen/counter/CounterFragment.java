@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
@@ -127,9 +128,11 @@ public class CounterFragment extends Fragment {
 
             @Override
             public void onReset() {
-                counter.resetCounter();
-                Snackbar.make(requireView(), getResources().getString(R.string.counterReset), Snackbar.LENGTH_LONG)
-                        .setAction(getResources().getString(R.string.counterResetUndo), v1 -> counter.undoReset()).show();
+                counter.resetCounter(copy -> {
+                    Snackbar.make(requireView(), getResources().getString(R.string.counterReset), Snackbar.LENGTH_LONG)
+                            .setAction(getResources().getString(R.string.counterResetUndo), v1 -> counter.insert(copy)).show();
+                });
+
             }
 
         });
