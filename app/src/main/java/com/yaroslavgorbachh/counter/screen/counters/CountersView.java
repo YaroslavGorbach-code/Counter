@@ -1,5 +1,6 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
@@ -14,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
@@ -166,7 +168,21 @@ public class CountersView {
                 callback.onExport(mCountersAdapter.getSelected());
             }
             if (item.getItemId() == R.id.deleteSelected) {
-                callback.onRemove(mCountersAdapter.getSelected());
+                String title;
+                if (mCountersAdapter.getSelected().size() > 1) {
+                    title = mBinding.getRoot().getContext().getString(R.string.deleteCountersDeleteDialog);
+                } else {
+                    title = mBinding.getRoot().getContext().getString(R.string.deleteCounterDeleteDialog);
+                }
+                new MaterialAlertDialogBuilder(mBinding.getRoot().getContext())
+                        .setTitle(title)
+                        .setMessage(R.string.deleteCounterDialogText)
+                        .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which) -> {
+                            callback.onRemove(mCountersAdapter.getSelected());
+                            mCountersAdapter.unselectAll();
+                        })
+                        .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
+                        .show();
             }
             if (item.getItemId() == R.id.counterCreate) {
                 callback.onShowCreateDialog();

@@ -26,7 +26,6 @@ public class EditCounterFragment extends Fragment {
     public EditCounterFragment() {
         super(R.layout.fragment_edit_counter);
     }
-
     @Inject Repo repo;
 
     @Override

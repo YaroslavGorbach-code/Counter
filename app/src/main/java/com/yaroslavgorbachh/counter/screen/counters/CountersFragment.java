@@ -121,19 +121,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onRemove(List<Counter> counters) {
-                String title;
-                if (counters.size() > 1) {
-                    title = getString(R.string.deleteCountersDeleteDialog);
-                } else {
-                    title = getString(R.string.deleteCounterDeleteDialog);
-                }
-                new MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(title)
-                        .setMessage(R.string.deleteCounterDialogText)
-                        .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which) ->
-                                mCounters.remove(counters))
-                        .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
-                        .show();
+                mCounters.remove(counters);
             }
 
             @Override
