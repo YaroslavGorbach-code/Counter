@@ -142,6 +142,7 @@ public class CountersView {
             public void onSelect(int count) {
                 if (mCountersAdapter!=null && mCountersAdapter.getSelected().size() > 0){
                     binding.toolbar.setTitle(String.valueOf(mCountersAdapter.getSelected().size()));
+                    mBinding.toolbar.getMenu().getItem(0).setVisible(mCountersAdapter.getSelected().size() <= 1);
                 }else{
                     binding.toolbar.setTitle(mGroupTitle);
                 }
