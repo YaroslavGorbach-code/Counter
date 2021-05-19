@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.yaroslavgorbachh.counter.component.edit.EditCounter;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
 import com.yaroslavgorbachh.counter.MyApplication;
@@ -52,13 +53,13 @@ public class EditCounterFragment extends Fragment {
             }
 
             @Override
-            public void onSave(String title, long value, int step, long max, long min, String group) {
-                editCounter.editCounter(title, value, max, min, step, group);
+            public void onSave(Counter counter) {
+                editCounter.updateCounter(counter);
                 Navigation.findNavController(view).popBackStack();
                 Utility.hideKeyboard(requireActivity());
             }
-
         });
+
         editCounter.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
         editCounter.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
     }

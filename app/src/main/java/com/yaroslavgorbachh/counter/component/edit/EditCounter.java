@@ -9,6 +9,6 @@ import java.util.List;
 public interface EditCounter {
     LiveData<List<String>> getGroups();
     LiveData<Counter> getCounter();
-    void editCounter(String title, long value, long maxValue, long minValue, long step, String grope);
+    void updateCounter(Counter counter);
 
 }

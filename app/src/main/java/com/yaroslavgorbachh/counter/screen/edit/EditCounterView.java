@@ -1,53 +1,58 @@
 package com.yaroslavgorbachh.counter.screen.edit;
 
-
-import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-
-import androidx.appcompat.widget.Toolbar;
 
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
 import com.yaroslavgorbachh.counter.feature.InputFilters;
-import com.yaroslavgorbachh.counter.utill.Utility;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class EditCounterView {
-
-    interface Callback{
-        void onBack();
-        void onSave(String title, long value, int step, long max, long min, String group);
-    }
-    private FragmentEditCounterBinding mBinding;
-    public EditCounterView(FragmentEditCounterBinding binding, Callback callback){
+    private final FragmentEditCounterBinding mBinding;
+    private Counter mCounter;
+    public EditCounterView(FragmentEditCounterBinding binding, Callback callback) {
         mBinding = binding;
         binding.toolbar.setNavigationOnClickListener(v -> callback.onBack());
         binding.toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.saveCreateCounter){
-                if (!InputFilters.titleFilter(mBinding.title)
-                        && !InputFilters.valueFilter(mBinding.value)
-                        && !InputFilters.stepFilter(mBinding.step)) {
-                    return true;
+            if (item.getItemId() == R.id.saveCreateCounter) {
+                if (InputFilters.titleFilter(mBinding.title)
+                        && InputFilters.valueFilter(mBinding.value)
+                        && InputFilters.stepFilter(mBinding.step)) {
+
+                    mBinding.group.setText(InputFilters.groupsFilter(mBinding.group));
+                    Counter counter = new Counter(
+                            mBinding.title.getText().toString(),
+                            Long.parseLong(mBinding.value.getText().toString()),
+                            Long.parseLong(InputFilters.maxValueFilter(mBinding.max)),
+                            Long.parseLong(InputFilters.minValueFilter(mBinding.min)),
+                            Long.parseLong(mBinding.step.getText().toString()),
+                            mBinding.group.getText().toString(),
+                            new Date(),
+                            new Date(),
+                            new Date(),
+                            0L,
+                            0L,
+                            0L,
+                            0);
+                    if (mCounter != null) {
+                        counter.setId(mCounter.id);
+                        counter.createDateSort = mCounter.createDateSort;
+                        counter.lastResetDate = mCounter.lastResetDate;
+                        counter.createDate = mCounter.createDate;
+                        counter.lastResetValue = mCounter.lastResetValue;
+                        counter.counterMaxValue = mCounter.counterMaxValue;
+                        counter.counterMinValue = mCounter.counterMinValue;
+                        counter.widgetId = mCounter.widgetId;
+                    }
+                    callback.onSave(counter);
                 }
-
-                mBinding.max.setText(InputFilters.maxValueFilter(mBinding.max));
-                mBinding.min.setText(InputFilters.minValueFilter(mBinding.min));
-                mBinding.dropdown.setText(InputFilters.groupsFilter(mBinding.dropdown));
-
-                callback.onSave(
-                        mBinding.title.getText().toString(),
-                        Long.parseLong(mBinding.value.getText().toString()),
-                        Integer.parseInt(mBinding.step.getText().toString()),
-                        Long.parseLong(mBinding.max.getText().toString()),
-                        Long.parseLong(mBinding.min.getText().toString()),
-                        mBinding.dropdown.getText().toString()
-                );
             }
             return true;
         });
+
     }
 
     public void setCounter(Counter counter) {
@@ -56,15 +61,15 @@ public class EditCounterView {
             mBinding.title.setText("");
             mBinding.value.setText("0");
             mBinding.step.setText("1");
-            mBinding.dropdown.setText("");
+            mBinding.group.setText("");
             mBinding.toolbar.setTitle(mBinding.getRoot().getContext().getString(R.string.createEditCounterCounterTitleText));
-            /*if counter != null that means counter will
-             be updated and we need to get old counter values*/
+
         } else {
+            mCounter = counter;
             mBinding.title.setText(counter.title);
             mBinding.value.setText(String.valueOf(counter.value));
             mBinding.step.setText(String.valueOf(counter.step));
-            mBinding.dropdown.setText(counter.grope);
+            mBinding.group.setText(counter.grope);
             if (counter.maxValue != Counter.MAX_VALUE) {
                 mBinding.max.setText(String.valueOf(counter.maxValue));
             }
@@ -80,7 +85,12 @@ public class EditCounterView {
                 mBinding.getRoot().getContext(),
                 R.layout.item_popup,
                 groups);
-        mBinding.dropdown.setAdapter(adapter);
+        mBinding.group.setAdapter(adapter);
+    }
+
+    interface Callback {
+        void onBack();
+        void onSave(Counter counter);
     }
 
 }
