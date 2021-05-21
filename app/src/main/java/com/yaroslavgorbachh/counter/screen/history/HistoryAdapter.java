@@ -2,22 +2,21 @@ package com.yaroslavgorbachh.counter.screen.history;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
-import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.databinding.ICounterHistoryBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh>{
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
 
     private List<CounterHistory> mData = new ArrayList<>();
 
-    public HistoryAdapter(){
+    public HistoryAdapter() {
         setHasStableIds(true);
     }
 
@@ -29,7 +28,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh>{
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Vh(parent);
+        return new Vh(ICounterHistoryBinding.inflate(LayoutInflater.from(parent.getContext())));
     }
 
     @Override
@@ -47,24 +46,21 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh>{
         return mData.get(position).id;
     }
 
-        public static class Vh extends RecyclerView.ViewHolder{
-            private final TextView mValue;
-            private final TextView mCreateData;
+    public static class Vh extends RecyclerView.ViewHolder {
+        private final ICounterHistoryBinding mBinding;
 
-            public Vh(@NonNull ViewGroup parent) {
-                super(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_counter_history,
-                        parent, false));
-                mValue = itemView.findViewById(R.id.value);
-                mCreateData = itemView.findViewById(R.id.date);
-            }
-
-            private void bind(CounterHistory counterHistory) {
-                mValue.setText(String.valueOf(counterHistory.value));
-                mCreateData.setText(counterHistory.data);
-            }
-
-
+        public Vh(ICounterHistoryBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
         }
+
+        private void bind(CounterHistory counterHistory) {
+            mBinding.value.setText(String.valueOf(counterHistory.value));
+            mBinding.date.setText(counterHistory.data);
+        }
+
+
     }
+}
 
 

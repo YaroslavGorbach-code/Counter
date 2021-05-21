@@ -51,14 +51,8 @@ public class HistoryFragment extends Fragment {
             }
 
             @Override
-            public void onClearHistory() {
-                new MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(getString(R.string.clear_history_title))
-                        .setMessage(getString(R.string.clear_history_message))
-                        .setPositiveButton(getString(R.string.clear_history_pos_button), (dialog, which) -> history.clean())
-                        .setNegativeButton(getString(R.string.clear_history_neg_button), null)
-                        .create()
-                        .show();
+            public void onClear() {
+                history.clean();
             }
         });
         history.getHistory().observe(getViewLifecycleOwner(), v::setHistory);

@@ -17,7 +17,7 @@ public class CounterView {
         mBinding = binding;
         mCallback = callback;
 
-        ((MaterialToolbar) binding.toolbar).setOnMenuItemClickListener(i -> {
+        binding.toolbar.setOnMenuItemClickListener(i -> {
             if (i.getItemId() == R.id.delete) {
                 callback.onDelete();
             }
@@ -38,7 +38,7 @@ public class CounterView {
             }
             return true;
         });
-        ((MaterialToolbar) binding.toolbar).setNavigationOnClickListener(i -> callback.onBack());
+        binding.toolbar.setNavigationOnClickListener(i -> callback.onBack());
         binding.inc.setOnClickListener(callback::onInc);
         binding.dec.setOnClickListener(callback::onDec);
     }
