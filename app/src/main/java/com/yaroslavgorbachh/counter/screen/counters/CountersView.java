@@ -1,5 +1,6 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
@@ -22,9 +23,13 @@ import com.google.android.material.transition.MaterialFade;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
+import com.yaroslavgorbachh.counter.feature.Accessibility;
+import com.yaroslavgorbachh.counter.feature.FastCountButton;
 import com.yaroslavgorbachh.counter.feature.multyselection.CounterMultiSelection;
 import com.yaroslavgorbachh.counter.screen.counters.drawer.GroupsAdapter;
+import com.yaroslavgorbachh.counter.util.CommonUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
@@ -39,7 +44,7 @@ public class CountersView {
         void onMoved(Counter counterFrom, Counter counterTo);
         void onEdit(Counter counter);
         void onReset(List<Counter> counters);
-        void onExport(List<Counter> counters);
+        void onExport(Intent intent);
         void onRemove(List<Counter> counters);
         void onShowCreateDialog();
         void onDecSelected(List<Counter> selected);
@@ -54,7 +59,7 @@ public class CountersView {
     private final Drawable mNavigationIcon;
     private String mGroupTitle;
 
-    CountersView(FragmentCountersBinding binding, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
+    CountersView(FragmentCountersBinding binding, Accessibility accessibility, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
         mBinding = binding;
         mGroupTitle = binding.getRoot().getContext().getString(R.string.allCountersItem);
         OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
@@ -101,7 +106,7 @@ public class CountersView {
         binding.drawer.groupsList.setAdapter(mGroupsAdapter);
         binding.drawer.groupsList.setHasFixedSize(true);
 
-        mCountersAdapter = new CountersAdapter(new CounterMultiSelection(), new CountersAdapter.Callback() {
+        mCountersAdapter = new CountersAdapter(new CounterMultiSelection(), accessibility, new CountersAdapter.Callback() {
             @Override
             public void onInc(Counter counter) {
                 callback.onInc(counter);
@@ -167,7 +172,7 @@ public class CountersView {
                 callback.onReset(mCountersAdapter.getSelected());
             }
             if (item.getItemId() == R.id.exportSelected) {
-                callback.onExport(mCountersAdapter.getSelected());
+                callback.onExport(CommonUtil.getExportCSVIntent(mCountersAdapter.getSelected()));
             }
             if (item.getItemId() == R.id.deleteSelected) {
                 String title;
@@ -199,8 +204,15 @@ public class CountersView {
                 mBinding.openableLayout.open();
             }
         });
-        binding.decSelected.setOnClickListener(v -> callback.onDecSelected(mCountersAdapter.getSelected()));
-        binding.incSelected.setOnClickListener(v -> callback.onIncSelected(mCountersAdapter.getSelected()));
+        new FastCountButton(binding.decSelected, () -> {
+            callback.onDecSelected(mCountersAdapter.getSelected());
+            accessibility.playDecFeedback(null);
+        }, null);
+
+        new FastCountButton(binding.incSelected, () -> {
+            accessibility.playIncFeedback(null);
+            callback.onIncSelected(mCountersAdapter.getSelected());
+        }, null);
     }
 
     public void setGroups(List<String> groups) {

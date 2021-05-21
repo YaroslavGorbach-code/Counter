@@ -1,16 +1,8 @@
 package com.yaroslavgorbachh.counter.data.Models;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import com.yaroslavgorbachh.counter.feature.Accessibility;
-import com.yaroslavgorbachh.counter.feature.HistoryManager;
-import com.yaroslavgorbachh.counter.data.Repo;
-import com.yaroslavgorbachh.counter.R;
 
 import java.util.Date;
 
@@ -73,77 +65,4 @@ public class Counter {
         this.id = id;
     }
 
-    public void inc(Context context, Repo repo, Accessibility accessibility){
-            long maxValue;
-            long incOn;
-            long value = this.value;
-            maxValue = this.maxValue;
-            incOn = this.step;
-            value += incOn;
-
-            if (value > maxValue) {
-                Toast.makeText(context, context.getResources().getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
-                this.value = maxValue;
-            } else {
-                this.value = Math.max(this.minValue, value);
-            }
-
-            if (this.value == this.minValue){
-                Toast.makeText(context, context.getResources().getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
-            }
-
-            if (this.value > this.counterMaxValue) this.counterMaxValue = this.value;
-
-            if (this.value < this.counterMinValue) this.counterMaxValue = this.value;
-
-        repo.updateCounter(this);
-
-        if (accessibility!=null)
-            accessibility.playIncFeedback(String.valueOf(this.value));
-        HistoryManager.getInstance().saveValueWitDelay(value, id, repo);
-
-
-    }
-
-    public void dec(Context context, Repo repo, Accessibility accessibility){
-        long minValue;
-        long decOn;
-        minValue = this.minValue;
-        long value = this.value;
-        decOn = this.step;
-        value -= decOn;
-
-        if (value < minValue){
-            Toast.makeText(context, context.getResources().getString(R.string.thisIsMinimum), Toast.LENGTH_SHORT).show();
-            this.value = minValue;
-        }else {
-            this.value = Math.min(this.maxValue, value);
-        }
-        if (this.value == this.maxValue){
-            Toast.makeText(context, context.getResources().getString(R.string.thisIsMaximum), Toast.LENGTH_SHORT).show();
-        }
-
-        if (this.value > this.counterMaxValue) this.counterMaxValue = this.value;
-
-        if (this.value < this.counterMinValue) this.counterMinValue = this.value;
-
-        repo.updateCounter(this);
-
-        if (accessibility!=null)
-            accessibility.playDecFeedback(String.valueOf(this.value));
-        HistoryManager.getInstance().saveValueWitDelay(value, id, repo);
-
-    }
-
-    public void reset(Repo repo){
-        lastResetValue = value;
-        lastResetDate = new Date();
-        if (minValue > 0){
-            value = minValue;
-        }else {
-            value = 0;
-        }
-        repo.updateCounter(this);
-        HistoryManager.getInstance().saveValueWitDelay(value, id, repo);
-    }
 }

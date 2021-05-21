@@ -27,7 +27,7 @@ import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
-import com.yaroslavgorbachh.counter.util.Utility;
+import com.yaroslavgorbachh.counter.util.CommonUtil;
 
 import java.util.List;
 
@@ -65,11 +65,10 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
         // init view
         CountersView v = new CountersView(FragmentCountersBinding.bind(view),
-                requireActivity(), this, new CountersView.Callback() {
+                accessibility, requireActivity(), this, new CountersView.Callback() {
             @Override
             public void onSettings() {
-                Intent startSettingsActivity = new Intent(getContext(), SettingsActivity.class);
-                startActivity(startSettingsActivity);
+                startActivity(new Intent(getContext(), SettingsActivity.class));
             }
 
             @Override
@@ -111,9 +110,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
             }
 
             @Override
-            public void onExport(List<Counter> counters) {
-                startActivity(Utility.getShareCountersInCSVIntent(counters));
-            }
+            public void onExport(Intent intent) { startActivity(intent); }
 
             @Override
             public void onRemove(List<Counter> counters) {
@@ -206,7 +203,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     public void onDetailed() {
         NavController navController = Navigation.findNavController(requireView());
         navController.navigate(CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2());
-        Utility.hideKeyboard(requireActivity());
+        CommonUtil.hideKeyboard(requireActivity());
     }
 
 }

@@ -22,6 +22,7 @@ import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.databinding.FragmentFullscreenBinding;
+import com.yaroslavgorbachh.counter.feature.Accessibility;
 
 import javax.inject.Inject;
 
@@ -39,6 +40,7 @@ public class FullscreenFragment extends Fragment {
     private VolumeButtonBroadcastReceiver mMessageReceiver;
     private Fullscreen mFullscreen;
     @Inject Repo repo;
+    @Inject Accessibility accessibility;
 
     private final Runnable mHidePart2Runnable = () -> {
         int flags = View.SYSTEM_UI_FLAG_LOW_PROFILE
@@ -89,7 +91,7 @@ public class FullscreenFragment extends Fragment {
         mFullscreen = vm.getFullscreenCounter(repo, id);
 
         //init view
-        FullscreenView v = new FullscreenView(FragmentFullscreenBinding.bind(view), new FullscreenView.Callback() {
+        FullscreenView v = new FullscreenView(FragmentFullscreenBinding.bind(view), accessibility, new FullscreenView.Callback() {
             @Override
             public void onBack() { Navigation.findNavController(view).popBackStack(); }
 

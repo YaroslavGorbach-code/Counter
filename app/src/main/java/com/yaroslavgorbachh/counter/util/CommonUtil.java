@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Utility {
+public class CommonUtil {
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -25,7 +25,7 @@ public class Utility {
 
 
 
-    public static Intent getShareCountersInCSVIntent(List<Counter> list){
+    public static Intent getExportCSVIntent(List<Counter> list){
         StringBuilder textToSend = new StringBuilder();
         Collections.reverse(list);
         for (Counter counter : list) {

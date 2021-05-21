@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.ICounterBinding;
+import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
 import com.yaroslavgorbachh.counter.feature.multyselection.MultiSelection;
 
@@ -34,10 +35,12 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     private final Callback mCallback;
     private List<Counter> mData = new ArrayList<>();
     private final MultiSelection mMultiSelection;
+    private final Accessibility mAccessibility;
 
-    public CountersAdapter(MultiSelection multiSelection, Callback callback, LifecycleOwner lifecycleOwner) {
+    public CountersAdapter(MultiSelection multiSelection, Accessibility accessibility, Callback callback, LifecycleOwner lifecycleOwner) {
         setHasStableIds(true);
         mCallback = callback;
+        mAccessibility = accessibility;
         mMultiSelection = multiSelection;
         mMultiSelection.getIsSelectionActive().observe(lifecycleOwner, callback::onMultiSelectionStateChange);
         multiSelection.getSelectedCount().observe(lifecycleOwner, callback::onSelect);
@@ -111,14 +114,19 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             itemView.setOnTouchListener(this);
 
             new FastCountButton(binding.inc, () -> {
-                if (getBindingAdapterPosition() != -1)
+                if (getBindingAdapterPosition() != -1){
                     mCallback.onInc(mData.get(getBindingAdapterPosition()));
-            }, null, null);
+                    mAccessibility.playIncFeedback(mBinding.value.getText().toString());
+                }
+
+            }, null);
 
             new FastCountButton(binding.dec, () -> {
-                if (getBindingAdapterPosition() != -1)
+                if (getBindingAdapterPosition() != -1){
                     mCallback.onDec(mData.get(getBindingAdapterPosition()));
-            }, null, null);
+                    mAccessibility.playDecFeedback(mBinding.value.getText().toString());
+                }
+            }, null);
 
         }
 

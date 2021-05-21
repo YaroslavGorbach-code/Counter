@@ -19,13 +19,10 @@ public class FastCountButton implements View.OnTouchListener, Handler.Callback {
     private final Handler mHandler = new Handler(this);
     private final View mView;
     public boolean mFastCounting;
-    private final Accessibility mAccessibility; // TODO: 5/15/2021 handle accessibility
 
 
-    public FastCountButton(View view, Runnable action, SharedPreferences mSharedPreferences, Accessibility accessibility) {
+    public FastCountButton(View view, Runnable action, SharedPreferences mSharedPreferences) {
         mView = view;
-        mAccessibility = accessibility;
-        action.run();
         view.setOnClickListener(v -> action.run());
         view.setOnTouchListener(this);
         //mFastCountInterval = MAX - mSharedPreferences.getInt("fastCountSpeed", 200) + MIN;

@@ -61,18 +61,11 @@ public class CounterFragment extends Fragment {
         CounterComp counter = vm.getCounterComponent(repo, id);
 
         // init view
-        CounterView v = new CounterView(FragmentCounterBinding.bind(requireView()), new CounterView.Callback() {
+        CounterView v = new CounterView(FragmentCounterBinding.bind(requireView()), accessibility, new CounterView.Callback() {
             @Override
             public void onDelete() {
-                new MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(getString(R.string.deleteCounterDeleteDialog))
-                        .setMessage(R.string.deleteCounterDialogText)
-                        .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which) -> {
-                            counter.delete();
-                            Navigation.findNavController(view).popBackStack();
-                        })
-                        .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
-                        .show();
+                counter.delete();
+                Navigation.findNavController(view).popBackStack();
             }
 
             @Override
@@ -117,14 +110,10 @@ public class CounterFragment extends Fragment {
             }
 
             @Override
-            public void onInc(View view) {
-                new FastCountButton(view, counter::incCounter, sharedPreferences, accessibility);
-            }
+            public void onInc() { counter.incCounter(); }
 
             @Override
-            public void onDec(View view) {
-                new FastCountButton(view, counter::decCounter, sharedPreferences, accessibility);
-            }
+            public void onDec() { counter.decCounter(); }
 
             @Override
             public void onReset() {
@@ -161,7 +150,6 @@ public class CounterFragment extends Fragment {
                 new IntentFilter(ON_KEY_DOWN_BROADCAST));
 
     }
-
 
     @Override
     public void onDestroyView() {

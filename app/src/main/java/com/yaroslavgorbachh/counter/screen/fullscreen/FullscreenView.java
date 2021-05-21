@@ -4,10 +4,9 @@ import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentFullscreenBinding;
-import com.yaroslavgorbachh.counter.util.Utility;
+import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 public class FullscreenView {
@@ -19,7 +18,7 @@ public class FullscreenView {
 
     private final FragmentFullscreenBinding mBinding;
     @SuppressLint("ClickableViewAccessibility")
-    public FullscreenView(FragmentFullscreenBinding binding, Callback callback) {
+    public FullscreenView(FragmentFullscreenBinding binding, Accessibility accessibility, Callback callback) {
         mBinding = binding;
         showHelp();
         binding.toolbar.setNavigationOnClickListener(v -> callback.onBack());
@@ -27,10 +26,12 @@ public class FullscreenView {
             @Override
             public void onSwipeTop() {
                 callback.onSwipeTop();
+                accessibility.playIncFeedback(null);
             }
             @Override
             public void onSwipeBottom() {
                 callback.onSwipeBottom();
+                accessibility.playDecFeedback(null);
             }
         });
     }
@@ -42,6 +43,6 @@ public class FullscreenView {
 
     private void showHelp(){
         new Handler(Looper.getMainLooper()).postDelayed(() ->
-                mBinding.help.setVisibility(View.GONE),2000);
+                mBinding.help.setVisibility(View.GONE),1500);
     }
 }

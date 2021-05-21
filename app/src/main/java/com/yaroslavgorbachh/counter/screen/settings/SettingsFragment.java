@@ -27,7 +27,7 @@ import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.util.Utility;
+import com.yaroslavgorbachh.counter.util.CommonUtil;
 
 import javax.inject.Inject;
 
@@ -102,7 +102,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         assert mExportAllCountersPref != null;
         mExportAllCountersPref.setOnPreferenceClickListener(preference -> {
-            settings.getAll().observe(getViewLifecycleOwner(), list -> startActivity(Utility.getShareCountersInCSVIntent(list)));
+            settings.getAll().observe(getViewLifecycleOwner(), list -> startActivity(CommonUtil.getExportCSVIntent(list)));
             return true;
         });
 

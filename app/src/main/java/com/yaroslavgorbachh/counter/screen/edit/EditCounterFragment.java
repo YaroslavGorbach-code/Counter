@@ -16,7 +16,7 @@ import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.util.Utility;
+import com.yaroslavgorbachh.counter.util.CommonUtil;
 
 import javax.inject.Inject;
 
@@ -55,7 +55,7 @@ public class EditCounterFragment extends Fragment {
             public void onSave(Counter counter) {
                 editCounter.updateCounter(counter);
                 Navigation.findNavController(view).popBackStack();
-                Utility.hideKeyboard(requireActivity());
+                CommonUtil.hideKeyboard(requireActivity());
             }
         });
 
