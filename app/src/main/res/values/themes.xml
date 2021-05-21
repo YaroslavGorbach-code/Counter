@@ -12,6 +12,7 @@
         <item name="android:statusBarColor">#222</item>
         <item name="appBarLayoutStyle">@style/AppBar</item>
         <item name="toolbarStyle">@style/Toolbar</item>
+        <item name="navigationViewStyle">@style/NavigationView</item>
 
     </style>
 
@@ -22,6 +23,11 @@
 
     <style name="Toolbar" parent="@style/Widget.MaterialComponents.Toolbar">
         <item name="titleTextColor">?colorControlNormal</item>
+    </style>
+
+    <style name="NavigationView" parent="@style/Widget.Design.NavigationView">
+        <item name="android:background">?colorPrimarySurface</item>
+
     </style>
 
 </resources>
