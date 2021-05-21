@@ -6,6 +6,7 @@ import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
 import com.yaroslavgorbachh.counter.util.Utility;
+import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 public class CounterView {
 
@@ -44,7 +45,7 @@ public class CounterView {
 
     public void setCounter(Counter counter) {
         if (counter != null) {
-            mBinding.value.setTextSize(Utility.getValueTvSize(counter.value));
+            mBinding.value.setTextSize(ViewUtil.getCounterTvSize(counter.value));
             mBinding.value.setText(String.valueOf(counter.value));
             mBinding.title.setText(counter.title);
             mBinding.groupTitle.setText(counter.grope);

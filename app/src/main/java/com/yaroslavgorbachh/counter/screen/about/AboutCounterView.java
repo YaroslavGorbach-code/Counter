@@ -1,7 +1,7 @@
 package com.yaroslavgorbachh.counter.screen.about;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.util.Utility;
+import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentAboutCounterBinding;
 
@@ -19,7 +19,7 @@ public class AboutCounterView {
     void setCounter(Counter counter){
         mBinding.name.setText(counter.title);
         mBinding.createData.setText(mBinding.getRoot().getContext().getString(
-                R.string.created, Utility.convertDateToString(counter.createDate)));
+                R.string.created, DateAndTimeUtil.convertDateToString(counter.createDate)));
         mBinding.lastResetValue.setText(String.valueOf(counter.lastResetValue));
         mBinding.value.setText(String.valueOf(counter.value));
         mBinding.step.setText(String.valueOf(counter.step));
@@ -28,6 +28,6 @@ public class AboutCounterView {
         mBinding.minValue.setText(String.valueOf(counter.counterMinValue));
         mBinding.maxValue.setText(String.valueOf(counter.counterMaxValue));
         if (counter.lastResetDate!=null)
-            mBinding.lastResetDate.setText(Utility.convertDateToString(counter.lastResetDate));
+            mBinding.lastResetDate.setText(DateAndTimeUtil.convertDateToString(counter.lastResetDate));
     }
 }

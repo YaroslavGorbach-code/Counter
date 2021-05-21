@@ -25,4 +25,39 @@ public class ViewUtil {
         return color;
     }
 
+    public static int getCounterTvSize(long value) {
+        switch (String.valueOf(value).length()) {
+            case 1:
+            case 2:
+                return 150;
+            case 3:
+                return 130;
+            case 4:
+                return 120;
+            case 5:
+                return 110;
+            case 6:
+                return 100;
+            case 7:
+                return 90;
+            case 8:
+                return 80;
+            case 9:
+                return 70;
+            case 10:
+            case 11:
+                return 60;
+            case 12:
+            case 13:
+                return 50;
+            case 14:
+            case 17:
+            case 15:
+            case 16:
+            case 18:
+            case 19:
+                return 40;
+        }
+        return 0;
+    }
 }

@@ -186,7 +186,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     }
 
     @Override
-    public void onViewStateRestored(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         mCounters.setGroup(mCounters.getCurrentGroup());
     }

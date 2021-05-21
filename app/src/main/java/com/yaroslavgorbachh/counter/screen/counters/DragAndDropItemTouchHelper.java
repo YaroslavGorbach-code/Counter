@@ -48,7 +48,7 @@ public class DragAndDropItemTouchHelper extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public void onSelectedChanged(@Nullable @org.jetbrains.annotations.Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
+    public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
         if (viewHolder instanceof CallbackViewHolder) {
             CallbackViewHolder itemViewHolder =
                     (CallbackViewHolder) viewHolder;

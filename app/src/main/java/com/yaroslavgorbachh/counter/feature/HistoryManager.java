@@ -1,6 +1,6 @@
 package com.yaroslavgorbachh.counter.feature;
 
-import com.yaroslavgorbachh.counter.util.Utility;
+import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.data.Repo;
 
@@ -31,7 +31,7 @@ public class HistoryManager {
             @Override
             public void run() {
                     if (previousValues.get(id)==value)
-                repo.insertCounterHistory(new CounterHistory(value, Utility.convertDateToString(new Date()), id));
+                repo.insertCounterHistory(new CounterHistory(value, DateAndTimeUtil.convertDateToString(new Date()), id));
             }
         }, 2000);
 

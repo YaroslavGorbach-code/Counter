@@ -24,6 +24,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.component.settings.Settings;
 import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.util.Utility;
@@ -178,7 +179,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TITLE, "CounterBackup " + Utility.getCurrentDate());
+        intent.putExtra(Intent.EXTRA_TITLE, "CounterBackup " + DateAndTimeUtil.getCurrentDate());
         startActivityForResult(intent, CREATE_FILE);
     }
 

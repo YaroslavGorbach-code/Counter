@@ -8,6 +8,7 @@ import android.view.View;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentFullscreenBinding;
 import com.yaroslavgorbachh.counter.util.Utility;
+import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 public class FullscreenView {
     public interface Callback {
@@ -35,7 +36,7 @@ public class FullscreenView {
     }
 
     public void setCounter(Counter counter) {
-        mBinding.value.setTextSize(Utility.getValueTvSize(counter.value));
+        mBinding.value.setTextSize(ViewUtil.getCounterTvSize(counter.value));
         mBinding.value.setText(String.valueOf(counter.value));
     }
 
