@@ -2,19 +2,19 @@ package com.yaroslavgorbachh.counter.screen.about;
 
 import androidx.lifecycle.ViewModel;
 
-import com.yaroslavgorbachh.counter.component.aboutcounter.AboutCounter;
-import com.yaroslavgorbachh.counter.component.aboutcounter.AboutCounterImp;
+import com.yaroslavgorbachh.counter.component.aboutcounter.AboutComponent;
+import com.yaroslavgorbachh.counter.component.aboutcounter.AboutComponentImp;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 public class AboutCounterViewModel extends ViewModel {
-    private AboutCounter aboutCounter;
+    private AboutComponent aboutComponent;
 
-    public AboutCounter getAboutCounter(Repo repo, long id) {
-        if (aboutCounter == null) {
-            aboutCounter = new AboutCounterImp(repo, id) {
+    public AboutComponent getAboutCounter(Repo repo, long id) {
+        if (aboutComponent == null) {
+            aboutComponent = new AboutComponentImp(repo, id) {
             };
         }
-        return aboutCounter;
+        return aboutComponent;
     }
 
 }

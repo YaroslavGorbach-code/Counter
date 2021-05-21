@@ -2,17 +2,17 @@ package com.yaroslavgorbachh.counter.screen.fullscreen;
 
 import androidx.lifecycle.ViewModel;
 
-import com.yaroslavgorbachh.counter.component.fullscreen.Fullscreen;
-import com.yaroslavgorbachh.counter.component.fullscreen.FullscreenImp;
+import com.yaroslavgorbachh.counter.component.fullscreen.FullscreenComponent;
+import com.yaroslavgorbachh.counter.component.fullscreen.FullscreenComponentImp;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 public class FullscreenViewModel extends ViewModel {
-    private Fullscreen fullscreen;
+    private FullscreenComponent fullscreenComponent;
 
-    public Fullscreen getFullscreenCounter(Repo repo, long id) {
-        if (fullscreen == null) {
-            fullscreen = new FullscreenImp(repo, id);
+    public FullscreenComponent getFullscreenCounter(Repo repo, long id) {
+        if (fullscreenComponent == null) {
+            fullscreenComponent = new FullscreenComponentImp(repo, id);
         }
-        return fullscreen;
+        return fullscreenComponent;
     }
 }

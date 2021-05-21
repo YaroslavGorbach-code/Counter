@@ -10,11 +10,11 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class CountersImp implements Counters {
+public class CountersComponentImp implements CountersComponent {
     private final Repo mRepo;
     private String mGroup;
 
-    public CountersImp(Repo repo) {
+    public CountersComponentImp(Repo repo) {
         mRepo = repo;
     }
 

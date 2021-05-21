@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_counter_fragment"
+        app:menu="@menu/menu_counter"
         app:navigationIcon="@drawable/ic_arrow_back" />
 
     <com.google.android.material.textview.MaterialTextView

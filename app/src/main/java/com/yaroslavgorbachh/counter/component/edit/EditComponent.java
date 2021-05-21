@@ -6,7 +6,7 @@ import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 import java.util.List;
 
-public interface EditCounter {
+public interface EditComponent {
     LiveData<List<String>> getGroups();
     LiveData<Counter> getCounter();
     void updateCounter(Counter counter);

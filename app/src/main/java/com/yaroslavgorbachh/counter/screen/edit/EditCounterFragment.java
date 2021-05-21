@@ -10,13 +10,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import com.yaroslavgorbachh.counter.component.edit.EditCounter;
+import com.yaroslavgorbachh.counter.component.edit.EditComponent;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.util.CommonUtil;
 
 import javax.inject.Inject;
 
@@ -42,7 +41,7 @@ public class EditCounterFragment extends Fragment {
         // init component
         long id = EditCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
         EditCounterViewModel vm = new ViewModelProvider(this).get(EditCounterViewModel.class);
-        EditCounter editCounter = vm.getEditCounter(repo, id);
+        EditComponent editComponent = vm.getEditCounter(repo, id);
 
         // init view
         EditCounterView v = new EditCounterView(FragmentEditCounterBinding.bind(view), new EditCounterView.Callback() {
@@ -53,13 +52,13 @@ public class EditCounterFragment extends Fragment {
 
             @Override
             public void onSave(Counter counter) {
-                editCounter.updateCounter(counter);
+                editComponent.updateCounter(counter);
                 Navigation.findNavController(view).popBackStack();
             }
         });
 
-        editCounter.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
-        editCounter.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
+        editComponent.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
+        editComponent.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
     }
 
 }

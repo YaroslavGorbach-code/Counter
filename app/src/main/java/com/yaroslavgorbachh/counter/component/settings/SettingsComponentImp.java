@@ -6,16 +6,15 @@ import android.content.res.Resources;
 
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.data.Models.AppStyle;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import java.util.List;
 
-public class SettingsImp implements Settings {
+public class SettingsComponentImp implements SettingsComponent {
     private final Repo mRepo;
 
-    public SettingsImp(Repo repo) {
+    public SettingsComponentImp(Repo repo) {
         mRepo = repo;
     }
 

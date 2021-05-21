@@ -7,11 +7,11 @@ import com.yaroslavgorbachh.counter.data.Repo;
 
 import java.util.List;
 
-public class EditCounterImp implements EditCounter {
+public class EditComponentImp implements EditComponent {
     private final Repo mRepo;
     private final long mId;
 
-    public EditCounterImp(Repo repo, long id) {
+    public EditComponentImp(Repo repo, long id) {
         mRepo = repo;
         mId = id;
     }

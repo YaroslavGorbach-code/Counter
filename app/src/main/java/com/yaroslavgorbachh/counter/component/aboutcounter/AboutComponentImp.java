@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 
-public class AboutCounterImp implements AboutCounter {
+public class AboutComponentImp implements AboutComponent {
     private long mId;
     private Repo repo;
-    public AboutCounterImp(Repo repo, long id) {
+    public AboutComponentImp(Repo repo, long id) {
         mId = id;
         this.repo = repo;
     }

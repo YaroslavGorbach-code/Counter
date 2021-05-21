@@ -21,13 +21,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
-import com.yaroslavgorbachh.counter.component.counters.Counters;
+import com.yaroslavgorbachh.counter.component.counters.CountersComponent;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
-import com.yaroslavgorbachh.counter.util.CommonUtil;
 
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     @Inject Repo repo;
 
     private VolumeButtonBroadcastReceiver mMessageReceiver;
-    private Counters mCounters;
+    private CountersComponent mCountersComponent;
 
     public CountersFragment() {
         super(R.layout.fragment_counters);
@@ -61,7 +60,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
         // init component
         CountersViewModel vm = new ViewModelProvider(this).get(CountersViewModel.class);
-        mCounters = vm.getCountersComponent(repo);
+        mCountersComponent = vm.getCountersComponent(repo);
 
         // init view
         CountersView v = new CountersView(FragmentCountersBinding.bind(view),
@@ -73,12 +72,12 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onInc(Counter counter) {
-                mCounters.inc(counter.id);
+                mCountersComponent.inc(counter.id);
             }
 
             @Override
             public void onDec(Counter counter) {
-                mCounters.dec(counter.id);
+                mCountersComponent.dec(counter.id);
             }
 
             @Override
@@ -90,7 +89,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onMoved(Counter from, Counter to) {
-                mCounters.onMove(from, to);
+                mCountersComponent.onMove(from, to);
             }
 
             @Override
@@ -101,10 +100,10 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onReset(List<Counter> counters) {
-                mCounters.reset(counters, copy -> Snackbar.make(requireView(), getResources().getString(R.string
+                mCountersComponent.reset(counters, copy -> Snackbar.make(requireView(), getResources().getString(R.string
                         .counterReset), Snackbar.LENGTH_LONG)
                         .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
-                            mCounters.update(copy);
+                            mCountersComponent.update(copy);
                         }).show());
 
             }
@@ -114,41 +113,41 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onRemove(List<Counter> counters) {
-                mCounters.remove(counters);
+                mCountersComponent.remove(counters);
             }
 
             @Override
             public void onShowCreateDialog() {
-                CounterCreateDialog.newInstance(mCounters.getCurrentGroup())
+                CounterCreateDialog.newInstance(mCountersComponent.getCurrentGroup())
                         .show(getChildFragmentManager(), "addCounter");
             }
 
             @Override
             public void onDecSelected(List<Counter> selected) {
-                mCounters.decSelected(selected);
+                mCountersComponent.decSelected(selected);
             }
 
             @Override
             public void onIncSelected(List<Counter> selected) {
-                mCounters.incSelected(selected);
+                mCountersComponent.incSelected(selected);
             }
 
             @Override
             public void onGroupItemSelected(String group) {
-                mCounters.setGroup(group);
+                mCountersComponent.setGroup(group);
             }
 
             @Override
             public void onAllCountersItemSelected() {
-                mCounters.setGroup(null);
+                mCountersComponent.setGroup(null);
             }
         });
 
-        mCounters.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
-        mCounters.getCounters().observe(getViewLifecycleOwner(), counters -> {
-            if (mCounters.getCurrentGroup() != null) {
-                v.setCounters(mCounters.sortCounters(counters));
-                v.setGroup(mCounters.getCurrentGroup());
+        mCountersComponent.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
+        mCountersComponent.getCounters().observe(getViewLifecycleOwner(), counters -> {
+            if (mCountersComponent.getCurrentGroup() != null) {
+                v.setCounters(mCountersComponent.sortCounters(counters));
+                v.setGroup(mCountersComponent.getCurrentGroup());
             } else {
                 v.setCounters(counters);
             }
@@ -185,7 +184,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        mCounters.setGroup(mCounters.getCurrentGroup());
+        mCountersComponent.setGroup(mCountersComponent.getCurrentGroup());
     }
 
     @Override
@@ -196,7 +195,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
     @Override
     public void onCreateCounter(String title, String group) {
-        mCounters.createCounter(title, group);
+        mCountersComponent.createCounter(title, group);
     }
 
     @Override

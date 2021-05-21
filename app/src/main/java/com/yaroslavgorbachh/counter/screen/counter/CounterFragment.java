@@ -12,19 +12,14 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
-import com.yaroslavgorbachh.counter.feature.FastCountButton;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.component.counter.CounterComp;
+import com.yaroslavgorbachh.counter.component.counter.CounterComponent;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
 
@@ -58,7 +53,7 @@ public class CounterFragment extends Fragment {
         // init component
         long id = CounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
         CounterViewModel vm = new ViewModelProvider(this).get(CounterViewModel.class);
-        CounterComp counter = vm.getCounterComponent(repo, id);
+        CounterComponent counter = vm.getCounterComponent(repo, id);
 
         // init view
         CounterView v = new CounterView(FragmentCounterBinding.bind(requireView()), accessibility, new CounterView.Callback() {

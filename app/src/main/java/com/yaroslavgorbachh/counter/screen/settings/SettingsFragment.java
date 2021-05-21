@@ -22,7 +22,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.MyApplication;
-import com.yaroslavgorbachh.counter.component.settings.Settings;
+import com.yaroslavgorbachh.counter.component.settings.SettingsComponent;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
@@ -36,7 +36,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public static final String THEME_CHANGED_BROADCAST = "THEME_CHANGED_BROADCAST";
     private static final int RESTORE_REQUEST_CODE = 0;
     private static final int CREATE_FILE = 1;
-    private Settings settings;
+    private SettingsComponent settingsComponent;
 
     @Inject Repo repo;
     @Override
@@ -53,13 +53,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         if (requestCode == CREATE_FILE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                settings.backup(data, requireContext());
+                settingsComponent.backup(data, requireContext());
             }
         }
 
         if (requestCode == RESTORE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                settings.restore(data, requireContext());
+                settingsComponent.restore(data, requireContext());
             }
         }
     }
@@ -80,7 +80,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         Preference mChangeAccentColorPref = findPreference("changeAccentColor");
         Preference mBackupPref = findPreference("backup");
         SettingsViewModel vm = new ViewModelProvider(this).get(SettingsViewModel.class);
-        settings = vm.getSettings(repo);
+        settingsComponent = vm.getSettings(repo);
 
         assert mRemoveAllCountersPref != null;
         mRemoveAllCountersPref.setOnPreferenceClickListener(preference -> {
@@ -88,7 +88,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     .setTitle(getString(R.string.deleteCountersDeleteDialog))
                     .setMessage(R.string.deleteCounterDialogText)
                     .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which)
-                            -> settings.deleteAll())
+                            -> settingsComponent.deleteAll())
                     .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
                     .show();
             return true;
@@ -96,13 +96,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         assert mResetAllCountersPref != null;
         mResetAllCountersPref.setOnPreferenceClickListener(preference -> {
-            settings.resetAll();
+            settingsComponent.resetAll();
             return true;
         });
 
         assert mExportAllCountersPref != null;
         mExportAllCountersPref.setOnPreferenceClickListener(preference -> {
-            settings.getAll().observe(getViewLifecycleOwner(), list -> startActivity(CommonUtil.getExportCSVIntent(list)));
+            settingsComponent.getAll().observe(getViewLifecycleOwner(), list -> startActivity(CommonUtil.getExportCSVIntent(list)));
             return true;
         });
 
@@ -155,7 +155,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     @Override
     public void onThemeChange(int color) {
-        settings.changeTheme(color, requireContext().getResources());
+        settingsComponent.changeTheme(color, requireContext().getResources());
         Intent intent = new Intent(THEME_CHANGED_BROADCAST);
         LocalBroadcastManager.getInstance(requireActivity()).sendBroadcast(intent);
         ViewUtil.animate(requireActivity());

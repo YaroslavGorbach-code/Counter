@@ -10,7 +10,7 @@ import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 import java.util.List;
 
-public interface Settings {
+public interface SettingsComponent {
     void backup(Intent data, Context context);
     void restore(Intent data, Context context);
     void deleteAll();

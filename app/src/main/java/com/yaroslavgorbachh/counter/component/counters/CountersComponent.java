@@ -7,7 +7,7 @@ import com.yaroslavgorbachh.counter.data.Models.Counter;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface Counters {
+public interface CountersComponent {
 
     interface ResetCallback{
         void onReset(List<Counter> copy);

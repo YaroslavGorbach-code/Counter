@@ -2,17 +2,17 @@ package com.yaroslavgorbachh.counter.screen.settings;
 
 import androidx.lifecycle.ViewModel;
 
-import com.yaroslavgorbachh.counter.component.settings.Settings;
-import com.yaroslavgorbachh.counter.component.settings.SettingsImp;
+import com.yaroslavgorbachh.counter.component.settings.SettingsComponent;
+import com.yaroslavgorbachh.counter.component.settings.SettingsComponentImp;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 public class SettingsViewModel extends ViewModel {
-    private Settings settings;
+    private SettingsComponent settingsComponent;
 
-    public Settings getSettings(Repo repo) {
-        if (settings == null) {
-            settings = new SettingsImp(repo);
+    public SettingsComponent getSettings(Repo repo) {
+        if (settingsComponent == null) {
+            settingsComponent = new SettingsComponentImp(repo);
         }
-        return settings;
+        return settingsComponent;
     }
 }

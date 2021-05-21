@@ -1,11 +1,9 @@
-package com.yaroslavgorbachh.counter.component.fullscreen;
+package com.yaroslavgorbachh.counter.component.aboutcounter;
 
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 
-public interface Fullscreen {
-    void inc();
-    void dec();
+public interface AboutComponent {
     LiveData<Counter> getCounter();
 }

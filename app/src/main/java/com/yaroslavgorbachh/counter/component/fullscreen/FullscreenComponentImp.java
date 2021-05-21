@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 
-public class FullscreenImp implements Fullscreen {
+public class FullscreenComponentImp implements FullscreenComponent {
     private final Repo mRepo;
     private final long mId;
-    public FullscreenImp(Repo repo, long id){
+    public FullscreenComponentImp(Repo repo, long id){
         mRepo = repo;
         mId = id;
     }

@@ -118,7 +118,7 @@
 
 
     <!-- About counter fragment -->
-    <string name="aboutCounter">Про лічильник</string>
+    <string name="aboutComponent">Про лічильник</string>
     <string name="counterName">Ім\'я лічильника</string>
     <string name="valueBeforeReset">Значення до обнулення</string>
     <string name="value">Значение</string>

@@ -7,10 +7,10 @@ import com.yaroslavgorbachh.counter.data.Repo;
 
 import java.util.List;
 
-public class HistoryImp implements History{
+public class HistoryComponentImp implements HistoryComponent {
     private final Repo mRepo;
     private final long mId;
-    public HistoryImp(Repo repo, long id){
+    public HistoryComponentImp(Repo repo, long id){
         mRepo = repo;
         mId = id;
     }

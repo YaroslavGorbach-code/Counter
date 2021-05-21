@@ -16,7 +16,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.yaroslavgorbachh.counter.component.fullscreen.Fullscreen;
+import com.yaroslavgorbachh.counter.component.fullscreen.FullscreenComponent;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
@@ -38,7 +38,7 @@ public class FullscreenFragment extends Fragment {
     private int mSavedFlags;
     private final Handler mHideHandler = new Handler();
     private VolumeButtonBroadcastReceiver mMessageReceiver;
-    private Fullscreen mFullscreen;
+    private FullscreenComponent mFullscreenComponent;
     @Inject Repo repo;
     @Inject Accessibility accessibility;
 
@@ -70,12 +70,12 @@ public class FullscreenFragment extends Fragment {
         mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
             @Override
             public void decCounters() {
-                mFullscreen.dec();
+                mFullscreenComponent.dec();
             }
 
             @Override
             public void incCounters() {
-                mFullscreen.inc();
+                mFullscreenComponent.inc();
             }
 
             @Override
@@ -88,7 +88,7 @@ public class FullscreenFragment extends Fragment {
         // init component
         long id = FullscreenFragmentArgs.fromBundle(requireArguments()).getCounterId();
         FullscreenViewModel vm = new ViewModelProvider(this).get(FullscreenViewModel.class);
-        mFullscreen = vm.getFullscreenCounter(repo, id);
+        mFullscreenComponent = vm.getFullscreenCounter(repo, id);
 
         //init view
         FullscreenView v = new FullscreenView(FragmentFullscreenBinding.bind(view), accessibility, new FullscreenView.Callback() {
@@ -96,13 +96,13 @@ public class FullscreenFragment extends Fragment {
             public void onBack() { Navigation.findNavController(view).popBackStack(); }
 
             @Override
-            public void onSwipeTop() { mFullscreen.inc(); }
+            public void onSwipeTop() { mFullscreenComponent.inc(); }
 
             @Override
-            public void onSwipeBottom() { mFullscreen.dec(); }
+            public void onSwipeBottom() { mFullscreenComponent.dec(); }
         });
 
-        mFullscreen.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
+        mFullscreenComponent.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
 
     }
 

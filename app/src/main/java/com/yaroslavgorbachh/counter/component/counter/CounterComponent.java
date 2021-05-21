@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 
-public interface CounterComp {
+public interface CounterComponent {
 
     interface ResetCallback{
         void onReset(Counter copy);

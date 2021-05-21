@@ -6,7 +6,6 @@
     android:layout_margin="4dp"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/i_history_bg"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="8dp">
 

@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.component.aboutcounter.AboutCounter;
+import com.yaroslavgorbachh.counter.component.aboutcounter.AboutComponent;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentAboutCounterBinding;
 
@@ -41,10 +41,10 @@ public class AboutCounterFragment extends Fragment {
         // init component
         long id = AboutCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
         AboutCounterViewModel vm = new ViewModelProvider(this).get(AboutCounterViewModel.class);
-        AboutCounter aboutCounter = vm.getAboutCounter(repo, id);
+        AboutComponent aboutComponent = vm.getAboutCounter(repo, id);
 
         // init view
         AboutCounterView v = new AboutCounterView(FragmentAboutCounterBinding.bind(view), () -> Navigation.findNavController(view).popBackStack());
-        aboutCounter.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
+        aboutComponent.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
     }
 }

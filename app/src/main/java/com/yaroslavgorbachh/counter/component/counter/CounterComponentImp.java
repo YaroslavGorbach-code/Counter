@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 
-public class CounterCompImp implements CounterComp {
+public class CounterComponentImp implements CounterComponent {
     private final Repo mRepo;
     private final long mId;
 
-    public CounterCompImp(Repo repo, long id){
+    public CounterComponentImp(Repo repo, long id){
         mRepo = repo;
         mId = id;
     }
