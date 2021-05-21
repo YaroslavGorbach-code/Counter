@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.utill.ThemeUtility;
+import com.yaroslavgorbachh.counter.util.ThemeUtility;
+import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 public class ScrollColorPicker implements ColorPicker {
     private final int[] colors = {};
@@ -39,7 +40,7 @@ public class ScrollColorPicker implements ColorPicker {
             item.setOnClickListener(v -> setColor(color));
             content.addView(item, i);
         }
-        setColor(ThemeUtility.fetchAccentColor(root.getContext()));
+        setColor(ViewUtil.fetchAccentColor(root.getContext()));
     }
 
     @Override

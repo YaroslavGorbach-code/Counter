@@ -2,11 +2,10 @@ package com.yaroslavgorbachh.counter.screen.counter;
 
 import android.view.View;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
-import com.yaroslavgorbachh.counter.utill.Utility;
+import com.yaroslavgorbachh.counter.util.Utility;
 
 public class CounterView {
 

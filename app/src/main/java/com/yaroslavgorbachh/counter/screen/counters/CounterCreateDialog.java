@@ -1,13 +1,9 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,9 +13,7 @@ import androidx.fragment.app.DialogFragment;
 import com.yaroslavgorbachh.counter.databinding.DialogCreateCounterBinding;
 import com.yaroslavgorbachh.counter.feature.InputFilters;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.utill.Utility;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 

@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.utill;
+package com.yaroslavgorbachh.counter.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,13 +12,6 @@ import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 public class ThemeUtility {
-    public static int fetchAccentColor(Context context) {
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
-        @ColorInt int color = typedValue.data;
-        return color;
-    }
 
     public static void setTheme(SharedPreferences sharedPreferences, Activity activity, Repo repo) {
         // TODO: 5/15/2021  

@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentFullscreenBinding;
-import com.yaroslavgorbachh.counter.utill.Utility;
+import com.yaroslavgorbachh.counter.util.Utility;
 
 public class FullscreenView {
     public interface Callback {

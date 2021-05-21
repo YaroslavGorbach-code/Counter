@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.yaroslavgorbachh.counter.utill.ThemeUtility;
+import com.yaroslavgorbachh.counter.util.ThemeUtility;
 import com.yaroslavgorbachh.counter.screen.widget.CounterWidgetProvider;
 import com.yaroslavgorbachh.counter.data.Repo;
 

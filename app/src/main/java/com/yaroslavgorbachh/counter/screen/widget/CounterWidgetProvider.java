@@ -13,9 +13,10 @@ import android.widget.RemoteViews;
 
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.utill.ThemeUtility;
+import com.yaroslavgorbachh.counter.util.ThemeUtility;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 import javax.inject.Inject;
 
@@ -141,7 +142,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
         if (widgetCounter != null) {
             if (isFirsTimeCreated){
                 views.setImageViewResource(R.id.toolbar_color, R.drawable.widget_toolbar_bg);
-                views.setInt(R.id.toolbar_color, "setColorFilter", ThemeUtility.fetchAccentColor(context));
+                views.setInt(R.id.toolbar_color, "setColorFilter", ViewUtil.fetchAccentColor(context));
             }
 
             views.setTextViewText(R.id.value, String.valueOf(widgetCounter.value));
@@ -196,7 +197,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
     public static void setWidgetColor(Context context, int widgetId, AppWidgetManager appWidgetManager) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_counter_widget);
         views.setImageViewResource(R.id.toolbar_color, R.drawable.widget_toolbar_bg);
-        views.setInt(R.id.toolbar_color, "setColorFilter", ThemeUtility.fetchAccentColor(context));
+        views.setInt(R.id.toolbar_color, "setColorFilter", ViewUtil.fetchAccentColor(context));
         appWidgetManager.updateAppWidget(widgetId, views);
         }
 

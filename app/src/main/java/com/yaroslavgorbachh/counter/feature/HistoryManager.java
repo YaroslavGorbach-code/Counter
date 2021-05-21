@@ -1,6 +1,6 @@
 package com.yaroslavgorbachh.counter.feature;
 
-import com.yaroslavgorbachh.counter.utill.Utility;
+import com.yaroslavgorbachh.counter.util.Utility;
 import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
 import com.yaroslavgorbachh.counter.data.Repo;
 

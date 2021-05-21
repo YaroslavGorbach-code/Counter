@@ -1,7 +1,7 @@
 package com.yaroslavgorbachh.counter.screen.about;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.utill.Utility;
+import com.yaroslavgorbachh.counter.util.Utility;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentAboutCounterBinding;
 

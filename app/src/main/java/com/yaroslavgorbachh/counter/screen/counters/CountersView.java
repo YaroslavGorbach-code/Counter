@@ -1,6 +1,5 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
@@ -14,15 +13,17 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Explode;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.transition.MaterialFade;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
-import com.yaroslavgorbachh.counter.feature.Animations;
 import com.yaroslavgorbachh.counter.feature.multyselection.CounterMultiSelection;
 import com.yaroslavgorbachh.counter.screen.counters.drawer.GroupsAdapter;
-import com.yaroslavgorbachh.counter.utill.Utility;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class CountersView {
         OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (mCountersAdapter.getSelected().size()>0) {
+                if (mCountersAdapter.getSelected().size() > 0) {
                     mCountersAdapter.unselectAll();
                 } else {
                     activity.finish();
@@ -124,14 +125,14 @@ public class CountersView {
             @Override
             public void onMultiSelectionStateChange(boolean isActive) {
                 if (isActive) {
-                    Animations.showButtonsMultiSelection(binding.decSelected, binding.incSelected);
+                    showButtons(true);
                     mBinding.toolbar.setNavigationIcon(ResourcesCompat.getDrawable(
                             binding.getRoot().getContext().getResources(), R.drawable.ic_close, activity.getTheme()));
                     binding.toolbar.getMenu().clear();
                     binding.toolbar.inflateMenu(R.menu.menu_selection_mod);
 
                 } else {
-                    Animations.hideButtonsMultiSelection(binding.decSelected, binding.incSelected);
+                    showButtons(false);
                     mBinding.toolbar.setNavigationIcon(mNavigationIcon);
                     binding.toolbar.getMenu().clear();
                     binding.toolbar.inflateMenu(R.menu.menu_counters);
@@ -140,10 +141,10 @@ public class CountersView {
 
             @Override
             public void onSelect(int count) {
-                if (mCountersAdapter!=null && mCountersAdapter.getSelected().size() > 0){
+                if (mCountersAdapter != null && mCountersAdapter.getSelected().size() > 0) {
                     binding.toolbar.setTitle(String.valueOf(mCountersAdapter.getSelected().size()));
                     mBinding.toolbar.getMenu().getItem(0).setVisible(mCountersAdapter.getSelected().size() <= 1);
-                }else{
+                } else {
                     binding.toolbar.setTitle(mGroupTitle);
                 }
             }
@@ -192,7 +193,7 @@ public class CountersView {
         });
 
         mBinding.toolbar.setNavigationOnClickListener(v -> {
-            if (mCountersAdapter.getSelected().size()>0) {
+            if (mCountersAdapter.getSelected().size() > 0) {
                 mCountersAdapter.unselectAll();
             } else {
                 mBinding.openableLayout.open();
@@ -215,14 +216,32 @@ public class CountersView {
     }
 
     public void setGroup(String currentGroup) {
-        if (currentGroup == null){
+        if (currentGroup == null) {
             mGroupTitle = mBinding.getRoot().getContext().getString(R.string.allCountersItem);
             mBinding.toolbar.setTitle(mGroupTitle);
-        }else {
+        } else {
             mBinding.toolbar.setTitle(currentGroup);
             mGroupTitle = currentGroup;
             mGroupsAdapter.select(currentGroup);
             mBinding.drawer.allCounters.setBackgroundResource(R.drawable.i_group);
         }
     }
+
+    private void showButtons(boolean show) {
+        Transition transition = new Explode();
+        transition.setDuration(400);
+        transition.addTarget(R.id.inc_selected);
+        transition.addTarget(R.id.dec_selected);
+
+        TransitionManager.beginDelayedTransition(mBinding.getRoot(), transition);
+        if (show) {
+            mBinding.incSelected.setVisibility(View.VISIBLE);
+            mBinding.decSelected.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.incSelected.setVisibility(View.GONE);
+            mBinding.decSelected.setVisibility(View.GONE);
+        }
+    }
+
+
 }

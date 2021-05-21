@@ -24,9 +24,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.component.settings.Settings;
 import com.yaroslavgorbachh.counter.data.Repo;
-import com.yaroslavgorbachh.counter.utill.AnimateThemeChange;
+import com.yaroslavgorbachh.counter.util.ViewUtil;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.utill.Utility;
+import com.yaroslavgorbachh.counter.util.Utility;
 
 import javax.inject.Inject;
 
@@ -132,11 +132,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("nightMod") && sharedPreferences.getBoolean("nightMod", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            AnimateThemeChange.animate(requireActivity());
+            ViewUtil.animate(requireActivity());
         }
         if (key.equals("nightMod") && !sharedPreferences.getBoolean("nightMod", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            AnimateThemeChange.animate(requireActivity());
+            ViewUtil.animate(requireActivity());
         }
         if (key.equals("keepScreenOn") && sharedPreferences.getBoolean("keepScreenOn", true)) {
             requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -157,7 +157,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         settings.changeTheme(color, requireContext().getResources());
         Intent intent = new Intent(THEME_CHANGED_BROADCAST);
         LocalBroadcastManager.getInstance(requireActivity()).sendBroadcast(intent);
-        AnimateThemeChange.animate(requireActivity());
+        ViewUtil.animate(requireActivity());
     }
 
     @Override

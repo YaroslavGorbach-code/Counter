@@ -1,6 +1,5 @@
-package com.yaroslavgorbachh.counter.utill;
+package com.yaroslavgorbachh.counter.util;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -8,14 +7,10 @@ import android.view.inputmethod.InputMethodManager;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 public class Utility {
 

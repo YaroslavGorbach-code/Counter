@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.utill.ThemeUtility;
+import com.yaroslavgorbachh.counter.util.ThemeUtility;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import javax.inject.Inject;

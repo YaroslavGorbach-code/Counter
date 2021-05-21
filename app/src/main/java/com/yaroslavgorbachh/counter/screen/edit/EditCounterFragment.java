@@ -16,7 +16,7 @@ import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.utill.Utility;
+import com.yaroslavgorbachh.counter.util.Utility;
 
 import javax.inject.Inject;
 
