@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.data.BackupAndRestore;
+package com.yaroslavgorbachh.counter.feature.roombackup;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -25,20 +25,18 @@ public class Json {
             this.object = new JsonObject();
         }
 
-        public Builder putItem(String key, String value){
+        public void putItem(String key, String value){
             Gson gson = new Gson();
             JsonElement je = gson.toJsonTree(value);
             object.add(key,je);
-            return this;
         }
 
-        public Builder putItem(String key, ArrayList<Json> items){
+        public void putItem(String key, ArrayList<Json> items){
             JsonArray jsonArray = new JsonArray();
             for (Json item: items) {
                 jsonArray.add(item.getAsJsonObject());
             }
             this.object.add(key,jsonArray);
-            return this;
         }
 
         public Json build(){

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.data.Models.History;
 import com.yaroslavgorbachh.counter.databinding.ICounterHistoryBinding;
 
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
 
-    private List<CounterHistory> mData = new ArrayList<>();
+    private List<History> mData = new ArrayList<>();
 
     public HistoryAdapter() {
         setHasStableIds(true);
     }
 
-    public void setData(List<CounterHistory> list) {
+    public void setData(List<History> list) {
         mData = list;
         notifyDataSetChanged();
     }
@@ -54,9 +54,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
             mBinding = binding;
         }
 
-        private void bind(CounterHistory counterHistory) {
-            mBinding.value.setText(String.valueOf(counterHistory.value));
-            mBinding.date.setText(counterHistory.data);
+        private void bind(History history) {
+            mBinding.value.setText(String.valueOf(history.value));
+            mBinding.date.setText(history.data);
         }
 
 

@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public interface AboutComponent {
-    LiveData<Counter> getCounter();
+    Observable<Counter> getCounter();
 }

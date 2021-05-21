@@ -1,33 +1,38 @@
 package com.yaroslavgorbachh.counter.screen.edit;
 
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
-import com.yaroslavgorbachh.counter.feature.InputFilters;
+import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class EditCounterView {
     private final FragmentEditCounterBinding mBinding;
     private Counter mCounter;
+
     public EditCounterView(FragmentEditCounterBinding binding, Callback callback) {
         mBinding = binding;
         binding.toolbar.setNavigationOnClickListener(v -> callback.onBack());
         binding.toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.saveCreateCounter) {
-                if (InputFilters.titleFilter(mBinding.title)
-                        && InputFilters.valueFilter(mBinding.value)
-                        && InputFilters.stepFilter(mBinding.step)) {
+                if (ViewUtil.titleFilter(mBinding.title)
+                        && ViewUtil.valueFilter(mBinding.value)
+                        && ViewUtil.stepFilter(mBinding.step)) {
 
-                    mBinding.group.setText(InputFilters.groupsFilter(mBinding.group));
+                    mBinding.group.setText(ViewUtil.groupsFilter(mBinding.group));
                     Counter counter = new Counter(
                             mBinding.title.getText().toString(),
                             Long.parseLong(mBinding.value.getText().toString()),
-                            Long.parseLong(InputFilters.maxValueFilter(mBinding.max)),
-                            Long.parseLong(InputFilters.minValueFilter(mBinding.min)),
+                            Long.parseLong(ViewUtil.maxValueFilter(mBinding.max)),
+                            Long.parseLong(ViewUtil.minValueFilter(mBinding.min)),
                             Long.parseLong(mBinding.step.getText().toString()),
                             mBinding.group.getText().toString(),
                             new Date(),

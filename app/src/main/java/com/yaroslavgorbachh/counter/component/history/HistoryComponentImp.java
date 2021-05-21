@@ -2,7 +2,7 @@ package com.yaroslavgorbachh.counter.component.history;
 
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.data.Models.History;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import java.util.List;
@@ -15,12 +15,12 @@ public class HistoryComponentImp implements HistoryComponent {
         mId = id;
     }
     @Override
-    public LiveData<List<CounterHistory>> getHistory() {
-        return mRepo.getCounterHistoryList(mId);
+    public LiveData<List<History>> getHistory() {
+        return mRepo.getHistoryList(mId);
     }
 
     @Override
     public void clean() {
-        mRepo.deleteCounterHistory(mId);
+        mRepo.removeHistory(mId);
     }
 }

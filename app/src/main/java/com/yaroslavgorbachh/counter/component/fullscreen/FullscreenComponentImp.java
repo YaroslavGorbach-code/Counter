@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public class FullscreenComponentImp implements FullscreenComponent {
     private final Repo mRepo;
     private final long mId;
@@ -23,7 +25,7 @@ public class FullscreenComponentImp implements FullscreenComponent {
     }
 
     @Override
-    public LiveData<Counter> getCounter() {
+    public Observable<Counter> getCounter() {
         return mRepo.getCounter(mId);
     }
 }

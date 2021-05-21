@@ -14,10 +14,13 @@ import android.view.View;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.aboutcounter.AboutComponent;
+import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentAboutCounterBinding;
 
 import javax.inject.Inject;
+
+import io.reactivex.rxjava3.functions.Consumer;
 
 public class AboutCounterFragment extends Fragment {
 
@@ -45,6 +48,6 @@ public class AboutCounterFragment extends Fragment {
 
         // init view
         AboutCounterView v = new AboutCounterView(FragmentAboutCounterBinding.bind(view), () -> Navigation.findNavController(view).popBackStack());
-        aboutComponent.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
+        aboutComponent.getCounter().subscribe(v::setCounter);
     }
 }

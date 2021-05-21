@@ -7,6 +7,8 @@ import com.yaroslavgorbachh.counter.data.Repo;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public class EditComponentImp implements EditComponent {
     private final Repo mRepo;
     private final long mId;
@@ -22,12 +24,12 @@ public class EditComponentImp implements EditComponent {
     }
 
     @Override
-    public LiveData<Counter> getCounter() {
+    public Observable<Counter> getCounter() {
         return mRepo.getCounter(mId);
     }
 
     @Override
     public void updateCounter(Counter counter) {
-        mRepo.insertCounter(counter);
+        mRepo.createCounter(counter);
     }
 }

@@ -1,6 +1,5 @@
 package com.yaroslavgorbachh.counter.screen.history;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.data.Models.History;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterHistoryBinding;
 
 import java.util.List;
@@ -52,7 +51,7 @@ public class HistoryView {
 
     }
 
-    public void setHistory(List<CounterHistory> histories) {
+    public void setHistory(List<History> histories) {
         mAdapter.setData(histories);
     }
 

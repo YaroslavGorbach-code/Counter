@@ -26,6 +26,9 @@ import com.yaroslavgorbachh.counter.feature.Accessibility;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
 public class FullscreenFragment extends Fragment {
@@ -102,7 +105,10 @@ public class FullscreenFragment extends Fragment {
             public void onSwipeBottom() { mFullscreenComponent.dec(); }
         });
 
-        mFullscreenComponent.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
+        mFullscreenComponent.getCounter()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(v::setCounter);
 
     }
 

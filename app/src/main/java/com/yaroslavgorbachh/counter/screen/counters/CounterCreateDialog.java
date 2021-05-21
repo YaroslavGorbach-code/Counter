@@ -11,8 +11,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.yaroslavgorbachh.counter.databinding.DialogCreateCounterBinding;
-import com.yaroslavgorbachh.counter.feature.InputFilters;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 import java.util.Objects;
 
@@ -44,7 +44,7 @@ public class CounterCreateDialog extends DialogFragment {
                 .setNegativeButton(R.string.addCounterDialogCounterNegativeButton, null)
                 .setPositiveButton(R.string.addCounterDialogCounterPositiveButton, (dialog1, which) -> {
                     String title;
-                   if (InputFilters.titleFilter(binding.title)){
+                   if (ViewUtil.titleFilter(binding.title)){
                         title = binding.title.getText().toString();
                    }else {
                        return;

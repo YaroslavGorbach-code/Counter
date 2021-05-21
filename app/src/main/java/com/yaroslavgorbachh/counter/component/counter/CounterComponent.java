@@ -1,18 +1,18 @@
 package com.yaroslavgorbachh.counter.component.counter;
 
-import androidx.lifecycle.LiveData;
-
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 
-public interface CounterComponent {
+import io.reactivex.rxjava3.core.Observable;
 
-    interface ResetCallback{
-        void onReset(Counter copy);
-    }
+public interface CounterComponent {
     void incCounter();
     void decCounter();
     void resetCounter(ResetCallback resetCallback);
     void delete();
     void insert(Counter copy);
-    LiveData<Counter> getCounter();
+    Observable<Counter> getCounter();
+
+    interface ResetCallback {
+        void onReset(Counter copy);
+    }
 }

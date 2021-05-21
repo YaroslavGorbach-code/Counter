@@ -10,15 +10,13 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.CounterDatabase;
+import com.yaroslavgorbachh.counter.data.Db;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.data.RepoImp;
 
 
 import java.util.Date;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -27,13 +25,12 @@ import static com.yaroslavgorbachh.counter.data.Migrations.MIGRATION_24_25;
 import static com.yaroslavgorbachh.counter.data.Migrations.MIGRATION_25_26;
 import static com.yaroslavgorbachh.counter.data.Migrations.MIGRATION_26_27;
 
-
 @Module
 public class DataModule {
 
     @Provides
-    public CounterDatabase provideDatabase(Context context){
-        return Room.databaseBuilder(context.getApplicationContext(), CounterDatabase.class, "counter.db")
+    public Db provideDatabase(Context context){
+        return Room.databaseBuilder(context.getApplicationContext(), Db.class, "counter.db")
                         .addCallback(new RoomDatabase.Callback() {
                             @Override
                             public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -67,7 +64,7 @@ public class DataModule {
             }
 
     @Provides
-    public Repo provideRepo(CounterDatabase database){
+    public Repo provideRepo(Db database){
        return new RepoImp(database);
     }
 }

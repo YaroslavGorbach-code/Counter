@@ -1,5 +1,4 @@
-package com.yaroslavgorbachh.counter.data.BackupAndRestore;
-
+package com.yaroslavgorbachh.counter.feature.roombackup;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -13,14 +12,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
-public class MyRestore {
+public class Restore {
     private static final String STRING_FOR_NULL_VALUE = "!!!string_for_null_value!!!";
 
     public static class Init {
         private RoomDatabase database;
         private Uri uri;
         private Context context;
-        private OnCompleteListener onCompleteListener;
+        private CompleteListener completeListener;
 
         public Init database(RoomDatabase database) {
             this.database = database;
@@ -37,19 +36,19 @@ public class MyRestore {
             return this;
         }
 
-        public Init OnCompleteListener(OnCompleteListener onCompleteListener) {
-            this.onCompleteListener = onCompleteListener;
+        public Init OnCompleteListener(CompleteListener completeListener) {
+            this.completeListener = completeListener;
             return this;
         }
 
         public void execute() {
             try {
                 if (database == null) {
-                    onCompleteListener.onComplete(false, "Database not specified");
+                    completeListener.onComplete(false, "Database not specified");
                     return;
                 }
                 if (uri == null) {
-                    onCompleteListener.onComplete(false, "Uri not specified");
+                    completeListener.onComplete(false, "Uri not specified");
                     return;
                 }
 
@@ -96,11 +95,11 @@ public class MyRestore {
                         Log.e("TAG", String.valueOf(pp));
                     }
                 }
-                if (onCompleteListener != null)
-                    onCompleteListener.onComplete(true, "success");
+                if (completeListener != null)
+                    completeListener.onComplete(true, "success");
             } catch (Exception e) {
-                if (onCompleteListener != null)
-                    onCompleteListener.onComplete(false, e.toString());
+                if (completeListener != null)
+                    completeListener.onComplete(false, e.toString());
             }
         }
     }

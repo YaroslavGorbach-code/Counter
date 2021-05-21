@@ -11,6 +11,7 @@ import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 @Dao
@@ -35,16 +36,13 @@ public interface CounterDao {
     void deleteAllCounters();
 
     @Query("SELECT * FROM counter_table WHERE id = :id")
-    LiveData<Counter> getCounter(long id);
+    Observable<Counter> getCounter(long id);
 
     @Query("SELECT DISTINCT grope FROM counter_table WHERE grope<>'' ORDER BY grope ASC")
     LiveData<List<String>> getGroups();
 
     @Query("SELECT * FROM counter_table WHERE widgetId = :widgetId")
     Counter getCounterWidget(long widgetId);
-
-    @Query("SELECT * FROM counter_table WHERE id = :id")
-    Single<Counter> getCounterNoLiveData(long id);
 
     @Query("UPDATE counter_table SET value = value + 1 WHERE id = :id")
     void inc(long id);
@@ -54,7 +52,4 @@ public interface CounterDao {
 
     @Query("UPDATE counter_table SET value = 0 WHERE id = :id")
     void reset(long id);
-
-    @Query("SELECT * FROM counter_table WHERE grope = :group")
-    LiveData<List<Counter>> getCounters(String group);
 }

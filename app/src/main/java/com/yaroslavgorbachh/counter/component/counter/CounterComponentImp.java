@@ -1,14 +1,15 @@
 package com.yaroslavgorbachh.counter.component.counter;
-import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
+
+import io.reactivex.rxjava3.core.Observable;
 
 public class CounterComponentImp implements CounterComponent {
     private final Repo mRepo;
     private final long mId;
 
-    public CounterComponentImp(Repo repo, long id){
+    public CounterComponentImp(Repo repo, long id) {
         mRepo = repo;
         mId = id;
     }
@@ -24,24 +25,24 @@ public class CounterComponentImp implements CounterComponent {
     }
 
     @Override
-    public void resetCounter(ResetCallback callback){
-        callback.onReset(mRepo.getCounterNoLiveData(mId).blockingGet());
+    public void resetCounter(ResetCallback callback) {
+        callback.onReset(mRepo.getCounter(mId).blockingFirst());
         mRepo.resetCounter(mId);
     }
 
 
-    public void delete(){
+    public void delete() {
         mRepo.deleteCounter(mId);
-        mRepo.deleteCounterHistory(mId);
+        mRepo.removeHistory(mId);
     }
 
     @Override
     public void insert(Counter copy) {
-        mRepo.insertCounter(copy);
+        mRepo.createCounter(copy);
     }
 
     @Override
-    public LiveData<Counter> getCounter() {
+    public Observable<Counter> getCounter() {
         return mRepo.getCounter(mId);
     }
 

@@ -1,10 +1,5 @@
 package com.yaroslavgorbachh.counter.feature;
 
-import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
-import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
-import com.yaroslavgorbachh.counter.data.Repo;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;

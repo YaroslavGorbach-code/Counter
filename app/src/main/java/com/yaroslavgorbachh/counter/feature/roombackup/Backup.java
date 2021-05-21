@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.data.BackupAndRestore;
+package com.yaroslavgorbachh.counter.feature.roombackup;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -13,9 +13,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-
-
-public class MyBackup {
+public class Backup {
     private static final ArrayList<String> SQLITE_TABLES = new ArrayList<String>() {{
         add("android_metadata");
         add("room_master_table");
@@ -30,7 +28,7 @@ public class MyBackup {
         private RoomDatabase database;
         private Uri uri;
         private Context context;
-        private OnCompleteListener onCompleteListener;
+        private CompleteListener completeListener;
 
         public Init database(RoomDatabase database){
             this.database = database;
@@ -47,18 +45,18 @@ public class MyBackup {
         }
 
 
-        public Init OnCompleteListener(OnCompleteListener onCompleteListener){
-            this.onCompleteListener = onCompleteListener;
+        public Init OnCompleteListener(CompleteListener completeListener){
+            this.completeListener = completeListener;
             return this;
         }
 
         public void execute(){
             if(database==null){
-                onCompleteListener.onComplete(false, "Database not specified");
+                completeListener.onComplete(false, "Database not specified");
                 return;
             }
             if(uri==null){
-                onCompleteListener.onComplete(false, "Backup uri not specified");
+                completeListener.onComplete(false, "Backup uri not specified");
                 return;
             }
 
@@ -91,6 +89,7 @@ public class MyBackup {
                             for(int i=0; i<columnCount; i++){
                                 String columnName = rowsCursor.getColumnName(i);
                                 if(columnName.equals(aic)) continue;
+
                                 rowBuilder.putItem(columnName,(rowsCursor.getString(i)!=null) ? rowsCursor.getString(i) : STRING_FOR_NULL_VALUE);
                             }
                             rows.add(rowBuilder.build());
@@ -109,11 +108,11 @@ public class MyBackup {
                     outputStream.write(data);
                     outputStream.close();
 
-                    if(onCompleteListener!=null)
-                        onCompleteListener.onComplete(true, "success");
+                    if(completeListener !=null)
+                        completeListener.onComplete(true, "success");
                 } catch (Exception e) {
-                    if(onCompleteListener!=null){
-                        onCompleteListener.onComplete(false, e.toString());
+                    if(completeListener !=null){
+                        completeListener.onComplete(false, e.toString());
                     }
                 }
             }

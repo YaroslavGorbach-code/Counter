@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "counterHistory_table")
-public class CounterHistory {
+public class History {
 
     @PrimaryKey(autoGenerate = true)
     public long id;
@@ -12,7 +12,7 @@ public class CounterHistory {
     public String data;
     public long counterId;
 
-    public CounterHistory( long value, String data, long counterId) {
+    public History(long value, String data, long counterId) {
         this.value = value;
         this.data = data;
         this.counterId = counterId;

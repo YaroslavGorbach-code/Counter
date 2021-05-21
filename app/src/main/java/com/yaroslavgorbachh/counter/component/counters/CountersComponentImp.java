@@ -56,9 +56,9 @@ public class CountersComponentImp implements CountersComponent {
 
         if (!dataFrom.equals(dataTo)) {
             to.createDateSort = dataFrom;
-            mRepo.updateCounter(to);
+            mRepo.editCounter(to);
             from.createDateSort = dataTo;
-            mRepo.updateCounter(from);
+            mRepo.editCounter(from);
         }
     }
 
@@ -72,7 +72,7 @@ public class CountersComponentImp implements CountersComponent {
         Counter counter = new Counter(title, 0, Counter.MAX_VALUE,
                 Counter.MIN_VALUE, 1, group, new Date(),
                 new Date(), null, 0, 0, 0, null);
-        mRepo.insertCounter(counter);
+        mRepo.createCounter(counter);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class CountersComponentImp implements CountersComponent {
     @Override
     public void update(List<Counter> copy) {
         for (Counter counter : copy) {
-            mRepo.updateCounter(counter);
+            mRepo.editCounter(counter);
         }
     }
 

@@ -8,42 +8,35 @@ import android.widget.Toast;
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.BackupAndRestore.MyBackup;
-import com.yaroslavgorbachh.counter.data.BackupAndRestore.MyRestore;
 import com.yaroslavgorbachh.counter.data.Models.AppStyle;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
-import com.yaroslavgorbachh.counter.data.Models.CounterHistory;
+import com.yaroslavgorbachh.counter.data.Models.History;
 import com.yaroslavgorbachh.counter.feature.HistoryManager;
+import com.yaroslavgorbachh.counter.feature.roombackup.Backup;
+import com.yaroslavgorbachh.counter.feature.roombackup.Restore;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 
 import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RepoImp implements Repo {
-
-    private final CounterDatabase mDatabase;
-
-    public RepoImp(CounterDatabase database) {
+    private final Db mDatabase;
+    public RepoImp(Db database) {
         mDatabase = database;
     }
 
-    public AppStyle getCurrentStyle() {
-        return mDatabase.appStyleDao().getCurrentColor();
-    }
-
-    public void insertCounter(Counter counter) {
-        Completable.create(emitter -> mDatabase.counterDao().insert(counter))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+    public void createCounter(Counter counter) {
+        mDatabase.counterDao().insert(counter);
     }
 
     @Override
     public void backup(Intent data, Context context) {
-        new MyBackup.Init()
+        new Backup.Init()
                 .database(mDatabase)
                 .setContext(context)
                 .uri(data.getData())
@@ -61,7 +54,7 @@ public class RepoImp implements Repo {
 
     @Override
     public void restore(Intent data, Context context) {
-        new MyRestore.Init()
+        new Restore.Init()
                 .database(mDatabase)
                 .uri(data.getData())
                 .setContext(context)
@@ -76,11 +69,6 @@ public class RepoImp implements Repo {
     }
 
     @Override
-    public LiveData<List<Counter>> getCounters(String mGroup) {
-        return mDatabase.counterDao().getCounters(mGroup);
-    }
-
-    @Override
     public void triggerCountersLiveData() {
         List<Counter> counters = mDatabase.counterDao().getAllCountersNoLiveData();
         mDatabase.counterDao().deleteAllCounters();
@@ -90,33 +78,23 @@ public class RepoImp implements Repo {
     }
 
 
-    public void updateCounter(Counter counter) {
-        Completable.create(emitter -> mDatabase.counterDao().update(counter))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+    public void editCounter(Counter counter) {
+        mDatabase.counterDao().update(counter);
     }
 
     public void deleteCounters() {
-        Completable.create(emitter -> mDatabase.counterDao().deleteAllCounters())
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+        mDatabase.counterDao().deleteAllCounters();
     }
 
-    public void insertCounterHistory(CounterHistory counterHistory) {
-        mDatabase.counterHistoryDao().insert(counterHistory);
+    public void addHistory(History history) {
+        mDatabase.counterHistoryDao().insert(history);
     }
 
-    public void deleteCounterHistory(long counterId) {
-        Completable.create(emitter -> mDatabase.counterHistoryDao().delete(counterId))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+    public void removeHistory(long counterId) {
+        mDatabase.counterHistoryDao().delete(counterId);
     }
 
-    public Single<List<Counter>> getAllCountersNoLiveData() {
-        return Single.create(emitter -> emitter.onSuccess(mDatabase.counterDao().getAllCountersNoLiveData()));
-    }
-
-    public LiveData<List<CounterHistory>> getCounterHistoryList(long counterId) {
+    public LiveData<List<History>> getHistoryList(long counterId) {
         return mDatabase.counterHistoryDao().getCounterHistoryList(counterId);
     }
 
@@ -124,16 +102,12 @@ public class RepoImp implements Repo {
         return mDatabase.counterDao().getCounters();
     }
 
-    public LiveData<Counter> getCounter(long id) {
+    public Observable<Counter> getCounter(long id) {
         return mDatabase.counterDao().getCounter(id);
     }
 
     public Single<Counter> getCounterWidget(long widgetId) {
         return Single.create(emitter -> emitter.onSuccess(mDatabase.counterDao().getCounterWidget(widgetId)));
-    }
-
-    public Single<Counter> getCounterNoLiveData(long id) {
-        return mDatabase.counterDao().getCounterNoLiveData(id);
     }
 
     public LiveData<List<String>> getGroups() {
@@ -146,19 +120,16 @@ public class RepoImp implements Repo {
                 .subscribe();
     }
 
-    public void deleteHistoryItem(CounterHistory counterHistory) {
-        Completable.create(emitter ->
-                mDatabase.counterHistoryDao().delete(counterHistory))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+    public void removeHistory(History history) {
+        mDatabase.counterHistoryDao().delete(history);
     }
 
     public void incCounter(long id) {
         mDatabase.counterDao().inc(id);
         HistoryManager.getInstance()
-                .saveValueWitDelay(id, getCounterNoLiveData(id).blockingGet().value, () ->
-                        insertCounterHistory(new CounterHistory(
-                                getCounterNoLiveData(id).blockingGet().value,
+                .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
+                        addHistory(new History(
+                                getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
 
     }
@@ -166,18 +137,18 @@ public class RepoImp implements Repo {
     public void decCounter(long id) {
         mDatabase.counterDao().dec(id);
         HistoryManager.getInstance()
-                .saveValueWitDelay(id, getCounterNoLiveData(id).blockingGet().value, () ->
-                        insertCounterHistory(new CounterHistory(
-                                getCounterNoLiveData(id).blockingGet().value,
+                .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
+                        addHistory(new History(
+                                getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
     }
 
     public void resetCounter(long id) {
         mDatabase.counterDao().reset(id);
         HistoryManager.getInstance()
-                .saveValueWitDelay(id, getCounterNoLiveData(id).blockingGet().value, () ->
-                        insertCounterHistory(new CounterHistory(
-                                getCounterNoLiveData(id).blockingGet().value,
+                .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
+                        addHistory(new History(
+                                getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
     }
 

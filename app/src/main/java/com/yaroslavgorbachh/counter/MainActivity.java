@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     @Inject Repo repo;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MyApplication application = (MyApplication) getApplication();

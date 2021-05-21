@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.yaroslavgorbachh.counter.component.edit.EditComponent;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
@@ -17,7 +18,12 @@ import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class EditCounterFragment extends Fragment {
@@ -44,7 +50,9 @@ public class EditCounterFragment extends Fragment {
         EditComponent editComponent = vm.getEditCounter(repo, id);
 
         // init view
-        EditCounterView v = new EditCounterView(FragmentEditCounterBinding.bind(view), new EditCounterView.Callback() {
+        EditCounterView v = new EditCounterView(
+                FragmentEditCounterBinding.bind(view),
+                new EditCounterView.Callback() {
             @Override
             public void onBack() {
                 Navigation.findNavController(view).popBackStack();
@@ -57,7 +65,10 @@ public class EditCounterFragment extends Fragment {
             }
         });
 
-        editComponent.getCounter().observe(getViewLifecycleOwner(), v::setCounter);
+        editComponent.getCounter()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(v::setCounter);
         editComponent.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
     }
 
