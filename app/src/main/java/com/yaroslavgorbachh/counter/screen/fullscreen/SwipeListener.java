@@ -5,12 +5,12 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class CounterSwipeListener implements View.OnTouchListener{
+public class SwipeListener implements View.OnTouchListener{
 
     private final GestureDetector gestureDetector;
 
-    public CounterSwipeListener(Context ctx){
-        gestureDetector = new GestureDetector(ctx, new GestureListener());
+    public SwipeListener(Context context){
+        gestureDetector = new GestureDetector(context, new GestureListener());
     }
 
     @Override

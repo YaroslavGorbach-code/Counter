@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 
-public interface FullscreenCounter {
+public interface Fullscreen {
     void inc();
     void dec();
     LiveData<Counter> getCounter();

@@ -15,7 +15,7 @@ import com.yaroslavgorbachh.counter.screen.settings.ColorPickerDialog;
 import com.yaroslavgorbachh.counter.screen.widget.CounterWidgetConfigActivity;
 import com.yaroslavgorbachh.counter.screen.widget.CounterWidgetProvider;
 import com.yaroslavgorbachh.counter.screen.counters.CountersFragment;
-import com.yaroslavgorbachh.counter.screen.fullscreen.FullscreenCounterFragment;
+import com.yaroslavgorbachh.counter.screen.fullscreen.FullscreenFragment;
 
 import javax.inject.Singleton;
 
@@ -43,7 +43,7 @@ public interface AppComponent {
     void inject(CountersFragment fragment);
     void inject(CounterWidgetConfigActivity a);
     void inject(CounterWidgetProvider widgetProvider);
-    void inject(FullscreenCounterFragment fragment);
+    void inject(FullscreenFragment fragment);
     void inject(ColorPickerDialog dialog);
     void inject(CounterCreateDialog dialog);
     void inject(EditCounterFragment fragment);

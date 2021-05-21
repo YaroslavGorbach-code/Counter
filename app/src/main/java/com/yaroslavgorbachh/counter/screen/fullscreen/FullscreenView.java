@@ -6,25 +6,23 @@ import android.os.Looper;
 import android.view.View;
 
 import com.yaroslavgorbachh.counter.data.Models.Counter;
-import com.yaroslavgorbachh.counter.databinding.FragmentFullscreenCounterBinding;
+import com.yaroslavgorbachh.counter.databinding.FragmentFullscreenBinding;
 import com.yaroslavgorbachh.counter.utill.Utility;
 
-import java.util.Timer;
-
-public class FullscreenCounterView {
+public class FullscreenView {
     public interface Callback {
         void onBack();
         void onSwipeTop();
         void onSwipeBottom();
     }
 
-    private final FragmentFullscreenCounterBinding mBinding;
+    private final FragmentFullscreenBinding mBinding;
     @SuppressLint("ClickableViewAccessibility")
-    public FullscreenCounterView(FragmentFullscreenCounterBinding binding, Callback callback) {
+    public FullscreenView(FragmentFullscreenBinding binding, Callback callback) {
         mBinding = binding;
         showHelp();
         binding.toolbar.setNavigationOnClickListener(v -> callback.onBack());
-        mBinding.viewGroup.setOnTouchListener(new CounterSwipeListener(binding.getRoot().getContext()){
+        mBinding.viewGroup.setOnTouchListener(new SwipeListener(binding.getRoot().getContext()){
             @Override
             public void onSwipeTop() {
                 callback.onSwipeTop();
