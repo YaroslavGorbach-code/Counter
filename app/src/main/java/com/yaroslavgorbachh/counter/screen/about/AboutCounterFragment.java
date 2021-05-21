@@ -20,7 +20,10 @@ import com.yaroslavgorbachh.counter.databinding.FragmentAboutCounterBinding;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AboutCounterFragment extends Fragment {
 
@@ -48,6 +51,9 @@ public class AboutCounterFragment extends Fragment {
 
         // init view
         AboutCounterView v = new AboutCounterView(FragmentAboutCounterBinding.bind(view), () -> Navigation.findNavController(view).popBackStack());
-        aboutComponent.getCounter().subscribe(v::setCounter);
+        aboutComponent.getCounter()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(v::setCounter);
     }
 }

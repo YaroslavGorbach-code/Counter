@@ -17,6 +17,7 @@ import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
 import com.yaroslavgorbachh.counter.MyApplication;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 import java.util.Objects;
 
@@ -62,6 +63,7 @@ public class EditCounterFragment extends Fragment {
             public void onSave(Counter counter) {
                 editComponent.updateCounter(counter);
                 Navigation.findNavController(view).popBackStack();
+                ViewUtil.hideKeyboard(requireActivity());
             }
         });
 

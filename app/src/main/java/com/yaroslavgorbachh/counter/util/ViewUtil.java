@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.ColorInt;
@@ -15,7 +17,17 @@ import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
 
 public class ViewUtil {
-    public static void animate(Activity activity){
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void animate(Activity activity) {
         activity.finish();
         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         activity.startActivity(new Intent(activity, SettingsActivity.class));
@@ -64,10 +76,11 @@ public class ViewUtil {
         }
         return 0;
     }
+
     public static boolean valueFilter(TextInputEditText mValue_et) {
         /*if value is or - empty show error*/
         if (String.valueOf(mValue_et.getText()).trim().isEmpty() ||
-                String.valueOf(mValue_et.getText()).matches("-") ) {
+                String.valueOf(mValue_et.getText()).matches("-")) {
             mValue_et.setError(mValue_et.getContext().getString(R.string.valueError));
             mValue_et.setText(null);
             return false;
@@ -104,7 +117,7 @@ public class ViewUtil {
         if (String.valueOf(mMaxValue_et.getText()).trim().isEmpty()
                 || String.valueOf(mMaxValue_et.getText()).matches("-")) {
             return String.valueOf(Counter.MAX_VALUE);
-        }else {
+        } else {
             return String.valueOf(mMaxValue_et.getText());
         }
     }
@@ -124,7 +137,7 @@ public class ViewUtil {
         if (mGroups_et.getText().toString().trim().isEmpty()) {
             return null;
         } else {
-            return  mGroups_et.getText().toString();
+            return mGroups_et.getText().toString();
         }
     }
 
