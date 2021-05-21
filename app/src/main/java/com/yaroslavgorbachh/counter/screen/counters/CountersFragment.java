@@ -203,7 +203,6 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     public void onDetailed() {
         NavController navController = Navigation.findNavController(requireView());
         navController.navigate(CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2());
-        CommonUtil.hideKeyboard(requireActivity());
     }
 
 }

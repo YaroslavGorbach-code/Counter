@@ -11,6 +11,8 @@ import com.yaroslavgorbachh.counter.data.Models.Counter;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface CounterDao {
 
@@ -42,7 +44,7 @@ public interface CounterDao {
     Counter getCounterWidget(long widgetId);
 
     @Query("SELECT * FROM counter_table WHERE id = :id")
-    Counter getCounterNoLiveData(long id);
+    Single<Counter> getCounterNoLiveData(long id);
 
     @Query("UPDATE counter_table SET value = value + 1 WHERE id = :id")
     void inc(long id);

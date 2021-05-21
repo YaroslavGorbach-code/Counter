@@ -55,7 +55,6 @@ public class EditCounterFragment extends Fragment {
             public void onSave(Counter counter) {
                 editCounter.updateCounter(counter);
                 Navigation.findNavController(view).popBackStack();
-                CommonUtil.hideKeyboard(requireActivity());
             }
         });
 

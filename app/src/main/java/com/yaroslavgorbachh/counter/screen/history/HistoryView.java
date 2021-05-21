@@ -1,5 +1,6 @@
 package com.yaroslavgorbachh.counter.screen.history;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,7 +21,6 @@ public class HistoryView {
         bind.toolbar.setNavigationOnClickListener(i -> callback.onBack());
         bind.toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.deleteHistory) {
-                callback.onClear();
                 new MaterialAlertDialogBuilder(bind.getRoot().getContext())
                         .setTitle(bind.getRoot().getContext().getString(R.string.clear_history_title))
                         .setMessage(bind.getRoot().getContext().getString(R.string.clear_history_message))
