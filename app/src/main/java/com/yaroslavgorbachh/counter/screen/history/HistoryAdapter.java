@@ -46,6 +46,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
         return mData.get(position).id;
     }
 
+    public List<History> getData() {
+        return mData;
+    }
+
     public static class Vh extends RecyclerView.ViewHolder {
         private final ICounterHistoryBinding mBinding;
 

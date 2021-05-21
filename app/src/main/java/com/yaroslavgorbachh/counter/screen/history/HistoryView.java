@@ -10,8 +10,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.History;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterHistoryBinding;
+import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Observable;
 
 public class HistoryView {
     private final HistoryAdapter mAdapter;
@@ -38,7 +41,22 @@ public class HistoryView {
         bind.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: 5/15/2021 sort history
+                mAdapter.setData(Observable.fromIterable(mAdapter.getData())
+                        .sorted((o1, o2) -> {
+                            if (position == 1) {
+                                return Long.compare(o2.value, o1.value);
+                            } else {
+                                if (DateAndTimeUtil.convertStringToDate(o1.data)
+                                        .before(DateAndTimeUtil.convertStringToDate(o2.data))) {
+                                    return 1;
+                                } else if (DateAndTimeUtil.convertStringToDate(o1.data)
+                                        .after(DateAndTimeUtil.convertStringToDate(o2.data))) {
+                                    return -1;
+                                } else {
+                                    return 0;
+                                }
+                            }
+                        }).toList().blockingGet());
             }
 
             @Override

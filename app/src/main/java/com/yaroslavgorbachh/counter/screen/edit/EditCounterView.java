@@ -1,9 +1,6 @@
 package com.yaroslavgorbachh.counter.screen.edit;
 
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-
-import androidx.fragment.app.FragmentActivity;
 
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
@@ -12,7 +9,6 @@ import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class EditCounterView {
     private final FragmentEditCounterBinding mBinding;
@@ -95,6 +91,7 @@ public class EditCounterView {
 
     interface Callback {
         void onBack();
+
         void onSave(Counter counter);
     }
 
