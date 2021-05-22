@@ -78,7 +78,7 @@ public class RepoImp implements Repo {
         }
     }
 
-    public void editCounter(Counter counter) {
+    public void updateCounter(Counter counter) {
         mDatabase.counterDao().update(counter);
     }
 
@@ -111,8 +111,8 @@ public class RepoImp implements Repo {
         return mDatabase.counterDao().getCounter(id);
     }
 
-    public Single<Counter> getCounterWidget(long widgetId) {
-        return Single.create(emitter -> emitter.onSuccess(mDatabase.counterDao().getCounterWidget(widgetId)));
+    public Counter getCounterWidget(long widgetId) {
+        return mDatabase.counterDao().getCounterWidget(widgetId);
     }
 
     public LiveData<List<String>> getGroups() {
@@ -127,7 +127,7 @@ public class RepoImp implements Repo {
                         addHistory(new History(
                                 getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
-        editCounter(AboutCounterManager.updateMaxCounterValue(getCounter(id).blockingFirst()));
+        updateCounter(AboutCounterManager.updateMaxCounterValue(getCounter(id).blockingFirst()));
 
     }
 
@@ -138,18 +138,18 @@ public class RepoImp implements Repo {
                         addHistory(new History(
                                 getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
-        editCounter(AboutCounterManager.updateMinCounterValue(getCounter(id).blockingFirst()));
+        updateCounter(AboutCounterManager.updateMinCounterValue(getCounter(id).blockingFirst()));
     }
 
     public void resetCounter(long id) {
-        editCounter(AboutCounterManager.updateValueBeforeReset(getCounter(id).blockingFirst()));
+        updateCounter(AboutCounterManager.updateValueBeforeReset(getCounter(id).blockingFirst()));
         mDatabase.counterDao().reset(id);
         HistoryManager.getInstance()
                 .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
                         addHistory(new History(
                                 getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
-        editCounter(AboutCounterManager.updateLastResetDate(getCounter(id).blockingFirst()));
+        updateCounter(AboutCounterManager.updateLastResetDate(getCounter(id).blockingFirst()));
     }
 
     public void deleteCounter(long mId) {

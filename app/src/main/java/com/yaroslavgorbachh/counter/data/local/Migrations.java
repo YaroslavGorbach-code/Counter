@@ -36,7 +36,7 @@ public class Migrations {
     public static final Migration MIGRATION_27_28 = new Migration(27, 28) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("DROP TABLE app_style");
+            database.execSQL("DROP TABLE IF EXISTS app_style");
         }
     };
 }

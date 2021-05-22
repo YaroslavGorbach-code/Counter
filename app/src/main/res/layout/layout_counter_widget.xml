@@ -24,7 +24,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/widget_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -38,7 +38,7 @@
                 android:textSize="12sp" />
 
             <ImageView
-                android:id="@+id/dec"
+                android:id="@+id/widget_dec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -54,7 +54,7 @@
                 tools:ignore="ContentDescription" />
 
             <ImageView
-                android:id="@+id/fullscreen"
+                android:id="@+id/widget_fullscreen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -71,7 +71,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/value"
+            android:id="@+id/widget_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linear"

@@ -11,6 +11,7 @@ import com.yaroslavgorbachh.counter.data.Domain.History;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public interface Repo {
     void incCounter(long id);
@@ -23,8 +24,9 @@ public interface Repo {
     LiveData<List<History>> getHistoryList(long counterId);
     void addHistory(History copy);
     void deleteCounters();
+    Counter getCounterWidget(long widgetId);
     LiveData<List<Counter>> getCounters();
-    void editCounter(Counter counter);
+    void updateCounter(Counter counter);
     LiveData<List<String>> getGroups();
     void createCounter(Counter counter);
     void backup(Intent data, Context context);

@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.yaroslavgorbachh.counter.screen.widget.CounterWidgetProvider;
+import com.yaroslavgorbachh.counter.screen.widget.WidgetProvider;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import javax.inject.Inject;
@@ -27,7 +27,6 @@ import static com.yaroslavgorbachh.counter.screen.settings.SettingsFragment.THEM
 public class MainActivity extends AppCompatActivity {
     private boolean mAllowedVolumeButtons;
     private BroadcastReceiver mMessageReceiver;
-    private final CompositeDisposable mDisposables = new CompositeDisposable();
 
     @Inject SharedPreferences sharedPreferences;
     @Inject Repo repo;
@@ -85,9 +84,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-       Disposable disposable = CounterWidgetProvider.updateWidgets(this, repo);
-       if (disposable!=null)
-       mDisposables.add(disposable);
+        WidgetProvider.updateWidgets(this, repo);
     }
 
 
@@ -95,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-        mDisposables.dispose();
     }
 
 }

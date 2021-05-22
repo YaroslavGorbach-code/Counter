@@ -10,22 +10,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class WidgetCountersAdapter extends RecyclerView.Adapter<WidgetCountersAdapter.Vh> {
-    public interface ClickListener{
+public class WidgetsAdapter extends RecyclerView.Adapter<WidgetsAdapter.Vh> {
+    public interface Callback {
         void onClick(Counter counter);
     }
 
-    private List<Counter> mData;
-    private final ClickListener mListener;
+    private List<Counter> mData = new ArrayList<>();
+    private final Callback mListener;
 
-    WidgetCountersAdapter(ClickListener clickListener){
+    WidgetsAdapter(Callback clickListener){
         mListener = clickListener;
     }
 
     public void setData(List<Counter> counters){
         mData = counters;
+        notifyDataSetChanged();
     }
 
     @NonNull

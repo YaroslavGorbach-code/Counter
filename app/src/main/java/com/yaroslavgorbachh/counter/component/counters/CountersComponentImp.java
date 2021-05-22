@@ -56,9 +56,9 @@ public class CountersComponentImp implements CountersComponent {
 
         if (!dataFrom.equals(dataTo)) {
             to.createDateSort = dataFrom;
-            mRepo.editCounter(to);
+            mRepo.updateCounter(to);
             from.createDateSort = dataTo;
-            mRepo.editCounter(from);
+            mRepo.updateCounter(from);
         }
     }
 
@@ -93,7 +93,7 @@ public class CountersComponentImp implements CountersComponent {
     @Override
     public void update(List<Counter> copy) {
         for (Counter counter : copy) {
-            mRepo.editCounter(counter);
+            mRepo.updateCounter(counter);
         }
     }
 

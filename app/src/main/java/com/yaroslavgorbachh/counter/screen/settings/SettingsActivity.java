@@ -24,7 +24,6 @@ public class SettingsActivity extends AppCompatActivity {
         App application = (App) getApplication();
         application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
-        ThemeUtility.setTheme(sharedPreferences, this, repo);
         setContentView( R.layout.activity_settings);
         if (sharedPreferences.getBoolean("lockOrientation", true)) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

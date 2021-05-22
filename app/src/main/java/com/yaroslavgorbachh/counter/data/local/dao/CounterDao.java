@@ -12,6 +12,7 @@ import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface CounterDao {

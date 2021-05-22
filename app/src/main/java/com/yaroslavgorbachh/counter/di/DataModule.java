@@ -52,10 +52,6 @@ public class DataModule {
                                 db.insert("counter_table", SQLiteDatabase.CONFLICT_REPLACE, cv);
                                 cv.clear();
 
-                                cv.put("id", 1);
-                                cv.put("style", R.style.AppTheme);
-                                db.insert("app_style", SQLiteDatabase.CONFLICT_REPLACE, cv);
-
                             }
                         })
                         .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
