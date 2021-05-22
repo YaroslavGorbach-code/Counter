@@ -29,7 +29,6 @@ import dagger.Component;
 
 public interface AppComponent {
 
-
     @Component.Factory
     interface Factory {
         AppComponent create(@BindsInstance Application application, @BindsInstance Context context);

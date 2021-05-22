@@ -88,8 +88,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
             mBinding.value.setText(String.valueOf(history.value));
             mBinding.date.setText(history.data);
         }
-
-
     }
 }
 

@@ -19,17 +19,15 @@ import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.transition.MaterialFade;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
-import com.yaroslavgorbachh.counter.feature.multyselection.CounterMultiSelection;
+import com.yaroslavgorbachh.counter.screen.counters.multyselection.CounterMultiSelection;
 import com.yaroslavgorbachh.counter.screen.counters.drawer.GroupsAdapter;
 import com.yaroslavgorbachh.counter.util.CommonUtil;
 
-import java.util.Collections;
 import java.util.List;
 
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;

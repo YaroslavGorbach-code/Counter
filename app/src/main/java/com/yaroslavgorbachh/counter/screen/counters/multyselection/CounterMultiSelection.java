@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.feature.multyselection;
+package com.yaroslavgorbachh.counter.screen.counters.multyselection;
 
 import android.graphics.drawable.Drawable;
 import androidx.lifecycle.LiveData;

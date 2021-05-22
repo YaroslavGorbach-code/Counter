@@ -67,7 +67,6 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
                 mDrawerItemSelector.selectItem(mData.get(getBindingAdapterPosition()));
                 notifyDataSetChanged();
             });
-
         }
 
         public void bind(String s) {

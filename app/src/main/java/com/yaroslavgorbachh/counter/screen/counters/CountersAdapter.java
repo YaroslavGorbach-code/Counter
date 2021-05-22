@@ -13,7 +13,7 @@ import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.databinding.ItemCounterBinding;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
-import com.yaroslavgorbachh.counter.feature.multyselection.MultiSelection;
+import com.yaroslavgorbachh.counter.screen.counters.multyselection.MultiSelection;
 
 
 import java.util.ArrayList;
