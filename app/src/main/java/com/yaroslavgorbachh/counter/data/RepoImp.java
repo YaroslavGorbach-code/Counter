@@ -8,9 +8,9 @@ import android.widget.Toast;
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Models.AppStyle;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
-import com.yaroslavgorbachh.counter.data.Models.History;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.History;
+import com.yaroslavgorbachh.counter.data.local.Db;
 import com.yaroslavgorbachh.counter.feature.AboutCounterManager;
 import com.yaroslavgorbachh.counter.feature.HistoryManager;
 import com.yaroslavgorbachh.counter.feature.roombackup.Backup;
@@ -119,11 +119,6 @@ public class RepoImp implements Repo {
         return mDatabase.counterDao().getGroups();
     }
 
-    public void changeTheme(AppStyle style) {
-        Completable.create(emitter -> mDatabase.appStyleDao().update(style))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
-    }
 
     public void incCounter(long id) {
         mDatabase.counterDao().inc(id);

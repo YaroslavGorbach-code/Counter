@@ -21,7 +21,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.component.settings.SettingsComponent;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
@@ -42,7 +42,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        MyApplication application = (MyApplication) requireActivity().getApplication();
+        App application = (App) requireActivity().getApplication();
         application.appComponent.inject(this);
     }
 

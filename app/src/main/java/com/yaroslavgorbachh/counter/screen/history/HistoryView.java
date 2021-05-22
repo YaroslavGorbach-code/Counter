@@ -1,6 +1,5 @@
 package com.yaroslavgorbachh.counter.screen.history;
 
-import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,13 +12,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Models.History;
+import com.yaroslavgorbachh.counter.data.Domain.History;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterHistoryBinding;
-import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 
 import java.util.List;
-
-import io.reactivex.rxjava3.core.Observable;
 
 public class HistoryView {
     public interface Callback {

@@ -2,7 +2,7 @@ package com.yaroslavgorbachh.counter.component.history;
 
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.data.Models.History;
+import com.yaroslavgorbachh.counter.data.Domain.History;
 
 import java.util.List;
 

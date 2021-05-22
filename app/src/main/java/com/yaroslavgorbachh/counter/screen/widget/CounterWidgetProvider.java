@@ -11,10 +11,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.util.ThemeUtility;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
 
@@ -40,7 +39,7 @@ public class CounterWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        MyApplication application = (MyApplication) context.getApplicationContext();
+        App application = (App) context.getApplicationContext();
         application.appComponent.inject(this);
 
         long widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,

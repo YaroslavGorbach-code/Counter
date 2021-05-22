@@ -6,7 +6,7 @@ import android.content.res.Resources;
 
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import java.util.List;

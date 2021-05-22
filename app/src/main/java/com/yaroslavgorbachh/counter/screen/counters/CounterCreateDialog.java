@@ -16,7 +16,6 @@ import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 import java.util.Objects;
 
-
 public class CounterCreateDialog extends DialogFragment {
     interface Host{
         void onCreateCounter(String title, String group);
@@ -31,7 +30,6 @@ public class CounterCreateDialog extends DialogFragment {
         f.setArguments(args);
         return f;
     }
-
 
     @NonNull
     @Override

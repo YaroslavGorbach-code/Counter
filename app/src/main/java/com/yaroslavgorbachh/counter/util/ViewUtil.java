@@ -13,7 +13,7 @@ import androidx.annotation.ColorInt;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
 
 public class ViewUtil {

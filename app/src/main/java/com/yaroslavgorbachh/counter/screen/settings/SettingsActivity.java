@@ -8,9 +8,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.util.ThemeUtility;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import javax.inject.Inject;
@@ -22,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        MyApplication application = (MyApplication) getApplication();
+        App application = (App) getApplication();
         application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
         ThemeUtility.setTheme(sharedPreferences, this, repo);

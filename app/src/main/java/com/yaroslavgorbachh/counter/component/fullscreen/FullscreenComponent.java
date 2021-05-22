@@ -1,6 +1,6 @@
 package com.yaroslavgorbachh.counter.component.fullscreen;
 
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 
 import io.reactivex.rxjava3.core.Observable;
 

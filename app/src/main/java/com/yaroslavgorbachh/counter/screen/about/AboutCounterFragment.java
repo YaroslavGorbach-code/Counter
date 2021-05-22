@@ -11,18 +11,15 @@ import androidx.navigation.Navigation;
 
 import android.view.View;
 
-import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.aboutcounter.AboutComponent;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentAboutCounterBinding;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Scheduler;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AboutCounterFragment extends Fragment {
@@ -36,7 +33,7 @@ public class AboutCounterFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        MyApplication app = (MyApplication) (requireActivity().getApplication());
+        App app = (App) (requireActivity().getApplication());
         app.appComponent.inject(this);
     }
 

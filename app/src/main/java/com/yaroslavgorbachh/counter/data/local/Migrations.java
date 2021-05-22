@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.data;
+package com.yaroslavgorbachh.counter.data.local;
 
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -30,6 +30,13 @@ public class Migrations {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE counter_table ADD COLUMN widgetId INTEGER DEFAULT null ");
+        }
+    };
+
+    public static final Migration MIGRATION_27_28 = new Migration(27, 28) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("DROP TABLE app_style");
         }
     };
 }

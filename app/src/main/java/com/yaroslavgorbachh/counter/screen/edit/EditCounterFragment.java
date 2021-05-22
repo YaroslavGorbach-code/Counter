@@ -9,17 +9,14 @@ import androidx.navigation.Navigation;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.yaroslavgorbachh.counter.component.edit.EditComponent;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
-import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
-
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -37,7 +34,7 @@ public class EditCounterFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        MyApplication application = (MyApplication) requireActivity().getApplication();
+        App application = (App) requireActivity().getApplication();
         application.appComponent.inject(this);
     }
 

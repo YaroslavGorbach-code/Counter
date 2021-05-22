@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaroslavgorbachh.counter.data.Models.History;
+import com.yaroslavgorbachh.counter.data.Domain.History;
 import com.yaroslavgorbachh.counter.databinding.ItemHistoryBinding;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 

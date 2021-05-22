@@ -1,12 +1,11 @@
-package com.yaroslavgorbachh.counter.data.Daos;
+package com.yaroslavgorbachh.counter.data.local.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.yaroslavgorbachh.counter.data.Models.History;
+import com.yaroslavgorbachh.counter.data.Domain.History;
 
 import java.util.List;
 

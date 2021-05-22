@@ -2,9 +2,8 @@ package com.yaroslavgorbachh.counter.component.counters;
 
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface CountersComponent {

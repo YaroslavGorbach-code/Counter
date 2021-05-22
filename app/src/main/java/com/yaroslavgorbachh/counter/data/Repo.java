@@ -5,14 +5,12 @@ import android.content.Intent;
 
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.data.Models.AppStyle;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
-import com.yaroslavgorbachh.counter.data.Models.History;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.History;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Single;
 
 public interface Repo {
     void incCounter(long id);
@@ -27,7 +25,6 @@ public interface Repo {
     void deleteCounters();
     LiveData<List<Counter>> getCounters();
     void editCounter(Counter counter);
-    void changeTheme(AppStyle appStyle);
     LiveData<List<String>> getGroups();
     void createCounter(Counter counter);
     void backup(Intent data, Context context);

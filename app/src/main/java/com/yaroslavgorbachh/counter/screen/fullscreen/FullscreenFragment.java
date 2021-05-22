@@ -18,7 +18,7 @@ import android.view.WindowManager;
 
 import com.yaroslavgorbachh.counter.component.fullscreen.FullscreenComponent;
 import com.yaroslavgorbachh.counter.data.Repo;
-import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.databinding.FragmentFullscreenBinding;
@@ -61,7 +61,7 @@ public class FullscreenFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        MyApplication app = (MyApplication) requireActivity().getApplication();
+        App app = (App) requireActivity().getApplication();
         app.appComponent.inject(this);
     }
 

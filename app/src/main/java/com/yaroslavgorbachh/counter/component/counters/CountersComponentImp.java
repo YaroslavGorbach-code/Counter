@@ -2,7 +2,7 @@ package com.yaroslavgorbachh.counter.component.counters;
 
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import java.util.Date;

@@ -1,8 +1,6 @@
 package com.yaroslavgorbachh.counter.component.aboutcounter;
 
-import androidx.lifecycle.LiveData;
-
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 
 import io.reactivex.rxjava3.core.Observable;
 

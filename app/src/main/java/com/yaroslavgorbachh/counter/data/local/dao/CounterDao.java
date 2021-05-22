@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.data.Daos;
+package com.yaroslavgorbachh.counter.data.local.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,12 +7,11 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface CounterDao {

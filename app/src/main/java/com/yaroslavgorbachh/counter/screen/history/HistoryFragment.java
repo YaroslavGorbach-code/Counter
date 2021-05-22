@@ -11,10 +11,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.yaroslavgorbachh.counter.component.history.HistoryComponent;
-import com.yaroslavgorbachh.counter.data.Models.History;
+import com.yaroslavgorbachh.counter.data.Domain.History;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterHistoryBinding;
-import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
 
 import javax.inject.Inject;
@@ -30,7 +30,7 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        MyApplication application = (MyApplication) requireActivity().getApplication();
+        App application = (App) requireActivity().getApplication();
         application.appComponent.inject(this);
     }
 

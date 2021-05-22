@@ -18,11 +18,11 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.component.counters.CountersComponent;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
@@ -50,7 +50,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        MyApplication application = (MyApplication) requireActivity().getApplication();
+        App application = (App) requireActivity().getApplication();
         application.appComponent.inject(this);
     }
 

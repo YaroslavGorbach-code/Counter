@@ -3,7 +3,7 @@ package com.yaroslavgorbachh.counter.screen.edit;
 import android.widget.ArrayAdapter;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
 

@@ -11,9 +11,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.util.ThemeUtility;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import javax.inject.Inject;
@@ -31,7 +30,7 @@ public class CounterWidgetConfigActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        MyApplication application = (MyApplication) getApplication();
+        App application = (App) getApplication();
         application.appComponent.inject(this);
         ThemeUtility.setTheme(sharedPreferences, this, repo);
         super.onCreate(savedInstanceState);

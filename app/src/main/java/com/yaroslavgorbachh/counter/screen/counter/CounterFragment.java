@@ -15,10 +15,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
-import com.yaroslavgorbachh.counter.MyApplication;
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.counter.CounterComponent;
 import com.yaroslavgorbachh.counter.data.Repo;
@@ -27,7 +26,6 @@ import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
@@ -46,7 +44,7 @@ public class CounterFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        MyApplication application = (MyApplication) requireActivity().getApplication();
+        App application = (App) requireActivity().getApplication();
         application.appComponent.inject(this);
     }
 

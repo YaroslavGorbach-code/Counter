@@ -5,7 +5,7 @@ import android.app.Application;
 import com.yaroslavgorbachh.counter.di.AppComponent;
 import com.yaroslavgorbachh.counter.di.DaggerAppComponent;
 
-public class MyApplication extends Application {
+public class App extends Application {
 
     public AppComponent appComponent;
     @Override

@@ -11,7 +11,6 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.yaroslavgorbachh.counter.util.ThemeUtility;
 import com.yaroslavgorbachh.counter.screen.widget.CounterWidgetProvider;
 import com.yaroslavgorbachh.counter.data.Repo;
 
@@ -36,10 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        MyApplication application = (MyApplication) getApplication();
+        App application = (App) getApplication();
         application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
-        ThemeUtility.setTheme(sharedPreferences, this, repo);
         setContentView(R.layout.activity_main);
 
         // recreating activity when theme is changed
