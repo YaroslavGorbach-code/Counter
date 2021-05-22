@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.data.Models.History;
-import com.yaroslavgorbachh.counter.databinding.ICounterHistoryBinding;
+import com.yaroslavgorbachh.counter.databinding.ItemHistoryBinding;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Vh(ICounterHistoryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new Vh(ItemHistoryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -77,9 +77,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
     }
 
     public static class Vh extends RecyclerView.ViewHolder {
-        private final ICounterHistoryBinding mBinding;
+        private final ItemHistoryBinding mBinding;
 
-        public Vh(ICounterHistoryBinding binding) {
+        public Vh(ItemHistoryBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }

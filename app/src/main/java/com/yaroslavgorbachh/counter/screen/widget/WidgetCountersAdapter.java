@@ -48,7 +48,7 @@ public class WidgetCountersAdapter extends RecyclerView.Adapter<WidgetCountersAd
         private final TextView title;
         private final TextView value;
         public Vh(ViewGroup parent) {
-            super(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_widget, parent, false));
+            super(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_widget, parent, false));
             title = itemView.findViewById(R.id.title);
             value = itemView.findViewById(R.id.value);
             itemView.setOnClickListener(v -> mListener.onClick(mData.get(getAbsoluteAdapterPosition())));

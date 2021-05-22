@@ -10,7 +10,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
-import com.yaroslavgorbachh.counter.databinding.ICounterBinding;
+import com.yaroslavgorbachh.counter.databinding.ItemCounterBinding;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
 import com.yaroslavgorbachh.counter.feature.multyselection.MultiSelection;
@@ -72,7 +72,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     @NonNull
     @Override
     public CountersAdapter.Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CountersAdapter.Vh(ICounterBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new CountersAdapter.Vh(ItemCounterBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -105,9 +105,9 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     public class Vh extends RecyclerView.ViewHolder implements DragAndDropItemTouchHelper.CallbackViewHolder,
             View.OnTouchListener, GestureDetector.OnGestureListener {
         private final GestureDetector mGestureDetector;
-        private final ICounterBinding mBinding;
+        private final ItemCounterBinding mBinding;
 
-        public Vh(ICounterBinding binding) {
+        public Vh(ItemCounterBinding binding) {
             super(binding.getRoot());
             mBinding= binding;
             mGestureDetector = new GestureDetector(binding.getRoot().getContext(), this);

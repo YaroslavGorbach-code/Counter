@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaroslavgorbachh.counter.databinding.IGroupBinding;
+import com.yaroslavgorbachh.counter.databinding.ItemGroupBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Vh(IGroupBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new Vh(ItemGroupBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -58,8 +58,8 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.Vh>{
     }
 
     public class Vh extends RecyclerView.ViewHolder {
-        private final IGroupBinding mBinding;
-        public Vh(IGroupBinding binding) {
+        private final ItemGroupBinding mBinding;
+        public Vh(ItemGroupBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
             mBinding.getRoot().setOnClickListener(v -> {
