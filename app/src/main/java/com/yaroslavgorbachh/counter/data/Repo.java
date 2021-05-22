@@ -14,14 +14,15 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
-public interface Repo { void incCounter(long mId);
-    void decCounter(long mId);
-    void resetCounter(long mId);
+public interface Repo {
+    void incCounter(long id);
+    void decCounter(long id);
+    void resetCounter(long id);
     void deleteCounter(long mId);
-    void removeHistory(long mId);
+    void removeCounterHistory(long id);
+    void removeHistoryItem(long id);
     Observable<Counter> getCounter(long counterId);
     LiveData<List<History>> getHistoryList(long counterId);
-    void removeHistory(History history);
     void addHistory(History copy);
     void deleteCounters();
     LiveData<List<Counter>> getCounters();

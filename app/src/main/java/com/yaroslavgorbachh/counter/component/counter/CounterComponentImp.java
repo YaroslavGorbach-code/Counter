@@ -33,7 +33,7 @@ public class CounterComponentImp implements CounterComponent {
 
     public void delete() {
         mRepo.deleteCounter(mId);
-        mRepo.removeHistory(mId);
+        mRepo.removeCounterHistory(mId);
     }
 
     @Override

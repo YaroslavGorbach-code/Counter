@@ -8,21 +8,47 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.data.Models.History;
 import com.yaroslavgorbachh.counter.databinding.ICounterHistoryBinding;
+import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
+import io.reactivex.rxjava3.core.Observable;
 
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
     private List<History> mData = new ArrayList<>();
+    private Sort mSort = Sort.DATE;
+
+    public enum Sort{
+        DATE, VALUE
+    }
 
     public HistoryAdapter() {
         setHasStableIds(true);
     }
 
     public void setData(List<History> list) {
-        mData = list;
+        mData = (Observable.fromIterable(list)
+                .sorted((o1, o2) -> {
+                    if (mSort == Sort.VALUE) {
+                        return Long.compare(o2.value, o1.value);
+                    } else {
+                        if (DateAndTimeUtil.convertStringToDate(o1.data)
+                                .before(DateAndTimeUtil.convertStringToDate(o2.data))) {
+                            return 1;
+                        } else if (DateAndTimeUtil.convertStringToDate(o1.data)
+                                .after(DateAndTimeUtil.convertStringToDate(o2.data))) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                }).toList().blockingGet());
         notifyDataSetChanged();
+    }
+    public void setSort(Sort sort) {
+        mSort = sort;
+        setData(mData);
     }
 
     @NonNull

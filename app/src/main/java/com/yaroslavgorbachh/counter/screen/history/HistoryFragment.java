@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.yaroslavgorbachh.counter.component.history.HistoryComponent;
+import com.yaroslavgorbachh.counter.data.Models.History;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterHistoryBinding;
 import com.yaroslavgorbachh.counter.MyApplication;
@@ -52,6 +53,16 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onClear() {
                 historyComponent.clean();
+            }
+
+            @Override
+            public void onRemove(History history) {
+                historyComponent.remove(history);
+            }
+
+            @Override
+            public void onUndo(History item) {
+                historyComponent.addItem(item);
             }
         });
         historyComponent.getHistory().observe(getViewLifecycleOwner(), v::setHistory);

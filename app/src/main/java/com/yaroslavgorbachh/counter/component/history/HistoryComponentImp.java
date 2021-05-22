@@ -21,6 +21,16 @@ public class HistoryComponentImp implements HistoryComponent {
 
     @Override
     public void clean() {
-        mRepo.removeHistory(mId);
+        mRepo.removeCounterHistory(mId);
+    }
+
+    @Override
+    public void remove(History history) {
+        mRepo.removeHistoryItem(history.id);
+    }
+
+    @Override
+    public void addItem(History item) {
+        mRepo.addHistory(item);
     }
 }

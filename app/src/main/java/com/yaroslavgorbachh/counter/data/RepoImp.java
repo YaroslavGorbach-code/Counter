@@ -78,7 +78,6 @@ public class RepoImp implements Repo {
         }
     }
 
-
     public void editCounter(Counter counter) {
         mDatabase.counterDao().update(counter);
     }
@@ -91,12 +90,17 @@ public class RepoImp implements Repo {
         mDatabase.counterHistoryDao().insert(history);
     }
 
-    public void removeHistory(long counterId) {
-        mDatabase.counterHistoryDao().delete(counterId);
+    public void removeCounterHistory(long counterId) {
+        mDatabase.counterHistoryDao().deleteCounterHistory(counterId);
+    }
+
+    @Override
+    public void removeHistoryItem(long id) {
+        mDatabase.counterHistoryDao().delete(id);
     }
 
     public LiveData<List<History>> getHistoryList(long counterId) {
-        return mDatabase.counterHistoryDao().getCounterHistoryList(counterId);
+        return mDatabase.counterHistoryDao().getHistoryList(counterId);
     }
 
     public LiveData<List<Counter>> getCounters() {
@@ -119,10 +123,6 @@ public class RepoImp implements Repo {
         Completable.create(emitter -> mDatabase.appStyleDao().update(style))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
-    }
-
-    public void removeHistory(History history) {
-        mDatabase.counterHistoryDao().delete(history);
     }
 
     public void incCounter(long id) {
