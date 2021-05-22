@@ -11,6 +11,7 @@ import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Models.AppStyle;
 import com.yaroslavgorbachh.counter.data.Models.Counter;
 import com.yaroslavgorbachh.counter.data.Models.History;
+import com.yaroslavgorbachh.counter.feature.AboutCounterManager;
 import com.yaroslavgorbachh.counter.feature.HistoryManager;
 import com.yaroslavgorbachh.counter.feature.roombackup.Backup;
 import com.yaroslavgorbachh.counter.feature.roombackup.Restore;
@@ -131,6 +132,7 @@ public class RepoImp implements Repo {
                         addHistory(new History(
                                 getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
+        editCounter(AboutCounterManager.updateMaxCounterValue(getCounter(id).blockingFirst()));
 
     }
 
@@ -141,15 +143,18 @@ public class RepoImp implements Repo {
                         addHistory(new History(
                                 getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
+        editCounter(AboutCounterManager.updateMinCounterValue(getCounter(id).blockingFirst()));
     }
 
     public void resetCounter(long id) {
+        editCounter(AboutCounterManager.updateValueBeforeReset(getCounter(id).blockingFirst()));
         mDatabase.counterDao().reset(id);
         HistoryManager.getInstance()
                 .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
                         addHistory(new History(
                                 getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
+        editCounter(AboutCounterManager.updateLastResetDate(getCounter(id).blockingFirst()));
     }
 
     public void deleteCounter(long mId) {
