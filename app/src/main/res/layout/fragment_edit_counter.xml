@@ -6,16 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".screen.edit.EditCounterFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="0dp"
+        android:elevation="3dp"
         android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/ic_close"
-        app:menu="@menu/menu_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/createEditCounterCounterTitleText" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/menu_edit"
+            app:navigationIcon="@drawable/ic_close"
+            app:title="@string/createEditCounterCounterTitleText" />
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <ScrollView
         android:layout_width="0dp"
@@ -23,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/app_bar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

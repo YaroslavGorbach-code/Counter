@@ -8,74 +8,74 @@
     android:orientation="vertical"
     tools:context=".screen.counter.CounterFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_counter"
-        app:navigationIcon="@drawable/ic_arrow_back" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="1"
-        android:padding="10dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:text="title" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/menu_counter"
+            app:navigationIcon="@drawable/ic_arrow_back" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/group_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="group title" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/group_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="group title" />
+    </com.google.android.material.appbar.AppBarLayout>
 
 
-    <ImageButton
-        android:id="@+id/inc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="32dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:padding="16dp"
-        android:src="@drawable/ic_plus"
-        app:iconTint="?colorSecondary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dec"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inc"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="32dp"
+            app:icon="@drawable/ic_plus"
+            app:iconGravity="textEnd"
+            app:iconTint="?colorSecondary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/dec"
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/dec"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="32dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:padding="16dp"
-        android:src="@drawable/ic_minus"
-        app:iconTint="?colorSecondary"
-        app:layout_constraintEnd_toStartOf="@+id/inc"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:ignore="HardcodedText,SpUsage" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dec"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:padding="32dp"
+            app:icon="@drawable/ic_minus"
+            app:iconGravity="textEnd"
+            app:iconTint="?colorSecondary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/inc"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            tools:ignore="ContentDescription,HardcodedText,SpUsage" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/value"
@@ -88,7 +88,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/group_title"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         tools:text="0"
         tools:textSize="150sp" />
 

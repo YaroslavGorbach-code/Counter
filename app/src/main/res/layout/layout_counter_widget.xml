@@ -48,7 +48,7 @@
                 android:paddingEnd="4dp"
                 tools:visibility="visible"
                 android:clickable="true"
-                android:background="@drawable/widget_ic_ripple"
+                android:background="@drawable/widget_ripple"
                 android:src="@drawable/ic_widget_minus"
                 android:focusable="true"
                 tools:ignore="ContentDescription" />
@@ -65,7 +65,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 tools:visibility="visible"
-                android:background="@drawable/widget_ic_ripple"
+                android:background="@drawable/widget_ripple"
                 android:src="@drawable/ic_fullscreen_widget"
                 tools:ignore="ContentDescription" />
         </LinearLayout>

@@ -1,5 +1,7 @@
 package com.yaroslavgorbachh.counter.screen.counter;
 
+import android.view.View;
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
@@ -74,8 +76,11 @@ public class CounterView {
         if (counter != null) {
             mBinding.value.setTextSize(ViewUtil.getCounterTvSize(counter.value));
             mBinding.value.setText(String.valueOf(counter.value));
-            mBinding.title.setText(counter.title);
-            mBinding.groupTitle.setText(counter.grope);
+            mBinding.toolbar.setTitle(counter.title);
+            if (counter.grope!=null){
+                mBinding.groupTitle.setVisibility(View.VISIBLE);
+                mBinding.groupTitle.setText(counter.grope);
+            }
         } else {
             mCallback.onBack();
         }

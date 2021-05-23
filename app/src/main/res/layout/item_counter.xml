@@ -33,7 +33,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
-            android:textSize="35sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/inc"
             app:layout_constraintHorizontal_bias="0.5"
