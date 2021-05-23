@@ -30,6 +30,14 @@ import com.yaroslavgorbachh.counter.util.CommonUtil;
 
 import java.util.List;
 
+import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
+import jp.wasabeef.recyclerview.animators.OvershootInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.OvershootInRightAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInBottomAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
 
 public class CountersView {
@@ -156,6 +164,7 @@ public class CountersView {
         mBinding.list.setLayoutManager(layoutManager);
         mBinding.list.setHasFixedSize(true);
         mBinding.list.setAdapter(mCountersAdapter);
+        binding.list.setItemAnimator(new ScaleInBottomAnimator());
         mCountersAdapter.itemTouchHelper.attachToRecyclerView(mBinding.list);
         mCountersAdapter.setStateRestorationPolicy(PREVENT_WHEN_EMPTY);
 
