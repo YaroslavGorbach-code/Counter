@@ -25,6 +25,7 @@ import static com.yaroslavgorbachh.counter.data.local.Migrations.MIGRATION_24_25
 import static com.yaroslavgorbachh.counter.data.local.Migrations.MIGRATION_25_26;
 import static com.yaroslavgorbachh.counter.data.local.Migrations.MIGRATION_26_27;
 import static com.yaroslavgorbachh.counter.data.local.Migrations.MIGRATION_27_28;
+import static com.yaroslavgorbachh.counter.data.local.Migrations.MIGRATION_28_29;
 
 @Module
 public class DataModule {
@@ -42,6 +43,7 @@ public class DataModule {
                                 cv.put("maxValue", Counter.MAX_VALUE);
                                 cv.put("minValue", Counter.MIN_VALUE);
                                 cv.put("step", 1);
+                                cv.put("colorId", R.color.purple);
                                 cv.put("grope", (String) null);
                                 cv.put("createData", new Date().getTime());
                                 cv.put("createDataSort", new Date().getTime());
@@ -56,7 +58,7 @@ public class DataModule {
                         })
                         .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
                         .allowMainThreadQueries()
-                        .addMigrations(MIGRATION_24_25, MIGRATION_25_26, MIGRATION_26_27, MIGRATION_27_28)
+                        .addMigrations(MIGRATION_24_25, MIGRATION_25_26, MIGRATION_26_27, MIGRATION_27_28, MIGRATION_28_29)
                         .build();
             }
 

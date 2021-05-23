@@ -25,7 +25,7 @@
         android:gravity="center"
         tools:text="0"
         android:padding="8dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"
         android:textColor="?colorControlNormal"
         android:textSize="150sp"
         app:layout_constraintBottom_toBottomOf="parent"

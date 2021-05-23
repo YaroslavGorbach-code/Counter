@@ -23,7 +23,6 @@
 
     <style name="NavigationView" parent="@style/Widget.Design.NavigationView">
         <item name="android:background">?colorPrimarySurface</item>
-
     </style>
 
 </resources>

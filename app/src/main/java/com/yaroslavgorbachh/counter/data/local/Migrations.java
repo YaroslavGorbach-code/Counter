@@ -1,7 +1,12 @@
 package com.yaroslavgorbachh.counter.data.local;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import com.yaroslavgorbachh.counter.R;
 
 public class Migrations {
 
@@ -37,6 +42,16 @@ public class Migrations {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("DROP TABLE IF EXISTS app_style");
+        }
+    };
+
+    public static final Migration MIGRATION_28_29 = new Migration(28, 29) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE counter_table ADD COLUMN colorId INTEGER DEFAULT null");
+            ContentValues cv = new ContentValues();
+            cv.put("colorId", R.color.purple);
+            database.update("counter_table", SQLiteDatabase.CONFLICT_REPLACE, cv, null, null);
         }
     };
 }

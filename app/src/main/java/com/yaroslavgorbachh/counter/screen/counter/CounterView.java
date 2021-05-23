@@ -74,6 +74,11 @@ public class CounterView {
 
     public void setCounter(Counter counter) {
         if (counter != null) {
+            mBinding.inc.setIconTintResource(counter.colorId);
+            mBinding.dec.setIconTintResource(counter.colorId);
+            mBinding.inc.setRippleColorResource(counter.colorId);
+            mBinding.dec.setRippleColorResource(counter.colorId);
+
             mBinding.value.setTextSize(ViewUtil.getCounterTvSize(counter.value));
             mBinding.value.setText(String.valueOf(counter.value));
             mBinding.toolbar.setTitle(counter.title);

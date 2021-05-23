@@ -13,7 +13,7 @@ import com.yaroslavgorbachh.counter.data.local.dao.CounterHistoryDao;
 
 import java.util.Date;
 
-@Database(entities = {Counter.class, History.class},  version = 28)
+@Database(entities = {Counter.class, History.class},  version = 29)
 @TypeConverters({Db.Converters.class})
 public abstract class Db extends RoomDatabase {
     public abstract CounterDao counterDao();

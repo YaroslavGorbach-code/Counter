@@ -34,12 +34,14 @@
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
             android:textSize="24sp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/inc"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/dec"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/group"
             tools:text="0" />
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title"
@@ -49,13 +51,28 @@
             android:gravity="center"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/value"
+            android:textSize="19sp"
+            app:layout_constraintBottom_toTopOf="@+id/group"
             app:layout_constraintEnd_toEndOf="@+id/value"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/value"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="CounterTitle" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/value"
+            app:layout_constraintEnd_toStartOf="@+id/inc"
+            app:layout_constraintStart_toEndOf="@+id/dec"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            tools:text="group" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dec"
@@ -70,10 +87,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/value"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/inc"

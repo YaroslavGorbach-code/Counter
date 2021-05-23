@@ -18,6 +18,7 @@ public class Counter {
     public long maxValue;
     public long minValue;
     public long step;
+    public Integer colorId;
     public String grope;
     @ColumnInfo(name = "createData")
     public Date createDate;
@@ -38,6 +39,7 @@ public class Counter {
                    long maxValue,
                    long minValue,
                    long step,
+                   int colorId,
                    String grope,
                    Date createDate,
                    Date createDateSort,
@@ -51,6 +53,7 @@ public class Counter {
         this.maxValue = maxValue;
         this.minValue = minValue;
         this.step = step;
+        this.colorId = colorId;
         this.grope = grope;
         this.createDate = createDate;
         this.createDateSort = createDateSort;

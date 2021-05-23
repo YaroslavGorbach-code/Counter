@@ -133,6 +133,13 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
         private void bind(Counter counter) {
             mBinding.title.setText(counter.title);
             mBinding.value.setText(String.valueOf(counter.value));
+            mBinding.group.setText(counter.grope);
+            mBinding.dec.setIconTintResource(counter.colorId);
+            mBinding.inc.setIconTintResource(counter.colorId);
+//            mBinding.value.setTextColor(mBinding.getRoot().getContext().getResources().getColor(counter.colorId));
+//            mBinding.title.setTextColor(mBinding.getRoot().getContext().getResources().getColor(counter.colorId));
+//            mBinding.group.setTextColor(mBinding.getRoot().getContext().getResources().getColor(counter.colorId));
+
         }
 
         @Override

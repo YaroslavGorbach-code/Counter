@@ -161,6 +161,5 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include android:id="@+id/drawer"
-        layout="@layout/drawer"
-        />
+        layout="@layout/drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>

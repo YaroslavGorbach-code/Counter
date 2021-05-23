@@ -32,7 +32,7 @@ import com.yaroslavgorbachh.counter.util.CommonUtil;
 import javax.inject.Inject;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
-        SharedPreferences.OnSharedPreferenceChangeListener, ColorPickerDialog.Host {
+        SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String THEME_CHANGED_BROADCAST = "THEME_CHANGED_BROADCAST";
     private static final int RESTORE_REQUEST_CODE = 0;
     private static final int CREATE_FILE = 1;
@@ -106,12 +106,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             return true;
         });
 
-        assert mChangeAccentColorPref != null;
-        mChangeAccentColorPref.setOnPreferenceClickListener(preference -> {
-            ColorPickerDialog.newInstance().show(getChildFragmentManager(), "colorPicker");
-            return true;
-        });
-
         assert mBackupPref != null;
         mBackupPref.setOnPreferenceClickListener(preference -> {
             View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_backup,
@@ -151,14 +145,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         if (key.equals("lockOrientation") && !sharedPreferences.getBoolean("lockOrientation", true)) {
             requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
-    }
-
-    @Override
-    public void onThemeChange(int color) {
-        settingsComponent.changeTheme(color, requireContext().getResources());
-        Intent intent = new Intent(THEME_CHANGED_BROADCAST);
-        LocalBroadcastManager.getInstance(requireActivity()).sendBroadcast(intent);
-        ViewUtil.animate(requireActivity());
     }
 
     @Override

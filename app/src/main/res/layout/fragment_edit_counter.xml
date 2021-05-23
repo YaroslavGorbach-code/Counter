@@ -9,8 +9,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="0dp"
-        android:elevation="3dp"
         android:layout_height="wrap_content"
+        android:elevation="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -56,8 +56,8 @@
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/createEditCounterCounterTitleHint"
                     android:focusable="true"
+                    android:hint="@string/createEditCounterCounterTitleHint"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLines="1" />
@@ -149,7 +149,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/outlinedTextField3"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -164,9 +163,28 @@
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
                     android:maxLength="18"
-
                     />
+
             </com.google.android.material.textfield.TextInputLayout>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/horizontal_scroll_view_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/counterGroups_addCounter_detailed">
+
+                <LinearLayout
+                    android:id="@+id/color_picker_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/counterGroups_addCounter_detailed"
