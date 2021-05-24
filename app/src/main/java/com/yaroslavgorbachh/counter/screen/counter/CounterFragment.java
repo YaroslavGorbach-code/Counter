@@ -33,9 +33,7 @@ import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_
 public class CounterFragment extends Fragment {
 
     private VolumeButtonBroadcastReceiver mMessageReceiver;
-    @Inject SharedPreferences sharedPreferences;
     @Inject Repo repo;
-    @Inject Accessibility accessibility;
 
     public CounterFragment(){
         super(R.layout.fragment_counter);
@@ -59,7 +57,7 @@ public class CounterFragment extends Fragment {
         CounterComponent counter = vm.getCounterComponent(repo, id);
 
         // init view
-        CounterView v = new CounterView(FragmentCounterBinding.bind(requireView()), accessibility, new CounterView.Callback() {
+        CounterView v = new CounterView(FragmentCounterBinding.bind(requireView()), new CounterView.Callback() {
             @Override
             public void onDelete() {
                 counter.delete();

@@ -65,7 +65,7 @@ public class CountersView {
     private final Drawable mNavigationIcon;
     private String mGroupTitle;
 
-    CountersView(FragmentCountersBinding binding, Accessibility accessibility, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
+    CountersView(FragmentCountersBinding binding, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
         mBinding = binding;
         mGroupTitle = binding.getRoot().getContext().getString(R.string.allCountersItem);
         OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
@@ -112,7 +112,7 @@ public class CountersView {
         binding.drawer.groupsList.setAdapter(mGroupsAdapter);
         binding.drawer.groupsList.setHasFixedSize(true);
 
-        mCountersAdapter = new CountersAdapter(new CounterMultiSelection(), accessibility, new CountersAdapter.Callback() {
+        mCountersAdapter = new CountersAdapter(new CounterMultiSelection(), new CountersAdapter.Callback() {
             @Override
             public void onInc(Counter counter) {
                 callback.onInc(counter);
@@ -211,15 +211,11 @@ public class CountersView {
                 mBinding.openableLayout.open();
             }
         });
-        new FastCountButton(binding.decSelected, () -> {
-            callback.onDecSelected(mCountersAdapter.getSelected());
-            accessibility.playDecFeedback(null);
-        }, null);
+        new FastCountButton(binding.decSelected, () ->
+                callback.onDecSelected(mCountersAdapter.getSelected()), null);
 
-        new FastCountButton(binding.incSelected, () -> {
-            accessibility.playIncFeedback(null);
-            callback.onIncSelected(mCountersAdapter.getSelected());
-        }, null);
+        new FastCountButton(binding.incSelected, () ->
+                callback.onIncSelected(mCountersAdapter.getSelected()), null);
     }
 
     public void setGroups(List<String> groups) {

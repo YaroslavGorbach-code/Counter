@@ -26,7 +26,7 @@ public class CounterView {
     private final FragmentCounterBinding mBinding;
     private final Callback mCallback;
 
-    public CounterView(FragmentCounterBinding binding, Accessibility accessibility, Callback callback) {
+    public CounterView(FragmentCounterBinding binding, Callback callback) {
         mBinding = binding;
         mCallback = callback;
 
@@ -59,17 +59,8 @@ public class CounterView {
             return true;
         });
         binding.toolbar.setNavigationOnClickListener(i -> callback.onBack());
-
-        new FastCountButton(binding.inc, () -> {
-            accessibility.playIncFeedback(mBinding.value.getText().toString());
-            mCallback.onInc();
-        }, null);
-
-        new FastCountButton(binding.dec, () -> {
-            accessibility.playDecFeedback(mBinding.value.getText().toString());
-            callback.onDec();
-        }, null);
-
+        new FastCountButton(binding.inc, mCallback::onInc, null);
+        new FastCountButton(binding.dec, callback::onDec, null);
     }
 
     public void setCounter(Counter counter) {
@@ -82,7 +73,7 @@ public class CounterView {
             mBinding.value.setTextSize(ViewUtil.getCounterTvSize(counter.value));
             mBinding.value.setText(String.valueOf(counter.value));
             mBinding.toolbar.setTitle(counter.title);
-            if (counter.grope!=null){
+            if (counter.grope!=null && !counter.grope.equals("")){
                 mBinding.groupTitle.setVisibility(View.VISIBLE);
                 mBinding.groupTitle.setText(counter.grope);
             }

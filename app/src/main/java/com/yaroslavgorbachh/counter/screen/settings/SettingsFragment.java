@@ -15,19 +15,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.App;
+import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.settings.SettingsComponent;
 import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.util.CommonUtil;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
-import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.util.CommonUtil;
 
 import javax.inject.Inject;
 
@@ -36,9 +35,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public static final String THEME_CHANGED_BROADCAST = "THEME_CHANGED_BROADCAST";
     private static final int RESTORE_REQUEST_CODE = 0;
     private static final int CREATE_FILE = 1;
+    @Inject
+    Repo repo;
     private SettingsComponent settingsComponent;
 
-    @Inject Repo repo;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -77,7 +77,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         Preference mRemoveAllCountersPref = findPreference("removeAllCounters");
         Preference mResetAllCountersPref = findPreference("resetAllCounters");
         Preference mExportAllCountersPref = findPreference("exportAllCounters");
-        Preference mChangeAccentColorPref = findPreference("changeAccentColor");
         Preference mBackupPref = findPreference("backup");
         SettingsViewModel vm = new ViewModelProvider(this).get(SettingsViewModel.class);
         settingsComponent = vm.getSettings(repo);

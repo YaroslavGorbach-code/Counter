@@ -26,17 +26,11 @@ public class Accessibility {
     private final SoundPool mSoundPool;
     private int mSoundIncId;
     private int mSoundDecId;
-    private boolean mVibrationIsAllowed;
-    private boolean mClickSoundIsAllowed;
-    private boolean mSpeechOutputIsAllowed;
     private TextToSpeech mTextToSpeech;
-    private final SharedPreferences mSharedPreferences;
     private final Vibrator vibrator;
 
-
-    @Inject
-    public Accessibility(Context context, SharedPreferences sharedPreferences){
-       AudioAttributes audioAttributes = new AudioAttributes.Builder()
+    public Accessibility(Context context) {
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .build();
@@ -44,78 +38,51 @@ public class Accessibility {
                 .setMaxStreams(1)
                 .setAudioAttributes(audioAttributes)
                 .build();
-            try {
-                mSoundDecId = mSoundPool.load(context, R.raw.dec_click_sound, 1);
-                mSoundIncId = mSoundPool.load(context, R.raw.inc_click_sound, 1);
-            }catch (Exception e){
-                Log.e(null, "Resources not found");
-            }
+        try {
+            mSoundDecId = mSoundPool.load(context, R.raw.dec_click_sound, 1);
+            mSoundIncId = mSoundPool.load(context, R.raw.inc_click_sound, 1);
+        } catch (Exception e) {
+            Log.e(null, "Resources not found");
+        }
 
         mTextToSpeech = new TextToSpeech(context, status -> {
-            if(status != TextToSpeech.ERROR) {
+            if (status != TextToSpeech.ERROR) {
                 mTextToSpeech.setLanguage(Locale.getDefault());
             }
         });
-            mSharedPreferences = sharedPreferences;
 
-       vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-   }
-
-    public void playIncFeedback(String text){
-        checkPref();
-        playIncSoundEffect();
-        playIncVibrationEffect();
-        speechOutput(text);
-        Log.v("counter","incFeedback");
-    }
-
-    public void playDecFeedback(String text){
-        checkPref();
-        playDecSoundEffect();
-        playDecVibrationEffect();
-        speechOutput(text);
-    }
-
-    public void speechOutput(String text){
-        if (mSpeechOutputIsAllowed)
-            mTextToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "ID");
+        vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
 
-    private void playIncSoundEffect(){
-        if (mClickSoundIsAllowed)
+    public void speechOutput(String text) {
+        mTextToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "ID");
+    }
+
+
+    public void playIncSoundEffect() {
         mSoundPool.play(mSoundIncId, 1f, 1f, 1, 0, 1f);
     }
 
-    private void playDecSoundEffect(){
-        if (mClickSoundIsAllowed)
+    public void playDecSoundEffect() {
         mSoundPool.play(mSoundDecId, 1f, 1f, 1, 0, 1f);
 
     }
 
-    private void playIncVibrationEffect(){
-        if (mVibrationIsAllowed)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-            } else {
-                vibrator.vibrate(100);
-            }
+    public void playIncVibrationEffect() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            vibrator.vibrate(100);
+        }
     }
 
-    private void playDecVibrationEffect(){
-        if (mVibrationIsAllowed)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-            } else {
-                vibrator.vibrate(50);
-            }
+    public void playDecVibrationEffect() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            vibrator.vibrate(50);
+
+        }
     }
-
-    private void checkPref(){
-        mVibrationIsAllowed = mSharedPreferences.getBoolean("clickVibration", false);
-        mClickSoundIsAllowed = mSharedPreferences.getBoolean("clickSound", true);
-        mSpeechOutputIsAllowed = mSharedPreferences.getBoolean("clickSpeak", false);
-
-    }
-
 }

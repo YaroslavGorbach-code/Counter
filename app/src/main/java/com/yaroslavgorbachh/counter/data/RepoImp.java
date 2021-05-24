@@ -2,6 +2,7 @@ package com.yaroslavgorbachh.counter.data;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Domain.History;
 import com.yaroslavgorbachh.counter.data.local.Db;
 import com.yaroslavgorbachh.counter.feature.AboutCounterManager;
+import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.HistoryManager;
 import com.yaroslavgorbachh.counter.feature.roombackup.Backup;
 import com.yaroslavgorbachh.counter.feature.roombackup.Restore;
@@ -22,13 +24,17 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RepoImp implements Repo {
     private final Db mDatabase;
-    public RepoImp(Db database) {
+    private final SharedPreferences mSharedPreferences;
+    private final Accessibility mAccessibility;
+
+    public RepoImp(Db database, SharedPreferences preferences, Accessibility accessibility) {
         mDatabase = database;
+        mSharedPreferences = preferences;
+        mAccessibility = accessibility;
     }
 
     public void createCounter(Counter counter) {
@@ -78,18 +84,37 @@ public class RepoImp implements Repo {
         }
     }
 
+    @Override
+    public boolean getIsOrientationLock() {
+       return mSharedPreferences.getBoolean("lockOrientation", true);
+    }
+
+    @Override
+    public boolean getUseVolumeButtonsIsAllow() {
+        return mSharedPreferences.getBoolean("useVolumeButtons", true);
+    }
+
+    @Override
+    public boolean getKeepScreenOnIsAllow() {
+        return mSharedPreferences.getBoolean("keepScreenOn", true);
+    }
+
+    @Override
     public void updateCounter(Counter counter) {
         mDatabase.counterDao().update(counter);
     }
 
+    @Override
     public void deleteCounters() {
         mDatabase.counterDao().deleteAllCounters();
     }
 
+    @Override
     public void addHistory(History history) {
         mDatabase.counterHistoryDao().insert(history);
     }
 
+    @Override
     public void removeCounterHistory(long counterId) {
         mDatabase.counterHistoryDao().deleteCounterHistory(counterId);
     }
@@ -99,27 +124,32 @@ public class RepoImp implements Repo {
         mDatabase.counterHistoryDao().delete(id);
     }
 
+    @Override
     public LiveData<List<History>> getHistoryList(long counterId) {
         return mDatabase.counterHistoryDao().getHistoryList(counterId);
     }
 
+    @Override
     public LiveData<List<Counter>> getCounters() {
         return mDatabase.counterDao().getCounters();
     }
 
+    @Override
     public Observable<Counter> getCounter(long id) {
         return mDatabase.counterDao().getCounter(id);
     }
 
+    @Override
     public Counter getCounterWidget(long widgetId) {
         return mDatabase.counterDao().getCounterWidget(widgetId);
     }
 
+    @Override
     public LiveData<List<String>> getGroups() {
         return mDatabase.counterDao().getGroups();
     }
 
-
+    @Override
     public void incCounter(long id) {
         mDatabase.counterDao().inc(id);
         HistoryManager.getInstance()
@@ -129,8 +159,18 @@ public class RepoImp implements Repo {
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
         updateCounter(AboutCounterManager.updateMaxCounterValue(getCounter(id).blockingFirst()));
 
+        if (mSharedPreferences.getBoolean("clickVibration", false)){
+            mAccessibility.playIncVibrationEffect();
+        }
+        if (mSharedPreferences.getBoolean("clickSound", true)){
+            mAccessibility.playIncSoundEffect();
+        }
+        if (mSharedPreferences.getBoolean("clickSpeak", false)){
+            mAccessibility.speechOutput(String.valueOf(getCounter(id).blockingFirst().value));
+        }
     }
 
+    @Override
     public void decCounter(long id) {
         mDatabase.counterDao().dec(id);
         HistoryManager.getInstance()
@@ -139,8 +179,18 @@ public class RepoImp implements Repo {
                                 getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
         updateCounter(AboutCounterManager.updateMinCounterValue(getCounter(id).blockingFirst()));
+        if (mSharedPreferences.getBoolean("clickVibration", false)){
+            mAccessibility.playDecVibrationEffect();
+        }
+        if (mSharedPreferences.getBoolean("clickSound", true)){
+            mAccessibility.playDecSoundEffect();
+        }
+        if (mSharedPreferences.getBoolean("clickSpeak", false)){
+            mAccessibility.speechOutput(String.valueOf(getCounter(id).blockingFirst().value));
+        }
     }
 
+    @Override
     public void resetCounter(long id) {
         updateCounter(AboutCounterManager.updateValueBeforeReset(getCounter(id).blockingFirst()));
         mDatabase.counterDao().reset(id);
@@ -152,6 +202,7 @@ public class RepoImp implements Repo {
         updateCounter(AboutCounterManager.updateLastResetDate(getCounter(id).blockingFirst()));
     }
 
+    @Override
     public void deleteCounter(long mId) {
         Completable.create(emitter ->
                 mDatabase.counterDao().delete(mId))
@@ -159,12 +210,6 @@ public class RepoImp implements Repo {
                 .subscribe();
     }
 }
-
-
-
-
-
-
 
 
 

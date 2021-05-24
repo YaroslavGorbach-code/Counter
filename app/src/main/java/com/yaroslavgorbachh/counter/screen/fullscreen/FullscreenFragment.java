@@ -43,7 +43,6 @@ public class FullscreenFragment extends Fragment {
     private VolumeButtonBroadcastReceiver mMessageReceiver;
     private FullscreenComponent mFullscreenComponent;
     @Inject Repo repo;
-    @Inject Accessibility accessibility;
 
     private final Runnable mHidePart2Runnable = () -> {
         int flags = View.SYSTEM_UI_FLAG_LOW_PROFILE
@@ -94,7 +93,7 @@ public class FullscreenFragment extends Fragment {
         mFullscreenComponent = vm.getFullscreenCounter(repo, id);
 
         //init view
-        FullscreenView v = new FullscreenView(FragmentFullscreenBinding.bind(view), accessibility, new FullscreenView.Callback() {
+        FullscreenView v = new FullscreenView(FragmentFullscreenBinding.bind(view), new FullscreenView.Callback() {
             @Override
             public void onBack() { Navigation.findNavController(view).popBackStack(); }
 

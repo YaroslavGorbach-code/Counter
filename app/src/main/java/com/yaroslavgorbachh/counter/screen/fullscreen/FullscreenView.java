@@ -18,21 +18,15 @@ public class FullscreenView {
 
     private final FragmentFullscreenBinding mBinding;
     @SuppressLint("ClickableViewAccessibility")
-    public FullscreenView(FragmentFullscreenBinding binding, Accessibility accessibility, Callback callback) {
+    public FullscreenView(FragmentFullscreenBinding binding, Callback callback) {
         mBinding = binding;
         showHelp();
         binding.toolbar.setNavigationOnClickListener(v -> callback.onBack());
         mBinding.viewGroup.setOnTouchListener(new SwipeListener(binding.getRoot().getContext()){
             @Override
-            public void onSwipeTop() {
-                callback.onSwipeTop();
-                accessibility.playIncFeedback(null);
-            }
+            public void onSwipeTop() { callback.onSwipeTop(); }
             @Override
-            public void onSwipeBottom() {
-                callback.onSwipeBottom();
-                accessibility.playDecFeedback(null);
-            }
+            public void onSwipeBottom() { callback.onSwipeBottom(); }
         });
     }
 

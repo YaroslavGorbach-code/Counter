@@ -36,8 +36,6 @@ import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_
 
 public class CountersFragment extends Fragment implements CounterCreateDialog.Host {
     @Inject AudioManager mAudioManager;
-    @Inject Accessibility accessibility;
-    @Inject SharedPreferences sharedPreferences;
     @Inject Repo repo;
 
     private VolumeButtonBroadcastReceiver mMessageReceiver;
@@ -63,8 +61,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
         mCountersComponent = vm.getCountersComponent(repo);
 
         // init view
-        CountersView v = new CountersView(FragmentCountersBinding.bind(view),
-                accessibility, requireActivity(), this, new CountersView.Callback() {
+        CountersView v = new CountersView(FragmentCountersBinding.bind(view), requireActivity(), this, new CountersView.Callback() {
             @Override
             public void onSettings() {
                 startActivity(new Intent(getContext(), SettingsActivity.class));

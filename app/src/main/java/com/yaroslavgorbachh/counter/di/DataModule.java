@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -14,6 +15,7 @@ import com.yaroslavgorbachh.counter.data.local.Db;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.data.RepoImp;
+import com.yaroslavgorbachh.counter.feature.Accessibility;
 
 
 import java.util.Date;
@@ -63,7 +65,7 @@ public class DataModule {
             }
 
     @Provides
-    public Repo provideRepo(Db database){
-       return new RepoImp(database);
+    public Repo provideRepo(Db database, Context context){
+       return new RepoImp(database, PreferenceManager.getDefaultSharedPreferences(context), new Accessibility(context));
     }
 }

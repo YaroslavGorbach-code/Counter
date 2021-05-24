@@ -1,9 +1,11 @@
 package com.yaroslavgorbachh.counter;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.WindowManager;
@@ -25,19 +27,29 @@ import static com.yaroslavgorbachh.counter.screen.settings.SettingsFragment.THEM
 
 
 public class MainActivity extends AppCompatActivity {
-    private boolean mAllowedVolumeButtons;
     private BroadcastReceiver mMessageReceiver;
-
-    @Inject SharedPreferences sharedPreferences;
     @Inject Repo repo;
 
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         App application = (App) getApplication();
         application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (repo.getIsOrientationLock()) {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
+
+        if (repo.getKeepScreenOnIsAllow()){
+            MainActivity.this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }else {
+            MainActivity.this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
 
         // recreating activity when theme is changed
         mMessageReceiver = new BroadcastReceiver() {
@@ -46,35 +58,17 @@ public class MainActivity extends AppCompatActivity {
                recreate();
             }
         };
-
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter(THEME_CHANGED_BROADCAST));
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        /* depending on pref keeps screen on or let it off*/
-        mAllowedVolumeButtons = sharedPreferences.getBoolean("useVolumeButtons", true);
-        if (sharedPreferences.getBoolean("keepScreenOn", true)) {
-            MainActivity.this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        }
-        if (!sharedPreferences.getBoolean("keepScreenOn", true)) {
-            MainActivity.this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        }
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        /* sends local broadcast to catch the key volume up event*/
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mAllowedVolumeButtons) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && repo.getUseVolumeButtonsIsAllow()) {
             LocalBroadcastManager.getInstance(this).sendBroadcast(INTENT_VOLUME_UP);
             return true;
         }
-
-        /* sends local broadcast to catch the key volume down event*/
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && mAllowedVolumeButtons) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && repo.getUseVolumeButtonsIsAllow()) {
             LocalBroadcastManager.getInstance(this).sendBroadcast(INTENT_VOLUME_DOWN);
             return true;
         }

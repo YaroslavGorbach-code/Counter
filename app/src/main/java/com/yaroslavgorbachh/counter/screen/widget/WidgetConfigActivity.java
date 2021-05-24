@@ -26,7 +26,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class WidgetConfigActivity extends AppCompatActivity {
     @Inject Repo repo;
-    @Inject SharedPreferences sharedPreferences;
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
 

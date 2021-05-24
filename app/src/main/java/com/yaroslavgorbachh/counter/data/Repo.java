@@ -32,5 +32,7 @@ public interface Repo {
     void backup(Intent data, Context context);
     void restore(Intent data, Context context);
     void triggerCountersLiveData();
-
+    boolean getIsOrientationLock();
+    boolean getUseVolumeButtonsIsAllow();
+    boolean getKeepScreenOnIsAllow();
 }

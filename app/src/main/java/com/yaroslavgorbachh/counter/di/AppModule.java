@@ -23,8 +23,4 @@ public class AppModule {
        return context.getResources();
     }
 
-    @Provides
-    public SharedPreferences provideDefaultSharedPreferences(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context);
-    }
 }

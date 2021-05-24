@@ -1,22 +1,24 @@
 package com.yaroslavgorbachh.counter.screen.settings;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.yaroslavgorbachh.counter.App;
+import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import javax.inject.Inject;
 
 public class SettingsActivity extends AppCompatActivity {
-   @Inject SharedPreferences sharedPreferences;
-   @Inject Repo repo;
+
+    @Inject
+    Repo repo;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -24,11 +26,16 @@ public class SettingsActivity extends AppCompatActivity {
         App application = (App) getApplication();
         application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView( R.layout.activity_settings);
-        if (sharedPreferences.getBoolean("lockOrientation", true)) {
+        setContentView(R.layout.activity_settings);
+        if (repo.getIsOrientationLock()) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
+        if (repo.getKeepScreenOnIsAllow()){
+            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }else {
+            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
         getSupportFragmentManager()
                 .beginTransaction()
@@ -37,8 +44,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         Toolbar mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(v -> finish());
-
-
     }
 
 }

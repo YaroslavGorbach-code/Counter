@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> implements DragAndDropItemTouchHelper.CallbackAdapter {
-
     public interface Callback {
         void onInc(Counter counter);
         void onDec(Counter counter);
@@ -35,12 +34,11 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     private final Callback mCallback;
     private List<Counter> mData = new ArrayList<>();
     private final MultiSelection mMultiSelection;
-    private final Accessibility mAccessibility;
 
-    public CountersAdapter(MultiSelection multiSelection, Accessibility accessibility, Callback callback, LifecycleOwner lifecycleOwner) {
+
+    public CountersAdapter(MultiSelection multiSelection, Callback callback, LifecycleOwner lifecycleOwner) {
         setHasStableIds(true);
         mCallback = callback;
-        mAccessibility = accessibility;
         mMultiSelection = multiSelection;
         mMultiSelection.getIsSelectionActive().observe(lifecycleOwner, callback::onMultiSelectionStateChange);
         multiSelection.getSelectedCount().observe(lifecycleOwner, callback::onSelect);
@@ -116,7 +114,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             new FastCountButton(binding.inc, () -> {
                 if (getBindingAdapterPosition() != -1){
                     mCallback.onInc(mData.get(getBindingAdapterPosition()));
-                    mAccessibility.playIncFeedback(mBinding.value.getText().toString());
                 }
 
             }, null);
@@ -124,10 +121,8 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             new FastCountButton(binding.dec, () -> {
                 if (getBindingAdapterPosition() != -1){
                     mCallback.onDec(mData.get(getBindingAdapterPosition()));
-                    mAccessibility.playDecFeedback(mBinding.value.getText().toString());
                 }
             }, null);
-
         }
 
         private void bind(Counter counter) {
@@ -136,10 +131,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
             mBinding.group.setText(counter.grope);
             mBinding.dec.setIconTintResource(counter.colorId);
             mBinding.inc.setIconTintResource(counter.colorId);
-//            mBinding.value.setTextColor(mBinding.getRoot().getContext().getResources().getColor(counter.colorId));
-//            mBinding.title.setTextColor(mBinding.getRoot().getContext().getResources().getColor(counter.colorId));
-//            mBinding.group.setTextColor(mBinding.getRoot().getContext().getResources().getColor(counter.colorId));
-
         }
 
         @Override
