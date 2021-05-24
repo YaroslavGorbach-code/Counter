@@ -57,7 +57,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
         // init component
         CountersViewModel vm = new ViewModelProvider(this).get(CountersViewModel.class);
-        mCountersComponent = vm.getCountersComponent(repo);
+        mCountersComponent = vm.getCountersComponent(repo, new Accessibility(requireContext()));
 
         // init view
         mV = new CountersView(FragmentCountersBinding.bind(view), requireActivity(), this, new CountersView.Callback() {
@@ -68,12 +68,12 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onInc(Counter counter) {
-                mCountersComponent.inc(counter.id);
+                mCountersComponent.inc(counter);
             }
 
             @Override
             public void onDec(Counter counter) {
-                mCountersComponent.dec(counter.id);
+                mCountersComponent.dec(counter);
             }
 
             @Override

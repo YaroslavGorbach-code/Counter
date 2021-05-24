@@ -50,15 +50,12 @@ public class Accessibility {
                 mTextToSpeech.setLanguage(Locale.getDefault());
             }
         });
-
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
-
 
     public void speechOutput(String text) {
         mTextToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "ID");
     }
-
 
     public void playIncSoundEffect() {
         mSoundPool.play(mSoundIncId, 1f, 1f, 1, 0, 1f);
@@ -66,7 +63,6 @@ public class Accessibility {
 
     public void playDecSoundEffect() {
         mSoundPool.play(mSoundDecId, 1f, 1f, 1, 0, 1f);
-
     }
 
     public void playIncVibrationEffect() {
@@ -82,7 +78,6 @@ public class Accessibility {
             vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
             vibrator.vibrate(50);
-
         }
     }
 }

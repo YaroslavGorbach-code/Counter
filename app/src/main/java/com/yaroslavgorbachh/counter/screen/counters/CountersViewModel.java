@@ -5,13 +5,14 @@ import androidx.lifecycle.ViewModel;
 import com.yaroslavgorbachh.counter.component.counters.CountersComponent;
 import com.yaroslavgorbachh.counter.component.counters.CountersComponentImp;
 import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.feature.Accessibility;
 
 public class CountersViewModel extends ViewModel {
     private CountersComponent mCountersComponent;
 
-    public CountersComponent getCountersComponent(Repo repo) {
+    public CountersComponent getCountersComponent(Repo repo, Accessibility accessibility) {
         if (mCountersComponent == null){
-            mCountersComponent = new CountersComponentImp(repo);
+            mCountersComponent = new CountersComponentImp(repo, accessibility);
         }
         return mCountersComponent;
     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.feature.Accessibility;
 
 import java.util.Date;
 import java.util.List;
@@ -14,9 +15,10 @@ import io.reactivex.rxjava3.core.Observable;
 public class CountersComponentImp implements CountersComponent {
     private final Repo mRepo;
     private String mGroup;
-
-    public CountersComponentImp(Repo repo) {
+    private final Accessibility mAccessibility;
+    public CountersComponentImp(Repo repo, Accessibility accessibility) {
         mRepo = repo;
+        mAccessibility = accessibility;
     }
 
     @Override
@@ -33,13 +35,19 @@ public class CountersComponentImp implements CountersComponent {
     }
 
     @Override
-    public void inc(long id) {
-        mRepo.incCounter(id);
+    public void inc(Counter counter) {
+       if (mRepo.getClickSoundIsAllow()) mAccessibility.playIncSoundEffect();
+       if (mRepo.getClickVibrationIsAllow()) mAccessibility.playIncVibrationEffect();
+       if (mRepo.getClickSpeakIsAllow()) mAccessibility.speechOutput(String.valueOf(counter.value + 1));
+        mRepo.incCounter(counter.id);
     }
 
     @Override
-    public void dec(long id) {
-        mRepo.decCounter(id);
+    public void dec(Counter counter) {
+        if (mRepo.getClickSoundIsAllow()) mAccessibility.playDecSoundEffect();
+        if (mRepo.getClickVibrationIsAllow()) mAccessibility.playDecVibrationEffect();
+        if (mRepo.getClickSpeakIsAllow()) mAccessibility.speechOutput(String.valueOf(counter.value - 1));
+        mRepo.decCounter(counter.id);
     }
 
     @Override
@@ -100,6 +108,8 @@ public class CountersComponentImp implements CountersComponent {
 
     @Override
     public void decSelected(List<Counter> selected) {
+        if (mRepo.getClickSoundIsAllow()) mAccessibility.playDecSoundEffect();
+        if (mRepo.getClickVibrationIsAllow()) mAccessibility.playDecVibrationEffect();
         for (Counter counter : selected) {
             mRepo.decCounter(counter.id);
         }
@@ -107,6 +117,8 @@ public class CountersComponentImp implements CountersComponent {
 
     @Override
     public void incSelected(List<Counter> selected) {
+        if (mRepo.getClickSoundIsAllow()) mAccessibility.playIncSoundEffect();
+        if (mRepo.getClickVibrationIsAllow()) mAccessibility.playIncVibrationEffect();
         for (Counter counter : selected) {
             mRepo.incCounter(counter.id);
         }

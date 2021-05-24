@@ -35,4 +35,7 @@ public interface Repo {
     boolean getIsOrientationLock();
     boolean getUseVolumeButtonsIsAllow();
     boolean getKeepScreenOnIsAllow();
+    boolean getClickVibrationIsAllow();
+    boolean getClickSoundIsAllow();
+    boolean getClickSpeakIsAllow();
 }

@@ -17,6 +17,7 @@ import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.counter.CounterComponent;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
+import com.yaroslavgorbachh.counter.feature.Accessibility;
 
 import javax.inject.Inject;
 
@@ -26,6 +27,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class CounterFragment extends Fragment {
     @Inject Repo repo;
     private CounterView mV;
+
     public CounterFragment() {
         super(R.layout.fragment_counter);
     }
@@ -44,7 +46,7 @@ public class CounterFragment extends Fragment {
         // init component
         long id = CounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
         CounterViewModel vm = new ViewModelProvider(this).get(CounterViewModel.class);
-        CounterComponent counter = vm.getCounterComponent(repo, id);
+        CounterComponent counter = vm.getCounterComponent(repo, id, new Accessibility(requireContext()));
 
         // init view
         mV = new CounterView(FragmentCounterBinding.bind(requireView()), requireActivity(), new CounterView.Callback() {
@@ -118,8 +120,6 @@ public class CounterFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mV::setCounter);
-
-
     }
 
     @Override

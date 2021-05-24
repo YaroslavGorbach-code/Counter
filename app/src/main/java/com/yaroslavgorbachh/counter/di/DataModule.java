@@ -66,6 +66,6 @@ public class DataModule {
 
     @Provides
     public Repo provideRepo(Db database, Context context){
-       return new RepoImp(database, PreferenceManager.getDefaultSharedPreferences(context), new Accessibility(context));
+       return new RepoImp(database, PreferenceManager.getDefaultSharedPreferences(context));
     }
 }

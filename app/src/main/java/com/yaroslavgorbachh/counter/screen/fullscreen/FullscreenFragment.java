@@ -73,7 +73,7 @@ public class FullscreenFragment extends Fragment {
         // init component
         long id = FullscreenFragmentArgs.fromBundle(requireArguments()).getCounterId();
         FullscreenViewModel vm = new ViewModelProvider(this).get(FullscreenViewModel.class);
-        mFullscreenComponent = vm.getFullscreenCounter(repo, id);
+        mFullscreenComponent = vm.getFullscreenCounter(repo, id, new Accessibility(requireContext()));
 
         //init view
         mV = new FullscreenView(FragmentFullscreenBinding.bind(view), new FullscreenView.Callback() {

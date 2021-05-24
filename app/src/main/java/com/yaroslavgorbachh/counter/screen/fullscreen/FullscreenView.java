@@ -65,7 +65,6 @@ public class FullscreenView {
         LocalBroadcastManager.getInstance(context).unregisterReceiver(mMessageReceiver);
     }
 
-
     private void showHelp(){
         new Handler(Looper.getMainLooper()).postDelayed(() ->
                 mBinding.help.setVisibility(View.GONE),1500);

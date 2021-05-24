@@ -13,8 +13,8 @@ public interface CountersComponent {
     }
 
     LiveData<List<String>> getGroups();
-    void inc(long id);
-    void dec(long id);
+    void inc(Counter counter);
+    void dec(Counter counter);
     void onMove(Counter from, Counter to);
     LiveData<List<Counter>> getCounters();
     void createCounter(String title, String group);

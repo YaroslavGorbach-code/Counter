@@ -29,12 +29,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class RepoImp implements Repo {
     private final Db mDatabase;
     private final SharedPreferences mSharedPreferences;
-    private final Accessibility mAccessibility;
 
-    public RepoImp(Db database, SharedPreferences preferences, Accessibility accessibility) {
+    public RepoImp(Db database, SharedPreferences preferences) {
         mDatabase = database;
         mSharedPreferences = preferences;
-        mAccessibility = accessibility;
     }
 
     public void createCounter(Counter counter) {
@@ -100,6 +98,21 @@ public class RepoImp implements Repo {
     }
 
     @Override
+    public boolean getClickVibrationIsAllow() {
+        return mSharedPreferences.getBoolean("clickVibration", false);
+    }
+
+    @Override
+    public boolean getClickSoundIsAllow() {
+        return mSharedPreferences.getBoolean("clickSound", true);
+    }
+
+    @Override
+    public boolean getClickSpeakIsAllow() {
+        return mSharedPreferences.getBoolean("clickSpeak", false);
+    }
+
+    @Override
     public void updateCounter(Counter counter) {
         mDatabase.counterDao().update(counter);
     }
@@ -158,16 +171,6 @@ public class RepoImp implements Repo {
                                 getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
         updateCounter(AboutCounterManager.updateMaxCounterValue(getCounter(id).blockingFirst()));
-
-        if (mSharedPreferences.getBoolean("clickVibration", false)){
-            mAccessibility.playIncVibrationEffect();
-        }
-        if (mSharedPreferences.getBoolean("clickSound", true)){
-            mAccessibility.playIncSoundEffect();
-        }
-        if (mSharedPreferences.getBoolean("clickSpeak", false)){
-            mAccessibility.speechOutput(String.valueOf(getCounter(id).blockingFirst().value));
-        }
     }
 
     @Override
@@ -179,15 +182,6 @@ public class RepoImp implements Repo {
                                 getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
         updateCounter(AboutCounterManager.updateMinCounterValue(getCounter(id).blockingFirst()));
-        if (mSharedPreferences.getBoolean("clickVibration", false)){
-            mAccessibility.playDecVibrationEffect();
-        }
-        if (mSharedPreferences.getBoolean("clickSound", true)){
-            mAccessibility.playDecSoundEffect();
-        }
-        if (mSharedPreferences.getBoolean("clickSpeak", false)){
-            mAccessibility.speechOutput(String.valueOf(getCounter(id).blockingFirst().value));
-        }
     }
 
     @Override
