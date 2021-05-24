@@ -40,8 +40,8 @@ public class FullscreenFragment extends Fragment {
     private static final int UI_ANIMATION_DELAY = 300;
     private int mSavedFlags;
     private final Handler mHideHandler = new Handler();
-    private VolumeButtonBroadcastReceiver mMessageReceiver;
     private FullscreenComponent mFullscreenComponent;
+    private FullscreenView mV;
     @Inject Repo repo;
 
     private final Runnable mHidePart2Runnable = () -> {
@@ -69,23 +69,6 @@ public class FullscreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mSavedFlags = requireActivity().getWindow().getDecorView().getSystemUiVisibility();
-        mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
-            @Override
-            public void decCounters() {
-                mFullscreenComponent.dec();
-            }
-
-            @Override
-            public void incCounters() {
-                mFullscreenComponent.inc();
-            }
-
-            @Override
-            public void lowerVolume() { }
-
-            @Override
-            public void raiseVolume() { }
-        });
 
         // init component
         long id = FullscreenFragmentArgs.fromBundle(requireArguments()).getCounterId();
@@ -93,7 +76,7 @@ public class FullscreenFragment extends Fragment {
         mFullscreenComponent = vm.getFullscreenCounter(repo, id);
 
         //init view
-        FullscreenView v = new FullscreenView(FragmentFullscreenBinding.bind(view), new FullscreenView.Callback() {
+        mV = new FullscreenView(FragmentFullscreenBinding.bind(view), new FullscreenView.Callback() {
             @Override
             public void onBack() { Navigation.findNavController(view).popBackStack(); }
 
@@ -107,7 +90,7 @@ public class FullscreenFragment extends Fragment {
         mFullscreenComponent.getCounter()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(v::setCounter);
+                .subscribe(mV::setCounter);
 
     }
 
@@ -118,8 +101,6 @@ public class FullscreenFragment extends Fragment {
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
         delayedHide();
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver,
-                new IntentFilter(ON_KEY_DOWN_BROADCAST));
     }
 
     @Override
@@ -130,7 +111,6 @@ public class FullscreenFragment extends Fragment {
             getActivity().getWindow().getDecorView().setSystemUiVisibility(0);
             getActivity().getWindow().getDecorView().setSystemUiVisibility(mSavedFlags);
         }
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver);
     }
 
     private void delayedHide() {
@@ -138,4 +118,9 @@ public class FullscreenFragment extends Fragment {
         mHideHandler.postDelayed(mHideRunnable, 100);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mV.unregisterReceiver(requireContext());
+    }
 }

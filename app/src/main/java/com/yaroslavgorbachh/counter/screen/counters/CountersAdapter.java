@@ -154,7 +154,7 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            if (mMultiSelection.getIsSelectionActive().getValue()){
+            if (getBindingAdapterPosition() != -1 && mMultiSelection.getIsSelectionActive().getValue()){
                 mMultiSelection.select(mData.get(getBindingAdapterPosition()), this);
             }else if (getBindingAdapterPosition() != -1){
                 mCallback.onOpen(mData.get(getBindingAdapterPosition()));

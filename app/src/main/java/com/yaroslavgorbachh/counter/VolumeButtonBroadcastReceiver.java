@@ -5,6 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 
 public class VolumeButtonBroadcastReceiver extends BroadcastReceiver {
+    public interface VolumeKeyDownResponse{
+        void decCounters();
+        void incCounters();
+        void lowerVolume();
+        void raiseVolume();
+    }
+
     public static final String ON_KEY_DOWN_BROADCAST = "ON_KEY_DOWN_BROADCAST";
     public static final String KEYCODE_EXTRA = "KEYCODE_EXTRA";
     public static final int KEYCODE_VOLUME_UP = 24;
@@ -18,13 +25,6 @@ public class VolumeButtonBroadcastReceiver extends BroadcastReceiver {
 
     private boolean mIsSelectionMod = true;
     private final VolumeKeyDownResponse mVolumeKeyDownResponse;
-
-    public interface VolumeKeyDownResponse{
-        void decCounters();
-        void incCounters();
-        void lowerVolume();
-        void raiseVolume();
-    }
 
     public void setSelectionMod(boolean selectionMod){
         mIsSelectionMod = selectionMod;

@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -37,10 +38,8 @@ import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_
 public class CountersFragment extends Fragment implements CounterCreateDialog.Host {
     @Inject AudioManager mAudioManager;
     @Inject Repo repo;
-
-    private VolumeButtonBroadcastReceiver mMessageReceiver;
     private CountersComponent mCountersComponent;
-
+    private CountersView mV;
     public CountersFragment() {
         super(R.layout.fragment_counters);
     }
@@ -61,7 +60,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
         mCountersComponent = vm.getCountersComponent(repo);
 
         // init view
-        CountersView v = new CountersView(FragmentCountersBinding.bind(view), requireActivity(), this, new CountersView.Callback() {
+        mV = new CountersView(FragmentCountersBinding.bind(view), requireActivity(), this, new CountersView.Callback() {
             @Override
             public void onSettings() {
                 startActivity(new Intent(getContext(), SettingsActivity.class));
@@ -138,56 +137,33 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
             public void onAllCountersItemSelected() {
                 mCountersComponent.setGroup(null);
             }
-        });
-
-        mCountersComponent.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
-        mCountersComponent.getCounters().observe(getViewLifecycleOwner(), counters -> {
-            if (mCountersComponent.getCurrentGroup() != null) {
-                v.setCounters(mCountersComponent.sortCounters(counters));
-                v.setGroup(mCountersComponent.getCurrentGroup());
-            } else {
-                v.setCounters(counters);
-            }
-        });
-
-        mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
-            @Override
-            public void decCounters() {
-                // TODO: 5/16/2021 dec selected
-            }
 
             @Override
-            public void incCounters() {
-                // TODO: 5/16/2021 inc selected
-            }
-
-            @Override
-            public void lowerVolume() {
+            public void onLoverVolume() {
                 mAudioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
             }
 
             @Override
-            public void raiseVolume() {
+            public void onRaiseVolume() {
                 mAudioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
             }
         });
 
-        /*Register to receive messages.*/
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver,
-                new IntentFilter(ON_KEY_DOWN_BROADCAST));
-
+        mCountersComponent.getGroups().observe(getViewLifecycleOwner(), mV::setGroups);
+        mCountersComponent.getCounters().observe(getViewLifecycleOwner(), counters -> {
+            if (mCountersComponent.getCurrentGroup() != null) {
+                mV.setCounters(mCountersComponent.sortCounters(counters));
+                mV.setGroup(mCountersComponent.getCurrentGroup());
+            } else {
+                mV.setCounters(counters);
+            }
+        });
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         mCountersComponent.setGroup(mCountersComponent.getCurrentGroup());
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver);
     }
 
     @Override
@@ -201,5 +177,10 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
         navController.navigate(CountersFragmentDirections.actionCountersFragmentToCreateEditCounterFragment2());
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mV.unregisterReceiver(requireContext());
+    }
 }
 

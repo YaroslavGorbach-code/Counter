@@ -1,13 +1,19 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,6 +26,7 @@ import androidx.transition.TransitionManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
@@ -39,9 +46,9 @@ import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
+import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
 public class CountersView {
-
     public interface Callback {
         void onSettings();
         void onInc(Counter counter);
@@ -57,6 +64,8 @@ public class CountersView {
         void onIncSelected(List<Counter> selected);
         void onGroupItemSelected(String group);
         void onAllCountersItemSelected();
+        void onLoverVolume();
+        void onRaiseVolume();
     }
 
     private final FragmentCountersBinding mBinding;
@@ -64,6 +73,7 @@ public class CountersView {
     private final CountersAdapter mCountersAdapter;
     private final Drawable mNavigationIcon;
     private String mGroupTitle;
+    private final VolumeButtonBroadcastReceiver mMessageReceiver;
 
     CountersView(FragmentCountersBinding binding, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
         mBinding = binding;
@@ -78,8 +88,33 @@ public class CountersView {
                 }
             }
         };
-
         activity.getOnBackPressedDispatcher().addCallback(lifecycleOwner, backPressedCallback);
+
+        mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
+            @Override
+            public void decCounters() {
+                callback.onDecSelected(mCountersAdapter.getSelected());
+            }
+
+            @Override
+            public void incCounters() {
+                callback.onIncSelected(mCountersAdapter.getSelected());
+            }
+
+            @Override
+            public void lowerVolume() {
+                callback.onLoverVolume();
+            }
+
+            @Override
+            public void raiseVolume() {
+                callback.onRaiseVolume();
+            }
+        });
+        /*Register to receive messages.*/
+        LocalBroadcastManager.getInstance(binding.getRoot().getContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter(ON_KEY_DOWN_BROADCAST));
+
         NavController mNavController = Navigation.findNavController(activity, R.id.hostFragment);
         AppBarConfiguration appBarConfiguration;
         appBarConfiguration = new AppBarConfiguration.Builder(mNavController.getGraph())
@@ -135,6 +170,7 @@ public class CountersView {
 
             @Override
             public void onMultiSelectionStateChange(boolean isActive) {
+                mMessageReceiver.setSelectionMod(isActive);
                 if (isActive) {
                     showButtons(true);
                     mBinding.toolbar.setNavigationIcon(ResourcesCompat.getDrawable(
@@ -241,6 +277,10 @@ public class CountersView {
             mBinding.drawer.allCounters.setBackgroundResource(R.drawable.i_group);
         }
     }
+    public void unregisterReceiver(Context context) {
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(mMessageReceiver);
+    }
+
 
     private void showButtons(boolean show) {
         Transition transition = new Explode();
@@ -257,6 +297,7 @@ public class CountersView {
             mBinding.decSelected.setVisibility(View.GONE);
         }
     }
+
 
 
 }

@@ -1,14 +1,24 @@
 package com.yaroslavgorbachh.counter.screen.counter;
 
+import android.content.Context;
+import android.content.IntentFilter;
 import android.view.View;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
+
+import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
 public class CounterView {
     public interface Callback {
@@ -22,13 +32,25 @@ public class CounterView {
         void onDec();
         void onReset();
     }
-
     private final FragmentCounterBinding mBinding;
     private final Callback mCallback;
+    private final VolumeButtonBroadcastReceiver mMessageReceiver;
 
-    public CounterView(FragmentCounterBinding binding, Callback callback) {
+    public CounterView(FragmentCounterBinding binding, FragmentActivity activity, Callback callback) {
         mBinding = binding;
         mCallback = callback;
+        mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
+            @Override
+            public void decCounters() { callback.onDec(); }
+            @Override
+            public void incCounters() { callback.onInc(); }
+            @Override
+            public void lowerVolume() {}
+            @Override
+            public void raiseVolume() {}
+        });
+        LocalBroadcastManager.getInstance(activity).registerReceiver(mMessageReceiver,
+                new IntentFilter(ON_KEY_DOWN_BROADCAST));
 
         binding.toolbar.setOnMenuItemClickListener(i -> {
             if (i.getItemId() == R.id.delete) {
@@ -80,6 +102,10 @@ public class CounterView {
         } else {
             mCallback.onBack();
         }
+    }
+
+    public void unregisterReceiver(Context context) {
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(mMessageReceiver);
     }
 
 }
