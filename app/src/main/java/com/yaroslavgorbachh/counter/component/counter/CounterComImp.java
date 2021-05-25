@@ -6,12 +6,12 @@ import com.yaroslavgorbachh.counter.feature.Accessibility;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class CounterComponentImp implements CounterComponent {
+public class CounterComImp implements CounterCom {
     private final Repo mRepo;
     private final long mId;
     private final Accessibility mAccessibility;
 
-    public CounterComponentImp(Repo repo, long id, Accessibility accessibility) {
+    public CounterComImp(Repo repo, long id, Accessibility accessibility) {
         mRepo = repo;
         mId = id;
         mAccessibility = accessibility;

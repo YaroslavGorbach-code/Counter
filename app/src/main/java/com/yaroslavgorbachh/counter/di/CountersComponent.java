@@ -15,7 +15,9 @@ import dagger.Module;
 import dagger.Provides;
 
 @ViewModelScope
-@Component(dependencies = {AppComponent.class}, modules = {CountersComponent.CountersModule.class})
+@Component(dependencies = {AppComponent.class},
+        modules = {CountersComponent.CountersModule.class, CountersCommonModule.class})
+
 public interface CountersComponent {
     void inject(CountersFragment fragment);
 
@@ -30,12 +32,6 @@ public interface CountersComponent {
         @Provides
         public Counters provideCounters(Repo repo, Accessibility accessibility, AudioManager audioManager) {
             return new CountersImp(repo, accessibility, audioManager);
-        }
-
-        @ViewModelScope
-        @Provides
-        public Accessibility provideAccessibility (Context context) {
-            return new Accessibility(context);
         }
 
         @ViewModelScope

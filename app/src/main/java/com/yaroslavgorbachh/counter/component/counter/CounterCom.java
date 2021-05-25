@@ -4,7 +4,7 @@ import com.yaroslavgorbachh.counter.data.Domain.Counter;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public interface CounterComponent {
+public interface CounterCom {
     void incCounter();
     void decCounter();
     void resetCounter(ResetCallback resetCallback);

@@ -23,7 +23,6 @@ import dagger.Component;
 public interface AppComponent extends RepoProvider {
 
     void inject(MainActivity activity);
-    void inject(CounterFragment fragment);
     void inject(AboutCounterFragment fragment);
     void inject(HistoryFragment fragment);
     void inject(SettingsFragment fragment);
