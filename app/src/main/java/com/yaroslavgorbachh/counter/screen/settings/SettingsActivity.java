@@ -16,6 +16,7 @@ import com.yaroslavgorbachh.counter.data.Repo;
 import javax.inject.Inject;
 
 public class SettingsActivity extends AppCompatActivity {
+    public static final int RECREATE_RESULT_CODE = 1;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override

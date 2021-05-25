@@ -11,7 +11,6 @@ public class CommonUtil {
 
     public static Intent getExportCSVIntent(List<Counter> list) {
         StringBuilder textToSend = new StringBuilder();
-        Collections.reverse(list);
         for (Counter counter : list) {
             textToSend.append(counter.title).append(": ").append(counter.value).append("\n");
         }

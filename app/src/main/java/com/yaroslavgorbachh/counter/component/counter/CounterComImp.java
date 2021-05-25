@@ -51,6 +51,11 @@ public class CounterComImp implements CounterCom {
     }
 
     @Override
+    public int getFastCountInterval() {
+        return mRepo.getFastCountInterval();
+    }
+
+    @Override
     public Observable<Counter> getCounter() {
         return mRepo.getCounter(mId);
     }

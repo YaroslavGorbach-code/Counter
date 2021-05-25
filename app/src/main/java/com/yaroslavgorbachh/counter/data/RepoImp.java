@@ -115,6 +115,11 @@ public class RepoImp implements Repo {
     }
 
     @Override
+    public int getFastCountInterval() {
+        return mSharedPreferencesSettings.getInt("fastCountSpeed", 200);
+    }
+
+    @Override
     public boolean getIsNightMod() {
         return mLocalSharedPref.getNightMod();
     }
@@ -123,6 +128,7 @@ public class RepoImp implements Repo {
     public void setIsNightMod(boolean b) {
         mLocalSharedPref.setNightMod(b);
     }
+
 
     @Override
     public void updateCounter(Counter counter) {

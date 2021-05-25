@@ -9,7 +9,6 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 
 public interface Counters {
-
     interface ResetCallback{
         void onReset(List<Counter> copy);
     }
@@ -28,6 +27,7 @@ public interface Counters {
     void setGroup(String group);
     void onLoverVolume();
     void onRaiseVolume();
+    int getFastCountInterval();
     String getCurrentGroup();
     List<Counter> sortCounters(List<Counter> counters);
 

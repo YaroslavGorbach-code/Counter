@@ -34,10 +34,12 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     private final Callback mCallback;
     private List<Counter> mData = new ArrayList<>();
     private final MultiSelection mMultiSelection;
+    private final int mFastCountInterval;
 
 
-    public CountersAdapter(MultiSelection multiSelection, Callback callback, LifecycleOwner lifecycleOwner) {
+    public CountersAdapter(MultiSelection multiSelection, int fastCountInterval, Callback callback, LifecycleOwner lifecycleOwner) {
         setHasStableIds(true);
+        mFastCountInterval = fastCountInterval;
         mCallback = callback;
         mMultiSelection = multiSelection;
         mMultiSelection.getIsSelectionActive().observe(lifecycleOwner, callback::onMultiSelectionStateChange);
@@ -116,13 +118,13 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
                     mCallback.onInc(mData.get(getBindingAdapterPosition()));
                 }
 
-            }, null);
+            }, mFastCountInterval);
 
             new FastCountButton(binding.dec, () -> {
                 if (getBindingAdapterPosition() != -1){
                     mCallback.onDec(mData.get(getBindingAdapterPosition()));
                 }
-            }, null);
+            }, mFastCountInterval);
         }
 
         private void bind(Counter counter) {

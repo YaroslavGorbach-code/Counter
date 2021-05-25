@@ -40,4 +40,5 @@ public interface Repo {
     boolean getClickSpeakIsAllow();
     boolean getIsNightMod();
     void setIsNightMod(boolean b);
+    int getFastCountInterval();
 }

@@ -44,6 +44,11 @@ public class CountersImp implements Counters {
     }
 
     @Override
+    public int getFastCountInterval() {
+        return mRepo.getFastCountInterval();
+    }
+
+    @Override
     public LiveData<List<String>> getGroups() {
         return mRepo.getGroups();
     }

@@ -43,7 +43,7 @@ public class CounterFragment extends Fragment {
         vm.getCounterComponent(id).inject(this);
 
         // init view
-        mV = new CounterView(FragmentCounterBinding.bind(requireView()), requireActivity(), new CounterView.Callback() {
+        mV = new CounterView(FragmentCounterBinding.bind(requireView()), requireActivity(), counterCom.getFastCountInterval(), new CounterView.Callback() {
             @Override
             public void onDelete() {
                 counterCom.delete();

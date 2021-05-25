@@ -36,7 +36,7 @@ public class CounterView {
     private final Callback mCallback;
     private final VolumeButtonBroadcastReceiver mMessageReceiver;
 
-    public CounterView(FragmentCounterBinding binding, FragmentActivity activity, Callback callback) {
+    public CounterView(FragmentCounterBinding binding, FragmentActivity activity, int fastCountInterval, Callback callback) {
         mBinding = binding;
         mCallback = callback;
         mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
@@ -81,8 +81,8 @@ public class CounterView {
             return true;
         });
         binding.toolbar.setNavigationOnClickListener(i -> callback.onBack());
-        new FastCountButton(binding.inc, mCallback::onInc, null);
-        new FastCountButton(binding.dec, callback::onDec, null);
+        new FastCountButton(binding.inc, mCallback::onInc, fastCountInterval);
+        new FastCountButton(binding.dec, callback::onDec, fastCountInterval);
     }
 
     public void setCounter(Counter counter) {

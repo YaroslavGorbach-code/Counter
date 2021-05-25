@@ -23,11 +23,9 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_DOWN;
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_UP;
-import static com.yaroslavgorbachh.counter.screen.settings.SettingsFragment.THEME_CHANGED_BROADCAST;
 
 
 public class MainActivity extends AppCompatActivity {
-    private BroadcastReceiver mMessageReceiver;
     private Repo mRepo;
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -49,15 +47,6 @@ public class MainActivity extends AppCompatActivity {
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
-        // recreating activity when theme is changed
-        mMessageReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-               recreate();
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter(THEME_CHANGED_BROADCAST));
     }
 
     @Override
@@ -73,17 +62,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
     @Override
     protected void onStop() {
         super.onStop();
         WidgetProvider.updateWidgets(this, mRepo);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
 }

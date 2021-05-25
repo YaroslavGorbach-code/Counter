@@ -1,12 +1,9 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
-import android.util.Log;
 import android.view.View;
 
 import androidx.activity.OnBackPressedCallback;
@@ -29,53 +26,26 @@ import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
-import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
-import com.yaroslavgorbachh.counter.screen.counters.multyselection.CounterMultiSelection;
 import com.yaroslavgorbachh.counter.screen.counters.drawer.GroupsAdapter;
+import com.yaroslavgorbachh.counter.screen.counters.multyselection.CounterMultiSelection;
 import com.yaroslavgorbachh.counter.util.CommonUtil;
 
 import java.util.List;
 
-import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
-import jp.wasabeef.recyclerview.animators.OvershootInLeftAnimator;
-import jp.wasabeef.recyclerview.animators.OvershootInRightAnimator;
 import jp.wasabeef.recyclerview.animators.ScaleInBottomAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY;
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
 public class CountersView {
-    public interface Callback {
-        void onSettings();
-        void onInc(Counter counter);
-        void onDec(Counter counter);
-        void onOpen(Counter counter);
-        void onMoved(Counter counterFrom, Counter counterTo);
-        void onEdit(Counter counter);
-        void onReset(List<Counter> counters);
-        void onExport(Intent intent);
-        void onRemove(List<Counter> counters);
-        void onShowCreateDialog();
-        void onDecSelected(List<Counter> selected);
-        void onIncSelected(List<Counter> selected);
-        void onGroupItemSelected(String group);
-        void onAllCountersItemSelected();
-        void onLoverVolume();
-        void onRaiseVolume();
-    }
-
     private final FragmentCountersBinding mBinding;
     private final GroupsAdapter mGroupsAdapter;
     private final CountersAdapter mCountersAdapter;
     private final Drawable mNavigationIcon;
-    private String mGroupTitle;
     private final VolumeButtonBroadcastReceiver mMessageReceiver;
-
-    CountersView(FragmentCountersBinding binding, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
+    private String mGroupTitle;
+    CountersView(FragmentCountersBinding binding, int fastCountInterval, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
         mBinding = binding;
         mGroupTitle = binding.getRoot().getContext().getString(R.string.allCountersItem);
         OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
@@ -147,7 +117,7 @@ public class CountersView {
         binding.drawer.groupsList.setAdapter(mGroupsAdapter);
         binding.drawer.groupsList.setHasFixedSize(true);
 
-        mCountersAdapter = new CountersAdapter(new CounterMultiSelection(), new CountersAdapter.Callback() {
+        mCountersAdapter = new CountersAdapter(new CounterMultiSelection(), fastCountInterval, new CountersAdapter.Callback() {
             @Override
             public void onInc(Counter counter) {
                 callback.onInc(counter);
@@ -248,10 +218,10 @@ public class CountersView {
             }
         });
         new FastCountButton(binding.decSelected, () ->
-                callback.onDecSelected(mCountersAdapter.getSelected()), null);
+                callback.onDecSelected(mCountersAdapter.getSelected()), fastCountInterval);
 
         new FastCountButton(binding.incSelected, () ->
-                callback.onIncSelected(mCountersAdapter.getSelected()), null);
+                callback.onIncSelected(mCountersAdapter.getSelected()), fastCountInterval);
     }
 
     public void setGroups(List<String> groups) {
@@ -277,10 +247,10 @@ public class CountersView {
             mBinding.drawer.allCounters.setBackgroundResource(R.drawable.i_group);
         }
     }
+
     public void unregisterReceiver(Context context) {
         LocalBroadcastManager.getInstance(context).unregisterReceiver(mMessageReceiver);
     }
-
 
     private void showButtons(boolean show) {
         Transition transition = new Explode();
@@ -298,6 +268,40 @@ public class CountersView {
         }
     }
 
+
+    public interface Callback {
+        void onSettings();
+
+        void onInc(Counter counter);
+
+        void onDec(Counter counter);
+
+        void onOpen(Counter counter);
+
+        void onMoved(Counter counterFrom, Counter counterTo);
+
+        void onEdit(Counter counter);
+
+        void onReset(List<Counter> counters);
+
+        void onExport(Intent intent);
+
+        void onRemove(List<Counter> counters);
+
+        void onShowCreateDialog();
+
+        void onDecSelected(List<Counter> selected);
+
+        void onIncSelected(List<Counter> selected);
+
+        void onGroupItemSelected(String group);
+
+        void onAllCountersItemSelected();
+
+        void onLoverVolume();
+
+        void onRaiseVolume();
+    }
 
 
 }

@@ -32,7 +32,6 @@ import javax.inject.Inject;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
-    public static final String THEME_CHANGED_BROADCAST = "THEME_CHANGED_BROADCAST";
     private static final int RESTORE_REQUEST_CODE = 0;
     private static final int CREATE_FILE = 1;
 
@@ -66,6 +65,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        requireActivity().setResult(Activity.RESULT_CANCELED);
 
         // inject component
         SettingsViewModel vm = new ViewModelProvider(this).get(SettingsViewModel.class);
@@ -114,7 +114,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     }
 
-
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -128,15 +127,22 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         }
         if (key.equals("keepScreenOn") && sharedPreferences.getBoolean("keepScreenOn", true)) {
             requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            requireActivity().setResult(Activity.RESULT_OK);
         }
         if (key.equals("keepScreenOn") && !sharedPreferences.getBoolean("keepScreenOn", false)) {
             requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            requireActivity().setResult(Activity.RESULT_OK);
         }
         if (key.equals("lockOrientation") && sharedPreferences.getBoolean("lockOrientation", true)) {
             requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            requireActivity().setResult(Activity.RESULT_OK);
         }
         if (key.equals("lockOrientation") && !sharedPreferences.getBoolean("lockOrientation", true)) {
             requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+            requireActivity().setResult(Activity.RESULT_OK);
+        }
+        if (key.equals("fastCountSpeed")) {
+            requireActivity().setResult(Activity.RESULT_OK);
         }
     }
 
