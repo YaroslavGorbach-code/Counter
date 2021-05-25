@@ -32,8 +32,7 @@ public class WidgetProvider extends AppWidgetProvider {
     public static final String OPEN_CLICK = "OPEN_CLICK";
     public static final String START_MAIN_ACTIVITY_EXTRA = "START_MAIN_ACTIVITY_EXTRA";
 
-    @Inject
-    Repo repo;
+    @Inject Repo repo;
 
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -28,8 +28,7 @@ import static com.yaroslavgorbachh.counter.screen.settings.SettingsFragment.THEM
 
 public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver;
-    @Inject Repo repo;
-
+    private final Repo mRepo = ((App)getApplication()).provideRepo();
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -39,16 +38,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (repo.getIsOrientationLock()) {
+        if (mRepo.getIsOrientationLock()) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
 
-        if (repo.getKeepScreenOnIsAllow()){
-            MainActivity.this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        if (mRepo.getKeepScreenOnIsAllow()){
+            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }else {
-            MainActivity.this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
         // recreating activity when theme is changed
@@ -64,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && repo.getUseVolumeButtonsIsAllow()) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
             LocalBroadcastManager.getInstance(this).sendBroadcast(INTENT_VOLUME_UP);
             return true;
         }
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && repo.getUseVolumeButtonsIsAllow()) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             LocalBroadcastManager.getInstance(this).sendBroadcast(INTENT_VOLUME_DOWN);
             return true;
         }
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        WidgetProvider.updateWidgets(this, repo);
+        WidgetProvider.updateWidgets(this, mRepo);
     }
 
 

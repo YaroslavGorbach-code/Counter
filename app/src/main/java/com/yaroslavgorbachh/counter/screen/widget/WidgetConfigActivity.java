@@ -25,19 +25,15 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class WidgetConfigActivity extends AppCompatActivity {
-    @Inject Repo repo;
-    private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
+    private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        App application = (App) getApplication();
-        application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
         ActivityWidgetConfigurationBinding binding =
                 ActivityWidgetConfigurationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         Intent configIntent = getIntent();
         Bundle extras = configIntent.getExtras();
@@ -53,6 +49,8 @@ public class WidgetConfigActivity extends AppCompatActivity {
             finish();
         }
 
+        Repo repo = ((App)getApplication()).provideRepo();
+        // init view
         WidgetConfigView view = new WidgetConfigView(binding, new WidgetConfigView.Callback() {
             @Override
             public void onBack() { finish(); }
