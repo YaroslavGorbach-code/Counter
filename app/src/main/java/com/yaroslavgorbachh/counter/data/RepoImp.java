@@ -182,18 +182,30 @@ public class RepoImp implements Repo {
 
     @Override
     public void incCounter(long id) {
-        mDatabase.counterDao().inc(id);
+        Counter counter = getCounter(id).blockingFirst();
+        if (counter.value + counter.step >= counter.maxValue){
+            counter.value = counter.maxValue;
+            updateCounter(counter);
+        }else {
+            mDatabase.counterDao().inc(id);
+        }
         HistoryManager.getInstance()
-                .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
+                .saveValueWitDelay(id, counter.value, () ->
                         addHistory(new History(
-                                getCounter(id).blockingFirst().value,
+                                counter.value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
         updateCounter(AboutCounterManager.updateMaxCounterValue(getCounter(id).blockingFirst()));
     }
 
     @Override
     public void decCounter(long id) {
-        mDatabase.counterDao().dec(id);
+        Counter counter = getCounter(id).blockingFirst();
+        if (counter.value - counter.step <= counter.minValue){
+            counter.value = counter.minValue;
+            updateCounter(counter);
+        }else {
+            mDatabase.counterDao().dec(id);
+        }
         HistoryManager.getInstance()
                 .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
                         addHistory(new History(

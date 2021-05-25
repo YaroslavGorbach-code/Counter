@@ -45,7 +45,6 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
         if (requestCode == SettingsActivity.RECREATE_RESULT_CODE && resultCode == Activity.RESULT_OK){
             requireActivity().recreate();
         }
-
     }
 
     @Override

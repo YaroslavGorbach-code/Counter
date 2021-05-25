@@ -12,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import androidx.annotation.ColorInt;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
@@ -25,12 +26,6 @@ public class ViewUtil {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    public static void animate(Activity activity) {
-        activity.finish();
-        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        activity.startActivity(new Intent(activity, SettingsActivity.class));
     }
 
     public static int fetchAccentColor(Context context) {
@@ -77,16 +72,26 @@ public class ViewUtil {
         return 0;
     }
 
-    public static boolean valueFilter(TextInputEditText mValue_et) {
+    public static boolean valueFilter(TextInputEditText value, TextInputEditText min, TextInputEditText max) {
         /*if value is or - empty show error*/
-        if (String.valueOf(mValue_et.getText()).trim().isEmpty() ||
-                String.valueOf(mValue_et.getText()).matches("-")) {
-            mValue_et.setError(mValue_et.getContext().getString(R.string.valueError));
-            mValue_et.setText(null);
+        if (String.valueOf(value.getText()).trim().isEmpty() ||
+                String.valueOf(value.getText()).matches("-")) {
+            value.setError(value.getContext().getString(R.string.valueError));
+            value.setText(null);
             return false;
-        } else {
-            return true;
+        } else if (max.getText()!=null
+                && Long.valueOf(max.getText().toString()) < Long.valueOf(value.getText().toString())){
+            value.setError(value.getContext().getString(R.string.ValueBiggerMaxError));
+
+            return false;
+
+        }else if (min.getText()!=null
+                && Long.valueOf(min.getText().toString()) > Long.valueOf(value.getText().toString())){
+            value.setError(value.getContext().getString(R.string.ValueLeesMin));
+
+            return false;
         }
+        return true;
     }
 
     public static boolean titleFilter(TextInputEditText mTitle_et) {
@@ -141,4 +146,19 @@ public class ViewUtil {
         }
     }
 
+    public static boolean maxAndMinValueFilter(TextInputEditText max, TextInputEditText min) {
+        if (max.getText()!=null
+                && min.getText()!=null
+                && !max.getText().toString().trim().isEmpty()
+                && !min.getText().toString().trim().isEmpty()){
+            if (Long.valueOf(min.getText().toString()) > Long.valueOf(max.getText().toString())){
+                min.setError(min.getContext().getString(R.string.minValueError));
+                return false;
+            }else if (Long.valueOf(max.getText().toString()) < Long.valueOf(min.getText().toString())){
+                max.setError(min.getContext().getString(R.string.maxValueError));
+                return false;
+            }
+        }
+       return true;
+    }
 }

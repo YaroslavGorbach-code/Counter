@@ -40,10 +40,10 @@ public interface CounterDao {
     @Query("SELECT * FROM counter_table WHERE widgetId = :widgetId")
     Counter getCounterWidget(long widgetId);
 
-    @Query("UPDATE counter_table SET value = value + 1 WHERE id = :id")
+    @Query("UPDATE counter_table SET value = value + step WHERE id = :id")
     void inc(long id);
 
-    @Query("UPDATE counter_table SET value = value - 1 WHERE id = :id")
+    @Query("UPDATE counter_table SET value = value - step WHERE id = :id")
     void dec(long id);
 
     @Query("UPDATE counter_table SET value = 0 WHERE id = :id")

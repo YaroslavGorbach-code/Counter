@@ -140,5 +140,8 @@
     <string name="widget_deleted">УДАЛЕНО</string>
     <string name="menu_counter_reset">Сбросить</string>
 
-
+    <string name="minValueError">Минимальное значение не может быть больше максимального</string>
+    <string name="maxValueError">Максимальное значение не может быть меньше минимального</string>
+    <string name="ValueBiggerMaxError">Значение не может быть больше максимального</string>
+    <string name="ValueLeesMin">Значение не может быть меньше минимального</string>
 </resources>

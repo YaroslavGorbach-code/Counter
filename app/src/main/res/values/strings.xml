@@ -149,5 +149,9 @@
 
     <string name="apply">Apply</string>
     <string name="menu_counter_reset">Reset</string>
+    <string name="minValueError">Min value can not be bigger them max</string>
+    <string name="maxValueError">max value can not be lees then min</string>
+    <string name="ValueBiggerMaxError">Value can not be bigger then max</string>
+    <string name="ValueLeesMin">Value can not be less then min</string>
 
 </resources>

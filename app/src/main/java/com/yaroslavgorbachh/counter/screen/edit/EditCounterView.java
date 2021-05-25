@@ -24,8 +24,9 @@ public class EditCounterView {
         binding.toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.saveCreateCounter) {
                 if (ViewUtil.titleFilter(mBinding.title)
-                        && ViewUtil.valueFilter(mBinding.value)
-                        && ViewUtil.stepFilter(mBinding.step)) {
+                        && ViewUtil.valueFilter(mBinding.value, mBinding.min, mBinding.max)
+                        && ViewUtil.stepFilter(mBinding.step)
+                        && ViewUtil.maxAndMinValueFilter(mBinding.max, mBinding.min)) {
 
                     mBinding.group.setText(ViewUtil.groupsFilter(mBinding.group));
                     Counter counter = new Counter(
