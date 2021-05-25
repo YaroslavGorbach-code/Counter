@@ -2,20 +2,19 @@ package com.yaroslavgorbachh.counter.component.history;
 
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.data.Domain.History;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import java.util.List;
 
-public class HistoryComponentImp implements HistoryComponent {
+public class HistoryComImp implements HistoryCom {
     private final Repo mRepo;
     private final long mId;
-    public HistoryComponentImp(Repo repo, long id){
+    public HistoryComImp(Repo repo, long id){
         mRepo = repo;
         mId = id;
     }
     @Override
-    public LiveData<List<History>> getHistory() {
+    public LiveData<List<com.yaroslavgorbachh.counter.data.Domain.History>> getHistory() {
         return mRepo.getHistoryList(mId);
     }
 
@@ -25,12 +24,12 @@ public class HistoryComponentImp implements HistoryComponent {
     }
 
     @Override
-    public void remove(History history) {
+    public void remove(com.yaroslavgorbachh.counter.data.Domain.History history) {
         mRepo.removeHistoryItem(history.id);
     }
 
     @Override
-    public void addItem(History item) {
+    public void addItem(com.yaroslavgorbachh.counter.data.Domain.History item) {
         mRepo.addHistory(item);
     }
 }

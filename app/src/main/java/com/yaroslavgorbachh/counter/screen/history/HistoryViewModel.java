@@ -1,17 +1,25 @@
 package com.yaroslavgorbachh.counter.screen.history;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
 
-import com.yaroslavgorbachh.counter.component.history.HistoryComponent;
-import com.yaroslavgorbachh.counter.component.history.HistoryComponentImp;
-import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.App;
+import com.yaroslavgorbachh.counter.di.DaggerHistoryComponent;
+import com.yaroslavgorbachh.counter.di.HistoryComponent;
 
-public class HistoryViewModel extends ViewModel {
+public class HistoryViewModel extends AndroidViewModel {
     private HistoryComponent historyComponent;
 
-    public HistoryComponent getHistoryComponent(Repo repo, long id) {
+    public HistoryViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    public HistoryComponent getHistoryComponent(long id) {
         if (historyComponent == null) {
-            historyComponent = new HistoryComponentImp(repo, id);
+            historyComponent = DaggerHistoryComponent.factory().create(id, ((App)getApplication()).appComponent);
         }
         return historyComponent;
     }
