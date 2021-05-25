@@ -28,15 +28,14 @@ import static com.yaroslavgorbachh.counter.screen.settings.SettingsFragment.THEM
 
 public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver;
-    private final Repo mRepo = ((App)getApplication()).provideRepo();
+    private Repo mRepo;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        App application = (App) getApplication();
-        application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mRepo = ((App)getApplication()).provideRepo();
 
         if (mRepo.getIsOrientationLock()) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -63,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mRepo.getUseVolumeButtonsIsAllow()) {
             LocalBroadcastManager.getInstance(this).sendBroadcast(INTENT_VOLUME_UP);
             return true;
         }
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && mRepo.getUseVolumeButtonsIsAllow()) {
             LocalBroadcastManager.getInstance(this).sendBroadcast(INTENT_VOLUME_DOWN);
             return true;
         }

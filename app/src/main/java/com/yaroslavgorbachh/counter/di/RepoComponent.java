@@ -14,7 +14,8 @@ import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.data.RepoImp;
-import com.yaroslavgorbachh.counter.data.local.Db;
+import com.yaroslavgorbachh.counter.data.local.SharedPrefStorageImp;
+import com.yaroslavgorbachh.counter.data.local.room.RoomDb;
 
 import java.util.Date;
 
@@ -25,11 +26,11 @@ import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
 
-import static com.yaroslavgorbachh.counter.data.local.Migrations.MIGRATION_24_25;
-import static com.yaroslavgorbachh.counter.data.local.Migrations.MIGRATION_25_26;
-import static com.yaroslavgorbachh.counter.data.local.Migrations.MIGRATION_26_27;
-import static com.yaroslavgorbachh.counter.data.local.Migrations.MIGRATION_27_28;
-import static com.yaroslavgorbachh.counter.data.local.Migrations.MIGRATION_28_29;
+import static com.yaroslavgorbachh.counter.data.local.room.Migrations.MIGRATION_24_25;
+import static com.yaroslavgorbachh.counter.data.local.room.Migrations.MIGRATION_25_26;
+import static com.yaroslavgorbachh.counter.data.local.room.Migrations.MIGRATION_26_27;
+import static com.yaroslavgorbachh.counter.data.local.room.Migrations.MIGRATION_27_28;
+import static com.yaroslavgorbachh.counter.data.local.room.Migrations.MIGRATION_28_29;
 
 @Singleton
 @Component(modules = {RepoComponent.RepoModule.class, RepoComponent.RoomModule.class})
@@ -44,8 +45,11 @@ public interface RepoComponent extends RepoProvider {
     class RepoModule {
         @Singleton
         @Provides
-        public Repo provideRepo(Context context, Db db) {
-            return new RepoImp(db, PreferenceManager.getDefaultSharedPreferences(context));
+        public Repo provideRepo(Context context, RoomDb roomDb) {
+            return new RepoImp(
+                    roomDb,
+                    PreferenceManager.getDefaultSharedPreferences(context),
+                    new SharedPrefStorageImp(context));
         }
     }
 
@@ -53,8 +57,8 @@ public interface RepoComponent extends RepoProvider {
     class RoomModule {
         @Singleton
         @Provides
-        public Db provideDb(Context context) {
-            return Room.databaseBuilder(context.getApplicationContext(), Db.class, "counter.db")
+        public RoomDb provideDb(Context context) {
+            return Room.databaseBuilder(context.getApplicationContext(), RoomDb.class, "counter.db")
                     .addCallback(new RoomDatabase.Callback() {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {

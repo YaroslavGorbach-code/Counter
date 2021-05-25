@@ -59,4 +59,9 @@ public class SettingsImp implements Settings {
     public List<Counter> getAll() {
         return mRepo.getCounters().getValue();
     }
+
+    @Override
+    public void changeNightMod(boolean b) {
+        mRepo.setIsNightMod(b);
+    }
 }

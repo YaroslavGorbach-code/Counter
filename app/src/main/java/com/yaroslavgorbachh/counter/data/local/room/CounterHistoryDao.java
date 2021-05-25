@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.data.local.dao;
+package com.yaroslavgorbachh.counter.data.local.room;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

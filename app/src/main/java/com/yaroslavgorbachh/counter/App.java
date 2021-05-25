@@ -2,6 +2,8 @@ package com.yaroslavgorbachh.counter;
 
 import android.app.Application;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.di.AppComponent;
 import com.yaroslavgorbachh.counter.di.DaggerAppComponent;
@@ -15,6 +17,11 @@ public class App extends Application implements RepoProvider {
     public void onCreate() {
         appComponent = DaggerAppComponent.factory().create(DaggerRepoComponent.factory().create(this));
         super.onCreate();
+        if (provideRepo().getIsNightMod()){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     @Override

@@ -11,9 +11,9 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Domain.History;
-import com.yaroslavgorbachh.counter.data.local.Db;
+import com.yaroslavgorbachh.counter.data.local.SharedPrefStorage;
+import com.yaroslavgorbachh.counter.data.local.room.RoomDb;
 import com.yaroslavgorbachh.counter.feature.AboutCounterManager;
-import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.HistoryManager;
 import com.yaroslavgorbachh.counter.feature.roombackup.Backup;
 import com.yaroslavgorbachh.counter.feature.roombackup.Restore;
@@ -27,12 +27,14 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RepoImp implements Repo {
-    private final Db mDatabase;
-    private final SharedPreferences mSharedPreferences;
+    private final RoomDb mDatabase;
+    private final SharedPreferences mSharedPreferencesSettings;
+    private final SharedPrefStorage mLocalSharedPref;
 
-    public RepoImp(Db database, SharedPreferences preferences) {
+    public RepoImp(RoomDb database, SharedPreferences preferencesSettings, SharedPrefStorage localPref) {
         mDatabase = database;
-        mSharedPreferences = preferences;
+        mSharedPreferencesSettings = preferencesSettings;
+        mLocalSharedPref = localPref;
     }
 
     public void createCounter(Counter counter) {
@@ -84,32 +86,42 @@ public class RepoImp implements Repo {
 
     @Override
     public boolean getIsOrientationLock() {
-       return mSharedPreferences.getBoolean("lockOrientation", true);
+       return mSharedPreferencesSettings.getBoolean("lockOrientation", true);
     }
 
     @Override
     public boolean getUseVolumeButtonsIsAllow() {
-        return mSharedPreferences.getBoolean("useVolumeButtons", true);
+        return mSharedPreferencesSettings.getBoolean("useVolumeButtons", true);
     }
 
     @Override
     public boolean getKeepScreenOnIsAllow() {
-        return mSharedPreferences.getBoolean("keepScreenOn", true);
+        return mSharedPreferencesSettings.getBoolean("keepScreenOn", true);
     }
 
     @Override
     public boolean getClickVibrationIsAllow() {
-        return mSharedPreferences.getBoolean("clickVibration", false);
+        return mSharedPreferencesSettings.getBoolean("clickVibration", false);
     }
 
     @Override
     public boolean getClickSoundIsAllow() {
-        return mSharedPreferences.getBoolean("clickSound", true);
+        return mSharedPreferencesSettings.getBoolean("clickSound", true);
     }
 
     @Override
     public boolean getClickSpeakIsAllow() {
-        return mSharedPreferences.getBoolean("clickSpeak", false);
+        return mSharedPreferencesSettings.getBoolean("clickSpeak", false);
+    }
+
+    @Override
+    public boolean getIsNightMod() {
+        return mLocalSharedPref.getNightMod();
+    }
+
+    @Override
+    public void setIsNightMod(boolean b) {
+        mLocalSharedPref.setNightMod(b);
     }
 
     @Override

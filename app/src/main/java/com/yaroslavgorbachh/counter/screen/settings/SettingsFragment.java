@@ -109,12 +109,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("nightMod") && sharedPreferences.getBoolean("nightMod", false)) {
+            settings.changeNightMod(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            ViewUtil.animate(requireActivity());
         }
         if (key.equals("nightMod") && !sharedPreferences.getBoolean("nightMod", false)) {
+            settings.changeNightMod(false);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            ViewUtil.animate(requireActivity());
         }
         if (key.equals("keepScreenOn") && sharedPreferences.getBoolean("keepScreenOn", true)) {
             requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

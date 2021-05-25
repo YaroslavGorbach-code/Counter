@@ -38,4 +38,6 @@ public interface Repo {
     boolean getClickVibrationIsAllow();
     boolean getClickSoundIsAllow();
     boolean getClickSpeakIsAllow();
+    boolean getIsNightMod();
+    void setIsNightMod(boolean b);
 }

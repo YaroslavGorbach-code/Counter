@@ -16,4 +16,5 @@ public interface Settings {
     void deleteAll();
     void resetAll();
     List<Counter> getAll();
+    void changeNightMod(boolean b);
 }

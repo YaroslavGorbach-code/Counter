@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.data.local;
+package com.yaroslavgorbachh.counter.data.local.room;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
