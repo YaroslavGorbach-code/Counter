@@ -6,11 +6,11 @@ import com.yaroslavgorbachh.counter.feature.Accessibility;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class FullscreenComponentImp implements FullscreenComponent {
+public class FullscreenImp implements Fullscreen {
     private final Repo mRepo;
     private final long mId;
     private final Accessibility mAccessibility;
-    public FullscreenComponentImp(Repo repo, long id, Accessibility accessibility){
+    public FullscreenImp(Repo repo, long id, Accessibility accessibility){
         mRepo = repo;
         mId = id;
         mAccessibility = accessibility;

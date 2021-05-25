@@ -12,11 +12,8 @@ import android.view.View;
 
 import com.yaroslavgorbachh.counter.component.edit.Edit;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
-import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
-import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.di.EditCounterComponent;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 import javax.inject.Inject;

@@ -6,20 +6,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.Navigation;
 
 import android.content.Context;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.yaroslavgorbachh.counter.component.fullscreen.FullscreenComponent;
+import com.yaroslavgorbachh.counter.component.fullscreen.Fullscreen;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.App;
-import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.databinding.FragmentFullscreenBinding;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
@@ -28,8 +25,6 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-
-import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
 public class FullscreenFragment extends Fragment {
 
@@ -40,9 +35,8 @@ public class FullscreenFragment extends Fragment {
     private static final int UI_ANIMATION_DELAY = 300;
     private int mSavedFlags;
     private final Handler mHideHandler = new Handler();
-    private FullscreenComponent mFullscreenComponent;
     private FullscreenView mV;
-    @Inject Repo repo;
+    @Inject Fullscreen mFullscreen;
 
     private final Runnable mHidePart2Runnable = () -> {
         int flags = View.SYSTEM_UI_FLAG_LOW_PROFILE
@@ -57,12 +51,6 @@ public class FullscreenFragment extends Fragment {
     };
     private final Runnable mHideRunnable = () -> mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        App app = (App) requireActivity().getApplication();
-        app.appComponent.inject(this);
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -73,7 +61,7 @@ public class FullscreenFragment extends Fragment {
         // init component
         long id = FullscreenFragmentArgs.fromBundle(requireArguments()).getCounterId();
         FullscreenViewModel vm = new ViewModelProvider(this).get(FullscreenViewModel.class);
-        mFullscreenComponent = vm.getFullscreenCounter(repo, id, new Accessibility(requireContext()));
+        vm.getFullscreenCounter(id).inject(this);
 
         //init view
         mV = new FullscreenView(FragmentFullscreenBinding.bind(view), new FullscreenView.Callback() {
@@ -81,13 +69,13 @@ public class FullscreenFragment extends Fragment {
             public void onBack() { Navigation.findNavController(view).popBackStack(); }
 
             @Override
-            public void onSwipeTop() { mFullscreenComponent.inc(); }
+            public void onSwipeTop() { mFullscreen.inc(); }
 
             @Override
-            public void onSwipeBottom() { mFullscreenComponent.dec(); }
+            public void onSwipeBottom() { mFullscreen.dec(); }
         });
 
-        mFullscreenComponent.getCounter()
+        mFullscreen.getCounter()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mV::setCounter);

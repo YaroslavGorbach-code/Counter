@@ -12,13 +12,13 @@ import dagger.Provides;
 
 @ViewModelScope
 @Component(dependencies = {AppComponent.class},
-        modules = {EditCounterComponent.EditModule.class})
-public interface EditCounterComponent {
+        modules = {EditComponent.EditModule.class})
+public interface EditComponent {
     void inject(EditCounterFragment fragment);
 
     @Component.Factory
     interface Factory {
-        EditCounterComponent create(@BindsInstance long counterId, AppComponent appComponent);
+        EditComponent create(@BindsInstance long counterId, AppComponent appComponent);
     }
 
     @Module
