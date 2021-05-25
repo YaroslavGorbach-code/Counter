@@ -16,7 +16,7 @@
         android:id="@+id/history"
         />
 
-    <item android:title="@string/aboutComponent"
+    <item android:title="@string/aboutCounter"
         android:id="@+id/about"
         />
     <item android:title="@string/menu_counter_reset"

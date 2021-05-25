@@ -123,7 +123,7 @@
 
 
     <!-- About counter fragment -->
-    <string name="aboutComponent">About counter</string>
+    <string name="aboutCounter">About counter</string>
     <string name="counterName">Counter name</string>
     <string name="valueBeforeReset">Value before reset</string>
     <string name="value">Value</string>

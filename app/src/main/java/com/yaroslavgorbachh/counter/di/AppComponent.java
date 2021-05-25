@@ -21,9 +21,7 @@ import dagger.Component;
 @Singleton
 @Component(dependencies = RepoProvider.class)
 public interface AppComponent extends RepoProvider {
-
     void inject(MainActivity activity);
-    void inject(AboutCounterFragment fragment);
     void inject(HistoryFragment fragment);
     void inject(SettingsFragment fragment);
     void inject(WidgetConfigActivity a);

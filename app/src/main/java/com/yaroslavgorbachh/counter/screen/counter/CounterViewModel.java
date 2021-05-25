@@ -15,7 +15,7 @@ import com.yaroslavgorbachh.counter.di.DaggerCounterComponent;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 
 public class CounterViewModel extends AndroidViewModel {
-    private CounterComponent counter;
+    private CounterComponent counter = null;
 
     public CounterViewModel(@NonNull Application application) {
         super(application);

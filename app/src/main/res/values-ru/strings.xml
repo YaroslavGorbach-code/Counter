@@ -115,7 +115,7 @@
     <string name="restore_backup">Восстановить копию</string>
 
     <!-- About counter fragment -->
-    <string name="aboutComponent">О счетчике</string>
+    <string name="aboutCounter">О счетчике</string>
     <string name="counterName">Имя счетчика</string>
     <string name="valueBeforeReset">Значение до сброса</string>
     <string name="value">Значение</string>

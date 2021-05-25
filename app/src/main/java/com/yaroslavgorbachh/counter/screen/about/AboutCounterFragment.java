@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.component.aboutcounter.AboutComponent;
+import com.yaroslavgorbachh.counter.component.aboutcounter.AboutCounter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentAboutCounterBinding;
 
@@ -24,31 +24,24 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AboutCounterFragment extends Fragment {
 
+    @Inject AboutCounter aboutCounter;
+
     public AboutCounterFragment() {
         super(R.layout.fragment_about_counter);
-    }
-
-    @Inject Repo repo;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        App app = (App) (requireActivity().getApplication());
-        app.appComponent.inject(this);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // init component
+        // inject component
         long id = AboutCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
         AboutCounterViewModel vm = new ViewModelProvider(this).get(AboutCounterViewModel.class);
-        AboutComponent aboutComponent = vm.getAboutCounter(repo, id);
+        vm.getAboutCounterComponent(id).inject(this);
 
         // init view
         AboutCounterView v = new AboutCounterView(FragmentAboutCounterBinding.bind(view), () -> Navigation.findNavController(view).popBackStack());
-        aboutComponent.getCounter()
+        aboutCounter.getCounter()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(v::setCounter);

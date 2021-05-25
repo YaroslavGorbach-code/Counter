@@ -5,11 +5,11 @@ import com.yaroslavgorbachh.counter.data.Repo;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class AboutComponentImp implements AboutComponent {
+public class AboutCounterImp implements AboutCounter {
     private final long mId;
     private final Repo repo;
 
-    public AboutComponentImp(Repo repo, long id) {
+    public AboutCounterImp(Repo repo, long id) {
         mId = id;
         this.repo = repo;
     }
