@@ -6,7 +6,7 @@ import com.yaroslavgorbachh.counter.data.Domain.Counter;
 
 import java.util.List;
 
-public interface CountersComponent {
+public interface Counters {
 
     interface ResetCallback{
         void onReset(List<Counter> copy);

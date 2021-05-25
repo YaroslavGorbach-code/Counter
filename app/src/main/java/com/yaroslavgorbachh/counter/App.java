@@ -9,8 +9,8 @@ import com.yaroslavgorbachh.counter.di.DaggerRepoComponent;
 import com.yaroslavgorbachh.counter.di.RepoProvider;
 
 public class App extends Application implements RepoProvider {
-
     public AppComponent appComponent;
+
     @Override
     public void onCreate() {
         appComponent = DaggerAppComponent.factory().create(DaggerRepoComponent.factory().create(this));
@@ -19,6 +19,6 @@ public class App extends Application implements RepoProvider {
 
     @Override
     public Repo provideRepo() {
-        return null;
+        return appComponent.provideRepo();
     }
 }

@@ -15,7 +15,6 @@ import com.yaroslavgorbachh.counter.screen.widget.WidgetProvider;
 
 import javax.inject.Singleton;
 
-import dagger.BindsInstance;
 import dagger.Component;
 
 
@@ -28,7 +27,6 @@ public interface AppComponent extends RepoProvider {
     void inject(AboutCounterFragment fragment);
     void inject(HistoryFragment fragment);
     void inject(SettingsFragment fragment);
-    void inject(CountersFragment fragment);
     void inject(WidgetConfigActivity a);
     void inject(WidgetProvider widgetProvider);
     void inject(FullscreenFragment fragment);
@@ -40,5 +38,4 @@ public interface AppComponent extends RepoProvider {
     interface Factory {
         AppComponent create(RepoProvider repoProvider);
     }
-
 }

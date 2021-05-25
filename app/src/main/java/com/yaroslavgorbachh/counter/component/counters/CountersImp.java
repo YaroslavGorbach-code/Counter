@@ -14,12 +14,12 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class CountersComponentImp implements CountersComponent {
+public class CountersImp implements Counters {
     private final Repo mRepo;
     private String mGroup;
     private final Accessibility mAccessibility;
     private final AudioManager mAudioManager;
-    public CountersComponentImp(Repo repo, Accessibility accessibility, AudioManager audioManager) {
+    public CountersImp(Repo repo, Accessibility accessibility, AudioManager audioManager) {
         mRepo = repo;
         mAccessibility = accessibility;
         mAudioManager = audioManager;

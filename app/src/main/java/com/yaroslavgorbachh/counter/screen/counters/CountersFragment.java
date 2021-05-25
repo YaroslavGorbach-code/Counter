@@ -1,65 +1,44 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.media.AudioManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
-import com.yaroslavgorbachh.counter.component.counters.CountersComponent;
+import com.yaroslavgorbachh.counter.component.counters.Counters;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
-import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
-import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
-
 public class CountersFragment extends Fragment implements CounterCreateDialog.Host {
-    @Inject Repo repo;
-    private CountersComponent mCountersComponent;
+
     private CountersView mV;
+    @Inject Counters mCounters;
+
     public CountersFragment() {
         super(R.layout.fragment_counters);
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        App application = (App) requireActivity().getApplication();
-        application.appComponent.inject(this);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // init component
+        // inject component
         CountersViewModel vm = new ViewModelProvider(this).get(CountersViewModel.class);
-        mCountersComponent = vm.getCountersComponent(
-                repo,
-                new Accessibility(requireContext()),
-                (AudioManager) requireContext().getSystemService(Context.AUDIO_SERVICE));
+        vm.countersComponent.inject(this);
 
         // init view
         mV = new CountersView(FragmentCountersBinding.bind(view), requireActivity(), this, new CountersView.Callback() {
@@ -70,12 +49,12 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onInc(Counter counter) {
-                mCountersComponent.inc(counter);
+                mCounters.inc(counter);
             }
 
             @Override
             public void onDec(Counter counter) {
-                mCountersComponent.dec(counter);
+                mCounters.dec(counter);
             }
 
             @Override
@@ -87,7 +66,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onMoved(Counter from, Counter to) {
-                mCountersComponent.onMove(from, to);
+                mCounters.onMove(from, to);
             }
 
             @Override
@@ -98,10 +77,10 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onReset(List<Counter> counters) {
-                mCountersComponent.reset(counters, copy -> Snackbar.make(requireView(), getResources().getString(R.string
+                mCounters.reset(counters, copy -> Snackbar.make(requireView(), getResources().getString(R.string
                         .counterReset), Snackbar.LENGTH_LONG)
                         .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
-                            mCountersComponent.update(copy);
+                            mCounters.update(copy);
                         }).show());
             }
 
@@ -110,43 +89,43 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onRemove(List<Counter> counters) {
-                mCountersComponent.remove(counters);
+                mCounters.remove(counters);
             }
 
             @Override
             public void onShowCreateDialog() {
-                CounterCreateDialog.newInstance(mCountersComponent.getCurrentGroup())
+                CounterCreateDialog.newInstance(mCounters.getCurrentGroup())
                         .show(getChildFragmentManager(), "addCounter");
             }
 
             @Override
-            public void onDecSelected(List<Counter> selected) { mCountersComponent.decSelected(selected); }
+            public void onDecSelected(List<Counter> selected) { mCounters.decSelected(selected); }
 
             @Override
-            public void onIncSelected(List<Counter> selected) { mCountersComponent.incSelected(selected); }
+            public void onIncSelected(List<Counter> selected) { mCounters.incSelected(selected); }
 
             @Override
             public void onGroupItemSelected(String group) {
-                mCountersComponent.setGroup(group);
+                mCounters.setGroup(group);
             }
 
             @Override
             public void onAllCountersItemSelected() {
-                mCountersComponent.setGroup(null);
+                mCounters.setGroup(null);
             }
 
             @Override
-            public void onLoverVolume() { mCountersComponent.onLoverVolume(); }
+            public void onLoverVolume() { mCounters.onLoverVolume(); }
 
             @Override
-            public void onRaiseVolume() { mCountersComponent.onRaiseVolume(); }
+            public void onRaiseVolume() { mCounters.onRaiseVolume(); }
         });
 
-        mCountersComponent.getGroups().observe(getViewLifecycleOwner(), mV::setGroups);
-        mCountersComponent.getCounters().observe(getViewLifecycleOwner(), counters -> {
-            if (mCountersComponent.getCurrentGroup() != null) {
-                mV.setCounters(mCountersComponent.sortCounters(counters));
-                mV.setGroup(mCountersComponent.getCurrentGroup());
+        mCounters.getGroups().observe(getViewLifecycleOwner(), mV::setGroups);
+        mCounters.getCounters().observe(getViewLifecycleOwner(), counters -> {
+            if (mCounters.getCurrentGroup() != null) {
+                mV.setCounters(mCounters.sortCounters(counters));
+                mV.setGroup(mCounters.getCurrentGroup());
             } else {
                 mV.setCounters(counters);
             }
@@ -156,12 +135,12 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        mCountersComponent.setGroup(mCountersComponent.getCurrentGroup());
+        mCounters.setGroup(mCounters.getCurrentGroup());
     }
 
     @Override
     public void onCreateCounter(String title, String group) {
-        mCountersComponent.createCounter(title, group);
+        mCounters.createCounter(title, group);
     }
 
     @Override
