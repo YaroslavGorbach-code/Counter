@@ -2,7 +2,6 @@ package com.yaroslavgorbachh.counter.screen.settings;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,10 +18,8 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.component.settings.SettingsComponent;
-import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.component.settings.Settings;
 import com.yaroslavgorbachh.counter.util.CommonUtil;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
@@ -35,16 +31,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public static final String THEME_CHANGED_BROADCAST = "THEME_CHANGED_BROADCAST";
     private static final int RESTORE_REQUEST_CODE = 0;
     private static final int CREATE_FILE = 1;
-    @Inject
-    Repo repo;
-    private SettingsComponent settingsComponent;
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        App application = (App) requireActivity().getApplication();
-        application.appComponent.inject(this);
-    }
+    @Inject Settings settings;
 
 
     @Override
@@ -53,13 +41,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
         if (requestCode == CREATE_FILE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                settingsComponent.backup(data, requireContext());
+                settings.backup(data, requireContext());
             }
         }
 
         if (requestCode == RESTORE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                settingsComponent.restore(data, requireContext());
+                settings.restore(data, requireContext());
             }
         }
     }
@@ -74,39 +62,39 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        Preference mRemoveAllCountersPref = findPreference("removeAllCounters");
-        Preference mResetAllCountersPref = findPreference("resetAllCounters");
-        Preference mExportAllCountersPref = findPreference("exportAllCounters");
-        Preference mBackupPref = findPreference("backup");
+        Preference removeAllCountersPref = findPreference("removeAllCounters");
+        Preference resetAllCountersPref = findPreference("resetAllCounters");
+        Preference exportAllCountersPref = findPreference("exportAllCounters");
+        Preference backupPref = findPreference("backup");
         SettingsViewModel vm = new ViewModelProvider(this).get(SettingsViewModel.class);
-        settingsComponent = vm.getSettings(repo);
+        vm.settingsComponent.inject(this);
 
-        assert mRemoveAllCountersPref != null;
-        mRemoveAllCountersPref.setOnPreferenceClickListener(preference -> {
+        assert removeAllCountersPref != null;
+        removeAllCountersPref.setOnPreferenceClickListener(preference -> {
             new MaterialAlertDialogBuilder(requireContext())
                     .setTitle(getString(R.string.deleteCountersDeleteDialog))
                     .setMessage(R.string.deleteCounterDialogText)
                     .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which)
-                            -> settingsComponent.deleteAll())
+                            -> settings.deleteAll())
                     .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
                     .show();
             return true;
         });
 
-        assert mResetAllCountersPref != null;
-        mResetAllCountersPref.setOnPreferenceClickListener(preference -> {
-            settingsComponent.resetAll();
+        assert resetAllCountersPref != null;
+        resetAllCountersPref.setOnPreferenceClickListener(preference -> {
+            settings.resetAll();
             return true;
         });
 
-        assert mExportAllCountersPref != null;
-        mExportAllCountersPref.setOnPreferenceClickListener(preference -> {
-            settingsComponent.getAll().observe(getViewLifecycleOwner(), list -> startActivity(CommonUtil.getExportCSVIntent(list)));
+        assert exportAllCountersPref != null;
+        exportAllCountersPref.setOnPreferenceClickListener(preference -> {
+            settings.getAll().observe(getViewLifecycleOwner(), list -> startActivity(CommonUtil.getExportCSVIntent(list)));
             return true;
         });
 
-        assert mBackupPref != null;
-        mBackupPref.setOnPreferenceClickListener(preference -> {
+        assert backupPref != null;
+        backupPref.setOnPreferenceClickListener(preference -> {
             View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_backup,
                     null);
             new MaterialAlertDialogBuilder(requireContext())

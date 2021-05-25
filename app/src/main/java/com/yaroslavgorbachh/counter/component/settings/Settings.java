@@ -10,11 +10,10 @@ import com.yaroslavgorbachh.counter.data.Domain.Counter;
 
 import java.util.List;
 
-public interface SettingsComponent {
+public interface Settings {
     void backup(Intent data, Context context);
     void restore(Intent data, Context context);
     void deleteAll();
     void resetAll();
-    void changeTheme(int color, Resources resources);
     LiveData<List<Counter>> getAll();
 }

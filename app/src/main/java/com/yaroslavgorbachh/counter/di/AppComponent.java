@@ -22,11 +22,9 @@ import dagger.Component;
 @Component(dependencies = RepoProvider.class)
 public interface AppComponent extends RepoProvider {
     void inject(MainActivity activity);
-    void inject(SettingsFragment fragment);
     void inject(WidgetConfigActivity a);
     void inject(WidgetProvider widgetProvider);
     void inject(CounterCreateDialog dialog);
-    void inject(SettingsActivity a);
 
     @Component.Factory
     interface Factory {

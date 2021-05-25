@@ -17,16 +17,12 @@ import javax.inject.Inject;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    @Inject
-    Repo repo;
-
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        App application = (App) getApplication();
-        application.appComponent.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        Repo repo = ((App)getApplication()).provideRepo();
         if (repo.getIsOrientationLock()) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
