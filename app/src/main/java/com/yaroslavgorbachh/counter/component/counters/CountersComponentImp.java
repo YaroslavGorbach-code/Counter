@@ -1,5 +1,7 @@
 package com.yaroslavgorbachh.counter.component.counters;
 
+import android.media.AudioManager;
+
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.R;
@@ -16,9 +18,11 @@ public class CountersComponentImp implements CountersComponent {
     private final Repo mRepo;
     private String mGroup;
     private final Accessibility mAccessibility;
-    public CountersComponentImp(Repo repo, Accessibility accessibility) {
+    private final AudioManager mAudioManager;
+    public CountersComponentImp(Repo repo, Accessibility accessibility, AudioManager audioManager) {
         mRepo = repo;
         mAccessibility = accessibility;
+        mAudioManager = audioManager;
     }
 
     @Override
@@ -27,6 +31,16 @@ public class CountersComponentImp implements CountersComponent {
                 .filter(counter -> (counter.grope != null && counter.grope.equals(mGroup)))
                 .toList()
                 .blockingGet();
+    }
+
+    @Override
+    public void onLoverVolume() {
+        mAudioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+    }
+
+    @Override
+    public void onRaiseVolume() {
+        mAudioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
     }
 
     @Override

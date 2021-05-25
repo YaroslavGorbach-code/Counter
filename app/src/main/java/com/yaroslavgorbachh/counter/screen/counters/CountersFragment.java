@@ -36,7 +36,6 @@ import javax.inject.Inject;
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
 public class CountersFragment extends Fragment implements CounterCreateDialog.Host {
-    @Inject AudioManager mAudioManager;
     @Inject Repo repo;
     private CountersComponent mCountersComponent;
     private CountersView mV;
@@ -57,7 +56,10 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
         // init component
         CountersViewModel vm = new ViewModelProvider(this).get(CountersViewModel.class);
-        mCountersComponent = vm.getCountersComponent(repo, new Accessibility(requireContext()));
+        mCountersComponent = vm.getCountersComponent(
+                repo,
+                new Accessibility(requireContext()),
+                (AudioManager) requireContext().getSystemService(Context.AUDIO_SERVICE));
 
         // init view
         mV = new CountersView(FragmentCountersBinding.bind(view), requireActivity(), this, new CountersView.Callback() {
@@ -101,7 +103,6 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
                         .setAction(getResources().getString(R.string.counterResetUndo), v1 -> {
                             mCountersComponent.update(copy);
                         }).show());
-
             }
 
             @Override
@@ -119,14 +120,10 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
             }
 
             @Override
-            public void onDecSelected(List<Counter> selected) {
-                mCountersComponent.decSelected(selected);
-            }
+            public void onDecSelected(List<Counter> selected) { mCountersComponent.decSelected(selected); }
 
             @Override
-            public void onIncSelected(List<Counter> selected) {
-                mCountersComponent.incSelected(selected);
-            }
+            public void onIncSelected(List<Counter> selected) { mCountersComponent.incSelected(selected); }
 
             @Override
             public void onGroupItemSelected(String group) {
@@ -139,14 +136,10 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
             }
 
             @Override
-            public void onLoverVolume() {
-                mAudioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
-            }
+            public void onLoverVolume() { mCountersComponent.onLoverVolume(); }
 
             @Override
-            public void onRaiseVolume() {
-                mAudioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
-            }
+            public void onRaiseVolume() { mCountersComponent.onRaiseVolume(); }
         });
 
         mCountersComponent.getGroups().observe(getViewLifecycleOwner(), mV::setGroups);

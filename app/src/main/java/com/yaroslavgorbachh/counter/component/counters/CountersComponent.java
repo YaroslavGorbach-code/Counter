@@ -24,6 +24,8 @@ public interface CountersComponent {
     void decSelected(List<Counter> selected);
     void incSelected(List<Counter> selected);
     void setGroup(String group);
+    void onLoverVolume();
+    void onRaiseVolume();
     String getCurrentGroup();
     List<Counter> sortCounters(List<Counter> counters);
 
