@@ -62,50 +62,46 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        Preference removeAllCountersPref = findPreference("removeAllCounters");
-        Preference resetAllCountersPref = findPreference("resetAllCounters");
-        Preference exportAllCountersPref = findPreference("exportAllCounters");
-        Preference backupPref = findPreference("backup");
+
+        // inject component
         SettingsViewModel vm = new ViewModelProvider(this).get(SettingsViewModel.class);
         vm.settingsComponent.inject(this);
 
-        assert removeAllCountersPref != null;
-        removeAllCountersPref.setOnPreferenceClickListener(preference -> {
-            new MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(getString(R.string.deleteCountersDeleteDialog))
-                    .setMessage(R.string.deleteCounterDialogText)
-                    .setPositiveButton(R.string.deleteCounterDialogPositiveButton, (dialog, which)
-                            -> settings.deleteAll())
-                    .setNegativeButton(R.string.deleteCounterDialogNegativeButton, null)
-                    .show();
-            return true;
+        // init view
+        SettingsFragmentView v = new SettingsFragmentView(this, new SettingsFragmentView.Callback() {
+            @Override
+            public void deleteAll() {
+                settings.deleteAll();
+            }
+
+            @Override
+            public void resetAll() {
+                settings.resetAll();
+            }
+
+            @Override
+            public void onExportAll() {
+              startActivity(CommonUtil.getExportCSVIntent(settings.getAll()));
+            }
+
+            @Override
+            public void onCreateBackup() {
+                Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TITLE, "CounterBackup " + DateAndTimeUtil.getCurrentDate());
+                startActivityForResult(intent, CREATE_FILE);
+            }
+
+            @Override
+            public void onRestoreBackup() {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("text/plain");
+                startActivityForResult(intent, RESTORE_REQUEST_CODE);
+            }
         });
 
-        assert resetAllCountersPref != null;
-        resetAllCountersPref.setOnPreferenceClickListener(preference -> {
-            settings.resetAll();
-            return true;
-        });
-
-        assert exportAllCountersPref != null;
-        exportAllCountersPref.setOnPreferenceClickListener(preference -> {
-            settings.getAll().observe(getViewLifecycleOwner(), list -> startActivity(CommonUtil.getExportCSVIntent(list)));
-            return true;
-        });
-
-        assert backupPref != null;
-        backupPref.setOnPreferenceClickListener(preference -> {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_backup,
-                    null);
-            new MaterialAlertDialogBuilder(requireContext())
-                    .setView(view).show();
-            MaterialButton create_bt = view.findViewById(R.id.copy);
-            MaterialButton restore_bt = view.findViewById(R.id.restore);
-            create_bt.setOnClickListener(v -> createFile());
-            restore_bt.setOnClickListener(v -> openFile());
-
-            return true;
-        });
     }
 
 
@@ -140,21 +136,5 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         getPreferenceManager().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
-
-    private void openFile() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/plain");
-        startActivityForResult(intent, RESTORE_REQUEST_CODE);
-    }
-
-    private void createFile() {
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TITLE, "CounterBackup " + DateAndTimeUtil.getCurrentDate());
-        startActivityForResult(intent, CREATE_FILE);
-    }
-
 
 }

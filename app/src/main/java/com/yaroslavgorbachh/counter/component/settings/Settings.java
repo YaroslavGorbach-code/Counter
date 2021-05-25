@@ -15,5 +15,5 @@ public interface Settings {
     void restore(Intent data, Context context);
     void deleteAll();
     void resetAll();
-    LiveData<List<Counter>> getAll();
+    List<Counter> getAll();
 }

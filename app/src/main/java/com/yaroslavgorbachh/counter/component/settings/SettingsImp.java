@@ -56,7 +56,7 @@ public class SettingsImp implements Settings {
     }
 
     @Override
-    public LiveData<List<Counter>> getAll() {
-        return mRepo.getCounters();
+    public List<Counter> getAll() {
+        return mRepo.getCounters().getValue();
     }
 }
