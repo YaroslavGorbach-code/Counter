@@ -22,12 +22,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class WidgetConfigActivity extends AppCompatActivity {
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-
+    private final CompositeDisposable mDisposables = new CompositeDisposable();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,7 @@ public class WidgetConfigActivity extends AppCompatActivity {
 
             @Override
             public void onWidget(Counter counter) {
-                repo.getCounter(counter.id)
+                mDisposables.add(repo.getCounter(counter.id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(widgetCounter -> {
@@ -76,9 +78,12 @@ public class WidgetConfigActivity extends AppCompatActivity {
                                 finish();
                             }
                         }, error -> {
-                        });
+                        }));
             }
         });
-        repo.getCounters().observe(this, view::setCounters);
+        mDisposables.add(repo.getCounters()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(view::setCounters));
     }
 }

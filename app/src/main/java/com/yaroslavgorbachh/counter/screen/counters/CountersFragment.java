@@ -23,9 +23,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class CountersFragment extends Fragment implements CounterCreateDialog.Host {
 
     private CountersView mV;
+    private final CompositeDisposable mDisposables = new CompositeDisposable();
     @Inject Counters mCounters;
 
     public CountersFragment() {
@@ -122,14 +128,17 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
         });
 
         mCounters.getGroups().observe(getViewLifecycleOwner(), mV::setGroups);
-        mCounters.getCounters().observe(getViewLifecycleOwner(), counters -> {
-            if (mCounters.getCurrentGroup() != null) {
-                mV.setCounters(mCounters.sortCounters(counters));
-                mV.setGroup(mCounters.getCurrentGroup());
-            } else {
-                mV.setCounters(counters);
-            }
-        });
+        mDisposables.add(mCounters.getCounters()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(counters -> {
+                    if (mCounters.getCurrentGroup() != null) {
+                        mV.setCounters(mCounters.sortCounters(counters));
+                        mV.setGroup(mCounters.getCurrentGroup());
+                    } else {
+                        mV.setCounters(counters);
+                    }
+                }));
     }
 
     @Override
@@ -153,6 +162,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     public void onDestroyView() {
         super.onDestroyView();
         mV.unregisterReceiver(requireContext());
+        mDisposables.clear();
     }
 }
 

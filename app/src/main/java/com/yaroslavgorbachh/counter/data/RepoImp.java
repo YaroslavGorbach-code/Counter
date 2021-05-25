@@ -77,7 +77,7 @@ public class RepoImp implements Repo {
 
     @Override
     public void triggerCountersLiveData() {
-        List<Counter> counters = mDatabase.counterDao().getAllCountersNoLiveData();
+        List<Counter> counters = mDatabase.counterDao().getCounters().blockingFirst();
         mDatabase.counterDao().deleteAllCounters();
         for (Counter c : counters) {
             mDatabase.counterDao().insert(c);
@@ -155,7 +155,7 @@ public class RepoImp implements Repo {
     }
 
     @Override
-    public LiveData<List<Counter>> getCounters() {
+    public Observable<List<Counter>> getCounters() {
         return mDatabase.counterDao().getCounters();
     }
 

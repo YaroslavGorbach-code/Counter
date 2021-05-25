@@ -26,10 +26,7 @@ public interface CounterDao {
     void delete(long id);
 
     @Query("SELECT * FROM counter_table ORDER BY createDataSort DESC")
-    LiveData<List<Counter>> getCounters();
-
-    @Query("SELECT * FROM counter_table ORDER BY createDataSort DESC")
-    List<Counter> getAllCountersNoLiveData();
+    Observable<List<Counter>> getCounters();
 
     @Query("DELETE FROM counter_table")
     void deleteAllCounters();

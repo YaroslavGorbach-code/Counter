@@ -8,16 +8,22 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.component.settings.Settings;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.util.CommonUtil;
+
+import java.util.List;
 
 public class SettingsFragmentView {
     public interface Callback{
         void deleteAll();
-        void resetAll();
+        void resetAll(Settings.ResetCallback callback);
         void onExportAll();
         void onCreateBackup();
         void onRestoreBackup();
+        void onUndoReset(List<Counter> copy);
     }
     public SettingsFragmentView(PreferenceFragmentCompat fragment, Callback callback){
         Preference removeAllCountersPref = fragment.findPreference("removeAllCounters");
@@ -39,7 +45,10 @@ public class SettingsFragmentView {
 
         assert resetAllCountersPref != null;
         resetAllCountersPref.setOnPreferenceClickListener(preference -> {
-            callback.resetAll();
+            callback.resetAll(copy ->
+                    Snackbar.make(fragment.requireView(), fragment.getContext().getResources().getString(R.string.countersReset), Snackbar.LENGTH_LONG)
+                    .setAction( fragment.getContext().getString(R.string.counterResetUndo), v1 ->
+                            callback.onUndoReset(copy)).show());
             return true;
         });
 

@@ -6,6 +6,8 @@ import com.yaroslavgorbachh.counter.data.Domain.Counter;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public interface Counters {
 
     interface ResetCallback{
@@ -16,7 +18,7 @@ public interface Counters {
     void inc(Counter counter);
     void dec(Counter counter);
     void onMove(Counter from, Counter to);
-    LiveData<List<Counter>> getCounters();
+    Observable<List<Counter>> getCounters();
     void createCounter(String title, String group);
     void remove(List<Counter> counters);
     void reset(List<Counter> counters, ResetCallback callback);

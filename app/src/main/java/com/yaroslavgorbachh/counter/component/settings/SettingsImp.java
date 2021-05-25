@@ -7,11 +7,14 @@ import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
+import com.yaroslavgorbachh.counter.screen.settings.SettingsFragmentView;
 
 import java.util.List;
 
 public class SettingsImp implements Settings {
+
     private final Repo mRepo;
+
 
     public SettingsImp(Repo repo) {
         mRepo = repo;
@@ -33,35 +36,28 @@ public class SettingsImp implements Settings {
     }
 
     @Override
-    public void resetAll() {
-        // TODO: 5/15/2021 reset all
-//        Disposable disposable = repo.getAllCountersNoLiveData()
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(counters -> {
-//                    CopyCounterBeforeReset copyCounterBeforeReset = new CopyCounterBeforeReset();
-//                    for (Counter counter : counters) {
-//                        copyCounterBeforeReset.addCounter(counter);
-//                        repo.resetCounter(counter.id);
-//                    }
-//                    Snackbar.make(view, view.getContext().getResources().getString(R.string
-//                            .countersReset), BaseTransientBottomBar.LENGTH_LONG)
-//                            .setAction( view.getContext().getString(R.string.counterResetUndo), v1 -> {
-//                                for (Counter counter : copyCounterBeforeReset.getCounters()) {
-//                                    repo.updateCounter(counter);
-//                                }
-//                            }).show();
-//                });
-//        mDisposables.add(disposable);
+    public void resetAll(ResetCallback callback) {
+        List<Counter> copy = mRepo.getCounters().blockingFirst();
+        for (Counter counter : copy) {
+            mRepo.resetCounter(counter.id);
+        }
+        callback.onReset(copy);
     }
 
     @Override
     public List<Counter> getAll() {
-        return mRepo.getCounters().getValue();
+        return mRepo.getCounters().blockingFirst();
     }
 
     @Override
     public void changeNightMod(boolean b) {
         mRepo.setIsNightMod(b);
+    }
+
+    @Override
+    public void undoReset(List<Counter> copy) {
+        for (Counter counter: copy) {
+            mRepo.updateCounter(counter);
+        }
     }
 }

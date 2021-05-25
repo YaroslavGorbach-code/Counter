@@ -18,11 +18,15 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.settings.Settings;
+import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.util.CommonUtil;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -75,9 +79,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             }
 
             @Override
-            public void resetAll() {
-                settings.resetAll();
+            public void resetAll(Settings.ResetCallback callback) {
+                settings.resetAll(callback);
             }
+
 
             @Override
             public void onExportAll() {
@@ -99,6 +104,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("text/plain");
                 startActivityForResult(intent, RESTORE_REQUEST_CODE);
+            }
+
+            @Override
+            public void onUndoReset(List<Counter> copy) {
+                settings.undoReset(copy);
             }
         });
 

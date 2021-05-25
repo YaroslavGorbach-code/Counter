@@ -86,7 +86,7 @@ public class CountersImp implements Counters {
     }
 
     @Override
-    public LiveData<List<Counter>> getCounters() {
+    public Observable<List<Counter>> getCounters() {
         return mRepo.getCounters();
     }
 

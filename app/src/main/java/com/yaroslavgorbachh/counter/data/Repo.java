@@ -25,7 +25,7 @@ public interface Repo {
     void addHistory(History copy);
     void deleteCounters();
     Counter getCounterWidget(long widgetId);
-    LiveData<List<Counter>> getCounters();
+    Observable<List<Counter>> getCounters();
     void updateCounter(Counter counter);
     LiveData<List<String>> getGroups();
     void createCounter(Counter counter);
