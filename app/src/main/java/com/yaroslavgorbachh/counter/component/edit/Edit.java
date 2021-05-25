@@ -8,7 +8,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public interface EditComponent {
+public interface Edit {
     LiveData<List<String>> getGroups();
     Observable<Counter> getCounter();
     void updateCounter(Counter counter);

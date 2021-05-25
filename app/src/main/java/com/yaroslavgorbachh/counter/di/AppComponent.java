@@ -28,7 +28,6 @@ public interface AppComponent extends RepoProvider {
     void inject(WidgetProvider widgetProvider);
     void inject(FullscreenFragment fragment);
     void inject(CounterCreateDialog dialog);
-    void inject(EditCounterFragment fragment);
     void inject(SettingsActivity a);
 
     @Component.Factory

@@ -9,11 +9,11 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class EditComponentImp implements EditComponent {
+public class EditImp implements Edit {
     private final Repo mRepo;
     private final long mId;
 
-    public EditComponentImp(Repo repo, long id) {
+    public EditImp(Repo repo, long id) {
         mRepo = repo;
         mId = id;
     }

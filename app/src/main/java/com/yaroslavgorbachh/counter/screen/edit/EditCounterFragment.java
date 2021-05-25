@@ -10,12 +10,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import com.yaroslavgorbachh.counter.component.edit.EditComponent;
+import com.yaroslavgorbachh.counter.component.edit.Edit;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
 import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
+import com.yaroslavgorbachh.counter.di.EditCounterComponent;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 import javax.inject.Inject;
@@ -25,27 +26,25 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class EditCounterFragment extends Fragment {
+    @Inject Edit edit;
 
     public EditCounterFragment() {
         super(R.layout.fragment_edit_counter);
     }
-    @Inject Repo repo;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        App application = (App) requireActivity().getApplication();
-        application.appComponent.inject(this);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // init component
+        // inject component
         long id = EditCounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
         EditCounterViewModel vm = new ViewModelProvider(this).get(EditCounterViewModel.class);
-        EditComponent editComponent = vm.getEditCounter(repo, id);
+        vm.getEditCounterComponent(id).inject(this);
 
         // init view
         EditCounterView v = new EditCounterView(
@@ -58,17 +57,17 @@ public class EditCounterFragment extends Fragment {
 
             @Override
             public void onSave(Counter counter) {
-                editComponent.updateCounter(counter);
+                edit.updateCounter(counter);
                 Navigation.findNavController(view).popBackStack();
                 ViewUtil.hideKeyboard(requireActivity());
             }
         });
 
-        editComponent.getCounter()
+        edit.getCounter()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(v::setCounter);
-        editComponent.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
+        edit.getGroups().observe(getViewLifecycleOwner(), v::setGroups);
     }
 
 }
