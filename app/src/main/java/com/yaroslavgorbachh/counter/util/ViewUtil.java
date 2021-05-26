@@ -73,26 +73,27 @@ public class ViewUtil {
     }
 
     public static boolean valueFilter(TextInputEditText value, TextInputEditText min, TextInputEditText max) {
-        /*if value is or - empty show error*/
-        if (String.valueOf(value.getText()).trim().isEmpty() ||
-                String.valueOf(value.getText()).matches("-")) {
-            value.setError(value.getContext().getString(R.string.valueError));
-            value.setText(null);
-            return false;
-        } else if (max.getText()!=null
-                && Long.valueOf(max.getText().toString()) < Long.valueOf(value.getText().toString())){
-            value.setError(value.getContext().getString(R.string.ValueBiggerMaxError));
+        if (value.getText().toString().equals("")) value.setText("0");
 
-            return false;
+            if (String.valueOf(value.getText()).trim().isEmpty() ||
+                    String.valueOf(value.getText()).matches("-")) {
+                value.setError(value.getContext().getString(R.string.valueError));
+                value.setText(null);
+                return false;
+            } else if (!max.getText().toString().trim().isEmpty() && !max.getText().toString().matches("-")
+                    && Long.valueOf(max.getText().toString()) < Long.valueOf(value.getText().toString())) {
+                value.setError(value.getContext().getString(R.string.ValueBiggerMaxError));
 
-        }else if (min.getText()!=null
-                && Long.valueOf(min.getText().toString()) > Long.valueOf(value.getText().toString())){
-            value.setError(value.getContext().getString(R.string.ValueLeesMin));
+                return false;
 
-            return false;
+            } else if (!min.getText().toString().trim().isEmpty() && !min.getText().toString().matches("-")
+                    && Long.valueOf(min.getText().toString()) > Long.valueOf(value.getText().toString())) {
+                value.setError(value.getContext().getString(R.string.ValueLeesMin));
+
+                return false;
+            }
+            return true;
         }
-        return true;
-    }
 
     public static boolean titleFilter(TextInputEditText mTitle_et) {
         /*if title is empty show error*/
@@ -150,7 +151,9 @@ public class ViewUtil {
         if (max.getText()!=null
                 && min.getText()!=null
                 && !max.getText().toString().trim().isEmpty()
-                && !min.getText().toString().trim().isEmpty()){
+                && !min.getText().toString().trim().isEmpty()
+                && !String.valueOf(max.getText()).matches("-")
+                && !String.valueOf(min.getText()).matches("-")){
             if (Long.valueOf(min.getText().toString()) > Long.valueOf(max.getText().toString())){
                 min.setError(min.getContext().getString(R.string.minValueError));
                 return false;

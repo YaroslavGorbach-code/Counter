@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="BaseAppTheme.DayNight">
-        <item name="colorPrimary">#4A148C</item>
+        <item name="colorPrimary">#7A50C1</item>
         <item name="colorPrimarySurface">#161616</item>
-        <item name="colorSecondary">#7A50C1</item>
+        <item name="colorSecondary">#9575CD</item>
         <item name="colorOnPrimary">#fafafa</item>
         <item name="colorOnSecondary">#fafafa</item>
     </style>

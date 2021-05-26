@@ -21,6 +21,7 @@ public class EditCounterView {
         mBinding = binding;
         mColorPicker = new ScrollColorPicker(mBinding.colorPickerParent, binding.getRoot().getResources());
         binding.toolbar.setNavigationOnClickListener(v -> callback.onBack());
+
         binding.toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.saveCreateCounter) {
                 if (ViewUtil.titleFilter(mBinding.title)
