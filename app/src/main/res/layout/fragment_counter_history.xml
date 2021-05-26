@@ -24,7 +24,6 @@
             app:title="@string/historyFragmentToolbarTitle" />
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
