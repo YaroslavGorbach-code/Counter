@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_height="?listPreferredItemHeightSmall"
     android:clickable="true"
     android:focusable="true"
-    xmlns:tools="http://schemas.android.com/tools"
     android:padding="8dp">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/value"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="0dp"
         android:gravity="center|start"
-        tools:text="Value"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/date"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Value" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/date"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="bottom|end"
-        tools:text="Data"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/value"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Data" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

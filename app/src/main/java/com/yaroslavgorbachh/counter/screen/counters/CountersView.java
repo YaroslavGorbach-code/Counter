@@ -22,6 +22,7 @@ import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.transition.MaterialFade;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
@@ -96,6 +97,7 @@ public class CountersView {
 
         binding.drawer.settings.setOnClickListener(i -> callback.onSettings());
         binding.noCounters.setOnClickListener(v -> callback.onShowCreateDialog());
+        binding.iconNoCounters.setOnClickListener(v -> callback.onShowCreateDialog());
 
         mGroupsAdapter = new GroupsAdapter(group -> {
             callback.onGroupItemSelected(group);
@@ -233,6 +235,7 @@ public class CountersView {
     }
 
     public void setCounters(List<Counter> data) {
+        showNoCountersIcon(data.isEmpty());
         mCountersAdapter.setData(data);
     }
 
@@ -266,8 +269,22 @@ public class CountersView {
             mBinding.incSelected.setVisibility(View.GONE);
             mBinding.decSelected.setVisibility(View.GONE);
         }
+
     }
 
+
+    private void showNoCountersIcon(boolean show) {
+        Transition transition = new MaterialFade();
+        transition.setDuration(400);
+        transition.addTarget(R.id.no_counters);
+
+        TransitionManager.beginDelayedTransition(mBinding.getRoot(), transition);
+        if (show) {
+            mBinding.noCounters.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.noCounters.setVisibility(View.GONE);
+        }
+    }
 
     public interface Callback {
         void onSettings();

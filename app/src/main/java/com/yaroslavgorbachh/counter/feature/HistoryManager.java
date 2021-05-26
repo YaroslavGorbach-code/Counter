@@ -13,9 +13,7 @@ public class HistoryManager {
     private final Timer timer = new Timer();
     private final Map<Long, Long> previousValues = new HashMap<>();
 
-    private HistoryManager(){
-
-    }
+    private HistoryManager(){ }
 
     public static HistoryManager getInstance(){
         if (sInstance==null){

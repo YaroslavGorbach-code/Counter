@@ -6,11 +6,13 @@ import android.widget.ArrayAdapter;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.transition.MaterialFade;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Domain.History;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterHistoryBinding;
@@ -26,8 +28,10 @@ public class HistoryView {
     }
 
     private final HistoryAdapter mAdapter;
+    private final FragmentCounterHistoryBinding mBinding;
 
     public HistoryView(FragmentCounterHistoryBinding bind, Callback callback) {
+        mBinding = bind;
         bind.toolbar.setNavigationOnClickListener(i -> callback.onBack());
         bind.toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.deleteHistory) {
@@ -64,20 +68,30 @@ public class HistoryView {
         mAdapter = new HistoryAdapter();
         bind.list.setAdapter(mAdapter);
         bind.list.setLayoutManager(new LinearLayoutManager(bind.getRoot().getContext()));
-        SwipeDeleteDecor swipeDeleteDecor = new SwipeDeleteDecor(new SwipeDeleteDecor.ItemSwipeCallback() {
-            @Override
-            public void onSwipe(RecyclerView.ViewHolder viewHolder) {
-                History item = mAdapter.getData().get(viewHolder.getBindingAdapterPosition());
-                callback.onRemove(item);
-                Snackbar.make(bind.getRoot(), R.string.history_item_removed, BaseTransientBottomBar.LENGTH_LONG)
-                        .setAction(R.string.counterResetUndo, v -> callback.onUndo(item)).show();
-            }
+        SwipeDeleteDecor swipeDeleteDecor = new SwipeDeleteDecor(viewHolder -> {
+            History item = mAdapter.getData().get(viewHolder.getBindingAdapterPosition());
+            callback.onRemove(item);
+            Snackbar.make(bind.getRoot(), R.string.history_item_removed, BaseTransientBottomBar.LENGTH_LONG)
+                    .setAction(R.string.counterResetUndo, v -> callback.onUndo(item)).show();
         }, ContextCompat.getDrawable(bind.getRoot().getContext(), R.drawable.remove_history_item));
         swipeDeleteDecor.attachToRecyclerView(bind.list);
     }
 
     public void setHistory(List<History> histories) {
+        showNoHistoryIcon(histories.isEmpty());
         mAdapter.setData(histories);
     }
 
+
+    private void showNoHistoryIcon(boolean show) {
+        Transition transition = new MaterialFade();
+        transition.setDuration(400);
+        transition.addTarget(R.id.no_counters);
+        TransitionManager.beginDelayedTransition(mBinding.getRoot(), transition);
+        if (show) {
+            mBinding.noHistory.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.noHistory.setVisibility(View.GONE);
+        }
+    }
 }

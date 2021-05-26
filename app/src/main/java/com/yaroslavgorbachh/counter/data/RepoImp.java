@@ -198,11 +198,10 @@ public class RepoImp implements Repo {
             mDatabase.counterDao().inc(id);
         }
         HistoryManager.getInstance()
-                .saveValueWitDelay(id, counter.value, () ->
-                        addHistory(new History(
-                                counter.value,
+                .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
+                        addHistory(new History(getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
-        updateCounter(AboutCounterManager.updateMaxCounterValue(getCounter(id).blockingFirst()));
+        updateCounter(AboutCounterManager.updateMinCounterValue(getCounter(id).blockingFirst()));
     }
 
     @Override
@@ -221,8 +220,7 @@ public class RepoImp implements Repo {
         }
         HistoryManager.getInstance()
                 .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
-                        addHistory(new History(
-                                getCounter(id).blockingFirst().value,
+                        addHistory(new History(getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
         updateCounter(AboutCounterManager.updateMinCounterValue(getCounter(id).blockingFirst()));
     }
@@ -233,8 +231,7 @@ public class RepoImp implements Repo {
         mDatabase.counterDao().reset(id);
         HistoryManager.getInstance()
                 .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
-                        addHistory(new History(
-                                getCounter(id).blockingFirst().value,
+                        addHistory(new History(getCounter(id).blockingFirst().value,
                                 DateAndTimeUtil.convertDateToString(new Date()), id)));
         updateCounter(AboutCounterManager.updateLastResetDate(getCounter(id).blockingFirst()));
     }
