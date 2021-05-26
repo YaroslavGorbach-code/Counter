@@ -3,6 +3,7 @@ package com.yaroslavgorbachh.counter.screen.counter;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -93,12 +94,32 @@ public class CounterFragment extends Fragment {
 
             @Override
             public void onInc() {
-                counterCom.incCounter();
+                counterCom.incCounter(new Repo.ValueCallback() {
+                    @Override
+                    public void onMax() {
+                        Toast.makeText(requireContext(), R.string.thisIsMaximum, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onMin() {
+                        Toast.makeText(requireContext(), R.string.thisIsMinimum, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
 
             @Override
             public void onDec() {
-                counterCom.decCounter();
+                counterCom.decCounter(new Repo.ValueCallback() {
+                    @Override
+                    public void onMax() {
+                        Toast.makeText(requireContext(), R.string.thisIsMaximum, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onMin() {
+                        Toast.makeText(requireContext(), R.string.thisIsMinimum, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
 
             @Override

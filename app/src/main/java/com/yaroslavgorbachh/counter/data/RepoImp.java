@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.R;
@@ -181,12 +182,19 @@ public class RepoImp implements Repo {
     }
 
     @Override
-    public void incCounter(long id) {
+    public void incCounter(long id, @Nullable ValueCallback callback) {
         Counter counter = getCounter(id).blockingFirst();
         if (counter.value + counter.step >= counter.maxValue){
             counter.value = counter.maxValue;
+            if (callback != null) callback.onMax();
             updateCounter(counter);
-        }else {
+
+        }else if(counter.value + counter.step <= counter.minValue){
+            counter.value = counter.minValue;
+            if (callback != null) callback.onMin();
+            updateCounter(counter);
+        }
+        else {
             mDatabase.counterDao().inc(id);
         }
         HistoryManager.getInstance()
@@ -198,12 +206,17 @@ public class RepoImp implements Repo {
     }
 
     @Override
-    public void decCounter(long id) {
+    public void decCounter(long id, @Nullable ValueCallback callback) {
         Counter counter = getCounter(id).blockingFirst();
         if (counter.value - counter.step <= counter.minValue){
             counter.value = counter.minValue;
+            if (callback != null) callback.onMin();
             updateCounter(counter);
-        }else {
+        }else if (counter.value - counter.step >= counter.maxValue){
+            counter.value = counter.maxValue;
+            if (callback != null) callback.onMax();
+            updateCounter(counter);
+        } else {
             mDatabase.counterDao().dec(id);
         }
         HistoryManager.getInstance()

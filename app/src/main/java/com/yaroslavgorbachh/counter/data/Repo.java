@@ -3,6 +3,7 @@ package com.yaroslavgorbachh.counter.data;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
@@ -14,8 +15,13 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface Repo {
-    void incCounter(long id);
-    void decCounter(long id);
+    interface ValueCallback{
+        void onMax();
+        void onMin();
+    }
+
+    void incCounter(long id, @Nullable ValueCallback c);
+    void decCounter(long id, @Nullable ValueCallback c);
     void resetCounter(long id);
     void deleteCounter(long mId);
     void removeCounterHistory(long id);

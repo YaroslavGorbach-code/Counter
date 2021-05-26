@@ -46,14 +46,19 @@ public class WidgetProvider extends AppWidgetProvider {
 
         if (Objects.requireNonNull(intent.getAction()).equals(INC_CLICK) && counter != null) {
             Log.v("widget", "dd");
-            repo.incCounter(counter.id);
+            repo.incCounter(counter.id, new Repo.ValueCallback() {
+                @Override
+                public void onMax() { }
+                @Override
+                public void onMin() { }
+            });
             Counter counterWidget = repo.getCounterWidget(widgetId);
             appWidgetManager.updateAppWidget(counterWidget.widgetId,
                     getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager, false));
         }
 
         if (Objects.requireNonNull(intent.getAction()).equals(DEC_CLICK) && counter != null) {
-            repo.decCounter(counter.id);
+            repo.decCounter(counter.id, null);
             Counter counterWidget = repo.getCounterWidget(widgetId);
             appWidgetManager.updateAppWidget(counterWidget.widgetId,
                     getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager, false));

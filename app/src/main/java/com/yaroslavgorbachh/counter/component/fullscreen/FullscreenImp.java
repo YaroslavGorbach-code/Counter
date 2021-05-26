@@ -16,19 +16,19 @@ public class FullscreenImp implements Fullscreen {
         mAccessibility = accessibility;
     }
     @Override
-    public void inc() {
+    public void inc(Repo.ValueCallback callback) {
         if (mRepo.getClickSoundIsAllow()) mAccessibility.playIncSoundEffect();
         if (mRepo.getClickVibrationIsAllow()) mAccessibility.playIncVibrationEffect();
         if (mRepo.getClickSpeakIsAllow()) mAccessibility.speechOutput(String.valueOf(getCounter().blockingFirst().value + 1));
-        mRepo.incCounter(mId);
+        mRepo.incCounter(mId, callback);
     }
 
     @Override
-    public void dec() {
+    public void dec(Repo.ValueCallback callback) {
         if (mRepo.getClickSoundIsAllow()) mAccessibility.playDecSoundEffect();
         if (mRepo.getClickVibrationIsAllow()) mAccessibility.playDecVibrationEffect();
         if (mRepo.getClickSpeakIsAllow()) mAccessibility.speechOutput(String.valueOf(getCounter().blockingFirst().value - 1));
-        mRepo.decCounter(mId);
+        mRepo.decCounter(mId, callback);
     }
 
     @Override

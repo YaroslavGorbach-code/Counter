@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.yaroslavgorbachh.counter.component.fullscreen.Fullscreen;
 import com.yaroslavgorbachh.counter.data.Repo;
@@ -51,7 +52,6 @@ public class FullscreenFragment extends Fragment {
     };
     private final Runnable mHideRunnable = () -> mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
 
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -69,10 +69,32 @@ public class FullscreenFragment extends Fragment {
             public void onBack() { Navigation.findNavController(view).popBackStack(); }
 
             @Override
-            public void onSwipeTop() { mFullscreen.inc(); }
+            public void onSwipeTop() { mFullscreen.inc(new Repo.ValueCallback() {
+                @Override
+                public void onMax() {
+                    Toast.makeText(requireContext(), R.string.thisIsMaximum, Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onMin() {
+                    Toast.makeText(requireContext(), R.string.thisIsMinimum, Toast.LENGTH_LONG).show();
+                }
+            });
+            }
 
             @Override
-            public void onSwipeBottom() { mFullscreen.dec(); }
+            public void onSwipeBottom() { mFullscreen.dec(new Repo.ValueCallback() {
+                @Override
+                public void onMax() {
+                    Toast.makeText(requireContext(), R.string.thisIsMaximum, Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onMin() {
+                    Toast.makeText(requireContext(), R.string.thisIsMinimum, Toast.LENGTH_LONG).show();
+                }
+            });
+            }
         });
 
         mFullscreen.getCounter()

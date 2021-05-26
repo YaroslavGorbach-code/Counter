@@ -3,6 +3,7 @@ package com.yaroslavgorbachh.counter.component.counters;
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.Repo;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public interface Counters {
     }
 
     LiveData<List<String>> getGroups();
-    void inc(Counter counter);
-    void dec(Counter counter);
+    void inc(Counter counter, Repo.ValueCallback callback);
+    void dec(Counter counter, Repo.ValueCallback callback);
     void onMove(Counter from, Counter to);
     Observable<List<Counter>> getCounters();
     void createCounter(String title, String group);

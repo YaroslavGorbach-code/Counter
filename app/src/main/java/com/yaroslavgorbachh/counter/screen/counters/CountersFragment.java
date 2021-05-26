@@ -5,6 +5,7 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.counters.Counters;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsFragment;
@@ -66,12 +68,32 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onInc(Counter counter) {
-                counters.inc(counter);
+                counters.inc(counter, new Repo.ValueCallback() {
+                    @Override
+                    public void onMax() {
+                        Toast.makeText(requireContext(), R.string.thisIsMaximum, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onMin() {
+                        Toast.makeText(requireContext(), R.string.thisIsMinimum, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
 
             @Override
             public void onDec(Counter counter) {
-                counters.dec(counter);
+                counters.dec(counter, new Repo.ValueCallback() {
+                    @Override
+                    public void onMax() {
+                        Toast.makeText(requireContext(), R.string.thisIsMaximum, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onMin() {
+                        Toast.makeText(requireContext(), R.string.thisIsMinimum, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
 
             @Override

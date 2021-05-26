@@ -1,11 +1,12 @@
 package com.yaroslavgorbachh.counter.component.fullscreen;
 
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.Repo;
 
 import io.reactivex.rxjava3.core.Observable;
 
 public interface Fullscreen {
-    void inc();
-    void dec();
+    void inc(Repo.ValueCallback callback);
+    void dec(Repo.ValueCallback callback);
     Observable<Counter> getCounter();
 }

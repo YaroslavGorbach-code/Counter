@@ -3,12 +3,13 @@ package com.yaroslavgorbachh.counter.component.counter;
 import androidx.fragment.app.FragmentActivity;
 
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.Repo;
 
 import io.reactivex.rxjava3.core.Observable;
 
 public interface CounterCom {
-    void incCounter();
-    void decCounter();
+    void incCounter(Repo.ValueCallback callback);
+    void decCounter(Repo.ValueCallback callback);
     void resetCounter(ResetCallback resetCallback);
     void delete();
     void insert(Counter copy);

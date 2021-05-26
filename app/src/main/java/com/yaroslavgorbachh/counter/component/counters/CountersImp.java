@@ -54,19 +54,19 @@ public class CountersImp implements Counters {
     }
 
     @Override
-    public void inc(Counter counter) {
+    public void inc(Counter counter, Repo.ValueCallback callback) {
        if (mRepo.getClickSoundIsAllow()) mAccessibility.playIncSoundEffect();
        if (mRepo.getClickVibrationIsAllow()) mAccessibility.playIncVibrationEffect();
        if (mRepo.getClickSpeakIsAllow()) mAccessibility.speechOutput(String.valueOf(counter.value + 1));
-        mRepo.incCounter(counter.id);
+        mRepo.incCounter(counter.id, callback);
     }
 
     @Override
-    public void dec(Counter counter) {
+    public void dec(Counter counter, Repo.ValueCallback callback) {
         if (mRepo.getClickSoundIsAllow()) mAccessibility.playDecSoundEffect();
         if (mRepo.getClickVibrationIsAllow()) mAccessibility.playDecVibrationEffect();
         if (mRepo.getClickSpeakIsAllow()) mAccessibility.speechOutput(String.valueOf(counter.value - 1));
-        mRepo.decCounter(counter.id);
+        mRepo.decCounter(counter.id, callback);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class CountersImp implements Counters {
         if (mRepo.getClickSoundIsAllow()) mAccessibility.playDecSoundEffect();
         if (mRepo.getClickVibrationIsAllow()) mAccessibility.playDecVibrationEffect();
         for (Counter counter : selected) {
-            mRepo.decCounter(counter.id);
+            mRepo.decCounter(counter.id, null);
         }
     }
 
@@ -139,7 +139,7 @@ public class CountersImp implements Counters {
         if (mRepo.getClickSoundIsAllow()) mAccessibility.playIncSoundEffect();
         if (mRepo.getClickVibrationIsAllow()) mAccessibility.playIncVibrationEffect();
         for (Counter counter : selected) {
-            mRepo.incCounter(counter.id);
+            mRepo.incCounter(counter.id, null);
         }
     }
 
