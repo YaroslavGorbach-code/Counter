@@ -8,31 +8,32 @@
     android:orientation="vertical"
     tools:context=".screen.counter.CounterFragment">
 
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/menu_counter"
-        app:navigationIcon="@drawable/ic_arrow_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="1"
-        android:padding="10dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:text="title" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/menu_counter"
+            app:navigationIcon="@drawable/ic_arrow_back" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/group_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:visibility="gone"
+            tools:text="group title"
+            tools:visibility="visible" />
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/value"
@@ -46,49 +47,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/inc"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/group_title"
+        app:layout_constraintStart_toEndOf="@+id/dec"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout3"
         tools:text="0" />
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/reset"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="6dp"
-        app:icon="@drawable/ic_refresh"
-        app:iconGravity="textStart"
-        app:iconSize="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/dec"
-        app:layout_constraintEnd_toStartOf="@+id/dec"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/inc"
-        app:layout_constraintTop_toTopOf="@+id/dec" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/dec"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
+        android:layout_width="237dp"
         android:layout_height="0dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
         app:icon="@drawable/ic_minus"
         app:iconGravity="textStart"
         app:iconSize="75dp"
-        app:layout_constraintBottom_toTopOf="@+id/inc"
-        app:layout_constraintEnd_toEndOf="@+id/inc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/value"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/reset"
-        app:layout_constraintTop_toTopOf="@+id/value" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout3" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/inc"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="6dp"
+        android:layout_width="237dp"
+        android:layout_height="320dp"
+        android:layout_marginEnd="8dp"
         app:icon="@drawable/ic_plus"
         app:iconGravity="textStart"
         app:iconSize="75dp"
@@ -96,17 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/value"
-        app:layout_constraintTop_toBottomOf="@+id/dec" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/group_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="group title" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

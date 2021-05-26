@@ -73,6 +73,7 @@ public class ViewUtil {
     }
 
     public static boolean valueFilter(TextInputEditText value, TextInputEditText min, TextInputEditText max) {
+        /*if value is or - empty show error*/
         if (value.getText().toString().equals("")) value.setText("0");
 
             if (String.valueOf(value.getText()).trim().isEmpty() ||
