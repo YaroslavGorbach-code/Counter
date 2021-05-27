@@ -1,20 +1,21 @@
 package com.yaroslavgorbachh.counter.screen.counters;
+
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.ItemCounterBinding;
-import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
 import com.yaroslavgorbachh.counter.screen.counters.multyselection.MultiSelection;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +33,21 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     private final ItemTouchHelper.Callback itemTouchHelperCallback = new DragAndDropItemTouchHelper(this);
     public final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
     private final Callback mCallback;
-    private List<Counter> mData = new ArrayList<>();
     private final MultiSelection mMultiSelection;
     private final int mFastCountInterval;
-
+    private List<Counter> mData = new ArrayList<>();
+    private boolean mButtonsIsClickable = false;
 
     public CountersAdapter(MultiSelection multiSelection, int fastCountInterval, Callback callback, LifecycleOwner lifecycleOwner) {
         setHasStableIds(true);
         mFastCountInterval = fastCountInterval;
         mCallback = callback;
         mMultiSelection = multiSelection;
-        mMultiSelection.getIsSelectionActive().observe(lifecycleOwner, callback::onMultiSelectionStateChange);
+        mMultiSelection.getIsSelectionActive().observe(lifecycleOwner, isActive -> {
+            callback.onMultiSelectionStateChange(isActive);
+            mButtonsIsClickable = !isActive;
+            notifyDataSetChanged();
+        });
         multiSelection.getSelectedCount().observe(lifecycleOwner, callback::onSelect);
     }
 
@@ -78,7 +83,6 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
     @Override
     public void onBindViewHolder(@NonNull CountersAdapter.Vh holder, int position) {
         holder.bind(mData.get(position));
-        mMultiSelection.bindBackground(mData.get(position), holder);
     }
 
     @Override
@@ -109,30 +113,35 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
         public Vh(ItemCounterBinding binding) {
             super(binding.getRoot());
-            mBinding= binding;
+            mBinding = binding;
             mGestureDetector = new GestureDetector(binding.getRoot().getContext(), this);
             itemView.setOnTouchListener(this);
 
             new FastCountButton(binding.inc, () -> {
-                if (getBindingAdapterPosition() != -1){
+                if (getBindingAdapterPosition() != -1) {
                     mCallback.onInc(mData.get(getBindingAdapterPosition()));
                 }
 
             }, mFastCountInterval);
 
             new FastCountButton(binding.dec, () -> {
-                if (getBindingAdapterPosition() != -1){
+                if (getBindingAdapterPosition() != -1) {
                     mCallback.onDec(mData.get(getBindingAdapterPosition()));
                 }
             }, mFastCountInterval);
         }
 
         private void bind(Counter counter) {
+            mMultiSelection.bindBackground(counter, this);
             mBinding.title.setText(counter.title);
             mBinding.value.setText(String.valueOf(counter.value));
             mBinding.group.setText(counter.grope);
             mBinding.dec.setIconTintResource(counter.colorId);
             mBinding.inc.setIconTintResource(counter.colorId);
+            mBinding.inc.setClickable(mButtonsIsClickable);
+            mBinding.dec.setClickable(mButtonsIsClickable);
+            mBinding.inc.setEnabled(mButtonsIsClickable);
+            mBinding.dec.setEnabled(mButtonsIsClickable);
         }
 
         @Override
@@ -156,9 +165,9 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            if (getBindingAdapterPosition() != -1 && mMultiSelection.getIsSelectionActive().getValue()){
+            if (getBindingAdapterPosition() != -1 && !mButtonsIsClickable) {
                 mMultiSelection.select(mData.get(getBindingAdapterPosition()), this);
-            }else if (getBindingAdapterPosition() != -1){
+            } else if (getBindingAdapterPosition() != -1) {
                 mCallback.onOpen(mData.get(getBindingAdapterPosition()));
             }
             return true;
@@ -171,12 +180,12 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
         @Override
         public void onLongPress(MotionEvent e) {
-            if (mMultiSelection.getIsSelectionActive().getValue()){
+            if (!mButtonsIsClickable) {
                 mMultiSelection.select(mData.get(getBindingAdapterPosition()), this);
-            }else {
+            } else {
                 itemView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 itemTouchHelper.startDrag(this);
-                if(mMultiSelection.getSelected().isEmpty()){
+                if (mMultiSelection.getSelected().isEmpty()) {
                     mMultiSelection.select(mData.get(getBindingAdapterPosition()), this);
                 }
             }
@@ -189,10 +198,11 @@ public class CountersAdapter extends RecyclerView.Adapter<CountersAdapter.Vh> im
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+
             mGestureDetector.onTouchEvent(event);
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    itemView.setPressed(!mMultiSelection.getIsSelectionActive().getValue());
+                    itemView.setPressed(mButtonsIsClickable);
                     break;
                 case MotionEvent.ACTION_UP:
                     itemView.performClick();
