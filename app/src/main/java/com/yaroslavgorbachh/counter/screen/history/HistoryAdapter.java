@@ -30,19 +30,21 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
     public void setData(List<History> list) {
         mData = (Observable.fromIterable(list)
                 .sorted((o1, o2) -> {
-                    if (mSort == Sort.VALUE) {
-                        return Long.compare(o2.value, o1.value);
-                    } else {
-                        if (DateAndTimeUtil.convertStringToDate(o1.data)
-                                .before(DateAndTimeUtil.convertStringToDate(o2.data))) {
-                            return 1;
-                        } else if (DateAndTimeUtil.convertStringToDate(o1.data)
-                                .after(DateAndTimeUtil.convertStringToDate(o2.data))) {
-                            return -1;
+
+                        if (mSort == Sort.VALUE) {
+                            return Long.compare(o2.value, o1.value);
                         } else {
-                            return 0;
+                                if (DateAndTimeUtil.convertStringToDate(o1.data)
+                                        .before(DateAndTimeUtil.convertStringToDate(o2.data))) {
+                                    return 1;
+                                } else if (DateAndTimeUtil.convertStringToDate(o1.data)
+                                        .after(DateAndTimeUtil.convertStringToDate(o2.data))) {
+                                    return -1;
+                                } else {
+                                    return 0;
+                            }
                         }
-                    }
+
                 }).toList().blockingGet());
         notifyDataSetChanged();
     }

@@ -16,6 +16,7 @@ import com.yaroslavgorbachh.counter.data.local.SharedPrefStorage;
 import com.yaroslavgorbachh.counter.data.local.room.RoomDb;
 import com.yaroslavgorbachh.counter.feature.AboutCounterManager;
 import com.yaroslavgorbachh.counter.feature.HistoryManager;
+import com.yaroslavgorbachh.counter.feature.ad.AdManager;
 import com.yaroslavgorbachh.counter.feature.roombackup.Backup;
 import com.yaroslavgorbachh.counter.feature.roombackup.Restore;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
@@ -118,6 +119,25 @@ public class RepoImp implements Repo {
     @Override
     public int getFastCountInterval() {
         return mSharedPreferencesSettings.getInt("fastCountSpeed", 200);
+    }
+
+    @Override
+    public boolean getAdIsAllow() {
+        return mLocalSharedPref.getAdIsAllow();
+    }
+
+    @Override
+    public boolean getInterstitialAdIsAllow() {
+        return mLocalSharedPref.getInterstitialAdCount() >= AdManager.INTERSTITIAL_SHOW_LIMIT;
+    }
+
+    @Override
+    public void incInterstitialAdCount() {
+        if (mLocalSharedPref.getInterstitialAdCount() < AdManager.INTERSTITIAL_SHOW_LIMIT) {
+            mLocalSharedPref.setInterstitialAdCount(mLocalSharedPref.getInterstitialAdCount() + 1);
+        } else {
+            mLocalSharedPref.setInterstitialAdCount(0);
+        }
     }
 
     @Override

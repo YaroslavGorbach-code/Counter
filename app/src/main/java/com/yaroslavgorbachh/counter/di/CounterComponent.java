@@ -2,10 +2,13 @@ package com.yaroslavgorbachh.counter.di;
 
 import android.content.Context;
 
+import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.component.counter.CounterCom;
 import com.yaroslavgorbachh.counter.component.counter.CounterComImp;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
+import com.yaroslavgorbachh.counter.feature.ad.AdManager;
+import com.yaroslavgorbachh.counter.feature.ad.AdManagerImp;
 import com.yaroslavgorbachh.counter.screen.counter.CounterFragment;
 
 import dagger.BindsInstance;
@@ -33,6 +36,12 @@ public interface CounterComponent {
         @Provides
         public CounterCom provideCounter(Repo repo, long counterId, Accessibility accessibility) {
             return new CounterComImp(repo, counterId, accessibility);
+        }
+
+        @ViewModelScope
+        @Provides
+        public AdManager provideAdManager(Repo repo) {
+            return  new AdManagerImp(repo);
         }
     }
 }

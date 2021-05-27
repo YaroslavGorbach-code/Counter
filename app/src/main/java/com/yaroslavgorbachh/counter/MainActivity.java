@@ -10,11 +10,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.Navigation;
 
+import com.yaroslavgorbachh.counter.feature.ad.AdManager;
+import com.yaroslavgorbachh.counter.feature.ad.AdManagerImp;
 import com.yaroslavgorbachh.counter.screen.widget.WidgetProvider;
 import com.yaroslavgorbachh.counter.data.Repo;
 
@@ -49,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         }else {
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
+
+        FrameLayout bannerContainer = findViewById(R.id.banner_container);
+        AdManager adManager = new AdManagerImp(mRepo);
+        adManager.showBanner(this, bannerContainer);
     }
 
     @Override

@@ -75,6 +75,11 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation("androidx.room:room-rxjava3:$room_version")
+
+    // adds
+    implementation 'com.google.firebase:firebase-ads:20.1.0'
+    implementation 'com.google.android.gms:play-services-ads:20.1.0'
+
     // RX
     implementation "io.reactivex.rxjava3:rxjava:3.0.11-RC5"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'

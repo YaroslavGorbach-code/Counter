@@ -43,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:listPreferredItemHeightSmall"
             android:layout_gravity="bottom"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/i_group_selected_bg"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,6 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:visibility="gone"
+            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toTopOf="@+id/settings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -113,11 +115,13 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView5"
             style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="248dp"
+            android:layout_width="0dp"
             android:layout_height="?android:listPreferredItemHeightSmall"
+            android:layout_marginStart="32dp"
             android:gravity="center|start"
             android:text="@string/navigationViewToolbar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/all_counters" />
 
         <LinearLayout

@@ -19,6 +19,8 @@ import com.yaroslavgorbachh.counter.component.counter.CounterCom;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
+import com.yaroslavgorbachh.counter.feature.ad.AdManager;
+import com.yaroslavgorbachh.counter.feature.ad.AdManagerImp;
 
 import javax.inject.Inject;
 
@@ -28,6 +30,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class CounterFragment extends Fragment {
     private CounterView mV;
     @Inject CounterCom counterCom;
+    @Inject AdManager adManager;
 
     public CounterFragment() {
         super(R.layout.fragment_counter);
@@ -37,11 +40,13 @@ public class CounterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // inject component
         long id = CounterFragmentArgs.fromBundle(requireArguments()).getCounterId();
         CounterViewModel vm = new ViewModelProvider(this).get(CounterViewModel.class);
         vm.getCounterComponent(id).inject(this);
+
+        // load ad
+        adManager.loadInterstitialAd(view.getContext());
 
         // init view
         mV = new CounterView(FragmentCounterBinding.bind(requireView()), requireActivity(), counterCom.getFastCountInterval(), new CounterView.Callback() {
@@ -141,5 +146,6 @@ public class CounterFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mV.unregisterReceiver(requireContext());
+        adManager.showInterstitialAd(requireActivity());
     }
 }

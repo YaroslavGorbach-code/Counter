@@ -3,6 +3,8 @@ package com.yaroslavgorbachh.counter.data.local;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.yaroslavgorbachh.counter.feature.ad.AdManager;
+
 public class SharedPrefStorageImp implements SharedPrefStorage {
     private final SharedPreferences mSharedPreferences;
 
@@ -17,8 +19,7 @@ public class SharedPrefStorageImp implements SharedPrefStorage {
 
     @Override
     public int getInterstitialAdCount() {
-        //return mSharedPreferences.getInt("interstitialAdCount", AdManager.INTERSTITIAL_SHOW_LIMIT);
-        return 0;
+        return mSharedPreferences.getInt("interstitialAdCount", 0);
     }
 
     @Override
@@ -33,24 +34,22 @@ public class SharedPrefStorageImp implements SharedPrefStorage {
 
     @Override
     public boolean getAdIsAllow() {
-        //return mSharedPreferences.getBoolean("adIsAllow", true);
-        return false;
+        return mSharedPreferences.getBoolean("adIsAllow", true);
     }
 
     @Override
     public void setAdIsAllow(boolean isAllow) {
-        //mSharedPreferences.edit().putBoolean("adIsAllow", isAllow).apply();
+        mSharedPreferences.edit().putBoolean("adIsAllow", isAllow).apply();
     }
 
     @Override
     public void setTimeLastReviewAsc(long time) {
-        //mSharedPreferences.edit().putLong("timeLastReviewAsc", time).apply();
+        mSharedPreferences.edit().putLong("timeLastReviewAsc", time).apply();
     }
 
     @Override
     public long getTimeLastReviewAsc() {
-        //return mSharedPreferences.getLong("timeLastReviewAsc", 0);
-        return 0;
+        return mSharedPreferences.getLong("timeLastReviewAsc", 0);
     }
 
 }

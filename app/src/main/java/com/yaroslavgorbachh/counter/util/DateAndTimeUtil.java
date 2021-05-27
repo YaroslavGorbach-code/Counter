@@ -22,7 +22,7 @@ public class DateAndTimeUtil {
 
     public static Date convertStringToDate(String stringDate){
         DateFormat dataFormat = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.SHORT, Locale.getDefault());
-        Date date = null;
+        Date date = new Date();
         try {
             date = dataFormat.parse(stringDate);
         } catch (ParseException e) {

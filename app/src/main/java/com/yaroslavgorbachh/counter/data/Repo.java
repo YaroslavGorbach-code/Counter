@@ -15,6 +15,8 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface Repo {
+
+
     interface ValueCallback{
         void onMax();
         void onMin();
@@ -47,4 +49,8 @@ public interface Repo {
     boolean getIsNightMod();
     void setIsNightMod(boolean b);
     int getFastCountInterval();
+    boolean getAdIsAllow();
+    boolean getInterstitialAdIsAllow();
+    void incInterstitialAdCount();
+
 }
