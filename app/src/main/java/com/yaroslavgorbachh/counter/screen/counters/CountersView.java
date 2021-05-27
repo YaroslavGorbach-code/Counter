@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.OnBackPressedCallback;
@@ -40,15 +41,37 @@ import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestoration
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
 public class CountersView {
+    public interface Callback {
+        void onSettings();
+        void onInc(Counter counter);
+        void onDec(Counter counter);
+        void onOpen(long counterId);
+        void onMoved(Counter counterFrom, Counter counterTo);
+        void onEdit(Counter counter);
+        void onReset(List<Counter> counters);
+        void onExport(Intent intent);
+        void onRemove(List<Counter> counters);
+        void onShowCreateDialog();
+        void onDecSelected(List<Counter> selected);
+        void onIncSelected(List<Counter> selected);
+        void onGroupItemSelected(String group);
+        void onAllCountersItemSelected();
+        void onLoverVolume();
+        void onRaiseVolume();
+    }
+
     private final FragmentCountersBinding mBinding;
     private final GroupsAdapter mGroupsAdapter;
     private final CountersAdapter mCountersAdapter;
     private final Drawable mNavigationIcon;
     private final VolumeButtonBroadcastReceiver mMessageReceiver;
+    private final Callback mCallback;
     private String mGroupTitle;
+
     CountersView(FragmentCountersBinding binding, int fastCountInterval, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
         mBinding = binding;
         mGroupTitle = binding.getRoot().getContext().getString(R.string.allCountersItem);
+        mCallback = callback;
         OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -132,7 +155,7 @@ public class CountersView {
 
             @Override
             public void onOpen(Counter counter) {
-                callback.onOpen(counter);
+                callback.onOpen(counter.id);
             }
 
             @Override
@@ -286,39 +309,10 @@ public class CountersView {
         }
     }
 
-    public interface Callback {
-        void onSettings();
-
-        void onInc(Counter counter);
-
-        void onDec(Counter counter);
-
-        void onOpen(Counter counter);
-
-        void onMoved(Counter counterFrom, Counter counterTo);
-
-        void onEdit(Counter counter);
-
-        void onReset(List<Counter> counters);
-
-        void onExport(Intent intent);
-
-        void onRemove(List<Counter> counters);
-
-        void onShowCreateDialog();
-
-        void onDecSelected(List<Counter> selected);
-
-        void onIncSelected(List<Counter> selected);
-
-        void onGroupItemSelected(String group);
-
-        void onAllCountersItemSelected();
-
-        void onLoverVolume();
-
-        void onRaiseVolume();
+    public void setCounterWidgetId(long id) {
+        if(id!=0){
+            mCallback.onOpen(id);
+        }
     }
-
 
 }

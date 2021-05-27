@@ -46,12 +46,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
         if (Objects.requireNonNull(intent.getAction()).equals(INC_CLICK) && counter != null) {
             Log.v("widget", "dd");
-            repo.incCounter(counter.id, new Repo.ValueCallback() {
-                @Override
-                public void onMax() { }
-                @Override
-                public void onMin() { }
-            });
+            repo.incCounter(counter.id, null);
             Counter counterWidget = repo.getCounterWidget(widgetId);
             appWidgetManager.updateAppWidget(counterWidget.widgetId,
                     getRemoteViews(counterWidget, counterWidget.widgetId, context, appWidgetManager, false));
@@ -129,7 +124,7 @@ public class WidgetProvider extends AppWidgetProvider {
         if (widgetCounter != null) {
             if (isFirsTimeCreated) {
                 views.setImageViewResource(R.id.toolbar_color, R.drawable.widget_toolbar_bg);
-                views.setInt(R.id.toolbar_color, "setColorFilter", ViewUtil.fetchAccentColor(context));
+                views.setInt(R.id.toolbar_color, "setColorFilter", context.getResources().getColor(widgetCounter.colorId));
             }
 
             views.setTextViewText(R.id.widget_value, String.valueOf(widgetCounter.value));
@@ -149,7 +144,7 @@ public class WidgetProvider extends AppWidgetProvider {
                 if (counter != null) {
                     appWidgetManager.updateAppWidget(counter.widgetId,
                             getRemoteViews(counter, counter.widgetId, context, appWidgetManager, false));
-                    setWidgetColor(context, counter.widgetId, appWidgetManager);
+                    setWidgetColor(context, counter, appWidgetManager);
 
                 } else {
                     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_counter_widget);
@@ -174,11 +169,11 @@ public class WidgetProvider extends AppWidgetProvider {
         return false;
     }
 
-    public static void setWidgetColor(Context context, int widgetId, AppWidgetManager appWidgetManager) {
+    public static void setWidgetColor(Context context, Counter widgetCounter, AppWidgetManager appWidgetManager) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_counter_widget);
         views.setImageViewResource(R.id.toolbar_color, R.drawable.widget_toolbar_bg);
-        views.setInt(R.id.toolbar_color, "setColorFilter", ViewUtil.fetchAccentColor(context));
-        appWidgetManager.updateAppWidget(widgetId, views);
+        views.setInt(R.id.toolbar_color, "setColorFilter", context.getResources().getColor(widgetCounter.colorId));
+        appWidgetManager.updateAppWidget(widgetCounter.widgetId, views);
     }
 
     @Override

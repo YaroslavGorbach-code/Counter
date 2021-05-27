@@ -25,12 +25,15 @@ import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsFragment;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+
+import static com.yaroslavgorbachh.counter.screen.widget.WidgetProvider.START_MAIN_ACTIVITY_EXTRA;
 
 public class CountersFragment extends Fragment implements CounterCreateDialog.Host {
     private CountersView mV;
@@ -52,7 +55,6 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // inject component
         CountersViewModel vm = new ViewModelProvider(this).get(CountersViewModel.class);
         vm.countersComponent.inject(this);
@@ -97,9 +99,9 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
             }
 
             @Override
-            public void onOpen(Counter counter) {
+            public void onOpen(long counterId) {
                 NavDirections action = CountersFragmentDirections
-                        .actionCountersFragmentToCounterFragment().setCounterId(counter.id);
+                        .actionCountersFragmentToCounterFragment().setCounterId(counterId);
                 Navigation.findNavController(view).navigate(action);
             }
 
@@ -160,6 +162,12 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
             public void onRaiseVolume() { counters.onRaiseVolume(); }
         });
 
+        long widgetCounterId = requireActivity().getIntent().getLongExtra(
+                START_MAIN_ACTIVITY_EXTRA, 0);
+        if (widgetCounterId!=0){
+            mV.setCounterWidgetId(widgetCounterId);
+            requireActivity().getIntent().putExtra(START_MAIN_ACTIVITY_EXTRA, 0);
+        }
         counters.getGroups().observe(getViewLifecycleOwner(), mV::setGroups);
         mDisposables.add(counters.getCounters()
                 .subscribeOn(Schedulers.io())

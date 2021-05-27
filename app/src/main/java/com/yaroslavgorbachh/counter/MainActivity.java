@@ -7,11 +7,13 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.navigation.Navigation;
 
 import com.yaroslavgorbachh.counter.screen.widget.WidgetProvider;
 import com.yaroslavgorbachh.counter.data.Repo;
@@ -23,6 +25,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_DOWN;
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.INTENT_VOLUME_UP;
+import static com.yaroslavgorbachh.counter.screen.widget.WidgetProvider.START_MAIN_ACTIVITY_EXTRA;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         }else {
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-
     }
 
     @Override

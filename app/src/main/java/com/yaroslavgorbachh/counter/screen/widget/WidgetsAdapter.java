@@ -53,7 +53,7 @@ public class WidgetsAdapter extends RecyclerView.Adapter<WidgetsAdapter.Vh> {
             super(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_widget, parent, false));
             title = itemView.findViewById(R.id.title);
             value = itemView.findViewById(R.id.value);
-            itemView.setOnClickListener(v -> mListener.onClick(mData.get(getAbsoluteAdapterPosition())));
+            itemView.setOnClickListener(v -> mListener.onClick(mData.get(getBindingAdapterPosition())));
         }
 
         public void bind(Counter counter) {
