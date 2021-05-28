@@ -54,4 +54,14 @@ public class SharedPrefStorageImp implements SharedPrefStorage {
         return mSharedPreferences.getLong("timeLastReviewAsc", new Date().getTime());
     }
 
+    @Override
+    public boolean getFirstOpen() {
+        return mSharedPreferences.getBoolean("firstOpen", true);
+    }
+
+    @Override
+    public void setFirstOpen(boolean firstOpen) {
+        mSharedPreferences.edit().putBoolean("firstOpen", firstOpen).apply();
+    }
+
 }

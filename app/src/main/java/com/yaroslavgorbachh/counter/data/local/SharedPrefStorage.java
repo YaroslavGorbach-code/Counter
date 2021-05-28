@@ -9,4 +9,6 @@ public interface SharedPrefStorage {
     void setAdIsAllow(boolean isAdRemoved);
     void setTimeLastReviewAsc(long time);
     long getTimeLastReviewAsc();
+    boolean getFirstOpen();
+    void setFirstOpen(boolean firstOpen);
 }

@@ -54,5 +54,7 @@ public interface Repo {
     void incInterstitialAdCount();
     boolean isAscAppReviewAllow();
     void setDateLastReviewAsc(Date date);
+    boolean getFirstOpen();
+    void setFirstOpen(boolean firstOpen);
 
 }

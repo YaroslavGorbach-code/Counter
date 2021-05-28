@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
+        if (mRepo.getFirstOpen()){
+            mRepo.setDateLastReviewAsc(new Date());
+        }
+        mRepo.setFirstOpen(false);
+
         if (mRepo.isAscAppReviewAllow()) {
             ReviewManager manager = ReviewManagerFactory.create(this);
             Task<ReviewInfo> request = manager.requestReviewFlow();

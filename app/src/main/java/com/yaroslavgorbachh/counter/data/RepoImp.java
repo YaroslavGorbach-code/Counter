@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -142,13 +143,25 @@ public class RepoImp implements Repo {
 
     @Override
     public boolean isAscAppReviewAllow() {
+        Log.v("time", TimeAndDataUtil.getDaysBetween(
+                new Date(mLocalSharedPref.getTimeLastReviewAsc()), new Date()) + "");
         return TimeAndDataUtil.getDaysBetween(
-                new Date(mLocalSharedPref.getTimeLastReviewAsc()), new Date()) > 6;
+                new Date(mLocalSharedPref.getTimeLastReviewAsc()), new Date()) > 5;
     }
 
     @Override
     public void setDateLastReviewAsc(Date date) {
         mLocalSharedPref.setTimeLastReviewAsc(date.getTime());
+    }
+
+    @Override
+    public boolean getFirstOpen() {
+        return mLocalSharedPref.getFirstOpen();
+    }
+
+    @Override
+    public void setFirstOpen(boolean firstOpen) {
+        mLocalSharedPref.setFirstOpen(firstOpen);
     }
 
     @Override
