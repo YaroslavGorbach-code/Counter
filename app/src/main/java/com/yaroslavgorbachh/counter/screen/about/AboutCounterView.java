@@ -1,5 +1,7 @@
 package com.yaroslavgorbachh.counter.screen.about;
 
+import android.graphics.Paint;
+
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
@@ -10,7 +12,7 @@ public class AboutCounterView {
         void onBack();
     }
 
-    private FragmentAboutCounterBinding mBinding;
+    private final FragmentAboutCounterBinding mBinding;
 
     public AboutCounterView(FragmentAboutCounterBinding binding, Callback callback){
         mBinding = binding;
@@ -23,8 +25,11 @@ public class AboutCounterView {
         mBinding.lastResetValue.setText(String.valueOf(counter.lastResetValue));
         mBinding.value.setText(String.valueOf(counter.value));
         mBinding.step.setText(String.valueOf(counter.step));
-        if (counter.grope!=null)
+        if (counter.grope!=null){
             mBinding.group.setText(counter.grope);
+        }else{
+            mBinding.group.setText(mBinding.getRoot().getContext().getResources().getString(R.string.no));
+        }
         mBinding.minValue.setText(String.valueOf(counter.counterMinValue));
         mBinding.maxValue.setText(String.valueOf(counter.counterMaxValue));
         if (counter.lastResetDate!=null)
