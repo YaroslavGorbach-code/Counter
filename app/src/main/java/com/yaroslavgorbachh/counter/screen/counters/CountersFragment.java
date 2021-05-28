@@ -5,6 +5,7 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,8 @@ import com.yaroslavgorbachh.counter.component.counters.Counters;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
+import com.yaroslavgorbachh.counter.feature.ad.AdManager;
+import com.yaroslavgorbachh.counter.feature.ad.AdManagerImp;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsFragment;
 
@@ -39,6 +42,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     private CountersView mV;
     private final CompositeDisposable mDisposables = new CompositeDisposable();
     @Inject Counters counters;
+    @Inject AdManager adManager;
 
     public CountersFragment() {
         super(R.layout.fragment_counters);
@@ -60,7 +64,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
         vm.countersComponent.inject(this);
 
         // init view
-        mV = new CountersView(FragmentCountersBinding.bind(view), counters.getFastCountInterval(), requireActivity(), this, new CountersView.Callback() {
+        mV = new CountersView(FragmentCountersBinding.bind(view), counters.getFastCountInterval(), requireActivity(), this, adManager, new CountersView.Callback() {
             @Override
             public void onSettings() {
                 startActivityForResult(

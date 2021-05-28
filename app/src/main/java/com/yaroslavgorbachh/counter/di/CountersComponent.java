@@ -16,7 +16,7 @@ import dagger.Provides;
 
 @ViewModelScope
 @Component(dependencies = {AppComponent.class},
-        modules = {CountersComponent.CountersModule.class, CountersCommonModule.class})
+        modules = {CountersComponent.CountersModule.class, CountersCommonModule.class, AdModule.class})
 
 public interface CountersComponent {
     void inject(CountersFragment fragment);

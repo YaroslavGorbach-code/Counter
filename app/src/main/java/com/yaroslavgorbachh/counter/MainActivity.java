@@ -52,10 +52,6 @@ public class MainActivity extends AppCompatActivity {
         }else {
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-
-        FrameLayout bannerContainer = findViewById(R.id.banner_container);
-        AdManager adManager = new AdManagerImp(mRepo);
-        adManager.showBanner(this, bannerContainer);
     }
 
     @Override

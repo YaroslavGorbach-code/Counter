@@ -28,6 +28,7 @@ import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
+import com.yaroslavgorbachh.counter.feature.ad.AdManager;
 import com.yaroslavgorbachh.counter.screen.counters.drawer.GroupsAdapter;
 import com.yaroslavgorbachh.counter.screen.counters.multyselection.CounterMultiSelection;
 import com.yaroslavgorbachh.counter.util.CommonUtil;
@@ -67,7 +68,12 @@ public class CountersView {
     private final Callback mCallback;
     private String mGroupTitle;
 
-    CountersView(FragmentCountersBinding binding, int fastCountInterval, FragmentActivity activity, LifecycleOwner lifecycleOwner, Callback callback) {
+    CountersView(FragmentCountersBinding binding,
+                 int fastCountInterval,
+                 FragmentActivity activity,
+                 LifecycleOwner lifecycleOwner,
+                 AdManager adManager,
+                 Callback callback) {
         mBinding = binding;
         mGroupTitle = binding.getRoot().getContext().getString(R.string.allCountersItem);
         mCallback = callback;
@@ -82,6 +88,7 @@ public class CountersView {
             }
         };
         activity.getOnBackPressedDispatcher().addCallback(lifecycleOwner, backPressedCallback);
+        adManager.showBanner(activity, mBinding.bannerContainer);
 
         mMessageReceiver = new VolumeButtonBroadcastReceiver(new VolumeButtonBroadcastReceiver.VolumeKeyDownResponse() {
             @Override
@@ -118,8 +125,7 @@ public class CountersView {
         mNavigationIcon = binding.toolbar.getNavigationIcon();
 
         binding.drawer.settings.setOnClickListener(i -> callback.onSettings());
-        binding.noCounters.setOnClickListener(v -> callback.onShowCreateDialog());
-        binding.iconNoCounters.setOnClickListener(v -> callback.onShowCreateDialog());
+        binding.noCountersLayout.iconNoCounters.setOnClickListener(v -> callback.onShowCreateDialog());
 
         mGroupsAdapter = new GroupsAdapter(group -> {
             callback.onGroupItemSelected(group);
@@ -302,9 +308,9 @@ public class CountersView {
 
         TransitionManager.beginDelayedTransition(mBinding.getRoot(), transition);
         if (show) {
-            mBinding.noCounters.setVisibility(View.VISIBLE);
+            mBinding.noCountersLayout.noCounters.setVisibility(View.VISIBLE);
         } else {
-            mBinding.noCounters.setVisibility(View.GONE);
+            mBinding.noCountersLayout.noCounters.setVisibility(View.GONE);
         }
     }
 

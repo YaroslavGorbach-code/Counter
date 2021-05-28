@@ -18,7 +18,7 @@ import dagger.Provides;
 
 @ViewModelScope
 @Component(dependencies = {AppComponent.class},
-        modules = {CounterComponent.CounterModule.class, CountersCommonModule.class})
+        modules = {CounterComponent.CounterModule.class, CountersCommonModule.class, AdModule.class})
 public interface CounterComponent {
     void inject(CounterFragment fragment);
 
@@ -36,12 +36,6 @@ public interface CounterComponent {
         @Provides
         public CounterCom provideCounter(Repo repo, long counterId, Accessibility accessibility) {
             return new CounterComImp(repo, counterId, accessibility);
-        }
-
-        @ViewModelScope
-        @Provides
-        public AdManager provideAdManager(Repo repo) {
-            return  new AdManagerImp(repo);
         }
     }
 }

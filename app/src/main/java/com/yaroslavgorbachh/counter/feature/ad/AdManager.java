@@ -5,7 +5,7 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 public interface AdManager {
-    int INTERSTITIAL_SHOW_LIMIT = 7;
+    int INTERSTITIAL_SHOW_LIMIT = 5;
     void showBanner(Context context, ViewGroup adContainer);
     void showInterstitialAd(Activity activity);
     void loadInterstitialAd(Context context);
