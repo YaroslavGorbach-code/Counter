@@ -143,10 +143,9 @@
     <string name="widget_deleted">ВИДАЛЕНО</string>
     <string name="menu_counter_reset">Обнулити</string>
 
-
-    <string name="minValueError">Минимальное значение не может быть больше максимального</string>
-    <string name="maxValueError">Максимальное значение не может быть меньше минимального</string>
-    <string name="ValueBiggerMaxError">Значение не может быть больше максимального</string>
-    <string name="ValueLeesMin">Значение не может быть меньше минимального</string>
-    <string name="remove_ad">Убрать рекламу</string>
+    <string name="minValueError">Мінімальне значення не може бути більше максимального </string>
+    <string name="maxValueError">Максимальне значення не може бути менше мінімального</string>
+    <string name="ValueBiggerMaxError">Значення не може бути більше максимального</string>
+    <string name="ValueLeesMin">Значення не може бути менше мінімального</string>
+    <string name="remove_ad">Видалити рекламу</string>
 </resources>
