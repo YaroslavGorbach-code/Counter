@@ -9,13 +9,13 @@ import androidx.lifecycle.LiveData;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Domain.History;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface Repo {
-
 
     interface ValueCallback{
         void onMax();
@@ -52,5 +52,7 @@ public interface Repo {
     boolean getAdIsAllow();
     boolean getInterstitialAdIsAllow();
     void incInterstitialAdCount();
+    boolean isAscAppReviewAllow();
+    void setDateLastReviewAsc(Date date);
 
 }

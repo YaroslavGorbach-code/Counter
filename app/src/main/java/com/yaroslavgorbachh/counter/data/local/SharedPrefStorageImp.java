@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 import com.yaroslavgorbachh.counter.feature.ad.AdManager;
 
+import java.util.Date;
+
 public class SharedPrefStorageImp implements SharedPrefStorage {
     private final SharedPreferences mSharedPreferences;
 
@@ -49,7 +51,7 @@ public class SharedPrefStorageImp implements SharedPrefStorage {
 
     @Override
     public long getTimeLastReviewAsc() {
-        return mSharedPreferences.getLong("timeLastReviewAsc", 0);
+        return mSharedPreferences.getLong("timeLastReviewAsc", new Date().getTime());
     }
 
 }

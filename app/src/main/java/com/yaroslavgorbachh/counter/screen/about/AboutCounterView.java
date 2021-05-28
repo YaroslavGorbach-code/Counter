@@ -1,9 +1,7 @@
 package com.yaroslavgorbachh.counter.screen.about;
 
-import android.graphics.Paint;
-
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
+import com.yaroslavgorbachh.counter.util.TimeAndDataUtil;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentAboutCounterBinding;
 
@@ -21,7 +19,7 @@ public class AboutCounterView {
     void setCounter(Counter counter){
         mBinding.name.setText(counter.title);
         mBinding.createData.setText(mBinding.getRoot().getContext().getString(
-                R.string.created, DateAndTimeUtil.convertDateToString(counter.createDate)));
+                R.string.created, TimeAndDataUtil.convertDateToString(counter.createDate)));
         mBinding.lastResetValue.setText(String.valueOf(counter.lastResetValue));
         mBinding.value.setText(String.valueOf(counter.value));
         mBinding.step.setText(String.valueOf(counter.step));
@@ -33,6 +31,6 @@ public class AboutCounterView {
         mBinding.minValue.setText(String.valueOf(counter.counterMinValue));
         mBinding.maxValue.setText(String.valueOf(counter.counterMaxValue));
         if (counter.lastResetDate!=null)
-            mBinding.lastResetDate.setText(DateAndTimeUtil.convertDateToString(counter.lastResetDate));
+            mBinding.lastResetDate.setText(TimeAndDataUtil.convertDateToString(counter.lastResetDate));
     }
 }

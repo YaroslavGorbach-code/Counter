@@ -16,10 +16,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.Navigation;
 
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.Task;
 import com.yaroslavgorbachh.counter.feature.ad.AdManager;
 import com.yaroslavgorbachh.counter.feature.ad.AdManagerImp;
 import com.yaroslavgorbachh.counter.screen.widget.WidgetProvider;
 import com.yaroslavgorbachh.counter.data.Repo;
+
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -51,6 +57,18 @@ public class MainActivity extends AppCompatActivity {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }else {
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+
+        if (mRepo.isAscAppReviewAllow()) {
+            ReviewManager manager = ReviewManagerFactory.create(this);
+            Task<ReviewInfo> request = manager.requestReviewFlow();
+            request.addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    ReviewInfo reviewInfo = task.getResult();
+                    Task<Void> flow = manager.launchReviewFlow(this, reviewInfo);
+                    flow.addOnCompleteListener(task1 -> mRepo.setDateLastReviewAsc(new Date()));
+                }
+            });
         }
     }
 

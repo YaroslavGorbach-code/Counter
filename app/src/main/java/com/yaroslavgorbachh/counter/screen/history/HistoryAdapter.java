@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaroslavgorbachh.counter.data.Domain.History;
 import com.yaroslavgorbachh.counter.databinding.ItemHistoryBinding;
-import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
+import com.yaroslavgorbachh.counter.util.TimeAndDataUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +34,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Vh> {
                         if (mSort == Sort.VALUE) {
                             return Long.compare(o2.value, o1.value);
                         } else {
-                                if (DateAndTimeUtil.convertStringToDate(o1.data)
-                                        .before(DateAndTimeUtil.convertStringToDate(o2.data))) {
+                                if (TimeAndDataUtil.convertStringToDate(o1.data)
+                                        .before(TimeAndDataUtil.convertStringToDate(o2.data))) {
                                     return 1;
-                                } else if (DateAndTimeUtil.convertStringToDate(o1.data)
-                                        .after(DateAndTimeUtil.convertStringToDate(o2.data))) {
+                                } else if (TimeAndDataUtil.convertStringToDate(o1.data)
+                                        .after(TimeAndDataUtil.convertStringToDate(o2.data))) {
                                     return -1;
                                 } else {
                                     return 0;

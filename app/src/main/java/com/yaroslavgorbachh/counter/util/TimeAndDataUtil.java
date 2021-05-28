@@ -7,8 +7,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
-public class DateAndTimeUtil {
+public class TimeAndDataUtil {
     public static String convertDateToString(Date date){
         DateFormat dataFormat = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.SHORT, Locale.getDefault());
 
@@ -31,4 +32,8 @@ public class DateAndTimeUtil {
         return date;
     }
 
+    public static long getDaysBetween(Date lastReview, Date current){
+        long diff =  current.getTime() - lastReview.getTime();
+        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+    }
 }

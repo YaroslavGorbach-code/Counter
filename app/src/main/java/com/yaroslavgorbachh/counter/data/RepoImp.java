@@ -19,7 +19,7 @@ import com.yaroslavgorbachh.counter.feature.HistoryManager;
 import com.yaroslavgorbachh.counter.feature.ad.AdManager;
 import com.yaroslavgorbachh.counter.feature.roombackup.Backup;
 import com.yaroslavgorbachh.counter.feature.roombackup.Restore;
-import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
+import com.yaroslavgorbachh.counter.util.TimeAndDataUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -141,6 +141,17 @@ public class RepoImp implements Repo {
     }
 
     @Override
+    public boolean isAscAppReviewAllow() {
+        return TimeAndDataUtil.getDaysBetween(
+                new Date(mLocalSharedPref.getTimeLastReviewAsc()), new Date()) > 6;
+    }
+
+    @Override
+    public void setDateLastReviewAsc(Date date) {
+        mLocalSharedPref.setTimeLastReviewAsc(date.getTime());
+    }
+
+    @Override
     public boolean getIsNightMod() {
         return mLocalSharedPref.getNightMod();
     }
@@ -220,7 +231,7 @@ public class RepoImp implements Repo {
         HistoryManager.getInstance()
                 .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
                         addHistory(new History(getCounter(id).blockingFirst().value,
-                                DateAndTimeUtil.convertDateToString(new Date()), id)));
+                                TimeAndDataUtil.convertDateToString(new Date()), id)));
         updateCounter(AboutCounterManager.updateMinCounterValue(getCounter(id).blockingFirst()));
     }
 
@@ -241,7 +252,7 @@ public class RepoImp implements Repo {
         HistoryManager.getInstance()
                 .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
                         addHistory(new History(getCounter(id).blockingFirst().value,
-                                DateAndTimeUtil.convertDateToString(new Date()), id)));
+                                TimeAndDataUtil.convertDateToString(new Date()), id)));
         updateCounter(AboutCounterManager.updateMinCounterValue(getCounter(id).blockingFirst()));
     }
 
@@ -252,7 +263,7 @@ public class RepoImp implements Repo {
         HistoryManager.getInstance()
                 .saveValueWitDelay(id, getCounter(id).blockingFirst().value, () ->
                         addHistory(new History(getCounter(id).blockingFirst().value,
-                                DateAndTimeUtil.convertDateToString(new Date()), id)));
+                                TimeAndDataUtil.convertDateToString(new Date()), id)));
         updateCounter(AboutCounterManager.updateLastResetDate(getCounter(id).blockingFirst()));
     }
 

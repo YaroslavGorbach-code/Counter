@@ -6,25 +6,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.settings.Settings;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.util.CommonUtil;
-import com.yaroslavgorbachh.counter.util.DateAndTimeUtil;
-import com.yaroslavgorbachh.counter.util.ViewUtil;
+import com.yaroslavgorbachh.counter.util.TimeAndDataUtil;
 
 import java.util.List;
 
@@ -94,7 +87,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TITLE, "CounterBackup " + DateAndTimeUtil.getCurrentDate());
+                intent.putExtra(Intent.EXTRA_TITLE, "CounterBackup " + TimeAndDataUtil.getCurrentDate());
                 startActivityForResult(intent, CREATE_FILE);
             }
 
