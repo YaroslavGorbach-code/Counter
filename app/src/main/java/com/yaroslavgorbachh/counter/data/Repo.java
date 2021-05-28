@@ -16,7 +16,6 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface Repo {
-
     interface ValueCallback{
         void onMax();
         void onMin();
@@ -56,5 +55,7 @@ public interface Repo {
     void setDateLastReviewAsc(Date date);
     boolean getFirstOpen();
     void setFirstOpen(boolean firstOpen);
+    void setAdIsAllow(boolean isAllow);
+
 
 }

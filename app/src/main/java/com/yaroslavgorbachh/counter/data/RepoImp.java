@@ -128,6 +128,11 @@ public class RepoImp implements Repo {
     }
 
     @Override
+    public void setAdIsAllow(boolean isAllow) {
+        mLocalSharedPref.setAdIsAllow(isAllow);
+    }
+
+    @Override
     public boolean getInterstitialAdIsAllow() {
         return mLocalSharedPref.getInterstitialAdCount() >= AdManager.INTERSTITIAL_SHOW_LIMIT;
     }
@@ -163,6 +168,7 @@ public class RepoImp implements Repo {
     public void setFirstOpen(boolean firstOpen) {
         mLocalSharedPref.setFirstOpen(firstOpen);
     }
+
 
     @Override
     public boolean getIsNightMod() {

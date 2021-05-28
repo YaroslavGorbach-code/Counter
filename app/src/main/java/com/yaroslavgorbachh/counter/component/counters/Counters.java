@@ -1,5 +1,6 @@
 package com.yaroslavgorbachh.counter.component.counters;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
@@ -10,6 +11,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 
 public interface Counters {
+
     interface ResetCallback{
         void onReset(List<Counter> copy);
     }
@@ -31,5 +33,8 @@ public interface Counters {
     int getFastCountInterval();
     String getCurrentGroup();
     List<Counter> sortCounters(List<Counter> counters);
+    boolean getAdIsAllow();
+    void showPurchasesDialog(FragmentActivity activity);
+    void queryPurchases(FragmentActivity activity);
 
 }

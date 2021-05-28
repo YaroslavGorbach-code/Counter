@@ -24,7 +24,6 @@ public interface AppComponent extends RepoProvider {
     void inject(MainActivity activity);
     void inject(WidgetConfigActivity a);
     void inject(WidgetProvider widgetProvider);
-    void inject(CounterCreateDialog dialog);
 
     @Component.Factory
     interface Factory {

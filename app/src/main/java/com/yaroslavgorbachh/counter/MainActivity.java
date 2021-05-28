@@ -22,6 +22,8 @@ import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.android.play.core.tasks.Task;
 import com.yaroslavgorbachh.counter.feature.ad.AdManager;
 import com.yaroslavgorbachh.counter.feature.ad.AdManagerImp;
+import com.yaroslavgorbachh.counter.feature.billing.BillingManager;
+import com.yaroslavgorbachh.counter.feature.billing.BillingManagerImp;
 import com.yaroslavgorbachh.counter.screen.widget.WidgetProvider;
 import com.yaroslavgorbachh.counter.data.Repo;
 
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRepo = ((App)getApplication()).provideRepo();
+        BillingManager billingManager = new BillingManagerImp(this);
+        billingManager.queryPurchases(isRemoved -> mRepo.setAdIsAllow(!isRemoved));
 
         if (mRepo.getIsOrientationLock()) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

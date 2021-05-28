@@ -1,14 +1,17 @@
 package com.yaroslavgorbachh.counter.component.counters;
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.util.Log;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
+import com.yaroslavgorbachh.counter.feature.billing.BillingManager;
 
 import java.util.Date;
 import java.util.List;
@@ -20,10 +23,12 @@ public class CountersImp implements Counters {
     private String mGroup;
     private final Accessibility mAccessibility;
     private final AudioManager mAudioManager;
-    public CountersImp(Repo repo, Accessibility accessibility, AudioManager audioManager) {
+    private final BillingManager mBillingManager;
+    public CountersImp(Repo repo, Accessibility accessibility, AudioManager audioManager, BillingManager billingManager) {
         mRepo = repo;
         mAccessibility = accessibility;
         mAudioManager = audioManager;
+        mBillingManager = billingManager;
     }
 
     @Override
@@ -32,6 +37,27 @@ public class CountersImp implements Counters {
                 .filter(counter -> (counter.grope != null && counter.grope.equals(mGroup)))
                 .toList()
                 .blockingGet();
+    }
+
+    @Override
+    public boolean getAdIsAllow() {
+        return mRepo.getAdIsAllow();
+    }
+
+    @Override
+    public void showPurchasesDialog(FragmentActivity activity) {
+        mBillingManager.showPurchasesDialog(activity);
+    }
+
+    @Override
+    public void queryPurchases(FragmentActivity activity) {
+        mBillingManager.queryPurchases(isAdRemoved -> {
+            if (isAdRemoved && mRepo.getAdIsAllow()) {
+                mRepo.setAdIsAllow(false);
+                activity.finish();
+                activity.startActivity(new Intent(activity, activity.getClass()));
+            }
+        });
     }
 
     @Override

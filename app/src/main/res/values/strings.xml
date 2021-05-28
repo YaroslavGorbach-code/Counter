@@ -153,5 +153,6 @@
     <string name="maxValueError">max value can not be lees then min</string>
     <string name="ValueBiggerMaxError">Value can not be bigger then max</string>
     <string name="ValueLeesMin">Value can not be less then min</string>
+    <string name="remove_ad">Remove ads</string>
 
 </resources>

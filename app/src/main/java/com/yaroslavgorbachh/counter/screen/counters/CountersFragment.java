@@ -1,11 +1,9 @@
 package com.yaroslavgorbachh.counter.screen.counters;
 
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,12 +21,9 @@ import com.yaroslavgorbachh.counter.data.Domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.feature.ad.AdManager;
-import com.yaroslavgorbachh.counter.feature.ad.AdManagerImp;
 import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
-import com.yaroslavgorbachh.counter.screen.settings.SettingsFragment;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -61,7 +56,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
         super.onViewCreated(view, savedInstanceState);
         // inject component
         CountersViewModel vm = new ViewModelProvider(this).get(CountersViewModel.class);
-        vm.countersComponent.inject(this);
+        vm.getCountersComponent(requireActivity()).inject(this);
 
         // init view
         mV = new CountersView(FragmentCountersBinding.bind(view), counters.getFastCountInterval(), requireActivity(), this, adManager, new CountersView.Callback() {
@@ -164,6 +159,9 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
 
             @Override
             public void onRaiseVolume() { counters.onRaiseVolume(); }
+
+            @Override
+            public void onRemoveAd() { counters.showPurchasesDialog(requireActivity()); }
         });
 
         long widgetCounterId = requireActivity().getIntent().getLongExtra(
@@ -172,6 +170,7 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
             mV.setCounterWidgetId(widgetCounterId);
             requireActivity().getIntent().putExtra(START_MAIN_ACTIVITY_EXTRA, 0);
         }
+        mV.sesRemoveAdVisibility(counters.getAdIsAllow());
         counters.getGroups().observe(getViewLifecycleOwner(), mV::setGroups);
         mDisposables.add(counters.getCounters()
                 .subscribeOn(Schedulers.io())
@@ -190,6 +189,12 @@ public class CountersFragment extends Fragment implements CounterCreateDialog.Ho
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         counters.setGroup(counters.getCurrentGroup());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        counters.queryPurchases(requireActivity());
     }
 
     @Override

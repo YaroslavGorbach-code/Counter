@@ -7,7 +7,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "com.yaroslavgorbachh.counter"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 14
         versionName "3.0.0"

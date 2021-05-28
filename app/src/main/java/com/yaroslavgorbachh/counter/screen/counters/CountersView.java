@@ -41,6 +41,8 @@ import static androidx.recyclerview.widget.RecyclerView.Adapter.StateRestoration
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;
 
 public class CountersView {
+
+
     public interface Callback {
         void onSettings();
         void onInc(Counter counter);
@@ -58,6 +60,7 @@ public class CountersView {
         void onAllCountersItemSelected();
         void onLoverVolume();
         void onRaiseVolume();
+        void onRemoveAd();
     }
 
     private final FragmentCountersBinding mBinding;
@@ -125,6 +128,8 @@ public class CountersView {
         mNavigationIcon = binding.toolbar.getNavigationIcon();
 
         binding.drawer.settings.setOnClickListener(i -> callback.onSettings());
+        binding.drawer.removeAd.setOnClickListener(i -> callback.onRemoveAd());
+
         binding.noCountersLayout.iconNoCounters.setOnClickListener(v -> callback.onShowCreateDialog());
 
         mGroupsAdapter = new GroupsAdapter(group -> {
@@ -300,6 +305,17 @@ public class CountersView {
 
     }
 
+    public void setCounterWidgetId(long id) {
+        if(id!=0){
+            mCallback.onOpen(id);
+        }
+    }
+
+    public void sesRemoveAdVisibility(boolean adIsAllow) {
+        if (!adIsAllow)
+        mBinding.drawer.removeAd.setVisibility(View.GONE);
+    }
+
 
     private void showNoCountersIcon(boolean show) {
         Transition transition = new MaterialFade();
@@ -311,12 +327,6 @@ public class CountersView {
             mBinding.noCountersLayout.noCounters.setVisibility(View.VISIBLE);
         } else {
             mBinding.noCountersLayout.noCounters.setVisibility(View.GONE);
-        }
-    }
-
-    public void setCounterWidgetId(long id) {
-        if(id!=0){
-            mCallback.onOpen(id);
         }
     }
 

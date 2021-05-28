@@ -148,4 +148,5 @@
     <string name="maxValueError">Максимальное значение не может быть меньше минимального</string>
     <string name="ValueBiggerMaxError">Значение не может быть больше максимального</string>
     <string name="ValueLeesMin">Значение не может быть меньше минимального</string>
+    <string name="remove_ad">Убрать рекламу</string>
 </resources>
