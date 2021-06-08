@@ -5,7 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.yaroslavgorbachh.counter.data.Domain.History;
+import com.yaroslavgorbachh.counter.data.domain.History;
 
 import java.util.List;
 

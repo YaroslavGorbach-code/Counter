@@ -15,7 +15,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.settings.Settings;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.util.CommonUtil;
 import com.yaroslavgorbachh.counter.util.TimeAndDataUtil;
 

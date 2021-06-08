@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
-import com.yaroslavgorbachh.counter.data.Domain.History;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.History;
 import com.yaroslavgorbachh.counter.data.local.SharedPrefStorage;
 import com.yaroslavgorbachh.counter.data.local.room.RoomDb;
 import com.yaroslavgorbachh.counter.feature.AboutCounterManager;

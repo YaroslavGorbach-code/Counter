@@ -6,14 +6,13 @@ import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
-import com.yaroslavgorbachh.counter.data.Domain.History;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.History;
 
 import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Single;
 
 public interface Repo {
     interface ValueCallback{

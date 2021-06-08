@@ -3,7 +3,7 @@ package com.yaroslavgorbachh.counter.screen.edit;
 import android.widget.ArrayAdapter;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentEditCounterBinding;
 import com.yaroslavgorbachh.counter.screen.edit.colorpicker.ColorPicker;
 import com.yaroslavgorbachh.counter.screen.edit.colorpicker.ScrollColorPicker;

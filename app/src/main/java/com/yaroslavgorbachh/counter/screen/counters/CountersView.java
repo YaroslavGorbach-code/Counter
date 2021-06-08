@@ -25,7 +25,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.transition.MaterialFade;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
 import com.yaroslavgorbachh.counter.feature.ad.AdManager;

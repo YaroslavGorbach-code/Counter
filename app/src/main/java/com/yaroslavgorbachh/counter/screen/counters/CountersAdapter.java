@@ -12,7 +12,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.ItemCounterBinding;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
 import com.yaroslavgorbachh.counter.screen.counters.multyselection.MultiSelection;

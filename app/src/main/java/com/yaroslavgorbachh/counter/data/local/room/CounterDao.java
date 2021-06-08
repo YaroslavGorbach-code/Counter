@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 
 import java.util.List;
 

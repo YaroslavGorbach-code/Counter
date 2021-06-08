@@ -1,6 +1,6 @@
 package com.yaroslavgorbachh.counter.component.counter;
 
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 

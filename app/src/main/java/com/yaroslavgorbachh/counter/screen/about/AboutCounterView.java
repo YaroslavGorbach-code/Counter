@@ -2,7 +2,7 @@ package com.yaroslavgorbachh.counter.screen.about;
 
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.util.TimeAndDataUtil;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentAboutCounterBinding;
 
 public class AboutCounterView {

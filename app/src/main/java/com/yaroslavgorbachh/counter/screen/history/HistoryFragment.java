@@ -43,12 +43,12 @@ public class HistoryFragment extends Fragment {
             }
 
             @Override
-            public void onRemove(com.yaroslavgorbachh.counter.data.Domain.History history) {
+            public void onRemove(com.yaroslavgorbachh.counter.data.domain.History history) {
                 historyCom.remove(history);
             }
 
             @Override
-            public void onUndo(com.yaroslavgorbachh.counter.data.Domain.History item) {
+            public void onUndo(com.yaroslavgorbachh.counter.data.domain.History item) {
                 historyCom.addItem(item);
             }
         });

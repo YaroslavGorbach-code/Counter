@@ -1,33 +1,24 @@
 package com.yaroslavgorbachh.counter.feature;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Build;
-import android.os.VibrationAttributes;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.HapticFeedbackConstants;
-import android.view.View;
-
-import androidx.preference.PreferenceManager;
 
 import com.yaroslavgorbachh.counter.R;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 public class Accessibility {
     private final SoundPool mSoundPool;
+    private final Vibrator vibrator;
     private int mSoundIncId;
     private int mSoundDecId;
     private TextToSpeech mTextToSpeech;
-    private final Vibrator vibrator;
 
     public Accessibility(Context context) {
         AudioAttributes audioAttributes = new AudioAttributes.Builder()

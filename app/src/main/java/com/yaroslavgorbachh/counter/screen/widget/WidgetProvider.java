@@ -16,9 +16,8 @@ import android.widget.RemoteViews;
 import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.MainActivity;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
-import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 import java.util.Objects;
 

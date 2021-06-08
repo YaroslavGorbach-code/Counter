@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.transition.MaterialFade;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Domain.History;
+import com.yaroslavgorbachh.counter.data.domain.History;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterHistoryBinding;
 
 import java.util.List;

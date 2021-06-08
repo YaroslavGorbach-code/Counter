@@ -2,9 +2,8 @@ package com.yaroslavgorbachh.counter.util;
 
 import android.content.Intent;
 
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 
-import java.util.Collections;
 import java.util.List;
 
 public class CommonUtil {

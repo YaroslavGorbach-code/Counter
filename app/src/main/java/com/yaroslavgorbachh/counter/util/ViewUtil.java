@@ -2,7 +2,6 @@ package com.yaroslavgorbachh.counter.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.View;
@@ -12,10 +11,8 @@ import android.widget.AutoCompleteTextView;
 import androidx.annotation.ColorInt;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
-import com.yaroslavgorbachh.counter.screen.settings.SettingsActivity;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 
 public class ViewUtil {
 

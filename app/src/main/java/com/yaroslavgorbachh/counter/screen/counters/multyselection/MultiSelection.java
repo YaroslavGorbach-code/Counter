@@ -3,7 +3,7 @@ package com.yaroslavgorbachh.counter.screen.counters.multyselection;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 
 import java.util.List;
 

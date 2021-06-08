@@ -14,7 +14,7 @@ public class HistoryComImp implements HistoryCom {
         mId = id;
     }
     @Override
-    public LiveData<List<com.yaroslavgorbachh.counter.data.Domain.History>> getHistory() {
+    public LiveData<List<com.yaroslavgorbachh.counter.data.domain.History>> getHistory() {
         return mRepo.getHistoryList(mId);
     }
 
@@ -24,12 +24,12 @@ public class HistoryComImp implements HistoryCom {
     }
 
     @Override
-    public void remove(com.yaroslavgorbachh.counter.data.Domain.History history) {
+    public void remove(com.yaroslavgorbachh.counter.data.domain.History history) {
         mRepo.removeHistoryItem(history.id);
     }
 
     @Override
-    public void addItem(com.yaroslavgorbachh.counter.data.Domain.History item) {
+    public void addItem(com.yaroslavgorbachh.counter.data.domain.History item) {
         mRepo.addHistory(item);
     }
 }

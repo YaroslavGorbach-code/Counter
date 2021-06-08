@@ -2,7 +2,7 @@ package com.yaroslavgorbachh.counter.screen.widget;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.ActivityWidgetConfigurationBinding;
 
 import java.util.List;

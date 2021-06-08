@@ -4,17 +4,14 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.view.View;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentCounterBinding;
-import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.FastCountButton;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
 

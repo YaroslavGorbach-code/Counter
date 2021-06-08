@@ -1,4 +1,4 @@
-package com.yaroslavgorbachh.counter.data.Domain;
+package com.yaroslavgorbachh.counter.data.domain;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

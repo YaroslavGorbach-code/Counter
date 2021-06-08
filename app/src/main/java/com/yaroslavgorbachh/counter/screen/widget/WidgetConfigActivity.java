@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.yaroslavgorbachh.counter.App;
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.ActivityWidgetConfigurationBinding;
 

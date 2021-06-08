@@ -3,7 +3,7 @@ package com.yaroslavgorbachh.counter.component.counters;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import java.util.List;

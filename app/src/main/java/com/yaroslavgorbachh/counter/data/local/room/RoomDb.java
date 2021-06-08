@@ -5,8 +5,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
-import com.yaroslavgorbachh.counter.data.Domain.History;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.History;
 
 
 import java.util.Date;

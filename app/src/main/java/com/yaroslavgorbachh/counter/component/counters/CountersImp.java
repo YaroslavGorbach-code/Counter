@@ -2,13 +2,12 @@ package com.yaroslavgorbachh.counter.component.counters;
 
 import android.content.Intent;
 import android.media.AudioManager;
-import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.feature.billing.BillingManager;

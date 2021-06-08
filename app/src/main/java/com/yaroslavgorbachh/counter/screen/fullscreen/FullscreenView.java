@@ -10,9 +10,8 @@ import android.view.View;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.databinding.FragmentFullscreenBinding;
-import com.yaroslavgorbachh.counter.feature.Accessibility;
 import com.yaroslavgorbachh.counter.util.ViewUtil;
 
 import static com.yaroslavgorbachh.counter.VolumeButtonBroadcastReceiver.ON_KEY_DOWN_BROADCAST;

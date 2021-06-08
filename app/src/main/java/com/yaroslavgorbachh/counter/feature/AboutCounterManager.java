@@ -1,6 +1,6 @@
 package com.yaroslavgorbachh.counter.feature;
 
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 
 import java.util.Date;
 

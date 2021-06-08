@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.yaroslavgorbachh.counter.R;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.data.RepoImp;
 import com.yaroslavgorbachh.counter.data.local.SharedPrefStorageImp;

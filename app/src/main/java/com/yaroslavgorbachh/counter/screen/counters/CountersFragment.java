@@ -17,7 +17,7 @@ import androidx.navigation.Navigation;
 import com.google.android.material.snackbar.Snackbar;
 import com.yaroslavgorbachh.counter.R;
 import com.yaroslavgorbachh.counter.component.counters.Counters;
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 import com.yaroslavgorbachh.counter.databinding.FragmentCountersBinding;
 import com.yaroslavgorbachh.counter.feature.ad.AdManager;

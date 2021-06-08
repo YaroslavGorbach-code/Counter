@@ -1,8 +1,6 @@
 package com.yaroslavgorbachh.counter.component.counter;
 
-import androidx.fragment.app.FragmentActivity;
-
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
 
 import io.reactivex.rxjava3.core.Observable;

@@ -3,11 +3,8 @@ package com.yaroslavgorbachh.counter.component.settings;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.lifecycle.LiveData;
-
-import com.yaroslavgorbachh.counter.data.Domain.Counter;
+import com.yaroslavgorbachh.counter.data.domain.Counter;
 import com.yaroslavgorbachh.counter.data.Repo;
-import com.yaroslavgorbachh.counter.screen.settings.SettingsFragmentView;
 
 import java.util.List;
 
