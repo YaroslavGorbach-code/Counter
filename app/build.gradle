@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: "androidx.navigation.safeargs"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 34
     buildToolsVersion "29.0.3"
     defaultConfig {
         multiDexEnabled true
         applicationId "com.yaroslavgorbachh.counter"
         minSdkVersion 23
-        targetSdkVersion 30
-        versionCode 15
-        versionName "3.0.1"
+        targetSdkVersion 34
+        versionCode 16
+        versionName "3.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -34,10 +34,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    buildFeatures {
-        viewBinding true
-    }
-
 }
 
 dependencies {
@@ -48,7 +44,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'org.jetbrains:annotations:16.0.1'
 
@@ -77,10 +73,10 @@ dependencies {
     implementation("androidx.room:room-rxjava3:$room_version")
 
     // google
-    implementation 'com.google.firebase:firebase-ads:20.1.0'
-    implementation 'com.google.android.gms:play-services-ads:20.1.0'
-    implementation "com.android.billingclient:billing:4.0.0"
-    implementation 'com.google.android.play:core:1.10.0'
+    implementation 'com.google.firebase:firebase-ads:22.2.0'
+    implementation 'com.google.android.gms:play-services-ads:22.2.0'
+    implementation "com.android.billingclient:billing:6.0.1"
+    implementation 'com.google.android.play:core:1.10.3'
 
     // RX
     implementation "io.reactivex.rxjava3:rxjava:3.0.11-RC5"

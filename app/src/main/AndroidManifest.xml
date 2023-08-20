@@ -15,10 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        >
+        tools:ignore="GoogleAppIndexingWarning">
 
-        <receiver android:name=".screen.widget.WidgetProvider">
+        <receiver
+            android:name=".screen.widget.WidgetProvider"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -28,20 +30,26 @@
                 android:resource="@xml/counter_widget_info" />
         </receiver>
 
-        <activity android:name=".screen.settings.SettingsActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".screen.settings.SettingsActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".screen.widget.WidgetConfigActivity">
+        <activity
+            android:name=".screen.widget.WidgetConfigActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-6043694180023070~9854105761" />

@@ -23,6 +23,8 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
+import static android.app.PendingIntent.FLAG_MUTABLE;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
 public class WidgetProvider extends AppWidgetProvider {
@@ -100,7 +102,7 @@ public class WidgetProvider extends AppWidgetProvider {
         incIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         // we need to embed the extras into the data so that the extras will not be ignored.
         incIntent.setData(Uri.parse(incIntent.toUri(Intent.URI_INTENT_SCHEME)));
-        PendingIntent incPendingIntent = PendingIntent.getBroadcast(context, 0, incIntent, 0);
+        PendingIntent incPendingIntent = PendingIntent.getBroadcast(context, 0, incIntent, PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.widget_value, incPendingIntent);
 
         Intent decIntent = new Intent(context, WidgetProvider.class);
@@ -108,7 +110,7 @@ public class WidgetProvider extends AppWidgetProvider {
         decIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         // we need to embed the extras into the data so that the extras will not be ignored.
         decIntent.setData(Uri.parse(incIntent.toUri(Intent.URI_INTENT_SCHEME)));
-        PendingIntent decPendingIntent = PendingIntent.getBroadcast(context, 0, decIntent, 0);
+        PendingIntent decPendingIntent = PendingIntent.getBroadcast(context, 0, decIntent,  PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.widget_dec, decPendingIntent);
 
         Intent openIntent = new Intent(context, WidgetProvider.class);
@@ -116,7 +118,7 @@ public class WidgetProvider extends AppWidgetProvider {
         openIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         // we need to embed the extras into the data so that the extras will not be ignored.
         openIntent.setData(Uri.parse(incIntent.toUri(Intent.URI_INTENT_SCHEME)));
-        PendingIntent openPendingIntent = PendingIntent.getBroadcast(context, 0, openIntent, 0);
+        PendingIntent openPendingIntent = PendingIntent.getBroadcast(context, 0, openIntent,  PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.widget_fullscreen, openPendingIntent);
 
 

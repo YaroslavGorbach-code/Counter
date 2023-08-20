@@ -3,7 +3,6 @@ package com.yaroslavgorbachh.counter.di;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 import androidx.room.Room;
